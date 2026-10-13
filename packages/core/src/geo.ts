@@ -50,16 +50,61 @@ export function detectProvince(rules: Rules, rawText: string): ProvinceCode | un
 
 /** Retrouve la RMR d'une ville (nom officiel ou alias), en tenant compte de la province si connue. */
 export function findCma(rules: Rules, city: string, province?: ProvinceCode): Cma | undefined {
-  const c = normalizeCity(city);
+  const c = cityKey(city);
   return rules.lmiaLowWage.cmas.find(
     (cma) =>
       (!province || cma.province === province) &&
-      [cma.name, ...cma.aliases].some((n) => normalizeCity(n) === c),
+      [cma.name, ...cma.aliases].some((n) => cityKey(n) === c),
   );
 }
 
-function normalizeCity(s: string): string {
-  return normalize(s).replace(/\bst\.?\s/g, 'saint ').replace(/[^a-z0-9]+/g, ' ').trim();
+/** Clé de comparaison d'un nom de ville (« St. John's » = « Saint John's », accents et parenthèses ignorés). */
+export function cityKey(s: string): string {
+  return normalize(s)
+    .replace(/\(.*?\)/g, ' ')
+    .replace(/\bste\.?(?=[\s-])/g, 'sainte')
+    .replace(/\bst\.?(?=[\s-])/g, 'saint')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+/**
+ * Correspondance municipalité → RMR, produite par le pipeline (cma-lookup.json)
+ * à partir de Statistique Canada. Clé : province puis cityKey(nom de la municipalité).
+ * Valeur : nom de la RMR (tel que dans rules.json), « - » si hors de toute RMR,
+ * « ? » si le nom est ambigu (même nom, statuts différents).
+ */
+export type CmaLookup = Record<string, Record<string, string>>;
+
+export type WorkplaceLocation =
+  | { kind: 'cma'; cma: Cma }
+  | { kind: 'outside' }
+  | { kind: 'unknown' };
+
+/**
+ * Situe un lieu de travail par rapport aux RMR : d'abord les alias saisis à la main
+ * dans rules.json (quartiers, anciennes villes), puis la correspondance officielle.
+ */
+export function locateWorkplace(
+  rules: Rules,
+  city: string,
+  province?: ProvinceCode,
+  lookup?: CmaLookup,
+): WorkplaceLocation {
+  const manual = findCma(rules, city, province);
+  if (manual) return { kind: 'cma', cma: manual };
+  if (!lookup) return { kind: 'unknown' };
+  const key = cityKey(city);
+  const values = new Set<string>();
+  for (const p of province ? [province] : Object.keys(lookup)) {
+    const v = lookup[p]?.[key];
+    if (v !== undefined) values.add(v);
+  }
+  if (values.size !== 1) return { kind: 'unknown' };
+  const v = [...values][0]!;
+  if (v === '-') return { kind: 'outside' };
+  const cma = rules.lmiaLowWage.cmas.find((c) => c.name === v);
+  return cma ? { kind: 'cma', cma } : { kind: 'unknown' };
 }
 
 /** Noms de villes trop ambigus pour être détectés dans un texte libre (mots courants ou villes homonymes à l'étranger). */

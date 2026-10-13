@@ -5,7 +5,7 @@
  *
  * Toutes les valeurs réglementaires viennent de data/rules.json.
  */
-import { findCma, PROVINCE_NAMES } from '../geo';
+import { locateWorkplace, PROVINCE_NAMES, type CmaLookup } from '../geo';
 import { findNoc, isPrimaryAgriculture, nocLabel, probableRmrExemption, teerOf } from '../noc';
 import { sourceRef, todayIso, uniqueSources } from '../sources';
 import { formatCad } from '../text';
@@ -49,6 +49,8 @@ export interface JobContext {
 export interface EvaluateOptions {
   rules: Rules;
   nocData: NocData;
+  /** Correspondance officielle municipalité → RMR (cma-lookup.json), si chargée. */
+  cmaLookup?: CmaLookup;
   today?: string;
 }
 
@@ -66,7 +68,7 @@ const STATUS_ORDER: Record<PathwayStatus, number> = { probable: 0, possible: 1, 
 /** Évalue toutes les voies pertinentes pour ce profil et cet emploi. */
 export function evaluatePathways(profile: Profile, job: JobContext, opts: EvaluateOptions): PathwayResult[] {
   const today = opts.today ?? todayIso();
-  const ctx: Ctx = { profile, job, rules: opts.rules, nocData: opts.nocData, today, teer: teerOf(job.noc) };
+  const ctx: Ctx = { profile, job, rules: opts.rules, nocData: opts.nocData, cmaLookup: opts.cmaLookup, today, teer: teerOf(job.noc) };
   const results: PathwayResult[] = [];
 
   if (isPrimaryAgriculture(opts.rules, job.noc)) {
@@ -88,6 +90,7 @@ interface Ctx {
   job: JobContext;
   rules: Rules;
   nocData: NocData;
+  cmaLookup?: CmaLookup;
   today: string;
   teer: number;
 }
@@ -169,7 +172,8 @@ function lowWage(ctx: Ctx): PathwayResult {
     });
   }
 
-  const cma = job.city ? findCma(rules, job.city, job.province) : undefined;
+  const where = job.city ? locateWorkplace(rules, job.city, job.province, ctx.cmaLookup) : undefined;
+  const cma = where?.kind === 'cma' ? where.cma : undefined;
   if (cma) {
     if (!cma.frozen) {
       raisons.push({
@@ -192,7 +196,7 @@ function lowWage(ctx: Ctx): PathwayResult {
     return result(ctx, 'eimt-bas-salaire', 'bloquee', raisons, ids);
   }
 
-  if (job.outsideCma) {
+  if (job.outsideCma || where?.kind === 'outside') {
     raisons.push({
       fr: 'Le lieu de travail est hors de toute RMR : il n’est pas visé par le gel des EIMT bas salaire.',
       en: 'The workplace is outside any CMA: it is not affected by the low-wage LMIA freeze.',

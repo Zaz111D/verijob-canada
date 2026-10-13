@@ -7,7 +7,19 @@ export * from './messages';
 export { normalize, prepareText } from './text';
 export { sourceRef, staleSources, todayIso } from './sources';
 export { teerOf, findNoc, isPrimaryAgriculture, detectNocInText, probableRmrExemption, nocLabel } from './noc';
-export { detectProvince, findCma, isAfrican, AFRICAN_COUNTRIES, PROVINCE_NAMES } from './geo';
+export {
+  detectProvince,
+  findCma,
+  cityKey,
+  locateWorkplace,
+  isAfrican,
+  AFRICAN_COUNTRIES,
+  PROVINCE_NAMES,
+  type CmaLookup,
+  type WorkplaceLocation,
+} from './geo';
+export { employerKey } from './employer';
+export { makeWageLookup, type WagesData } from './wages';
 export { extractWages, parseAmount } from './salary';
 export { analyzeOffer, type AnalyzeOptions } from './scam/analyze';
 export { SCAM_RULES } from './scam/rules';

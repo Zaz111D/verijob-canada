@@ -26,4 +26,20 @@ npm install
 npm test                 # tests unitaires du moteur
 npm run typecheck        # vérification TypeScript
 npm run check:rules      # signale les règles dont la date de révision est dépassée
+npm run data             # pipeline : télécharge et prépare les données (≈ 6 min la 1re fois)
 ```
+
+## Données
+
+`npm run data` produit les fichiers JSON utilisés hors ligne par la PWA dans `apps/pwa/public/data/`, ainsi que le rapport de contrôle [docs/data-report.md](docs/data-report.md).
+
+| Fichier | Contenu | Source |
+|---|---|---|
+| `employers-index.json`, `employers-<PROV>.json` | Employeurs ayant reçu une EIMT positive ou négative (8 derniers trimestres), un fichier par province | EDSC, open.canada.ca |
+| `cma-lookup.json` | Municipalité → RMR (gel des EIMT bas salaire) | Statistique Canada, Recensement 2021 |
+| `wages.json` | Salaires bas / médian / haut des métiers ciblés | Salaires Job Bank, open.canada.ca |
+| `designated-employers.json`, `community-priorities.json` | Employeurs désignés et métiers prioritaires PICR/PICRF | Relevés manuels : `data/manual/*.csv` |
+
+- Les téléchargements sont polis : user-agent identifiable et pause de 20 s entre deux requêtes vers open.canada.ca (`Crawl-delay`). Ils sont mis en cache dans `data/raw/`.
+- **Job Bank n'est jamais lu automatiquement**, car ses conditions d'utilisation l'interdisent.
+- Les employeurs désignés sont **relevés à la main** dans `data/manual/designated-employers.csv`. Chaque ligne indique sa source et la date du relevé. Le pipeline refuse un fichier invalide.

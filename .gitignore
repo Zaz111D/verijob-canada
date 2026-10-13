@@ -5,3 +5,5 @@ coverage/
 .DS_Store
 # Fichiers bruts téléchargés par les scripts (régénérables)
 data/raw/
+# Données générées par le pipeline (npm run data), régénérées en CI
+apps/pwa/public/data/

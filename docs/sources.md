@@ -195,3 +195,16 @@ FCIP : Péninsule acadienne NB · Superior East ON · St-Pierre-Jolys MB · Kelo
 - **URL françaises officielles** relevées via le bouton « Français » de chaque page canada.ca. Elles sont toutes enregistrées dans `data/rules.json` (`urlFr`).
 - La page IRCC « Se protéger contre la fraude » (modifiée le 23 févr. 2026) est générale. Elle ne cite ni les moyens de paiement ni les adresses officielles. Les explications du vérificateur sur ces points restent du bon sens et sont formulées prudemment, sans citer de règle officielle inexistante.
 - Les alias de villes des RMR (`rules.json` → `lmiaLowWage.cmas[].aliases`) ont été **saisis à la main** pour les grandes municipalités. Ils seront remplacés en Phase 2 par la correspondance officielle de Statistique Canada (subdivision de recensement → RMR). En attendant, une ville inconnue donne le statut « inconnue », jamais « hors RMR ».
+
+## 12. Sources ajoutées en Phase 2 (pipeline de données)
+
+| Source | URL | Format | Licence | Accès automatisé |
+|---|---|---|---|---|
+| Statistique Canada — tableau 98-10-0002 (toutes les municipalités / SDR, Recensement 2021) | https://www150.statcan.gc.ca/n1/tbl/csv/98100002-eng.zip | CSV zippé | Licence ouverte de Statistique Canada | ✅ `/n1/tbl/` autorisé, `Crawl-delay: 2` (on attend 3 s) |
+| Statistique Canada — tableau 98-10-0003 (RMR / AR et leurs municipalités) | https://www150.statcan.gc.ca/n1/tbl/csv/98100003-eng.zip | CSV zippé | idem | ✅ |
+| EDSC — Salaires Job Bank (bas / médian / haut par CNP et province) | https://open.canada.ca/data/fr/dataset/adad580f-76b0-4502-bd05-20c125de9116 | CSV annuel (dernier : 2025, publié le 19 nov. 2025) | Gouvernement ouvert | ✅ (API CKAN, `Crawl-delay: 20`) |
+| Greater Sudbury — employeurs désignés et métiers prioritaires RCIP/FCIP 2026 | https://investsudbury.ca/why-sudbury/newcomers/rcipfcip/ | HTML | Aucune licence affichée (données factuelles) | Transcription **ponctuelle** le 13 oct. 2026, relue à la main ; pas de scraper récurrent |
+
+- Le **fichier des attributs géographiques 2021** (92-151-X), plus complet, est derrière une protection anti-robots : il n'est pas utilisé, et cette protection n'est pas contournée.
+- La correspondance se fait **par nom de municipalité**, pas par code postal : les fichiers de conversion des codes postaux ne sont pas gratuits. Les quartiers et anciennes villes (Scarborough, Dartmouth…) passent par les alias saisis à la main dans `rules.json`.
+- `fetch-cma-rates.ts`, prévu dans le brief, n'existe pas. Les taux et la liste des RMR gelées sont **saisis à la main** dans `rules.json` (décision de la Phase 0), puis contrôlés par `npm run check:rules`.

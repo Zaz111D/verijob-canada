@@ -3,16 +3,24 @@
   "private": true,
   "version": "0.1.0",
   "description": "PWA gratuite pour aider les candidats africains à éviter les arnaques et trouver des emplois réellement accessibles au Canada.",
+  "type": "module",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "test": "npm run test --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
-    "check:rules": "node scripts/check-rules.mjs"
+    "test": "npm run test --workspaces --if-present && vitest run --root scripts",
+    "typecheck": "npm run typecheck --workspaces --if-present && tsc -p scripts/tsconfig.json",
+    "check:rules": "node scripts/check-rules.mjs",
+    "data": "tsx scripts/pipeline.ts"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "fflate": "^0.8.3",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.0"
   }
 }
