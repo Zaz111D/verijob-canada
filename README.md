@@ -144,12 +144,13 @@ Certains réseaux bloquent les serveurs de GitHub Pages : c'est le cas de notre 
 2. Ouvrez **Workers & Pages → Create → onglet Pages → Connect to Git**, autorisez GitHub et choisissez le dépôt `verijob-canada`.
 3. Réglages de build :
    - **Framework preset** : `None`
-   - **Build command** : `npm ci && npm run data && npm run build -w @verijob/pwa`
+   - **Build command** : `npm ci && node scripts/fetch-built-site.mjs`
+     (Cloudflare récupère le site déjà construit par GitHub Actions dans la release `site-latest` : les serveurs de construction de Cloudflare sont bloqués par Statistique Canada)
    - **Build output directory** : `apps/pwa/dist`
    - La version de Node (24) est lue automatiquement dans le fichier `.node-version`.
 4. Cliquez sur **Save and Deploy**. Après environ 10 minutes, le site est en ligne à `https://verijob-canada.pages.dev` (ou une adresse proche).
 
-**Variante « Worker »** (si Cloudflare a créé un projet Worker plutôt que Pages) : le fichier `wrangler.jsonc` à la racine est déjà prêt (nom du projet : `verijo`, à adapter). Dans le projet, ouvrez **Settings → Build**, puis réglez la *Build command* (même commande que ci-dessus) et la *Deploy command* : `npx wrangler deploy`. Activez ensuite l'adresse publique dans **Settings → Domains & Routes → workers.dev → Enable**.
+**Variante « Worker »** (si Cloudflare a créé un projet Worker plutôt que Pages) : le fichier `wrangler.jsonc` à la racine est déjà prêt (nom du projet : `verijo`, à adapter). Dans le projet, ouvrez **Settings → Build**, puis réglez la *Build command* (`npm ci && node scripts/fetch-built-site.mjs`) et la *Deploy command* : `npx wrangler deploy`. Activez ensuite l'adresse publique dans **Settings → Domains & Routes → workers.dev → Enable**.
 
 Cloudflare reconstruit le site à chaque `git push`. Pour le **rafraîchissement hebdomadaire des données** :
 1. dans Cloudflare, ouvrez le projet, puis **Settings → Builds → Deploy hooks**, créez un hook (nom : `hebdo`, branche : `main`) et copiez son adresse ;

@@ -42,6 +42,10 @@ export async function download(url: string, opts: { cacheName?: string; refresh?
   if (!opts.refresh && existsSync(path)) return readFileSync(path);
   console.log(`  ↓ ${url}`);
   const buf = Buffer.from(await (await politeFetch(url)).arrayBuffer());
+  // Un zip / xlsx commence par « PK » : sinon le site a renvoyé une page HTML (blocage, erreur).
+  if (/\.(zip|xlsx)(\?|$)/i.test(url) && !(buf[0] === 0x50 && buf[1] === 0x4b)) {
+    throw new Error(`Réponse inattendue pour ${url} (pas un fichier zip/xlsx : accès bloqué ou page d'erreur).`);
+  }
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, buf);
   return buf;
