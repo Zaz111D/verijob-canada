@@ -65,6 +65,21 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v5
 
+  # Cloudflare Pages (adresse en .pages.dev) : reconstruit le site avec les données fraîches.
+  # Facultatif : ne fait rien tant que le secret CLOUDFLARE_DEPLOY_HOOK n'est pas défini
+  # (Settings → Secrets and variables → Actions sur GitHub).
+  cloudflare:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name != 'push'
+    steps:
+      - name: Déclencher la reconstruction Cloudflare Pages
+        env:
+          HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "Pas de CLOUDFLARE_DEPLOY_HOOK : étape ignorée."; exit 0; fi
+          curl -fsS -X POST "$HOOK" > /dev/null && echo "Reconstruction Cloudflare demandée."
+
   regles:
     name: Règles à revérifier
     runs-on: ubuntu-latest

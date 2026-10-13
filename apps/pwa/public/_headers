@@ -1,0 +1,19 @@
+# En-têtes HTTP pour Cloudflare Pages (ignoré par GitHub Pages).
+# Le service worker et la page doivent toujours être revalidés : sinon une mise à jour peut rester bloquée sur les téléphones.
+/sw.js
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
+# Fichiers JS/CSS versionnés par leur nom : cache long.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+# Données : rafraîchies chaque semaine.
+/data/*
+  Cache-Control: public, max-age=3600
+# Sécurité de base.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

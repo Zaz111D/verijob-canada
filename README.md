@@ -137,13 +137,23 @@ Seul le filtre « candidats étrangers » (`fglo=1`) est confirmé. Pour avoir d
 
 Ensuite, **chaque lundi**, le workflow rafraîchit les données officielles, relance les tests et republie le site. Il se déclenche aussi à chaque `git push`.
 
-### Option B : Cloudflare Pages
-1. Sur https://pages.cloudflare.com, connectez votre dépôt GitHub.
-2. Commande de build : `npm ci && npm run data && npm run build -w @verijob/pwa`
-3. Dossier de sortie : `apps/pwa/dist`
-4. Variable d'environnement : `NODE_VERSION = 24`
+### Option B : Cloudflare Pages (recommandée en complément)
+Certains réseaux bloquent les serveurs de GitHub Pages : c'est le cas de notre connexion de développement. Cloudflare Pages (adresse en `….pages.dev`) a des serveurs en Afrique (Lagos, Johannesburg, Nairobi…).
 
-Le rafraîchissement hebdomadaire des données se fait alors en relançant le déploiement, par exemple avec un « Deploy hook » appelé par une tâche planifiée.
+1. Créez un compte gratuit sur https://dash.cloudflare.com/sign-up.
+2. Ouvrez **Workers & Pages → Create → onglet Pages → Connect to Git**, autorisez GitHub et choisissez le dépôt `verijob-canada`.
+3. Réglages de build :
+   - **Framework preset** : `None`
+   - **Build command** : `npm ci && npm run data && npm run build -w @verijob/pwa`
+   - **Build output directory** : `apps/pwa/dist`
+   - La version de Node (24) est lue automatiquement dans le fichier `.node-version`.
+4. Cliquez sur **Save and Deploy**. Après environ 10 minutes, le site est en ligne à `https://verijob-canada.pages.dev` (ou une adresse proche).
+
+Cloudflare reconstruit le site à chaque `git push`. Pour le **rafraîchissement hebdomadaire des données** :
+1. dans Cloudflare, ouvrez le projet, puis **Settings → Builds → Deploy hooks**, créez un hook (nom : `hebdo`, branche : `main`) et copiez son adresse ;
+2. sur GitHub, ouvrez **Settings → Secrets and variables → Actions → New repository secret**, avec le nom `CLOUDFLARE_DEPLOY_HOOK` et l'adresse copiée comme valeur.
+
+Le workflow du lundi déclenchera alors aussi la reconstruction Cloudflare. Le fichier `apps/pwa/public/_headers` règle le cache : les mises à jour arrivent vite sur les téléphones.
 
 ### Installer l'appli sur un téléphone
 Ouvrez l'adresse du site dans Chrome sur Android, puis choisissez **⋮ → Ajouter à l'écran d'accueil**. L'appli fonctionne ensuite hors ligne. Une province déjà consultée reste disponible sans connexion.
