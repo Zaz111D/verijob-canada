@@ -70,13 +70,13 @@ main { padding-top: 8px; }
 /* Barre d'onglets fixée en bas (accessible au pouce). */
 .tabs {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-template-columns: repeat(6, 1fr);
   background: var(--bg); border-top: 1px solid var(--line);
   padding-bottom: env(safe-area-inset-bottom);
 }
 .tabs a {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
-  padding: 8px 2px; font-size: 0.72rem; text-decoration: none; color: var(--muted); min-height: 56px;
+  padding: 8px 1px; font-size: 0.68rem; text-decoration: none; color: var(--muted); min-height: 56px;
 }
 .tabs a span { font-size: 1.2rem; line-height: 1; }
 .tabs a.active { color: var(--brand); font-weight: 700; }
@@ -147,3 +147,8 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 .sources summary { cursor: pointer; color: var(--brand); }
 .sources ul { padding-left: 1.2rem; }
 .route-group { margin-bottom: 1.5rem; }
+
+/* Panneau du message de candidature. */
+.panel { border: 2px solid var(--brand); border-radius: var(--radius); padding: 12px; margin: 12px 0; background: var(--bg); }
+.panel textarea { font-size: 0.95rem; }
+.panel .grid2 label { font-weight: 600; }

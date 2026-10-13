@@ -6,8 +6,8 @@ import { useEffect, useState } from 'preact/hooks';
 import { DISCLAIMER, type SourceRef } from '@verijob/core';
 import { setLang, STRINGS as S, tr, useLang } from '../i18n';
 
-export type Route = 'accueil' | 'offre' | 'employeur' | 'consultant' | 'profil';
-const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'consultant', 'profil'];
+export type Route = 'accueil' | 'offre' | 'employeur' | 'demarcher' | 'consultant' | 'profil';
+const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'demarcher', 'consultant', 'profil'];
 
 /** Routage par « #/page » : fonctionne sur tout hébergement statique. */
 export function useRoute(): Route {
@@ -38,6 +38,7 @@ const NAV: Array<{ route: Route; label: keyof typeof S; icon: string }> = [
   { route: 'accueil', label: 'navHome', icon: '⌂' },
   { route: 'offre', label: 'navOffer', icon: '✉' },
   { route: 'employeur', label: 'navEmployer', icon: '⌕' },
+  { route: 'demarcher', label: 'navProspects', icon: '✎' },
   { route: 'consultant', label: 'navConsultant', icon: '☑' },
   { route: 'profil', label: 'navProfile', icon: '☺' },
 ];

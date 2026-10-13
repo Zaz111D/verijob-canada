@@ -8,7 +8,7 @@
  *
  * Produit : apps/pwa/public/data/employers-index.json et employers-<PROVINCE>.json
  */
-import { employerKey, locateWorkplace, type CmaLookup, type NocData, type ProvinceCode, type Rules } from '../packages/core/src';
+import { employerKey, locateWorkplace, type CmaLookup, type NocData, type Prospect, type ProvinceCode, type Rules } from '../packages/core/src';
 import { download, getJson } from './lib/http';
 import { OGL, writeDataFile, type WrittenFile } from './lib/output';
 import { readXlsx, toRecords } from './lib/tabular';
@@ -186,6 +186,25 @@ export async function fetchLmia(rules: Rules, nocData: NocData, lookup: CmaLooku
     nocTitles: Object.fromEntries([...nocTitles.entries()].sort()),
     datasets: { positive: `https://open.canada.ca/data/fr/dataset/${POSITIVE_ID}`, negative: `https://open.canada.ca/data/fr/dataset/${NEGATIVE_ID}` },
   }));
+
+  // Liste de démarchage : recruteurs récurrents (≥ 2 trimestres) pour les métiers ciblés.
+  const targets = new Set(nocData.nocs.map((n) => n.code));
+  const prospects: Prospect[] = [];
+  for (const r of records.values()) {
+    const target = r.p.filter((e) => targets.has(e[2]));
+    const qs = [...new Set(target.map((e) => e[0]))].sort();
+    if (qs.length < 2) continue;
+    const byNoc = new Map<string, number>();
+    for (const e of target) byNoc.set(e[2], (byNoc.get(e[2]) ?? 0) + e[4]);
+    prospects.push({
+      n: r.n, k: r.k, p: r.province, c: r.c, pc: r.pc, g: r.g, q: qs.length, lq: qs.at(-1)!,
+      s: [...new Set(target.map((e) => e[1]))],
+      j: [...byNoc.entries()].sort((a, b) => b[1] - a[1]),
+      neg: r.x.filter((e) => targets.has(e[2])).reduce((s, e) => s + e[4], 0),
+    });
+  }
+  prospects.sort((a, b) => b.q - a.q || a.k.localeCompare(b.k));
+  files.push(writeDataFile('prospects.json', { ...source, name: `${source.name} — recruteurs récurrents (≥ 2 trimestres, métiers ciblés)` }, prospects.length, prospects));
 
   return { ...computeStats(records, nocTitles, nocData), quarters: qStats, streamPositions, repairedAddresses, files, missingQuarters };
 }

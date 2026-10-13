@@ -22,10 +22,11 @@
 | employers-SK.json | 1 998 | 316 Ko | 63 Ko |
 | employers-XX.json | 206 | 49 Ko | 11 Ko |
 | employers-YT.json | 69 | 13 Ko | 3 Ko |
+| prospects.json | 6 532 | 1 084 Ko | 230 Ko |
 | wages.json | 191 | 9 Ko | 2 Ko |
 | designated-employers.json | 1 615 | 516 Ko | 48 Ko |
 | community-priorities.json | 76 | 16 Ko | 2 Ko |
-| **Total** | | **13 333 Ko** | **2 650 Ko** |
+| **Total** | | **14 417 Ko** | **2 880 Ko** |
 
 Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne charge le fichier d'une province que lorsqu'on en a besoin.
 

@@ -5,7 +5,7 @@
  */
 import rulesJson from '../../../data/rules.json';
 import nocJson from '../../../data/noc.json';
-import { makeWageLookup, type CmaLookup, type NocData, type Rules, type WageLookup, type WagesData } from '@verijob/core';
+import { makeWageLookup, type CmaLookup, type NocData, type Prospect, type Rules, type WageLookup, type WagesData } from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
 export const nocData = nocJson as unknown as NocData;
@@ -55,6 +55,9 @@ function load<T>(file: string): Promise<DataFile<T>> {
 export const loadEmployersIndex = () => load<EmployersIndex>('employers-index.json');
 export const loadDesignated = () => load<DesignatedEmployer[]>('designated-employers.json');
 export const loadCmaLookup = () => load<CmaLookup>('cma-lookup.json');
+export const loadProspects = () => load<Prospect[]>('prospects.json');
+export interface CommunityPriority { community: string; program: 'RCIP' | 'FCIP'; noc: string; title: string; year: string; sourceUrl: string; recordedAt: string; notes?: string }
+export const loadPriorities = () => load<CommunityPriority[]>('community-priorities.json');
 
 export async function loadEmployers(province: string): Promise<EmployerRecord[]> {
   const f = await load<EmployerRecord[]>(`employers-${province}.json`);

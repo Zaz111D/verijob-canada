@@ -36,7 +36,7 @@ export default defineConfig({
         // Les listes d'employeurs par province (plus lourdes) sont gardées en cache après la 1re consultation.
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => /\/data\/employers-[A-Z]{2}\.json$/.test(url.pathname),
+            urlPattern: ({ url }) => /\/data\/(employers-[A-Z]{2}|prospects)\.json$/.test(url.pathname),
             handler: 'StaleWhileRevalidate',
             options: { cacheName: 'verijob-employeurs', expiration: { maxEntries: 20 } },
           },

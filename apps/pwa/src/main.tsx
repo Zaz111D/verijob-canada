@@ -6,6 +6,7 @@ import { CheckEmployer } from './pages/CheckEmployer';
 import { CheckOffer } from './pages/CheckOffer';
 import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
+import { Prospects } from './pages/Prospects';
 import { initLang, useLang } from './i18n';
 import './styles.css';
 
@@ -16,6 +17,7 @@ function App() {
     <Layout route={route}>
       {route === 'offre' ? <CheckOffer />
         : route === 'employeur' ? <CheckEmployer />
+        : route === 'demarcher' ? <Prospects />
         : route === 'consultant' ? <CheckConsultant />
         : route === 'profil' ? <Profile />
         : <Home />}

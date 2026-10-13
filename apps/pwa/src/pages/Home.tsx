@@ -3,6 +3,7 @@ import { STRINGS as S, tr, useLang } from '../i18n';
 const CARDS = [
   { href: '#/offre', title: S.cardOfferTitle, text: S.cardOfferText },
   { href: '#/employeur', title: S.cardEmployerTitle, text: S.cardEmployerText },
+  { href: '#/demarcher', title: S.cardProspectsTitle, text: S.cardProspectsText },
   { href: '#/consultant', title: S.cardConsultantTitle, text: S.cardConsultantText },
   { href: '#/profil', title: S.cardProfileTitle, text: S.cardProfileText },
 ];

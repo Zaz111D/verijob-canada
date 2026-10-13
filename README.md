@@ -39,6 +39,7 @@ npm run data             # pipeline : télécharge et prépare les données (≈
 |---|---|---|
 | `employers-index.json`, `employers-<PROV>.json` | Employeurs ayant reçu une EIMT positive ou négative (8 derniers trimestres), un fichier par province | EDSC, open.canada.ca |
 | `cma-lookup.json` | Municipalité → RMR (gel des EIMT bas salaire) | Statistique Canada, Recensement 2021 |
+| `prospects.json` | Recruteurs récurrents : EIMT positives sur ≥ 2 trimestres pour les métiers ciblés (liste de démarchage) | EDSC, open.canada.ca |
 | `wages.json` | Salaires bas / médian / haut des métiers ciblés | Salaires Job Bank, open.canada.ca |
 | `designated-employers.json`, `community-priorities.json` | Employeurs désignés et métiers prioritaires PICR/PICRF | Relevés manuels : `data/manual/*.csv` |
 
@@ -48,7 +49,7 @@ npm run data             # pipeline : télécharge et prépare les données (≈
 
 ## L'application (PWA)
 
-- **Pages** : Accueil, Analyser une offre, Vérifier un employeur, Vérifier un consultant, Mon profil (avec les voies d'immigration estimées).
+- **Pages** : Accueil, Analyser une offre, Vérifier un employeur, Démarcher (employeurs à contacter + modèles de message + export CSV), Vérifier un consultant, Mon profil (avec les voies d'immigration estimées).
 - **Bilingue** : français par défaut, bouton « English » en haut à droite (choix mémorisé sur l'appareil).
 - **Vie privée** : le profil est stocké uniquement sur le téléphone (IndexedDB). Aucun tracker, aucune publicité, aucune donnée envoyée.
 - **Hors ligne** : l'appli et les petits fichiers de données sont mis en cache à l'installation. La liste d'employeurs d'une province reste disponible hors ligne après sa première consultation.

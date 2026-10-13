@@ -114,6 +114,9 @@ export interface NocEntry {
   group: string;
   titleFr: string;
   titleEn: string;
+  /** Intitulé de poste court, au singulier (pour les messages). */
+  jobFr?: string;
+  jobEn?: string;
   probableNaics: string | null;
   keywords: string[];
 }
