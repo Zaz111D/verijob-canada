@@ -1,0 +1,270 @@
+{
+  "$comment": "Règles d'immigration versionnées. NE JAMAIS coder ces valeurs en dur dans la logique : le moteur lit ce fichier. Chaque section pointe vers une source officielle (champ 'source') qui porte sa date de vérification et sa date de prochaine révision. Mettre à jour 'version' à chaque modification.",
+  "version": "2026-10-13",
+  "sources": {
+    "esdc-refusal": {
+      "titleFr": "EDSC — Refus de traiter certaines demandes d'EIMT (RMR à chômage ≥ 6 %)",
+      "titleEn": "ESDC — Refusal to process certain LMIA applications (CMAs with unemployment ≥ 6%)",
+      "urlFr": "https://www.canada.ca/fr/emploi-developpement-social/services/travailleurs-etrangers/refus.html",
+      "urlEn": "https://www.canada.ca/en/employment-social-development/services/foreign-workers/refusal.html",
+      "pageModified": "2026-10-09",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-08"
+    },
+    "esdc-wage-thresholds": {
+      "titleFr": "EDSC — Seuils salariaux provinciaux (haut salaire / bas salaire)",
+      "titleEn": "ESDC — Provincial wage thresholds (high-wage / low-wage)",
+      "urlFr": "https://www.canada.ca/fr/emploi-developpement-social/services/travailleurs-etrangers/salaire-moyen.html",
+      "urlEn": "https://www.canada.ca/en/employment-social-development/services/foreign-workers/median-wage.html",
+      "pageModified": "2026-10-07",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "esdc-low-wage-requirements": {
+      "titleFr": "EDSC — Exigences pour les postes à bas salaire (frais, recrutement, transport)",
+      "titleEn": "ESDC — Program requirements for low-wage positions (fees, recruitment, transportation)",
+      "urlFr": "https://www.canada.ca/fr/emploi-developpement-social/services/travailleurs-etrangers/salaire-moyen/bas/exigences.html",
+      "urlEn": "https://www.canada.ca/en/employment-social-development/services/foreign-workers/median-wage/low/requirements.html",
+      "pageModified": "2026-09-22",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "esdc-agricultural": {
+      "titleFr": "EDSC — Embaucher un travailleur agricole étranger temporaire (volet agricole, agriculture primaire)",
+      "titleEn": "ESDC — Hire a temporary foreign agricultural worker (Agricultural Stream, primary agriculture)",
+      "urlFr": "https://www.canada.ca/fr/emploi-developpement-social/services/travailleurs-etrangers/agricoles.html",
+      "urlEn": "https://www.canada.ca/en/employment-social-development/services/foreign-workers/agricultural.html",
+      "pageModified": "2026-09-16",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "esdc-sawp": {
+      "titleFr": "EDSC — Programme des travailleurs agricoles saisonniers (PTAS)",
+      "titleEn": "ESDC — Seasonal Agricultural Worker Program (SAWP)",
+      "urlFr": "https://www.canada.ca/fr/emploi-developpement-social/services/travailleurs-etrangers/agricoles/agricoles-saisonniers.html",
+      "urlEn": "https://www.canada.ca/en/employment-social-development/services/foreign-workers/agricultural/seasonal-agricultural.html",
+      "pageModified": "2026-06-03",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "ircc-c16": {
+      "titleFr": "IRCC — Mobilité francophone (R205c – code C16)",
+      "titleEn": "IRCC — Francophone mobility (R205(c) – code C16)",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/organisation/publications-guides/bulletins-guides-operationnels/residents-temporaires/travailleurs-etrangers/codes-dispense/interets-canadiens-avantage-important-mobilite-francophone-r205a-code-dispense-c16.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/temporary-residents/foreign-workers/exemption-codes/canadian-interests-significant-benefit-mobilite-francophone-r205-exemption-code-c16.html",
+      "pageModified": "2026-06-23",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "ircc-hcwp": {
+      "titleFr": "IRCC — Instructions ministérielles IM86, 87, 88 et 91 : projets pilotes sur les travailleurs de soins à domicile",
+      "titleEn": "IRCC — Ministerial Instructions MI86, 87, 88 and 91: Home Care Worker Immigration Pilots",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/organisation/mandat/politiques-directives-operationnelles-ententes-accords/instructions-ministerielles/autres-objectifs/im86-87-88.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/policies-operational-instructions-agreements/ministerial-instructions/other-goals/mi86-87-88.html",
+      "pageModified": "2026-02-18",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "ircc-community-pilots": {
+      "titleFr": "IRCC — Projets pilotes d'immigration dans les communautés rurales et francophones",
+      "titleEn": "IRCC — Rural and Francophone Community Immigration Pilots",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/pilotes-rurale-franco.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots.html",
+      "pageModified": "2026-08-31",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "ircc-rcip-who": {
+      "titleFr": "IRCC — RCIP : qui peut présenter une demande (exigences linguistiques par TEER)",
+      "titleEn": "IRCC — RCIP: application process and who can apply (language by TEER)",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/organisation/publications-guides/bulletins-guides-operationnels/resdience-permanente/categories-immigration-economique/immigration-communautes-rurales/demandeurs.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/permanent-residence/economic-classes/rural-community-immigration/application-who.html",
+      "pageModified": null,
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "ircc-fcip-who": {
+      "titleFr": "IRCC — PICRF : qui peut présenter une demande (NCLC 5 dans les 4 compétences)",
+      "titleEn": "IRCC — FCIP: application process and who can apply (NCLC 5 in all 4 abilities)",
+      "urlFr": null,
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/permanent-residence/economic-classes/francophone-community-immigration/application-who.html",
+      "pageModified": null,
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "ircc-authorized-reps": {
+      "titleFr": "IRCC — Votre représentant est-il autorisé ?",
+      "titleEn": "IRCC — Find out if your representative is authorized",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/representant-immigration-citoyennete/choisir/autorise.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigration-citizenship-representative/choose/authorized.html",
+      "pageModified": "2026-08-18",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "cicc-register": {
+      "titleFr": "CICC — Registre public des consultants en immigration",
+      "titleEn": "CICC — Public register of immigration consultants",
+      "urlFr": "https://register.college-ic.ca/",
+      "urlEn": "https://register.college-ic.ca/",
+      "pageModified": null,
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "ircc-fraud": {
+      "titleFr": "IRCC — Se protéger contre la fraude",
+      "titleEn": "IRCC — Protect yourself from fraud",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/proteger-fraude.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/protect-fraud.html",
+      "pageModified": "2026-02-23",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    }
+  },
+
+  "lmiaLowWage": {
+    "source": "esdc-refusal",
+    "unemploymentThresholdPercent": 6,
+    "ratesUpdated": "2026-10-09",
+    "validFrom": "2026-10-09",
+    "validTo": "2027-01-07",
+    "nextUpdate": "2027-01-08",
+    "exemptions": {
+      "$comment": "Exemptions au refus de traiter dans les RMR. Le fichier EIMT n'a pas de code SCIAN : l'exemption est ESTIMÉE d'après le CNP (voir data/noc.json, champ probableNaics).",
+      "naics": ["23", "311", "622", "623"],
+      "primaryAgriculture": true,
+      "inHomeCaregiverNocs": ["31301", "32101", "44100", "44101"]
+    },
+    "cmas": [
+      { "name": "St. John's", "province": "NL", "frozen": true, "aliases": ["St John's", "Mount Pearl", "Paradise", "Conception Bay South"] },
+      { "name": "Halifax", "province": "NS", "frozen": true, "aliases": ["Dartmouth", "Bedford", "Sackville"] },
+      { "name": "Moncton", "province": "NB", "frozen": true, "aliases": ["Dieppe", "Riverview"] },
+      { "name": "Fredericton", "province": "NB", "frozen": true, "aliases": [] },
+      { "name": "Saint John", "province": "NB", "frozen": false, "aliases": ["Quispamsis", "Rothesay"] },
+      { "name": "Montréal", "province": "QC", "frozen": true, "aliases": ["Montreal", "Laval", "Longueuil", "Terrebonne", "Brossard", "Repentigny", "Blainville", "Mirabel", "Saint-Jérôme", "Châteauguay"] },
+      { "name": "Ottawa - Gatineau", "province": "ON", "frozen": true, "aliases": ["Ottawa", "Gatineau", "Kanata", "Orléans", "Nepean"] },
+      { "name": "Saguenay", "province": "QC", "frozen": false, "aliases": ["Chicoutimi", "Jonquière"] },
+      { "name": "Québec", "province": "QC", "frozen": false, "aliases": ["Quebec", "Quebec City", "Ville de Québec", "Lévis"] },
+      { "name": "Sherbrooke", "province": "QC", "frozen": false, "aliases": [] },
+      { "name": "Trois-Rivières", "province": "QC", "frozen": false, "aliases": [] },
+      { "name": "Drummondville", "province": "QC", "frozen": false, "aliases": [] },
+      { "name": "Kingston", "province": "ON", "frozen": true, "aliases": [] },
+      { "name": "Belleville - Quinte West", "province": "ON", "frozen": true, "aliases": ["Belleville", "Quinte West", "Trenton"] },
+      { "name": "Peterborough", "province": "ON", "frozen": true, "aliases": [] },
+      { "name": "Oshawa", "province": "ON", "frozen": true, "aliases": ["Whitby", "Clarington", "Courtice", "Bowmanville"] },
+      { "name": "Toronto", "province": "ON", "frozen": true, "aliases": ["Mississauga", "Brampton", "Markham", "Vaughan", "Richmond Hill", "Oakville", "Milton", "Pickering", "Ajax", "Scarborough", "North York", "Etobicoke", "Newmarket", "Aurora", "Caledon", "King", "Nobleton", "Halton Hills", "Georgina", "East Gwillimbury", "Whitchurch-Stouffville", "Uxbridge", "Bradford West Gwillimbury"] },
+      { "name": "Hamilton", "province": "ON", "frozen": true, "aliases": ["Burlington", "Grimsby", "Stoney Creek", "Ancaster", "Dundas"] },
+      { "name": "St. Catharines - Niagara", "province": "ON", "frozen": true, "aliases": ["St. Catharines", "St Catharines", "Niagara Falls", "Welland", "Niagara-on-the-Lake", "Thorold", "Fort Erie", "Lincoln", "Pelham", "Port Colborne"] },
+      { "name": "Kitchener - Cambridge - Waterloo", "province": "ON", "frozen": true, "aliases": ["Kitchener", "Cambridge", "Waterloo", "Woolwich"] },
+      { "name": "Brantford", "province": "ON", "frozen": true, "aliases": [] },
+      { "name": "Guelph", "province": "ON", "frozen": true, "aliases": [] },
+      { "name": "London", "province": "ON", "frozen": true, "aliases": [] },
+      { "name": "Windsor", "province": "ON", "frozen": true, "aliases": ["LaSalle", "Tecumseh", "Lakeshore", "Amherstburg"] },
+      { "name": "Barrie", "province": "ON", "frozen": true, "aliases": ["Innisfil", "Springwater"] },
+      { "name": "Greater Sudbury", "province": "ON", "frozen": true, "aliases": ["Grand Sudbury", "Sudbury"] },
+      { "name": "Thunder Bay", "province": "ON", "frozen": false, "aliases": [] },
+      { "name": "Winnipeg", "province": "MB", "frozen": false, "aliases": [] },
+      { "name": "Regina", "province": "SK", "frozen": true, "aliases": [] },
+      { "name": "Saskatoon", "province": "SK", "frozen": true, "aliases": [] },
+      { "name": "Lethbridge", "province": "AB", "frozen": true, "aliases": [] },
+      { "name": "Calgary", "province": "AB", "frozen": true, "aliases": ["Airdrie", "Chestermere", "Cochrane"] },
+      { "name": "Red Deer", "province": "AB", "frozen": true, "aliases": [] },
+      { "name": "Edmonton", "province": "AB", "frozen": true, "aliases": ["St. Albert", "Sherwood Park", "Spruce Grove", "Leduc", "Fort Saskatchewan", "Stony Plain", "Beaumont"] },
+      { "name": "Kelowna", "province": "BC", "frozen": true, "aliases": ["West Kelowna", "Lake Country"] },
+      { "name": "Kamloops", "province": "BC", "frozen": false, "aliases": [] },
+      { "name": "Chilliwack", "province": "BC", "frozen": false, "aliases": [] },
+      { "name": "Abbotsford - Mission", "province": "BC", "frozen": true, "aliases": ["Abbotsford", "Mission"] },
+      { "name": "Vancouver", "province": "BC", "frozen": true, "aliases": ["Surrey", "Burnaby", "Richmond", "Coquitlam", "Langley", "Delta", "North Vancouver", "West Vancouver", "Maple Ridge", "New Westminster", "Port Coquitlam", "Port Moody", "White Rock", "Pitt Meadows"] },
+      { "name": "Victoria", "province": "BC", "frozen": false, "aliases": ["Saanich", "Langford", "Esquimalt", "Oak Bay", "Colwood", "Sidney"] },
+      { "name": "Nanaimo", "province": "BC", "frozen": true, "aliases": ["Lantzville"] }
+    ]
+  },
+
+  "wageThresholds": {
+    "source": "esdc-wage-thresholds",
+    "$comment": "Salaire horaire à partir duquel un poste est 'haut salaire' (médiane provinciale + 20 %). En vigueur pour les EIMT reçues à partir du 17 juillet 2026.",
+    "effectiveFrom": "2026-07-17",
+    "hourlyCad": {
+      "AB": 37.50, "BC": 38.40, "MB": 31.33, "NB": 31.73, "NL": 33.60, "NT": 48.00,
+      "NS": 31.96, "NU": 45.00, "ON": 36.92, "PE": 31.20, "QC": 36.00, "SK": 34.62, "YT": 45.60
+    }
+  },
+
+  "fees": {
+    "source": "esdc-low-wage-requirements",
+    "lmiaProcessingFeeCad": 1000,
+    "$comment": "Frais d'EIMT, frais de recrutement et transport (bas salaire) : jamais à la charge du travailleur. Les frais de permis de travail / visa / biométrie restent à la charge du travailleur (ne pas les signaler comme arnaque)."
+  },
+
+  "agricultural": {
+    "source": "esdc-agricultural",
+    "openToAllCountries": true,
+    "primaryAgricultureNocs": ["80020", "80021", "82030", "82031", "84120", "85100", "85101", "85103"]
+  },
+
+  "sawp": {
+    "source": "esdc-sawp",
+    "$comment": "Codes pays ISO 3166-1 alpha-2 : Mexique + 11 pays des Caraïbes.",
+    "countries": ["MX", "AI", "AG", "BB", "DM", "GD", "JM", "MS", "KN", "LC", "VC", "TT"]
+  },
+
+  "francophoneMobility": {
+    "source": "ircc-c16",
+    "excludedProvinces": ["QC"],
+    "minOralNclc": 5,
+    "$comment": "NCLC 5 en expression orale ET compréhension orale. Exclut l'agriculture primaire de TEER 4 ou 5 (R315.2(4)).",
+    "excludesPrimaryAgricultureTeer": [4, 5]
+  },
+
+  "homeCareWorkerPilots": {
+    "source": "ircc-hcwp",
+    "nocs": ["44100", "44101"],
+    "closedFrom": "2026-03-31",
+    "closedUntil": "2030-03-30"
+  },
+
+  "liveInCaregiver": {
+    "source": "esdc-refusal",
+    "nocs": ["31301", "32101", "44100", "44101"]
+  },
+
+  "communityPilots": {
+    "source": "ircc-community-pilots",
+    "rcip": {
+      "source": "ircc-rcip-who",
+      "minClbByTeer": { "0": 6, "1": 6, "2": 5, "3": 5, "4": 4, "5": 4 },
+      "languages": ["fr", "en"]
+    },
+    "fcip": {
+      "source": "ircc-fcip-who",
+      "minNclcAllTeer": 5,
+      "languages": ["fr"]
+    },
+    "minExperienceHours": 1560,
+    "communities": [
+      { "name": "Pictou County", "province": "NS", "programs": ["RCIP"], "url": "https://pictoucountypartnership.com/rcip/" },
+      { "name": "North Bay", "province": "ON", "programs": ["RCIP"], "url": "https://nbrcip.ca/" },
+      { "name": "Sudbury", "province": "ON", "programs": ["RCIP", "FCIP"], "url": "https://investsudbury.ca/why-sudbury/newcomers/rcipfcip/" },
+      { "name": "Timmins", "province": "ON", "programs": ["RCIP", "FCIP"], "url": "https://timminsedc.com/immigration/" },
+      { "name": "Sault Ste. Marie", "province": "ON", "programs": ["RCIP"], "url": "https://welcometossm.com/rcip/" },
+      { "name": "Thunder Bay", "province": "ON", "programs": ["RCIP"], "url": "https://gotothunderbay.ca/why-thunder-bay/immigration/" },
+      { "name": "Steinbach", "province": "MB", "programs": ["RCIP"], "url": "https://steinbachedc.com/rcip/" },
+      { "name": "Altona/Rhineland", "province": "MB", "programs": ["RCIP"], "url": "https://ared-rpga.com/immigration/rcip/" },
+      { "name": "Brandon", "province": "MB", "programs": ["RCIP"], "url": "https://economicdevelopmentbrandon.com/rcip/rcip" },
+      { "name": "Moose Jaw", "province": "SK", "programs": ["RCIP"], "url": "https://rcip.mjchamber.com/" },
+      { "name": "Claresholm", "province": "AB", "programs": ["RCIP"], "url": "https://claresholm-rcip.ca/" },
+      { "name": "West Kootenay", "province": "BC", "programs": ["RCIP"], "url": "https://wk-rnip.ca/" },
+      { "name": "North Okanagan Shuswap", "province": "BC", "programs": ["RCIP"], "url": "https://rcipnorthokanaganshuswap.com/" },
+      { "name": "Peace Liard", "province": "BC", "programs": ["RCIP"], "url": "https://www.nebcimmigration.ca/" },
+      { "name": "Péninsule acadienne", "province": "NB", "programs": ["FCIP"], "url": "https://inspirepeninsuleacadienne.ca/programme-pilote-immigration-communautes-francophones/" },
+      { "name": "Superior East", "province": "ON", "programs": ["FCIP"], "url": "https://superioreastcfdc.ca/superioreastcfdc.ca/index.php/en-ca/fcip" },
+      { "name": "St-Pierre-Jolys", "province": "MB", "programs": ["FCIP"], "url": "https://villagestpierrejolys.ca/p/francophone-communities-immigration-pilot-program" },
+      { "name": "Kelowna", "province": "BC", "programs": ["FCIP"], "url": "https://www.sdecb.com/en/pilot-program/" }
+    ]
+  },
+
+  "authorizedRepresentatives": {
+    "source": "ircc-authorized-reps",
+    "registerSource": "cicc-register",
+    "$comment": "Représentants rémunérés autorisés : consultants CICC (numéro R + 6 chiffres), avocats membres d'un barreau provincial, notaires de la Chambre des notaires du Québec, parajuristes de l'Ontario."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "verijob-canada",
+  "private": true,
+  "version": "0.1.0",
+  "description": "PWA gratuite pour aider les candidats africains à éviter les arnaques et trouver des emplois réellement accessibles au Canada.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "check:rules": "node scripts/check-rules.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
