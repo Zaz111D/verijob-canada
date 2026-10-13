@@ -23,9 +23,9 @@
 | employers-XX.json | 206 | 49 Ko | 11 Ko |
 | employers-YT.json | 69 | 13 Ko | 3 Ko |
 | wages.json | 191 | 9 Ko | 2 Ko |
-| designated-employers.json | 445 | 157 Ko | 19 Ko |
-| community-priorities.json | 50 | 11 Ko | 2 Ko |
-| **Total** | | **12 968 Ko** | **2 620 Ko** |
+| designated-employers.json | 1 615 | 516 Ko | 48 Ko |
+| community-priorities.json | 76 | 16 Ko | 2 Ko |
+| **Total** | | **13 333 Ko** | **2 650 Ko** |
 
 Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne charge le fichier d'une province que lorsqu'on en a besoin.
 
@@ -118,10 +118,20 @@ Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne c
 
 ## 5. Employeurs désignés FCIP / RCIP (relevés manuels)
 
-| Communauté | Programme | Employeurs | « Ne recrute pas » | Relevé le |
-|---|---|---:|---:|---|
-| Sudbury | RCIP | 350 | 3 | 2026-10-13 |
-| Sudbury | FCIP | 95 | 1 | 2026-10-13 |
+| Communauté | Programme | Employeurs | « Ne recrute pas » | Retirés du programme | Relevé le |
+|---|---|---:|---:|---:|---|
+| Sudbury | RCIP | 350 | 3 | 0 | 2026-10-13 |
+| Sudbury | FCIP | 95 | 1 | 0 | 2026-10-13 |
+| Sault Ste. Marie | RCIP | 158 | 11 | 0 | 2026-10-13 |
+| Altona/Rhineland | RCIP | 23 | 1 | 0 | 2026-10-13 |
+| Claresholm | RCIP | 23 | 19 | 0 | 2026-10-13 |
+| Brandon | RCIP | 41 | 7 | 0 | 2026-10-13 |
+| West Kootenay | RCIP | 299 | 0 | 3 | 2026-10-13 |
+| Péninsule acadienne | FCIP | 37 | 4 | 0 | 2026-10-13 |
+| Timmins | RCIP | 150 | 26 | 0 | 2026-10-13 |
+| Timmins | FCIP | 26 | 3 | 0 | 2026-10-13 |
+| Moose Jaw | RCIP | 133 | 0 | 0 | 2026-10-13 |
+| Peace Liard | RCIP | 280 | 0 | 0 | 2026-10-13 |
 
-- Métiers prioritaires relevés : 50
-- Communautés sans relevé pour l'instant (17) : Pictou County, North Bay, Timmins, Sault Ste. Marie, Thunder Bay, Steinbach, Altona/Rhineland, Brandon, Moose Jaw, Claresholm, West Kootenay, North Okanagan Shuswap, Peace Liard, Péninsule acadienne, Superior East, St-Pierre-Jolys, Kelowna
+- Métiers prioritaires relevés : 76
+- Communautés sans relevé pour l'instant (8) : Pictou County, North Bay, Thunder Bay, Steinbach, North Okanagan Shuswap, Superior East, St-Pierre-Jolys, Kelowna

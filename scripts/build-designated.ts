@@ -13,7 +13,8 @@ import { MANUAL_DIR } from './lib/paths';
 import { writeDataFile, type WrittenFile } from './lib/output';
 import { parseCsv, toRecords } from './lib/tabular';
 
-const HIRING = new Set(['recrute', 'ne-recrute-pas', 'inconnu']);
+/** « retire » = employeur retiré du programme (« de-designated ») : utile pour repérer les fausses offres. */
+const HIRING = new Set(['recrute', 'ne-recrute-pas', 'inconnu', 'retire']);
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 /** Au-delà, une liste est signalée comme à revérifier. */
 const MAX_AGE_DAYS = 90;
@@ -26,7 +27,7 @@ export interface DesignatedEmployer {
   k: string;
   sector: string;
   nocs: string[];
-  hiring: 'recrute' | 'ne-recrute-pas' | 'inconnu';
+  hiring: 'recrute' | 'ne-recrute-pas' | 'inconnu' | 'retire';
   address: string;
   sourceUrl: string;
   recordedAt: string;
@@ -34,7 +35,7 @@ export interface DesignatedEmployer {
 
 export interface DesignatedStats {
   employers: number;
-  byCommunity: Array<{ community: string; program: string; employers: number; notHiring: number; recordedAt: string }>;
+  byCommunity: Array<{ community: string; program: string; employers: number; notHiring: number; withdrawn: number; recordedAt: string }>;
   communitiesWithoutData: string[];
   priorities: number;
   stale: string[];
@@ -59,7 +60,7 @@ export function buildDesignated(rules: Rules, today: string): DesignatedStats {
     if (!c) return errors.push(`ligne ${line} : communauté inconnue « ${r['community']} »`);
     if (!c.programs.includes(program)) return errors.push(`ligne ${line} : ${c.name} ne participe pas au ${program}`);
     if (!r['employer']) return errors.push(`ligne ${line} : nom d'employeur vide`);
-    if (!HIRING.has(r['hiring'] ?? '')) return errors.push(`ligne ${line} : statut « ${r['hiring']} » invalide (recrute | ne-recrute-pas | inconnu)`);
+    if (!HIRING.has(r['hiring'] ?? '')) return errors.push(`ligne ${line} : statut « ${r['hiring']} » invalide (recrute | ne-recrute-pas | inconnu | retire)`);
     if (!/^https:\/\//.test(r['source_url'] ?? '')) return errors.push(`ligne ${line} : source_url manquante ou non https`);
     if (!DATE.test(r['recorded_at'] ?? '')) return errors.push(`ligne ${line} : recorded_at doit être AAAA-MM-JJ`);
     const nocs = (r['nocs'] ?? '').split(/[;\s]+/).filter(Boolean);
@@ -83,9 +84,10 @@ export function buildDesignated(rules: Rules, today: string): DesignatedStats {
   const groups = new Map<string, DesignatedStats['byCommunity'][number]>();
   for (const e of out) {
     const key = `${e.community}|${e.program}`;
-    const g = groups.get(key) ?? { community: e.community, program: e.program, employers: 0, notHiring: 0, recordedAt: e.recordedAt };
+    const g = groups.get(key) ?? { community: e.community, program: e.program, employers: 0, notHiring: 0, withdrawn: 0, recordedAt: e.recordedAt };
     g.employers++;
     if (e.hiring === 'ne-recrute-pas') g.notHiring++;
+    if (e.hiring === 'retire') g.withdrawn++;
     if (e.recordedAt < g.recordedAt) g.recordedAt = e.recordedAt;
     groups.set(key, g);
   }

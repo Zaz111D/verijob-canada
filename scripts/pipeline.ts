@@ -104,9 +104,9 @@ ${recurringTargets.map((r) => `| ${r.name.replace(/\|/g, '/')} | ${r.province} |
 ${w.missing.length ? `- ⚠ Métiers sans données salariales : ${w.missing.join(', ')}\n` : ''}
 ## 5. Employeurs désignés FCIP / RCIP (relevés manuels)
 
-| Communauté | Programme | Employeurs | « Ne recrute pas » | Relevé le |
-|---|---|---:|---:|---|
-${d.byCommunity.map((c) => `| ${c.community} | ${c.program} | ${n(c.employers)} | ${c.notHiring} | ${c.recordedAt} |`).join('\n')}
+| Communauté | Programme | Employeurs | « Ne recrute pas » | Retirés du programme | Relevé le |
+|---|---|---:|---:|---:|---|
+${d.byCommunity.map((c) => `| ${c.community} | ${c.program} | ${n(c.employers)} | ${c.notHiring} | ${c.withdrawn} | ${c.recordedAt} |`).join('\n')}
 
 - Métiers prioritaires relevés : ${d.priorities}
 - Communautés sans relevé pour l'instant (${d.communitiesWithoutData.length}) : ${d.communitiesWithoutData.join(', ') || 'aucune'}

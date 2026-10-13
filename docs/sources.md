@@ -208,3 +208,25 @@ FCIP : Péninsule acadienne NB · Superior East ON · St-Pierre-Jolys MB · Kelo
 - Le **fichier des attributs géographiques 2021** (92-151-X), plus complet, est derrière une protection anti-robots : il n'est pas utilisé, et cette protection n'est pas contournée.
 - La correspondance se fait **par nom de municipalité**, pas par code postal : les fichiers de conversion des codes postaux ne sont pas gratuits. Les quartiers et anciennes villes (Scarborough, Dartmouth…) passent par les alias saisis à la main dans `rules.json`.
 - `fetch-cma-rates.ts`, prévu dans le brief, n'existe pas. Les taux et la liste des RMR gelées sont **saisis à la main** dans `rules.json` (décision de la Phase 0), puis contrôlés par `npm run check:rules`.
+
+## 13. Relevé des employeurs désignés PICR/PICRF (13 oct. 2026)
+
+Méthode : chaque site a été lu **une seule fois**, après vérification de son robots.txt. Pour les PDF, j'ai lu les pages rendues : la couche texte de plusieurs PDF (Timmins, Peace Liard) décale les colonnes. Chaque ligne du CSV porte l'URL source et la date du relevé.
+
+| Communauté | Programme | Source | Employeurs | Remarques |
+|---|---|---|---:|---|
+| Sudbury | RCIP + FCIP | HTML | 445 | 1 ligne séparée à la main (deux employeurs collés dans la page) |
+| Sault Ste. Marie | RCIP | HTML | 158 | Mention « (2025) » conservée en note |
+| Altona/Rhineland | RCIP | HTML | 23 | |
+| Claresholm | RCIP | HTML | 23 | Liste datée du 30 juin 2025 sur la page ; statut recrute / ne recrute pas fourni |
+| Brandon | RCIP | Tableau HTML | 41 | Notes de l'employeur résumées (employés actuels seulement, médecins…) |
+| West Kootenay | RCIP | HTML | 296 + 3 retirés | Liste du 16 sept. 2026 ; 3 employeurs **retirés** (statut `retire`) |
+| Péninsule acadienne | FCIP | PDF (12 août 2026) | 37 | 2 lignes brouillées dans le texte, lues sur l'image |
+| Timmins | RCIP + FCIP | PDF (7 juil. 2026) | 150 + 26 | Programmes lus sur l'image (la couche texte est décalée) |
+| Moose Jaw | RCIP | PDF (août 2026) | 133 | **PDF source mal mis en page** : des noms coupés ont été reconstitués et sont signalés « à vérifier » en note |
+| Peace Liard | RCIP | PDF (avril 2026) | 280 | Nom commercial + raison sociale ; 4 raisons sociales qui sont des noms de personnes ont été omises (vie privée) |
+
+**Non relevées : 8 communautés, à ouvrir par Jessica dans un navigateur**
+- Pictou County, Thunder Bay, Steinbach, North Okanagan Shuswap, Superior East, Kelowna : protégées par une **vérification anti-robots**, que je ne contourne pas.
+- North Bay : liste chargée en JavaScript depuis `/wp-admin/admin-ajax.php`, chemin **interdit par son robots.txt**. Ses 26 métiers prioritaires, publiés en clair, ont été relevés.
+- St-Pierre-Jolys : le lien vers le PDF renvoie une erreur **403** en dehors d'une session de navigateur.
