@@ -14,7 +14,7 @@ data/rules.json        règles d'immigration versionnées (source officielle + d
 data/noc.json          métiers CNP 2021 ciblés (titres officiels, mots-clés, secteur probable)
 data/manual/           fichiers curés à la main (employeurs désignés FCIP/RCIP…)
 packages/core          moteur anti-arnaque + moteur de faisabilité (TypeScript, sans DOM)
-apps/pwa               interface (Phase 3)
+apps/pwa               PWA Preact (profil, vérificateurs, bilingue, hors ligne)
 scripts/               pipeline de données (Phase 2) + contrôle des règles
 docs/sources.md        rapport de vérification des sources (Phase 0)
 ```
@@ -23,7 +23,9 @@ docs/sources.md        rapport de vérification des sources (Phase 0)
 
 ```bash
 npm install
-npm test                 # tests unitaires du moteur
+npm run data             # 1re fois : prépare les données (≈ 6 min)
+npm run dev -w @verijob/pwa   # appli sur http://localhost:5173
+npm test                 # tests unitaires (moteur, pipeline, textes de l'appli)
 npm run typecheck        # vérification TypeScript
 npm run check:rules      # signale les règles dont la date de révision est dépassée
 npm run data             # pipeline : télécharge et prépare les données (≈ 6 min la 1re fois)
@@ -43,3 +45,12 @@ npm run data             # pipeline : télécharge et prépare les données (≈
 - Les téléchargements sont polis : user-agent identifiable et pause de 20 s entre deux requêtes vers open.canada.ca (`Crawl-delay`). Ils sont mis en cache dans `data/raw/`.
 - **Job Bank n'est jamais lu automatiquement**, car ses conditions d'utilisation l'interdisent.
 - Les employeurs désignés sont **relevés à la main** dans `data/manual/designated-employers.csv`. Chaque ligne indique sa source et la date du relevé. Le pipeline refuse un fichier invalide.
+
+## L'application (PWA)
+
+- **Pages** : Accueil, Analyser une offre, Vérifier un employeur, Vérifier un consultant, Mon profil (avec les voies d'immigration estimées).
+- **Bilingue** : français par défaut, bouton « English » en haut à droite (choix mémorisé sur l'appareil).
+- **Vie privée** : le profil est stocké uniquement sur le téléphone (IndexedDB). Aucun tracker, aucune publicité, aucune donnée envoyée.
+- **Hors ligne** : l'appli et les petits fichiers de données sont mis en cache à l'installation. La liste d'employeurs d'une province reste disponible hors ligne après sa première consultation.
+- **Version de production** : `npm run build -w @verijob/pwa`, puis `npm run preview -w @verijob/pwa` (http://localhost:4173). Le service worker n'est actif qu'en production.
+- **Icônes** : `node scripts/make-icons.mjs`.

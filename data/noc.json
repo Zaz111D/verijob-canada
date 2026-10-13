@@ -11,7 +11,7 @@
     { "code": "85100", "group": "agriculture", "titleFr": "Manœuvres aux soins du bétail", "titleEn": "Livestock labourers", "probableNaics": "111-112",
       "keywords": ["soins du betail", "ouvrier d'elevage", "ouvriere d'elevage", "manoeuvre d'elevage", "livestock labourer", "livestock worker", "dairy farm worker", "ferme laitiere", "poultry farm worker"] },
     { "code": "85101", "group": "agriculture", "titleFr": "Manœuvres à la récolte", "titleEn": "Harvesting labourers", "probableNaics": "111",
-      "keywords": ["ouvrier agricole", "ouvriere agricole", "travailleur agricole", "travailleuse agricole", "manoeuvre agricole", "cueilleur", "cueilleuse", "recolte", "farm worker", "farm labourer", "farm labour", "farmworker", "harvesting labourer", "harvest worker", "fruit picker", "apple picker", "berry picker"] },
+      "keywords": ["ouvrier agricole", "ouvriere agricole", "fermes", "travail agricole", "farm jobs", "travailleur agricole", "travailleuse agricole", "manoeuvre agricole", "cueilleur", "cueilleuse", "recolte", "farm worker", "farm labourer", "farm labour", "farmworker", "harvesting labourer", "harvest worker", "fruit picker", "apple picker", "berry picker"] },
     { "code": "85102", "group": "agriculture", "titleFr": "Manœuvres de l'aquaculture et de la mariculture", "titleEn": "Aquaculture and marine harvest labourers", "probableNaics": "1125",
       "keywords": ["aquaculture", "pisciculture", "mariculture", "fish farm worker"] },
     { "code": "85103", "group": "agriculture", "titleFr": "Manœuvres de pépinières et de serres", "titleEn": "Nursery and greenhouse labourers", "probableNaics": "1114",

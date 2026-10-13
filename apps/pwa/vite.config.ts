@@ -1,0 +1,48 @@
+import preact from '@preact/preset-vite';
+import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
+
+// Chemins relatifs + routage par « # » : le site fonctionne tel quel sur GitHub Pages ou Cloudflare Pages.
+export default defineConfig({
+  base: './',
+  plugins: [
+    preact(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['icons/icon.svg'],
+      manifest: {
+        name: 'VériJob Canada',
+        short_name: 'VériJob',
+        description: "Vérifier une offre d'emploi au Canada et éviter les arnaques. Outil gratuit, non gouvernemental.",
+        lang: 'fr',
+        start_url: './',
+        scope: './',
+        display: 'standalone',
+        background_color: '#ffffff',
+        theme_color: '#0b5394',
+        icons: [
+          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
+      },
+      workbox: {
+        // L'application et les petits fichiers de données sont disponibles hors ligne dès l'installation.
+        globPatterns: [
+          '**/*.{js,css,html,svg,png,webmanifest}',
+          'data/{employers-index,wages,cma-lookup,designated-employers,community-priorities}.json',
+        ],
+        navigateFallback: 'index.html',
+        // Les listes d'employeurs par province (plus lourdes) sont gardées en cache après la 1re consultation.
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => /\/data\/employers-[A-Z]{2}\.json$/.test(url.pathname),
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'verijob-employeurs', expiration: { maxEntries: 20 } },
+          },
+        ],
+      },
+    }),
+  ],
+  build: { target: 'es2020' },
+});

@@ -8,7 +8,7 @@
 import { locateWorkplace, PROVINCE_NAMES, type CmaLookup } from '../geo';
 import { findNoc, isPrimaryAgriculture, nocLabel, probableRmrExemption, teerOf } from '../noc';
 import { sourceRef, todayIso, uniqueSources } from '../sources';
-import { formatCad } from '../text';
+import { formatCad, formatDate } from '../text';
 import type { LanguageLevels, Localized, NocData, Profile, ProvinceCode, Rules, SourceRef } from '../types';
 
 export type PathwayId =
@@ -162,13 +162,13 @@ function lowWage(ctx: Ctx): PathwayResult {
   };
 
   const period: Localized = {
-    fr: `liste valable pour les demandes du ${lw.validFrom} au ${lw.validTo}`,
-    en: `list valid for applications from ${lw.validFrom} to ${lw.validTo}`,
+    fr: `liste valable pour les demandes du ${formatDate(lw.validFrom, 'fr')} au ${formatDate(lw.validTo, 'fr')}`,
+    en: `list valid for applications from ${formatDate(lw.validFrom, 'en')} to ${formatDate(lw.validTo, 'en')}`,
   };
   if (ctx.today > lw.validTo) {
     raisons.push({
-      fr: `⚠ La liste des RMR gelées utilisée a expiré le ${lw.validTo} : elle doit être mise à jour.`,
-      en: `⚠ The frozen CMA list used expired on ${lw.validTo}: it must be updated.`,
+      fr: `⚠ La liste des RMR gelées utilisée a expiré le ${formatDate(lw.validTo, 'fr')} : elle doit être mise à jour.`,
+      en: `⚠ The frozen CMA list used expired on ${formatDate(lw.validTo, 'en')}: it must be updated.`,
     });
   }
 
@@ -324,8 +324,8 @@ function homeCarePilots(ctx: Ctx): PathwayResult {
   if (ctx.today >= h.closedFrom && ctx.today <= h.closedUntil) {
     return result(ctx, 'pilotes-aides-familiaux', 'bloquee', [
       {
-        fr: `Fermés : IRCC n'accepte aucune nouvelle demande du ${h.closedFrom} au ${h.closedUntil}. Il n'existe donc pas de voie « directe » vers la résidence permanente comme aide familial en ce moment.`,
-        en: `Closed: IRCC accepts no new applications from ${h.closedFrom} to ${h.closedUntil}. There is currently no "direct" route to permanent residence as a caregiver.`,
+        fr: `Fermés : IRCC n'accepte aucune nouvelle demande du ${formatDate(h.closedFrom, 'fr')} au ${formatDate(h.closedUntil, 'fr')}. Il n'existe donc pas de voie « directe » vers la résidence permanente comme aide familial en ce moment.`,
+        en: `Closed: IRCC accepts no new applications from ${formatDate(h.closedFrom, 'en')} to ${formatDate(h.closedUntil, 'en')}. There is currently no "direct" route to permanent residence as a caregiver.`,
       },
       {
         fr: 'Alternatives : Mobilité francophone (si vous parlez français, hors Québec) ou EIMT.',

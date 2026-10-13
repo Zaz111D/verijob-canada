@@ -4,7 +4,7 @@
  */
 export * from './types';
 export * from './messages';
-export { normalize, prepareText } from './text';
+export { normalize, prepareText, formatDate, formatAmount } from './text';
 export { sourceRef, staleSources, todayIso } from './sources';
 export { teerOf, findNoc, isPrimaryAgriculture, detectNocInText, probableRmrExemption, nocLabel } from './noc';
 export {
@@ -19,6 +19,7 @@ export {
   type WorkplaceLocation,
 } from './geo';
 export { employerKey } from './employer';
+export { searchEmployers, boundedLevenshtein, type SearchHit } from './search';
 export { makeWageLookup, type WagesData } from './wages';
 export { extractWages, parseAmount } from './salary';
 export { analyzeOffer, type AnalyzeOptions } from './scam/analyze';

@@ -15,7 +15,7 @@ describe('Critères de réussite du MVP', () => {
   it('n°3 — caregiver francophone NCLC 5 : pilotes fermés, Mobilité francophone possible', () => {
     const res = evaluate(FRANCO_NCLC5, { noc: '44101' });
     expect(status(res, 'pilotes-aides-familiaux')).toBe('bloquee');
-    expect(reasons(res, 'pilotes-aides-familiaux')).toContain('2030-03-30');
+    expect(reasons(res, 'pilotes-aides-familiaux')).toContain('30 mars 2030');
     expect(status(res, 'mobilite-francophone')).toBe('probable');
     expect(status(res, 'eimt-bas-salaire')).toBe('possible'); // aides familiaux exemptés du gel des RMR
     for (const r of res) {

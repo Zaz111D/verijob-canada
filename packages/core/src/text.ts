@@ -67,3 +67,15 @@ export function formatCad(value: number, lang: 'fr' | 'en'): string {
   const s = value.toFixed(2);
   return lang === 'fr' ? `${s.replace('.', ',')} $` : `$${s}`;
 }
+
+/** Montant entier lisible : « 1 000 » (fr) / « 1,000 » (en). */
+export function formatAmount(value: number, lang: 'fr' | 'en'): string {
+  return value.toLocaleString(lang === 'fr' ? 'fr-CA' : 'en-CA');
+}
+
+/** Date AAAA-MM-JJ → « 30 mars 2030 » (fr) / « March 30, 2030 » (en). */
+export function formatDate(iso: string, lang: 'fr' | 'en'): string {
+  const d = new Date(`${iso}T12:00:00Z`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d);
+}

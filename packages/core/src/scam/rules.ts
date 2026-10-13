@@ -10,7 +10,7 @@
 import { isAfrican } from '../geo';
 import { teerOf } from '../noc';
 import { extractWages, hasWageRate } from '../salary';
-import { excerpt, formatCad } from '../text';
+import { excerpt, formatAmount, formatCad, formatDate } from '../text';
 import type { ScamContext, ScamRule } from './types';
 
 // ---------------------------------------------------------------------------
@@ -105,8 +105,8 @@ export const SCAM_RULES: ScamRule[] = [
     severity: 'eleve',
     title: { fr: "On vous demande de l'argent pour l'emploi", en: 'You are asked to pay for the job' },
     explanation: (r) => ({
-      fr: `Au Canada, les frais d'EIMT (${r.fees.lmiaProcessingFeeCad} $ par poste) sont payés par l'employeur et ne peuvent pas être récupérés auprès du travailleur. Il est aussi interdit de facturer au travailleur des frais de recrutement, de « dossier » ou de « réservation ». Seuls les frais officiels du permis de travail et de la biométrie, payés directement à IRCC, sont à votre charge.`,
-      en: `In Canada, the LMIA fee ($${r.fees.lmiaProcessingFeeCad} per position) is paid by the employer and cannot be recovered from the worker. Charging the worker recruitment, "file" or "reservation" fees is also prohibited. Only the official work permit and biometrics fees, paid directly to IRCC, are yours to pay.`,
+      fr: `Au Canada, les frais d'EIMT (${formatAmount(r.fees.lmiaProcessingFeeCad, 'fr')} $ par poste) sont payés par l'employeur et ne peuvent pas être récupérés auprès du travailleur. Il est aussi interdit de facturer au travailleur des frais de recrutement, de « dossier » ou de « réservation ». Seuls les frais officiels du permis de travail et de la biométrie, payés directement à IRCC, sont à votre charge.`,
+      en: `In Canada, the LMIA fee ($${formatAmount(r.fees.lmiaProcessingFeeCad, 'en')} per position) is paid by the employer and cannot be recovered from the worker. Charging the worker recruitment, "file" or "reservation" fees is also prohibited. Only the official work permit and biometrics fees, paid directly to IRCC, are yours to pay.`,
     }),
     sourceIds: (r) => [r.fees.source],
     detect: (ctx) =>
@@ -251,8 +251,8 @@ export const SCAM_RULES: ScamRule[] = [
     severity: 'eleve',
     title: { fr: 'Résidence permanente promise pour un poste d’aide familial', en: 'Permanent residence promised for a caregiver job' },
     explanation: (r) => ({
-      fr: `Les programmes pilotes de résidence permanente pour aides familiaux n'acceptent aucune nouvelle demande du ${r.homeCareWorkerPilots.closedFrom} au ${r.homeCareWorkerPilots.closedUntil}. Personne ne peut donc vous promettre une résidence permanente « directe » comme aide familial en ce moment.`,
-      en: `The caregiver permanent residence pilots accept no new applications from ${r.homeCareWorkerPilots.closedFrom} to ${r.homeCareWorkerPilots.closedUntil}. So nobody can promise you "direct" permanent residence as a caregiver right now.`,
+      fr: `Les programmes pilotes de résidence permanente pour aides familiaux n'acceptent aucune nouvelle demande du ${formatDate(r.homeCareWorkerPilots.closedFrom, 'fr')} au ${formatDate(r.homeCareWorkerPilots.closedUntil, 'fr')}. Personne ne peut donc vous promettre une résidence permanente « directe » comme aide familial en ce moment.`,
+      en: `The caregiver permanent residence pilots accept no new applications from ${formatDate(r.homeCareWorkerPilots.closedFrom, 'en')} to ${formatDate(r.homeCareWorkerPilots.closedUntil, 'en')}. So nobody can promise you "direct" permanent residence as a caregiver right now.`,
     }),
     sourceIds: (r) => [r.homeCareWorkerPilots.source],
     detect: (ctx) => {
