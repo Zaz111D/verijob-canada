@@ -49,9 +49,17 @@ npm run data             # pipeline : télécharge et prépare les données (≈
 
 ## L'application (PWA)
 
-- **Pages** : Accueil, Analyser une offre, Vérifier un employeur, Démarcher (employeurs à contacter + modèles de message + export CSV), Vérifier un consultant, Mon profil (avec les voies d'immigration estimées).
+- **Pages** : Accueil, Analyser une offre, Vérifier un employeur, Emplois (radar Job Bank en mode liens + évaluation d'un poste trouvé), Démarcher (employeurs à contacter + modèles de message + export CSV), Mon profil (voies d'immigration estimées), Vérifier un consultant et Ce qui a changé (veille réglementaire) depuis l'accueil et le pied de page.
 - **Bilingue** : français par défaut, bouton « English » en haut à droite (choix mémorisé sur l'appareil).
 - **Vie privée** : le profil est stocké uniquement sur le téléphone (IndexedDB). Aucun tracker, aucune publicité, aucune donnée envoyée.
 - **Hors ligne** : l'appli et les petits fichiers de données sont mis en cache à l'installation. La liste d'employeurs d'une province reste disponible hors ligne après sa première consultation.
 - **Version de production** : `npm run build -w @verijob/pwa`, puis `npm run preview -w @verijob/pwa` (http://localhost:4173). Le service worker n'est actif qu'en production.
 - **Icônes** : `node scripts/make-icons.mjs`.
+
+## Radar Job Bank : activer les liens pré-filtrés
+
+Les conditions d'utilisation de Job Bank interdisent tout accès automatisé. VériJob ne fait donc **que des liens**. Seul le filtre « candidats étrangers » (`fglo=1`) est confirmé.
+
+Pour activer des liens filtrés par métier et province :
+1. sur jobbank.gc.ca, faites une recherche à la main (mot-clé, province, offres pour candidats étrangers) ;
+2. copiez l'adresse obtenue dans `data/rules.json` → `jobBank.searchTemplate`, en remplaçant le mot-clé par `{keyword}` et la province par `{province}`.

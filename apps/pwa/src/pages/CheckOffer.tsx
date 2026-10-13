@@ -60,6 +60,7 @@ export function CheckOffer() {
           ))}
           {result.skipped.map((k) => <p class="muted">{tr(S.notEvaluated, lang)} : {k.reason[lang]}</p>)}
           {result.count > 0 && <p class="callout">{tr(S.afterSignals, lang)}</p>}
+          <p><a href="#/employeur">{tr(S.cardEmployerTitle, lang)}</a> · <a href="#/consultant">{tr(S.cardConsultantTitle, lang)}</a></p>
         </div>
       )}
     </section>

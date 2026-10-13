@@ -29,7 +29,7 @@ describe('data/rules.json', () => {
 
   it('chaque source a une URL officielle https, une date de vérification et de révision', () => {
     for (const [id, s] of Object.entries(rules.sources)) {
-      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca)\//);
+      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca|www\.jobbank\.gc\.ca)\//);
       if (s.urlFr) expect(s.urlFr, id).toMatch(/^https:\/\//);
       expect(s.verifiedAt, id).toMatch(DATE);
       expect(s.nextReview, id).toMatch(DATE);

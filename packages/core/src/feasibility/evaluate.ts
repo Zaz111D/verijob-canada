@@ -201,6 +201,16 @@ function lowWage(ctx: Ctx): PathwayResult {
       fr: 'Le lieu de travail est hors de toute RMR : il n’est pas visé par le gel des EIMT bas salaire.',
       en: 'The workplace is outside any CMA: it is not affected by the low-wage LMIA freeze.',
     });
+    // Mesures temporaires rurales (plafond de 15 % / part conservée) dans certaines provinces.
+    const rm = rules.ruralMeasures;
+    const pm = job.province ? rm.provinces[job.province] : undefined;
+    if (pm && ctx.today >= pm.from && ctx.today <= rm.validTo) {
+      raisons.push({
+        fr: `Mesure temporaire rurale en vigueur dans cette province jusqu'au ${formatDate(rm.validTo, 'fr')} : l'employeur peut ${pm.cap15 ? 'embaucher davantage de travailleurs bas salaire (plafond de 15 % au lieu de 10 %)' : 'conserver sa part actuelle de travailleurs bas salaire'}.`,
+        en: `Temporary rural measure in force in this province until ${formatDate(rm.validTo, 'en')}: the employer may ${pm.cap15 ? 'hire more low-wage workers (15% cap instead of 10%)' : 'keep its current share of low-wage workers'}.`,
+      });
+      ids.push(rm.source);
+    }
     return result(ctx, 'eimt-bas-salaire', 'possible', raisons, ids);
   }
 

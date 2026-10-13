@@ -20,6 +20,7 @@ export {
 } from './geo';
 export { employerKey } from './employer';
 export { searchEmployers, boundedLevenshtein, type SearchHit } from './search';
+export { programStatuses, upcomingDates, changeLog, jobBankLink, type ProgramStatus, type ProgramState, type UpcomingDate, type ChangeEntry } from './watch';
 export { filterProspects, prospectPathway, prospectsToCsv, totalPositions, type Prospect, type ProspectFilter } from './prospects';
 export { makeWageLookup, type WagesData } from './wages';
 export { extractWages, parseAmount } from './salary';

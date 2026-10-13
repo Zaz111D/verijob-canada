@@ -7,6 +7,8 @@ import { CheckOffer } from './pages/CheckOffer';
 import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
 import { Prospects } from './pages/Prospects';
+import { Jobs } from './pages/Jobs';
+import { Watch } from './pages/Watch';
 import { initLang, useLang } from './i18n';
 import './styles.css';
 
@@ -17,6 +19,8 @@ function App() {
     <Layout route={route}>
       {route === 'offre' ? <CheckOffer />
         : route === 'employeur' ? <CheckEmployer />
+        : route === 'emplois' ? <Jobs />
+        : route === 'veille' ? <Watch />
         : route === 'demarcher' ? <Prospects />
         : route === 'consultant' ? <CheckConsultant />
         : route === 'profil' ? <Profile />

@@ -103,6 +103,38 @@ export interface Rules {
     source: string;
     registerSource: string;
   };
+  ruralMeasures: {
+    source: string;
+    validFrom: string;
+    validTo: string;
+    provinces: Record<string, { from: string; cap15: boolean }>;
+    notParticipating: string[];
+    undetermined: string[];
+  };
+  lowWageRecruitment: {
+    source: string;
+    minAdvertisingWeeks: number;
+    youthAgeRange: [number, number];
+  };
+  jobBank: {
+    source: string;
+    foreignJobsUrl: string;
+    /** Modèle d'URL relevé à la main ({keyword}, {province}) ; null tant qu'il n'est pas vérifié. */
+    searchTemplate: string | null;
+  };
+  changes: RuleChange[];
+}
+
+/** Changement réglementaire daté (page « Ce qui a changé »). */
+export interface RuleChange {
+  date: string;
+  source: string;
+  /** Vrai si la date exacte n'est pas indiquée sur la page officielle. */
+  approximateDate?: boolean;
+  titleFr: string;
+  titleEn: string;
+  detailFr: string;
+  detailEn: string;
 }
 
 // ---------------------------------------------------------------------------

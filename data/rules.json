@@ -118,9 +118,26 @@
       "pageModified": "2026-02-23",
       "verifiedAt": "2026-10-13",
       "nextReview": "2027-01-13"
+    },
+    "esdc-rural-measures": {
+      "titleFr": "EDSC — Mesures temporaires pour les régions rurales (bas salaire)",
+      "titleEn": "ESDC — Temporary measures for rural areas (low-wage)",
+      "urlFr": "https://www.canada.ca/fr/emploi-developpement-social/services/travailleurs-etrangers/mesures-temporaires.html",
+      "urlEn": "https://www.canada.ca/en/employment-social-development/services/foreign-workers/temporary-measures.html",
+      "pageModified": "2026-07-27",
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
+    },
+    "jobbank-foreign": {
+      "titleFr": "Guichet-Emplois — Candidats étrangers (offres ouvertes aux candidats internationaux)",
+      "titleEn": "Job Bank — Foreign candidates (jobs open to international candidates)",
+      "urlFr": null,
+      "urlEn": "https://www.jobbank.gc.ca/findajob/foreign-candidates",
+      "pageModified": null,
+      "verifiedAt": "2026-10-13",
+      "nextReview": "2027-01-13"
     }
   },
-
   "lmiaLowWage": {
     "source": "esdc-refusal",
     "unemploymentThresholdPercent": 6,
@@ -130,141 +147,784 @@
     "nextUpdate": "2027-01-08",
     "exemptions": {
       "$comment": "Exemptions au refus de traiter dans les RMR. Le fichier EIMT n'a pas de code SCIAN : l'exemption est ESTIMÉE d'après le CNP (voir data/noc.json, champ probableNaics).",
-      "naics": ["23", "311", "622", "623"],
+      "naics": [
+        "23",
+        "311",
+        "622",
+        "623"
+      ],
       "primaryAgriculture": true,
-      "inHomeCaregiverNocs": ["31301", "32101", "44100", "44101"]
+      "inHomeCaregiverNocs": [
+        "31301",
+        "32101",
+        "44100",
+        "44101"
+      ]
     },
     "cmas": [
-      { "name": "St. John's", "province": "NL", "frozen": true, "aliases": ["St John's", "Mount Pearl", "Paradise", "Conception Bay South"] },
-      { "name": "Halifax", "province": "NS", "frozen": true, "aliases": ["Dartmouth", "Bedford", "Sackville"] },
-      { "name": "Moncton", "province": "NB", "frozen": true, "aliases": ["Dieppe", "Riverview"] },
-      { "name": "Fredericton", "province": "NB", "frozen": true, "aliases": [] },
-      { "name": "Saint John", "province": "NB", "frozen": false, "aliases": ["Quispamsis", "Rothesay"] },
-      { "name": "Montréal", "province": "QC", "frozen": true, "aliases": ["Montreal", "Laval", "Longueuil", "Terrebonne", "Brossard", "Repentigny", "Blainville", "Mirabel", "Saint-Jérôme", "Châteauguay"] },
-      { "name": "Ottawa - Gatineau", "province": "ON", "frozen": true, "aliases": ["Ottawa", "Gatineau", "Kanata", "Orléans", "Nepean"] },
-      { "name": "Saguenay", "province": "QC", "frozen": false, "aliases": ["Chicoutimi", "Jonquière"] },
-      { "name": "Québec", "province": "QC", "frozen": false, "aliases": ["Quebec", "Quebec City", "Ville de Québec", "Lévis"] },
-      { "name": "Sherbrooke", "province": "QC", "frozen": false, "aliases": [] },
-      { "name": "Trois-Rivières", "province": "QC", "frozen": false, "aliases": [] },
-      { "name": "Drummondville", "province": "QC", "frozen": false, "aliases": [] },
-      { "name": "Kingston", "province": "ON", "frozen": true, "aliases": [] },
-      { "name": "Belleville - Quinte West", "province": "ON", "frozen": true, "aliases": ["Belleville", "Quinte West", "Trenton"] },
-      { "name": "Peterborough", "province": "ON", "frozen": true, "aliases": [] },
-      { "name": "Oshawa", "province": "ON", "frozen": true, "aliases": ["Whitby", "Clarington", "Courtice", "Bowmanville"] },
-      { "name": "Toronto", "province": "ON", "frozen": true, "aliases": ["Mississauga", "Brampton", "Markham", "Vaughan", "Richmond Hill", "Oakville", "Milton", "Pickering", "Ajax", "Scarborough", "North York", "Etobicoke", "Newmarket", "Aurora", "Caledon", "King", "Nobleton", "Halton Hills", "Georgina", "East Gwillimbury", "Whitchurch-Stouffville", "Uxbridge", "Bradford West Gwillimbury"] },
-      { "name": "Hamilton", "province": "ON", "frozen": true, "aliases": ["Burlington", "Grimsby", "Stoney Creek", "Ancaster", "Dundas"] },
-      { "name": "St. Catharines - Niagara", "province": "ON", "frozen": true, "aliases": ["St. Catharines", "St Catharines", "Niagara Falls", "Welland", "Niagara-on-the-Lake", "Thorold", "Fort Erie", "Lincoln", "Pelham", "Port Colborne"] },
-      { "name": "Kitchener - Cambridge - Waterloo", "province": "ON", "frozen": true, "aliases": ["Kitchener", "Cambridge", "Waterloo", "Woolwich"] },
-      { "name": "Brantford", "province": "ON", "frozen": true, "aliases": [] },
-      { "name": "Guelph", "province": "ON", "frozen": true, "aliases": [] },
-      { "name": "London", "province": "ON", "frozen": true, "aliases": [] },
-      { "name": "Windsor", "province": "ON", "frozen": true, "aliases": ["LaSalle", "Tecumseh", "Lakeshore", "Amherstburg"] },
-      { "name": "Barrie", "province": "ON", "frozen": true, "aliases": ["Innisfil", "Springwater"] },
-      { "name": "Greater Sudbury", "province": "ON", "frozen": true, "aliases": ["Grand Sudbury", "Sudbury"] },
-      { "name": "Thunder Bay", "province": "ON", "frozen": false, "aliases": [] },
-      { "name": "Winnipeg", "province": "MB", "frozen": false, "aliases": [] },
-      { "name": "Regina", "province": "SK", "frozen": true, "aliases": [] },
-      { "name": "Saskatoon", "province": "SK", "frozen": true, "aliases": [] },
-      { "name": "Lethbridge", "province": "AB", "frozen": true, "aliases": [] },
-      { "name": "Calgary", "province": "AB", "frozen": true, "aliases": ["Airdrie", "Chestermere", "Cochrane"] },
-      { "name": "Red Deer", "province": "AB", "frozen": true, "aliases": [] },
-      { "name": "Edmonton", "province": "AB", "frozen": true, "aliases": ["St. Albert", "Sherwood Park", "Spruce Grove", "Leduc", "Fort Saskatchewan", "Stony Plain", "Beaumont"] },
-      { "name": "Kelowna", "province": "BC", "frozen": true, "aliases": ["West Kelowna", "Lake Country"] },
-      { "name": "Kamloops", "province": "BC", "frozen": false, "aliases": [] },
-      { "name": "Chilliwack", "province": "BC", "frozen": false, "aliases": [] },
-      { "name": "Abbotsford - Mission", "province": "BC", "frozen": true, "aliases": ["Abbotsford", "Mission"] },
-      { "name": "Vancouver", "province": "BC", "frozen": true, "aliases": ["Surrey", "Burnaby", "Richmond", "Coquitlam", "Langley", "Delta", "North Vancouver", "West Vancouver", "Maple Ridge", "New Westminster", "Port Coquitlam", "Port Moody", "White Rock", "Pitt Meadows"] },
-      { "name": "Victoria", "province": "BC", "frozen": false, "aliases": ["Saanich", "Langford", "Esquimalt", "Oak Bay", "Colwood", "Sidney"] },
-      { "name": "Nanaimo", "province": "BC", "frozen": true, "aliases": ["Lantzville"] }
+      {
+        "name": "St. John's",
+        "province": "NL",
+        "frozen": true,
+        "aliases": [
+          "St John's",
+          "Mount Pearl",
+          "Paradise",
+          "Conception Bay South"
+        ]
+      },
+      {
+        "name": "Halifax",
+        "province": "NS",
+        "frozen": true,
+        "aliases": [
+          "Dartmouth",
+          "Bedford",
+          "Sackville"
+        ]
+      },
+      {
+        "name": "Moncton",
+        "province": "NB",
+        "frozen": true,
+        "aliases": [
+          "Dieppe",
+          "Riverview"
+        ]
+      },
+      {
+        "name": "Fredericton",
+        "province": "NB",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Saint John",
+        "province": "NB",
+        "frozen": false,
+        "aliases": [
+          "Quispamsis",
+          "Rothesay"
+        ]
+      },
+      {
+        "name": "Montréal",
+        "province": "QC",
+        "frozen": true,
+        "aliases": [
+          "Montreal",
+          "Laval",
+          "Longueuil",
+          "Terrebonne",
+          "Brossard",
+          "Repentigny",
+          "Blainville",
+          "Mirabel",
+          "Saint-Jérôme",
+          "Châteauguay"
+        ]
+      },
+      {
+        "name": "Ottawa - Gatineau",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Ottawa",
+          "Gatineau",
+          "Kanata",
+          "Orléans",
+          "Nepean"
+        ]
+      },
+      {
+        "name": "Saguenay",
+        "province": "QC",
+        "frozen": false,
+        "aliases": [
+          "Chicoutimi",
+          "Jonquière"
+        ]
+      },
+      {
+        "name": "Québec",
+        "province": "QC",
+        "frozen": false,
+        "aliases": [
+          "Quebec",
+          "Quebec City",
+          "Ville de Québec",
+          "Lévis"
+        ]
+      },
+      {
+        "name": "Sherbrooke",
+        "province": "QC",
+        "frozen": false,
+        "aliases": []
+      },
+      {
+        "name": "Trois-Rivières",
+        "province": "QC",
+        "frozen": false,
+        "aliases": []
+      },
+      {
+        "name": "Drummondville",
+        "province": "QC",
+        "frozen": false,
+        "aliases": []
+      },
+      {
+        "name": "Kingston",
+        "province": "ON",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Belleville - Quinte West",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Belleville",
+          "Quinte West",
+          "Trenton"
+        ]
+      },
+      {
+        "name": "Peterborough",
+        "province": "ON",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Oshawa",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Whitby",
+          "Clarington",
+          "Courtice",
+          "Bowmanville"
+        ]
+      },
+      {
+        "name": "Toronto",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Mississauga",
+          "Brampton",
+          "Markham",
+          "Vaughan",
+          "Richmond Hill",
+          "Oakville",
+          "Milton",
+          "Pickering",
+          "Ajax",
+          "Scarborough",
+          "North York",
+          "Etobicoke",
+          "Newmarket",
+          "Aurora",
+          "Caledon",
+          "King",
+          "Nobleton",
+          "Halton Hills",
+          "Georgina",
+          "East Gwillimbury",
+          "Whitchurch-Stouffville",
+          "Uxbridge",
+          "Bradford West Gwillimbury"
+        ]
+      },
+      {
+        "name": "Hamilton",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Burlington",
+          "Grimsby",
+          "Stoney Creek",
+          "Ancaster",
+          "Dundas"
+        ]
+      },
+      {
+        "name": "St. Catharines - Niagara",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "St. Catharines",
+          "St Catharines",
+          "Niagara Falls",
+          "Welland",
+          "Niagara-on-the-Lake",
+          "Thorold",
+          "Fort Erie",
+          "Lincoln",
+          "Pelham",
+          "Port Colborne"
+        ]
+      },
+      {
+        "name": "Kitchener - Cambridge - Waterloo",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Kitchener",
+          "Cambridge",
+          "Waterloo",
+          "Woolwich"
+        ]
+      },
+      {
+        "name": "Brantford",
+        "province": "ON",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Guelph",
+        "province": "ON",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "London",
+        "province": "ON",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Windsor",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "LaSalle",
+          "Tecumseh",
+          "Lakeshore",
+          "Amherstburg"
+        ]
+      },
+      {
+        "name": "Barrie",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Innisfil",
+          "Springwater"
+        ]
+      },
+      {
+        "name": "Greater Sudbury",
+        "province": "ON",
+        "frozen": true,
+        "aliases": [
+          "Grand Sudbury",
+          "Sudbury"
+        ]
+      },
+      {
+        "name": "Thunder Bay",
+        "province": "ON",
+        "frozen": false,
+        "aliases": []
+      },
+      {
+        "name": "Winnipeg",
+        "province": "MB",
+        "frozen": false,
+        "aliases": []
+      },
+      {
+        "name": "Regina",
+        "province": "SK",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Saskatoon",
+        "province": "SK",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Lethbridge",
+        "province": "AB",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Calgary",
+        "province": "AB",
+        "frozen": true,
+        "aliases": [
+          "Airdrie",
+          "Chestermere",
+          "Cochrane"
+        ]
+      },
+      {
+        "name": "Red Deer",
+        "province": "AB",
+        "frozen": true,
+        "aliases": []
+      },
+      {
+        "name": "Edmonton",
+        "province": "AB",
+        "frozen": true,
+        "aliases": [
+          "St. Albert",
+          "Sherwood Park",
+          "Spruce Grove",
+          "Leduc",
+          "Fort Saskatchewan",
+          "Stony Plain",
+          "Beaumont"
+        ]
+      },
+      {
+        "name": "Kelowna",
+        "province": "BC",
+        "frozen": true,
+        "aliases": [
+          "West Kelowna",
+          "Lake Country"
+        ]
+      },
+      {
+        "name": "Kamloops",
+        "province": "BC",
+        "frozen": false,
+        "aliases": []
+      },
+      {
+        "name": "Chilliwack",
+        "province": "BC",
+        "frozen": false,
+        "aliases": []
+      },
+      {
+        "name": "Abbotsford - Mission",
+        "province": "BC",
+        "frozen": true,
+        "aliases": [
+          "Abbotsford",
+          "Mission"
+        ]
+      },
+      {
+        "name": "Vancouver",
+        "province": "BC",
+        "frozen": true,
+        "aliases": [
+          "Surrey",
+          "Burnaby",
+          "Richmond",
+          "Coquitlam",
+          "Langley",
+          "Delta",
+          "North Vancouver",
+          "West Vancouver",
+          "Maple Ridge",
+          "New Westminster",
+          "Port Coquitlam",
+          "Port Moody",
+          "White Rock",
+          "Pitt Meadows"
+        ]
+      },
+      {
+        "name": "Victoria",
+        "province": "BC",
+        "frozen": false,
+        "aliases": [
+          "Saanich",
+          "Langford",
+          "Esquimalt",
+          "Oak Bay",
+          "Colwood",
+          "Sidney"
+        ]
+      },
+      {
+        "name": "Nanaimo",
+        "province": "BC",
+        "frozen": true,
+        "aliases": [
+          "Lantzville"
+        ]
+      }
     ]
   },
-
   "wageThresholds": {
     "source": "esdc-wage-thresholds",
     "$comment": "Salaire horaire à partir duquel un poste est 'haut salaire' (médiane provinciale + 20 %). En vigueur pour les EIMT reçues à partir du 17 juillet 2026.",
     "effectiveFrom": "2026-07-17",
     "hourlyCad": {
-      "AB": 37.50, "BC": 38.40, "MB": 31.33, "NB": 31.73, "NL": 33.60, "NT": 48.00,
-      "NS": 31.96, "NU": 45.00, "ON": 36.92, "PE": 31.20, "QC": 36.00, "SK": 34.62, "YT": 45.60
+      "AB": 37.5,
+      "BC": 38.4,
+      "MB": 31.33,
+      "NB": 31.73,
+      "NL": 33.6,
+      "NT": 48.0,
+      "NS": 31.96,
+      "NU": 45.0,
+      "ON": 36.92,
+      "PE": 31.2,
+      "QC": 36.0,
+      "SK": 34.62,
+      "YT": 45.6
     }
   },
-
   "fees": {
     "source": "esdc-low-wage-requirements",
     "lmiaProcessingFeeCad": 1000,
     "$comment": "Frais d'EIMT, frais de recrutement et transport (bas salaire) : jamais à la charge du travailleur. Les frais de permis de travail / visa / biométrie restent à la charge du travailleur (ne pas les signaler comme arnaque)."
   },
-
   "agricultural": {
     "source": "esdc-agricultural",
     "openToAllCountries": true,
-    "primaryAgricultureNocs": ["80020", "80021", "82030", "82031", "84120", "85100", "85101", "85103"]
+    "primaryAgricultureNocs": [
+      "80020",
+      "80021",
+      "82030",
+      "82031",
+      "84120",
+      "85100",
+      "85101",
+      "85103"
+    ]
   },
-
   "sawp": {
     "source": "esdc-sawp",
     "$comment": "Codes pays ISO 3166-1 alpha-2 : Mexique + 11 pays des Caraïbes.",
-    "countries": ["MX", "AI", "AG", "BB", "DM", "GD", "JM", "MS", "KN", "LC", "VC", "TT"]
+    "countries": [
+      "MX",
+      "AI",
+      "AG",
+      "BB",
+      "DM",
+      "GD",
+      "JM",
+      "MS",
+      "KN",
+      "LC",
+      "VC",
+      "TT"
+    ]
   },
-
   "francophoneMobility": {
     "source": "ircc-c16",
-    "excludedProvinces": ["QC"],
+    "excludedProvinces": [
+      "QC"
+    ],
     "minOralNclc": 5,
     "$comment": "NCLC 5 en expression orale ET compréhension orale. Exclut l'agriculture primaire de TEER 4 ou 5 (R315.2(4)).",
-    "excludesPrimaryAgricultureTeer": [4, 5]
+    "excludesPrimaryAgricultureTeer": [
+      4,
+      5
+    ]
   },
-
   "homeCareWorkerPilots": {
     "source": "ircc-hcwp",
-    "nocs": ["44100", "44101"],
+    "nocs": [
+      "44100",
+      "44101"
+    ],
     "closedFrom": "2026-03-31",
     "closedUntil": "2030-03-30"
   },
-
   "liveInCaregiver": {
     "source": "esdc-refusal",
-    "nocs": ["31301", "32101", "44100", "44101"]
+    "nocs": [
+      "31301",
+      "32101",
+      "44100",
+      "44101"
+    ]
   },
-
   "communityPilots": {
     "source": "ircc-community-pilots",
     "rcip": {
       "source": "ircc-rcip-who",
-      "minClbByTeer": { "0": 6, "1": 6, "2": 5, "3": 5, "4": 4, "5": 4 },
-      "languages": ["fr", "en"]
+      "minClbByTeer": {
+        "0": 6,
+        "1": 6,
+        "2": 5,
+        "3": 5,
+        "4": 4,
+        "5": 4
+      },
+      "languages": [
+        "fr",
+        "en"
+      ]
     },
     "fcip": {
       "source": "ircc-fcip-who",
       "minNclcAllTeer": 5,
-      "languages": ["fr"]
+      "languages": [
+        "fr"
+      ]
     },
     "minExperienceHours": 1560,
     "communities": [
-      { "name": "Pictou County", "province": "NS", "programs": ["RCIP"], "url": "https://pictoucountypartnership.com/rcip/" },
-      { "name": "North Bay", "province": "ON", "programs": ["RCIP"], "url": "https://nbrcip.ca/" },
-      { "name": "Sudbury", "province": "ON", "programs": ["RCIP", "FCIP"], "url": "https://investsudbury.ca/why-sudbury/newcomers/rcipfcip/" },
-      { "name": "Timmins", "province": "ON", "programs": ["RCIP", "FCIP"], "url": "https://timminsedc.com/immigration/" },
-      { "name": "Sault Ste. Marie", "province": "ON", "programs": ["RCIP"], "url": "https://welcometossm.com/rcip/" },
-      { "name": "Thunder Bay", "province": "ON", "programs": ["RCIP"], "url": "https://gotothunderbay.ca/why-thunder-bay/immigration/" },
-      { "name": "Steinbach", "province": "MB", "programs": ["RCIP"], "url": "https://steinbachedc.com/rcip/" },
-      { "name": "Altona/Rhineland", "province": "MB", "programs": ["RCIP"], "url": "https://ared-rpga.com/immigration/rcip/" },
-      { "name": "Brandon", "province": "MB", "programs": ["RCIP"], "url": "https://economicdevelopmentbrandon.com/rcip/rcip" },
-      { "name": "Moose Jaw", "province": "SK", "programs": ["RCIP"], "url": "https://rcip.mjchamber.com/" },
-      { "name": "Claresholm", "province": "AB", "programs": ["RCIP"], "url": "https://claresholm-rcip.ca/" },
-      { "name": "West Kootenay", "province": "BC", "programs": ["RCIP"], "url": "https://wk-rnip.ca/" },
-      { "name": "North Okanagan Shuswap", "province": "BC", "programs": ["RCIP"], "url": "https://rcipnorthokanaganshuswap.com/" },
-      { "name": "Peace Liard", "province": "BC", "programs": ["RCIP"], "url": "https://www.nebcimmigration.ca/" },
-      { "name": "Péninsule acadienne", "province": "NB", "programs": ["FCIP"], "url": "https://inspirepeninsuleacadienne.ca/programme-pilote-immigration-communautes-francophones/" },
-      { "name": "Superior East", "province": "ON", "programs": ["FCIP"], "url": "https://superioreastcfdc.ca/superioreastcfdc.ca/index.php/en-ca/fcip" },
-      { "name": "St-Pierre-Jolys", "province": "MB", "programs": ["FCIP"], "url": "https://villagestpierrejolys.ca/p/francophone-communities-immigration-pilot-program" },
-      { "name": "Kelowna", "province": "BC", "programs": ["FCIP"], "url": "https://www.sdecb.com/en/pilot-program/" }
+      {
+        "name": "Pictou County",
+        "province": "NS",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://pictoucountypartnership.com/rcip/"
+      },
+      {
+        "name": "North Bay",
+        "province": "ON",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://nbrcip.ca/"
+      },
+      {
+        "name": "Sudbury",
+        "province": "ON",
+        "programs": [
+          "RCIP",
+          "FCIP"
+        ],
+        "url": "https://investsudbury.ca/why-sudbury/newcomers/rcipfcip/"
+      },
+      {
+        "name": "Timmins",
+        "province": "ON",
+        "programs": [
+          "RCIP",
+          "FCIP"
+        ],
+        "url": "https://timminsedc.com/immigration/"
+      },
+      {
+        "name": "Sault Ste. Marie",
+        "province": "ON",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://welcometossm.com/rcip/"
+      },
+      {
+        "name": "Thunder Bay",
+        "province": "ON",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://gotothunderbay.ca/why-thunder-bay/immigration/"
+      },
+      {
+        "name": "Steinbach",
+        "province": "MB",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://steinbachedc.com/rcip/"
+      },
+      {
+        "name": "Altona/Rhineland",
+        "province": "MB",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://ared-rpga.com/immigration/rcip/"
+      },
+      {
+        "name": "Brandon",
+        "province": "MB",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://economicdevelopmentbrandon.com/rcip/rcip"
+      },
+      {
+        "name": "Moose Jaw",
+        "province": "SK",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://rcip.mjchamber.com/"
+      },
+      {
+        "name": "Claresholm",
+        "province": "AB",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://claresholm-rcip.ca/"
+      },
+      {
+        "name": "West Kootenay",
+        "province": "BC",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://wk-rnip.ca/"
+      },
+      {
+        "name": "North Okanagan Shuswap",
+        "province": "BC",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://rcipnorthokanaganshuswap.com/"
+      },
+      {
+        "name": "Peace Liard",
+        "province": "BC",
+        "programs": [
+          "RCIP"
+        ],
+        "url": "https://www.nebcimmigration.ca/"
+      },
+      {
+        "name": "Péninsule acadienne",
+        "province": "NB",
+        "programs": [
+          "FCIP"
+        ],
+        "url": "https://inspirepeninsuleacadienne.ca/programme-pilote-immigration-communautes-francophones/"
+      },
+      {
+        "name": "Superior East",
+        "province": "ON",
+        "programs": [
+          "FCIP"
+        ],
+        "url": "https://superioreastcfdc.ca/superioreastcfdc.ca/index.php/en-ca/fcip"
+      },
+      {
+        "name": "St-Pierre-Jolys",
+        "province": "MB",
+        "programs": [
+          "FCIP"
+        ],
+        "url": "https://villagestpierrejolys.ca/p/francophone-communities-immigration-pilot-program"
+      },
+      {
+        "name": "Kelowna",
+        "province": "BC",
+        "programs": [
+          "FCIP"
+        ],
+        "url": "https://www.sdecb.com/en/pilot-program/"
+      }
     ]
   },
-
   "authorizedRepresentatives": {
     "source": "ircc-authorized-reps",
     "registerSource": "cicc-register",
     "$comment": "Représentants rémunérés autorisés : consultants CICC (numéro R + 6 chiffres), avocats membres d'un barreau provincial, notaires de la Chambre des notaires du Québec, parajuristes de l'Ontario."
-  }
+  },
+  "ruralMeasures": {
+    "source": "esdc-rural-measures",
+    "$comment": "Hors RMR seulement. Employeurs admissibles : conserver leur part actuelle de TET bas salaire et/ou plafond de 15 % au lieu de 10 %. Nouvelles EIMT déposées pendant la période, à partir de la date d'application provinciale.",
+    "validFrom": "2026-04-01",
+    "validTo": "2027-03-31",
+    "provinces": {
+      "BC": {
+        "from": "2026-05-04",
+        "cap15": false
+      },
+      "MB": {
+        "from": "2026-04-14",
+        "cap15": true
+      },
+      "NB": {
+        "from": "2026-04-23",
+        "cap15": true
+      },
+      "NL": {
+        "from": "2026-06-11",
+        "cap15": true
+      },
+      "NT": {
+        "from": "2026-06-16",
+        "cap15": true
+      },
+      "NS": {
+        "from": "2026-04-14",
+        "cap15": true
+      },
+      "QC": {
+        "from": "2026-04-01",
+        "cap15": false
+      }
+    },
+    "notParticipating": [
+      "AB",
+      "NU",
+      "ON"
+    ],
+    "undetermined": [
+      "PE",
+      "SK",
+      "YT"
+    ]
+  },
+  "lowWageRecruitment": {
+    "source": "esdc-low-wage-requirements",
+    "minAdvertisingWeeks": 8,
+    "youthAgeRange": [
+      15,
+      30
+    ]
+  },
+  "jobBank": {
+    "source": "jobbank-foreign",
+    "$comment": "MODE LIENS UNIQUEMENT : les conditions d'utilisation de Job Bank interdisent tout accès automatisé. Seul le paramètre fglo=1 (offres ouvertes aux candidats étrangers) a été confirmé. searchTemplate reste null tant qu'un modèle d'URL n'a pas été relevé à la main dans un navigateur (placeholders {keyword} et {province}).",
+    "foreignJobsUrl": "https://www.jobbank.gc.ca/jobsearch/jobsearch?fglo=1&sort=D",
+    "searchTemplate": null
+  },
+  "changes": [
+    {
+      "date": "2026-10-09",
+      "source": "esdc-refusal",
+      "titleFr": "Nouvelle liste des RMR où les EIMT bas salaire sont gelées",
+      "titleEn": "New list of CMAs where low-wage LMIAs are frozen",
+      "detailFr": "30 RMR à 6 % de chômage ou plus pour les demandes du 9 octobre 2026 au 7 janvier 2027. Prochaine mise à jour : 8 janvier 2027.",
+      "detailEn": "30 CMAs at 6% unemployment or more for applications from October 9, 2026 to January 7, 2027. Next update: January 8, 2027."
+    },
+    {
+      "date": "2026-07-17",
+      "source": "esdc-wage-thresholds",
+      "titleFr": "Nouveaux seuils « haut salaire / bas salaire »",
+      "titleEn": "New high-wage / low-wage thresholds",
+      "detailFr": "Seuils provinciaux relevés pour les EIMT reçues à partir du 17 juillet 2026 (ex. Ontario 36,92 $/h).",
+      "detailEn": "Provincial thresholds raised for LMIAs received as of July 17, 2026 (e.g. Ontario $36.92/h)."
+    },
+    {
+      "date": "2026-04-01",
+      "source": "esdc-rural-measures",
+      "titleFr": "Mesures temporaires pour les régions rurales",
+      "titleEn": "Temporary measures for rural areas",
+      "detailFr": "Hors RMR, dans certaines provinces : l'employeur peut garder sa part actuelle de travailleurs bas salaire et/ou utiliser un plafond de 15 %. Jusqu'au 31 mars 2027. Ontario, Alberta et Nunavut ne participent pas.",
+      "detailEn": "Outside CMAs, in some provinces: employers may keep their current share of low-wage workers and/or use a 15% cap. Until March 31, 2027. Ontario, Alberta and Nunavut do not participate."
+    },
+    {
+      "date": "2026-04-01",
+      "source": "esdc-low-wage-requirements",
+      "approximateDate": true,
+      "titleFr": "Affichage de 8 semaines et recrutement de jeunes",
+      "titleEn": "8-week advertising and youth recruitment",
+      "detailFr": "Pour un poste bas salaire, l'employeur doit afficher l'offre au moins 8 semaines et faire des efforts pour recruter des jeunes (15-30 ans) avant de demander une EIMT. Date d'entrée en vigueur non indiquée sur la page officielle (1er avril 2026 selon la presse).",
+      "detailEn": "For a low-wage job, the employer must advertise for at least 8 weeks and try to recruit youth (15-30) before applying for an LMIA. Effective date not shown on the official page (April 1, 2026 according to the press)."
+    },
+    {
+      "date": "2026-03-31",
+      "source": "ircc-hcwp",
+      "titleFr": "Pilotes aides familiaux : aucune nouvelle demande jusqu'en 2030",
+      "titleEn": "Caregiver pilots: no new applications until 2030",
+      "detailFr": "IRCC n'accepte aucune nouvelle demande de résidence permanente dans les projets pilotes sur les travailleurs de soins à domicile du 31 mars 2026 au 30 mars 2030.",
+      "detailEn": "IRCC accepts no new permanent residence applications under the Home Care Worker Immigration Pilots from March 31, 2026 to March 30, 2030."
+    }
+  ]
 }

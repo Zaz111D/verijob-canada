@@ -77,5 +77,7 @@ export function formatAmount(value: number, lang: 'fr' | 'en'): string {
 export function formatDate(iso: string, lang: 'fr' | 'en'): string {
   const d = new Date(`${iso}T12:00:00Z`);
   if (Number.isNaN(d.getTime())) return iso;
-  return new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d);
+  const s = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-CA' : 'en-CA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d);
+  // Usage français : « 1er avril » et non « 1 avril ».
+  return lang === 'fr' ? s.replace(/^1 /, '1er ') : s;
 }

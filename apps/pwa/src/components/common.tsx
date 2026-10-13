@@ -3,11 +3,12 @@
  */
 import type { ComponentChildren } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
-import { DISCLAIMER, type SourceRef } from '@verijob/core';
+import { DISCLAIMER, staleSources, type PathwayResult, type SourceRef } from '@verijob/core';
+import { rules } from '../data';
 import { setLang, STRINGS as S, tr, useLang } from '../i18n';
 
-export type Route = 'accueil' | 'offre' | 'employeur' | 'demarcher' | 'consultant' | 'profil';
-const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'demarcher', 'consultant', 'profil'];
+export type Route = 'accueil' | 'offre' | 'employeur' | 'emplois' | 'demarcher' | 'consultant' | 'profil' | 'veille';
+const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'emplois', 'demarcher', 'consultant', 'profil', 'veille'];
 
 /** Routage par « #/page » : fonctionne sur tout hébergement statique. */
 export function useRoute(): Route {
@@ -38,14 +39,15 @@ const NAV: Array<{ route: Route; label: keyof typeof S; icon: string }> = [
   { route: 'accueil', label: 'navHome', icon: '⌂' },
   { route: 'offre', label: 'navOffer', icon: '✉' },
   { route: 'employeur', label: 'navEmployer', icon: '⌕' },
+  { route: 'emplois', label: 'navJobs', icon: '◎' },
   { route: 'demarcher', label: 'navProspects', icon: '✎' },
-  { route: 'consultant', label: 'navConsultant', icon: '☑' },
   { route: 'profil', label: 'navProfile', icon: '☺' },
 ];
 
 export function Layout({ route, children }: { route: Route; children: ComponentChildren }) {
   const lang = useLang();
   const online = useOnline();
+  const stale = staleSources(rules, new Date().toISOString().slice(0, 10)).length;
   return (
     <div class="app">
       <header class="top">
@@ -55,8 +57,12 @@ export function Layout({ route, children }: { route: Route; children: ComponentC
         </button>
       </header>
       {!online && <p class="offline" role="status">{tr(S.offline, lang)}</p>}
+      {stale > 0 && <p class="offline" role="status"><a href="#/veille">{tr(S.staleBanner, lang)}</a></p>}
       <main>{children}</main>
-      <footer class="disclaimer">{tr(DISCLAIMER, lang)}</footer>
+      <footer class="disclaimer">
+        <p>{tr(DISCLAIMER, lang)}</p>
+        <p><a href="#/veille">{tr(S.navWatch, lang)}</a> · <a href="#/consultant">{tr(S.cardConsultantTitle, lang)}</a></p>
+      </footer>
       <nav class="tabs" aria-label="Navigation">
         {NAV.map((n) => (
           <a href={`#/${n.route}`} class={route === n.route ? 'active' : ''} aria-current={route === n.route ? 'page' : undefined}>
@@ -91,4 +97,23 @@ export function Sources({ sources }: { sources: SourceRef[] }) {
 
 export function Badge({ kind, children }: { kind: string; children: ComponentChildren }) {
   return <span class={`badge badge-${kind}`}>{children}</span>;
+}
+
+/** Cartes des voies d'immigration (statut, raisons, sources). */
+export function PathwayCards({ results }: { results: PathwayResult[] }) {
+  const lang = useLang();
+  return (
+    <>
+      {results.map((r) => (
+        <article class={`route st-${r.statut}`}>
+          <div class="route-head">
+            <strong>{r.nom[lang]}</strong>
+            <Badge kind={r.statut}>{tr(S.status[r.statut], lang)}</Badge>
+          </div>
+          <ul>{r.raisons.map((x) => <li>{x[lang]}</li>)}</ul>
+          <Sources sources={r.sources} />
+        </article>
+      ))}
+    </>
+  );
 }

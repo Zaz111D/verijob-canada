@@ -6,7 +6,7 @@ import {
   AFRICAN_COUNTRIES, evaluatePathways, PROVINCE_NAMES, teerOf,
   type LanguageLevels, type PathwayResult, type ProvinceCode,
 } from '@verijob/core';
-import { Badge, Sources } from '../components/common';
+import { PathwayCards } from '../components/common';
 import { nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { eraseProfile, saveProfile, useProfile, type StoredProfile } from '../store';
@@ -62,16 +62,7 @@ function Routes({ profile }: { profile: StoredProfile }) {
         return (
           <div class="route-group">
             <h3>{code} – {n ? (lang === 'fr' ? n.titleFr : n.titleEn) : ''} <span class="muted">(TEER {teerOf(code)})</span></h3>
-            {res.map((r) => (
-              <article class={`route st-${r.statut}`}>
-                <div class="route-head">
-                  <strong>{r.nom[lang]}</strong>
-                  <Badge kind={r.statut}>{tr(S.status[r.statut], lang)}</Badge>
-                </div>
-                <ul>{r.raisons.map((x) => <li>{x[lang]}</li>)}</ul>
-                <Sources sources={r.sources} />
-              </article>
-            ))}
+            <PathwayCards results={res} />
           </div>
         );
       })}
