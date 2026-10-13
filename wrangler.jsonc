@@ -1,0 +1,10 @@
+// Configuration Cloudflare Workers (site statique, sans code serveur).
+// Le nom doit correspondre au projet créé dans le tableau de bord Cloudflare.
+{
+  "name": "verijo",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    // Dossier produit par : npm run data && npm run build -w @verijob/pwa
+    "directory": "./apps/pwa/dist"
+  }
+}

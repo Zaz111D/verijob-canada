@@ -149,6 +149,8 @@ Certains réseaux bloquent les serveurs de GitHub Pages : c'est le cas de notre 
    - La version de Node (24) est lue automatiquement dans le fichier `.node-version`.
 4. Cliquez sur **Save and Deploy**. Après environ 10 minutes, le site est en ligne à `https://verijob-canada.pages.dev` (ou une adresse proche).
 
+**Variante « Worker »** (si Cloudflare a créé un projet Worker plutôt que Pages) : le fichier `wrangler.jsonc` à la racine est déjà prêt (nom du projet : `verijo`, à adapter). Dans le projet, ouvrez **Settings → Build**, puis réglez la *Build command* (même commande que ci-dessus) et la *Deploy command* : `npx wrangler deploy`. Activez ensuite l'adresse publique dans **Settings → Domains & Routes → workers.dev → Enable**.
+
 Cloudflare reconstruit le site à chaque `git push`. Pour le **rafraîchissement hebdomadaire des données** :
 1. dans Cloudflare, ouvrez le projet, puis **Settings → Builds → Deploy hooks**, créez un hook (nom : `hebdo`, branche : `main`) et copiez son adresse ;
 2. sur GitHub, ouvrez **Settings → Secrets and variables → Actions → New repository secret**, avec le nom `CLOUDFLARE_DEPLOY_HOOK` et l'adresse copiée comme valeur.
