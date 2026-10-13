@@ -7,8 +7,8 @@ import { DISCLAIMER, staleSources, type PathwayResult, type SourceRef } from '@v
 import { rules } from '../data';
 import { setLang, STRINGS as S, tr, useLang } from '../i18n';
 
-export type Route = 'accueil' | 'offre' | 'employeur' | 'emplois' | 'demarcher' | 'consultant' | 'profil' | 'veille';
-const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'emplois', 'demarcher', 'consultant', 'profil', 'veille'];
+export type Route = 'accueil' | 'offre' | 'employeur' | 'emplois' | 'demarcher' | 'suivi' | 'consultant' | 'profil' | 'veille';
+const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'emplois', 'demarcher', 'suivi', 'consultant', 'profil', 'veille'];
 
 /** Routage par « #/page » : fonctionne sur tout hébergement statique. */
 export function useRoute(): Route {
@@ -41,6 +41,7 @@ const NAV: Array<{ route: Route; label: keyof typeof S; icon: string }> = [
   { route: 'employeur', label: 'navEmployer', icon: '⌕' },
   { route: 'emplois', label: 'navJobs', icon: '◎' },
   { route: 'demarcher', label: 'navProspects', icon: '✎' },
+  { route: 'suivi', label: 'navTracking', icon: '☰' },
   { route: 'profil', label: 'navProfile', icon: '☺' },
 ];
 

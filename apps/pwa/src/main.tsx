@@ -9,6 +9,7 @@ import { Profile } from './pages/Profile';
 import { Prospects } from './pages/Prospects';
 import { Jobs } from './pages/Jobs';
 import { Watch } from './pages/Watch';
+import { Tracking } from './pages/Tracking';
 import { initLang, useLang } from './i18n';
 import './styles.css';
 
@@ -21,6 +22,7 @@ function App() {
         : route === 'employeur' ? <CheckEmployer />
         : route === 'emplois' ? <Jobs />
         : route === 'veille' ? <Watch />
+        : route === 'suivi' ? <Tracking />
         : route === 'demarcher' ? <Prospects />
         : route === 'consultant' ? <CheckConsultant />
         : route === 'profil' ? <Profile />

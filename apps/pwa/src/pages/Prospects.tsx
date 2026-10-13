@@ -4,13 +4,13 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
-  filterProspects, findNoc, PROVINCE_NAMES, prospectPathway, prospectsToCsv, totalPositions,
+  addDays, DEFAULT_FOLLOW_UP_DAYS, filterProspects, findNoc, newId, PROVINCE_NAMES, prospectPathway, prospectsToCsv, totalPositions,
   type PathwayId, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge } from '../components/common';
 import { loadDesignated, loadPriorities, loadProspects, nocData, rules, type CommunityPriority, type DesignatedEmployer } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
-import { useProfile, type StoredProfile } from '../store';
+import { upsertApplication, useApplications, useProfile, type StoredProfile } from '../store';
 import { buildMessage } from '../templates';
 
 const PAGE = 40;
@@ -108,6 +108,15 @@ export function Prospects() {
   const [hideAgri, setHideAgri] = useState(false);
   const [shown, setShown] = useState(PAGE);
   const [target, setTarget] = useState<Target>();
+  const apps = useApplications();
+  const isTracked = (name: string) => apps.some((a) => a.employer === name);
+  const track = (employer: string, noc: string, verification: { lmiaFound?: boolean; designated?: boolean }) => {
+    const d = new Date().toISOString().slice(0, 10);
+    void upsertApplication({
+      id: newId(), employer, job: jobName(noc, lang), date: d, status: 'a-envoyer',
+      followUp: addDays(d, DEFAULT_FOLLOW_UP_DAYS), verification: { ...verification, checkedAt: d }, updatedAt: new Date().toISOString(),
+    });
+  };
 
   useEffect(() => {
     loadProspects().then((f) => setAll(f.data)).catch(() => setError(true));
@@ -189,6 +198,7 @@ export function Prospects() {
                 <div class="row">
                   <button type="button" class="primary" onClick={() => { setTarget({ employer: x.n, city: x.c, noc: r.noc, pathway: r.best.voie }); }}>{tr(S.writeMessage, lang)}</button>
                   <a class="button" href={searchUrl(x.n, x.c)} target="_blank" rel="noopener noreferrer">{tr(S.findWebsite, lang)}</a>
+                  <button type="button" disabled={isTracked(x.n)} onClick={() => track(x.n, r.noc, { lmiaFound: true })}>{isTracked(x.n) ? `✓ ${tr(S.tracked, lang)}` : tr(S.track, lang)}</button>
                 </div>
               </article>
             );
@@ -211,6 +221,7 @@ export function Prospects() {
           <div class="row">
             <button type="button" class="primary" onClick={() => { setTarget({ employer: d.employer, city: d.community, noc: nocs[0] ?? '44101', designated: { program: d.program, community: d.community } }); }}>{tr(S.writeMessage, lang)}</button>
             <a class="button" href={d.sourceUrl} target="_blank" rel="noopener noreferrer">{d.community}</a>
+            <button type="button" disabled={isTracked(d.employer)} onClick={() => track(d.employer, nocs[0] ?? '44101', { designated: true })}>{isTracked(d.employer) ? `✓ ${tr(S.tracked, lang)}` : tr(S.track, lang)}</button>
           </div>
           <p class="muted">{tr(S.recordedOn, lang)} {d.recordedAt}</p>
         </article>

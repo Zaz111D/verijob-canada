@@ -1,0 +1,77 @@
+# Chaque semaine (et à chaque modification de main) :
+#   1. tests et vérification TypeScript ;
+#   2. téléchargement poli des données officielles (pipeline) ;
+#   3. construction de la PWA et publication gratuite sur GitHub Pages.
+# Un job séparé échoue si une règle de data/rules.json a dépassé sa date de révision :
+# GitHub envoie alors un e-mail au propriétaire du dépôt.
+name: Données et déploiement
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # chaque lundi à 6 h UTC
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Tests et typage
+        run: |
+          npm test
+          npm run typecheck
+      # Fichiers bruts gardés une semaine : évite de retélécharger ce qui n'a pas changé.
+      - uses: actions/cache@v6
+        with:
+          path: data/raw
+          key: raw-${{ github.run_id }}
+          restore-keys: raw-
+      - name: Pipeline de données (open.canada.ca, Statistique Canada)
+        run: npm run data
+      - name: Construction de la PWA
+        run: |
+          node scripts/make-icons.mjs
+          npm run build -w @verijob/pwa
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: apps/pwa/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
+
+  regles:
+    name: Règles à revérifier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Dates de révision de data/rules.json
+        run: node scripts/check-rules.mjs
