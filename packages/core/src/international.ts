@@ -86,6 +86,8 @@ export interface InternationalOffer {
   noc: string;
   snippet: string;
   evidence: string[];
+  /** Expressions trouvées par Adzuna dans l'annonce COMPLÈTE (l'API ne renvoie qu'un extrait). */
+  matched: string[];
   caution: string[];
   /** Identifiants des signaux d'arnaque repérés dans le titre + l'extrait. */
   scam: string[];

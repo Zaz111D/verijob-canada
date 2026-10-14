@@ -3,26 +3,32 @@
  * 250 requêtes par jour, 1000 par semaine ; affichage autorisé avec la mention « Adzuna » liée au site).
  * Clés dans les secrets GitHub ADZUNA_APP_ID et ADZUNA_APP_KEY ; sans clés, l'étape est sautée.
  *
- * Pour chaque métier de data/noc.json : offres canadiennes des 45 derniers jours qui contiennent le métier ET
- * au moins un mot du recrutement international ; puis tri par VériJob (classifyInternational) et contrôle
- * anti-arnaque (analyzeOffer) sur le titre + l'extrait. Seules les offres « ouvertes » sont publiées.
+ * Méthode (après diagnostic du 15 oct. 2026) : l'API ne renvoie que le DÉBUT de chaque annonce, où la mention
+ * « LMIA » ou « sponsorship » apparaît rarement. On demande donc à Adzuna des EXPRESSIONS EXACTES
+ * (« lmia approved », « visa sponsorship »…), qu'il cherche dans l'annonce complète :
+ * - tous métiers confondus (le métier est déduit du titre quand c'est possible) ;
+ * - puis, pour chaque métier suivi, « métier + lmia / eimt / sponsorship ».
+ * VériJob relit ensuite le titre + l'extrait : une annonce qui exige d'être déjà au Canada est écartée ;
+ * si la phrase de preuve est dans l'extrait, elle est affichée, sinon l'appli indique l'expression trouvée
+ * par Adzuna dans l'annonce complète (à vérifier en ouvrant l'offre). Contrôle anti-arnaque sur chaque annonce.
  *
- * Produit : apps/pwa/public/data/international-offers.json
+ * Produit : apps/pwa/public/data/international-offers.json (+ international-diagnostic.json)
  */
 import {
-  analyzeOffer, classifyInternational, normalize, PROVINCE_NAMES,
+  analyzeOffer, classifyInternational, detectNocInText, normalize, PROVINCE_NAMES,
   type InternationalOffer, type NocData, type ProvinceCode, type Rules,
 } from '../packages/core/src';
 import { USER_AGENT } from './lib/http';
 import { writeDataFile, type WrittenFile } from './lib/output';
 
-const API = 'https://api.adzuna.com/v1/api/jobs/ca/search/1';
-/** Mots du recrutement international (au moins un doit figurer dans l'offre). */
-const INTERNATIONAL_WORDS = 'lmia eimt sponsorship sponsor visa international foreign immigration';
+const API = 'https://api.adzuna.com/v1/api/jobs/ca/search/';
+/** Expressions exactes du recrutement international (cherchées par Adzuna dans l'annonce complète). */
+const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt', 'visa sponsorship', 'sponsorship available', 'international applicants', 'temporary foreign worker'];
+/** Pour chaque métier suivi : au moins un de ces mots en plus du métier. */
+const NOC_WORDS = 'lmia eimt sponsorship';
 const MAX_DAYS_OLD = 45;
 const PER_PAGE = 50;
 const PAUSE_MS = 3000; // 25 requêtes par minute au plus : on reste très en dessous
-
 
 interface AdzunaJob {
   id?: string; title?: string; description?: string; created?: string; redirect_url?: string;
@@ -48,42 +54,32 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     return { queries: 0, seen: 0, kept: 0, closed: 0, skipped: 'clés absentes' };
   }
   const offers = new Map<string, InternationalOffer>();
+  const rejected = new Set<string>();
+  const diag: Array<{ query: string; total: number; results: number; kept: number; closed: number }> = [];
   let queries = 0, seen = 0, closed = 0;
-  // Diagnostic publié avec les données : volume par métier et exemples d'extraits non reconnus.
-  const perNoc: Array<{ noc: string; what: string; total: number; results: number; open: number; closed: number; unknown: number }> = [];
-  const samples: Array<{ noc: string; title: string; snippet: string }> = [];
-  for (const n of nocData.nocs) {
-    // Mot-clé simple : partie avant « ( » ou « / » (Adzuna exige tous les mots de « what »).
-    const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim();
-    const stat = { noc: n.code, what, total: 0, results: 0, open: 0, closed: 0, unknown: 0 };
-    perNoc.push(stat);
-    const params = new URLSearchParams({
-      app_id: id, app_key: key, what, what_or: INTERNATIONAL_WORDS, max_days_old: String(MAX_DAYS_OLD),
-      sort_by: 'date', results_per_page: String(PER_PAGE), 'content-type': 'application/json',
+
+  const search = async (label: string, params: Record<string, string>, matched: string, noc?: string) => {
+    const q = new URLSearchParams({
+      app_id: id, app_key: key, max_days_old: String(MAX_DAYS_OLD), sort_by: 'date',
+      results_per_page: String(PER_PAGE), 'content-type': 'application/json', ...params,
     });
     if (queries) await sleep(PAUSE_MS);
     queries++;
-    const res = await fetch(`${API}?${params}`, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
-    if (!res.ok) throw new Error(`Adzuna : HTTP ${res.status} pour « ${what} »`);
+    const res = await fetch(`${API}1?${q}`, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
+    if (!res.ok) throw new Error(`Adzuna : HTTP ${res.status} pour « ${label} »`);
     const body = (await res.json()) as { results?: AdzunaJob[]; count?: number };
-    const results = body.results ?? [];
-    stat.total = body.count ?? 0;
-    stat.results = results.length;
-    for (const j of results) {
+    const stat = { query: label, total: body.count ?? 0, results: body.results?.length ?? 0, kept: 0, closed: 0 };
+    diag.push(stat);
+    for (const j of body.results ?? []) {
       seen++;
-      if (!j.id || !j.redirect_url || offers.has(j.id)) continue;
+      if (!j.id || !j.redirect_url || rejected.has(j.id)) continue;
       const title = clean(j.title), snippet = clean(j.description);
       const text = `${title}.\n${snippet}`;
       const verdict = classifyInternational(text);
-      if (verdict.status === 'ferme') { closed++; stat.closed++; }
-      if (verdict.status === 'inconnu') {
-        stat.unknown++;
-        if (samples.filter((x) => x.noc === n.code).length < 2) samples.push({ noc: n.code, title, snippet });
-      }
-      if (verdict.status !== 'ouvert') continue;
-      stat.open++;
+      if (verdict.status === 'ferme') { closed++; stat.closed++; rejected.add(j.id); offers.delete(j.id); continue; }
+      const existing = offers.get(j.id);
+      if (existing) { if (!existing.matched.includes(matched)) existing.matched.push(matched); continue; }
       const area = j.location?.area ?? [];
-      const scam = analyzeOffer(text, { rules, nocData }).signals.map((s) => s.id);
       offers.set(j.id, {
         id: j.id,
         title,
@@ -95,14 +91,23 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
         salaryMax: typeof j.salary_max === 'number' ? j.salary_max : null,
         salaryPredicted: String(j.salary_is_predicted) === '1',
         url: j.redirect_url,
-        noc: n.code,
+        noc: noc ?? detectNocInText(nocData, normalize(title))?.code ?? '',
         snippet,
         evidence: verdict.evidence,
+        matched: [matched],
         caution: verdict.caution,
-        scam,
+        scam: analyzeOffer(text, { rules, nocData }).signals.map((s) => s.id),
       });
+      stat.kept++;
     }
+  };
+
+  for (const p of PHRASES) await search(`« ${p} »`, { what_phrase: p }, p);
+  for (const n of nocData.nocs) {
+    const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim(); // Adzuna exige tous les mots de « what »
+    await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt / sponsorship', n.code);
   }
+
   const list = [...offers.values()].sort((a, b) => b.date.localeCompare(a.date));
   const file = writeDataFile(
     'international-offers.json',
@@ -115,12 +120,12 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     list.length,
     list,
   );
-  console.log(`  ${queries} requêtes, ${seen} annonces lues, ${list.length} ouvertes à l'international, ${closed} écartées (Canada exigé)`);
   writeDataFile(
     'international-diagnostic.json',
-    { name: 'Diagnostic du tri des offres internationales', publisher: 'VériJob', url: 'https://www.adzuna.ca/', licence: 'Extraits d’annonces Adzuna' },
-    perNoc.length,
-    { perNoc, samples },
+    { name: 'Diagnostic du tri des offres internationales', publisher: 'VériJob', url: 'https://www.adzuna.ca/', licence: 'Compteurs seulement' },
+    diag.length,
+    diag,
   );
+  console.log(`  ${queries} requêtes, ${seen} annonces lues, ${list.length} gardées, ${closed} écartées (Canada exigé)`);
   return { queries, seen, kept: list.length, closed, file };
 }

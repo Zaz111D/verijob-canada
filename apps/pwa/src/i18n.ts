@@ -301,6 +301,8 @@ export const STRINGS = {
     en: 'Every week, VériJob reads job ads posted in Canada and keeps only those that clearly accept candidates abroad (LMIA, permit sponsorship, international applications). Those requiring you to already be in Canada are removed. The sentence that proves it is shown: always read the full offer.',
   },
   intlProof: { fr: 'Ce que dit l’annonce', en: 'What the ad says' },
+  intlMatched: { fr: 'Adzuna a trouvé {mots} dans l’annonce complète (pas dans l’extrait reçu par VériJob) : ouvrez l’offre pour lire la phrase exacte.', en: 'Adzuna found {mots} in the full ad (not in the excerpt VériJob received): open the offer to read the exact sentence.' },
+  intlMatchedBadge: { fr: 'Mention internationale trouvée par Adzuna', en: 'International mention found by Adzuna' },
   intlCaution: { fr: 'L’annonce mentionne aussi « autorisé à travailler au Canada » : vérifiez avec l’employeur que le permis sera bien parrainé.', en: 'The ad also says “authorized to work in Canada”: check with the employer that the permit will be sponsored.' },
   intlScam: { fr: 'signal(s) d’arnaque dans l’annonce : analysez-la avant tout contact', en: 'scam sign(s) in the ad: check it before any contact' },
   intlAnalyze: { fr: 'Analyser l’annonce', en: 'Check the ad' },

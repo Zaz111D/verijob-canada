@@ -33,9 +33,18 @@ function OfferCard({ o, lang }: { o: InternationalOffer; lang: Lang }) {
       <h3>{o.title}</h3>
       <p>{o.company || '—'} — {o.location}{o.province ? ` (${o.province})` : ''}</p>
       <p class="muted">{formatDate(o.date, lang)}{noc ? ` · ${noc.code} – ${lang === 'fr' ? noc.titleFr : noc.titleEn}` : ''}{sal ? ` · ${sal}` : ''}</p>
-      <p><Badge kind="ok">✓ {tr(S.intlTitle, lang)}</Badge></p>
-      <p class="muted">{tr(S.intlProof, lang)} :</p>
-      {o.evidence.slice(0, 2).map((e) => <p class="quote">« {e} »</p>)}
+      {o.evidence.length > 0 ? (
+        <>
+          <p><Badge kind="ok">✓ {tr(S.intlTitle, lang)}</Badge></p>
+          <p class="muted">{tr(S.intlProof, lang)} :</p>
+          {o.evidence.slice(0, 2).map((e) => <p class="quote">« {e} »</p>)}
+        </>
+      ) : (
+        <>
+          <p><Badge kind="info">{tr(S.intlMatchedBadge, lang)}</Badge></p>
+          <p class="muted">{tr(S.intlMatched, lang).replace('{mots}', (o.matched ?? []).map((m) => `« ${m} »`).join(', '))}</p>
+        </>
+      )}
       {o.caution.length > 0 && <p class="warn">{tr(S.intlCaution, lang)}</p>}
       {o.scam.length > 0 && <p class="alert">{o.scam.length} {tr(S.intlScam, lang)}</p>}
       <div class="row">
@@ -54,8 +63,8 @@ export function InternationalOffers({ nocs, provinces, lang }: { nocs: string[];
   if (!data) return null; // pas encore de fichier (clés Adzuna absentes) : section masquée
   const mine = data.list.filter((o) =>
     (all || !nocs.length || nocs.includes(o.noc)) && (all || !provinces.length || !o.province || provinces.includes(o.province)));
-  // Les annonces sans signal d'arnaque d'abord, puis les plus récentes.
-  const shown = [...mine].sort((a, b) => a.scam.length - b.scam.length || b.date.localeCompare(a.date)).slice(0, LIMIT);
+  // Sans signal d'arnaque d'abord, puis preuve visible dans l'extrait, puis les plus récentes.
+  const shown = [...mine].sort((a, b) => a.scam.length - b.scam.length || Number(b.evidence.length > 0) - Number(a.evidence.length > 0) || b.date.localeCompare(a.date)).slice(0, LIMIT);
   return (
     <>
       <h2>{tr(S.intlTitle, lang)}</h2>
