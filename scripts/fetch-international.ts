@@ -23,9 +23,11 @@ import { writeDataFile, type WrittenFile } from './lib/output';
 
 const API = 'https://api.adzuna.com/v1/api/jobs/ca/search/';
 /** Expressions exactes du recrutement international (cherchées par Adzuna dans l'annonce complète). */
-const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt', 'visa sponsorship', 'sponsorship available', 'international applicants', 'temporary foreign worker'];
+// « visa sponsorship » et « international applicants » écartés après diagnostic : surtout des annonces
+// « without visa sponsorship » (souvent pour les États-Unis). On garde les expressions propres au PTET/EIMT.
+const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt', 'temporary foreign worker'];
 /** Pour chaque métier suivi : au moins un de ces mots en plus du métier. */
-const NOC_WORDS = 'lmia eimt sponsorship';
+const NOC_WORDS = 'lmia eimt';
 const MAX_DAYS_OLD = 45;
 const PER_PAGE = 50;
 const PAUSE_MS = 3000; // 25 requêtes par minute au plus : on reste très en dessous
@@ -105,7 +107,7 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
   for (const p of PHRASES) await search(`« ${p} »`, { what_phrase: p }, p);
   for (const n of nocData.nocs) {
     const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim(); // Adzuna exige tous les mots de « what »
-    await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt / sponsorship', n.code);
+    await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt', n.code);
   }
 
   const list = [...offers.values()].sort((a, b) => b.date.localeCompare(a.date));

@@ -14,6 +14,7 @@ describe('Offres ouvertes aux candidats de l’étranger', () => {
     'Les candidatures internationales sont bienvenues.',
     'Recrutement international : soudeurs recherchés pour notre usine.',
     'Admissible à la Mobilité francophone (hors Québec).',
+    'This position is advertised in compliance with the Temporary Foreign Worker Program requirements.',
   ])('ouverte : %s', (t) => expect(status(t)).toBe('ouvert'));
 
   it.each([
@@ -27,6 +28,9 @@ describe('Offres ouvertes aux candidats de l’étranger', () => {
     'Citoyens canadiens seulement.',
     'Aucun parrainage offert.',
     'No LMIA for this position.',
+    'Applicants must be legally authorized to work in the United States without current or future visa sponsorship.',
+    'This role is offered without visa sponsorship.',
+    'Poste sans parrainage.',
   ])('fermée : %s', (t) => expect(status(t)).toBe('ferme'));
 
   it('une exigence explicite l’emporte sur une mention d’EIMT', () => {
