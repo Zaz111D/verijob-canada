@@ -231,6 +231,20 @@ You will receive payments into your bank account. Please provide your bank detai
     expected: ['messagerie-seule', 'documents-sensibles', 'cheque-ou-mule'],
   },
   {
+    name: 'Annonce réelle (Tim Hortons, Adzuna) : « Premium Rate of Pay » n’est pas un frais',
+    lang: 'en',
+    kind: 'saine',
+    text: `Why work for us? Flexible scheduling Employee meal discount Premium Rate of Pay Referral incentives Can hire under the Francophone Mobility Program or LMIA exempt`,
+    expected: [],
+  },
+  {
+    name: 'Entreprise de paiements électroniques : le secteur n’est pas un frais',
+    lang: 'en',
+    kind: 'saine',
+    text: `REPAY is an established and fast-growing payment processing company. REPAY enables its customers to accept payments anytime. Mail Insert Operator, Toronto.`,
+    expected: [],
+  },
+  {
     name: 'Mission officielle : « nous ne communiquons jamais par WhatsApp »',
     lang: 'fr',
     kind: 'saine',

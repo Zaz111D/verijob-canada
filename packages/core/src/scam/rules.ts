@@ -64,6 +64,8 @@ function domains(norm: string): string[] {
 
 const FEE_STRONG = /\b(frais|fee|fees|caution|depot|acompte|cotisation|tarif|deposit)\b/;
 const FEE_WEAK = /\b(payer|payez|paye|payes|paiement|versement|verser|versez|cout|coute|montant|pay|paying|payment|charge|charged|cost|costs)\b/;
+/** Le salaire (« rate of pay ») ou le secteur d'activité (« payment processing company ») ne sont pas des frais. */
+const NOT_A_FEE = /\b(rate of pay|pay rate|premium pay|taux de remuneration|payment (processing|solutions?|technology|technologies|company|industry|platform)|electronic payments?|traitement des paiements)\b/;
 /** « Envoyez » ne parle d'argent que si un montant ou le mot « argent » suit (sinon : envoyer un CV, une copie…). */
 const SEND_MONEY = /\b(envoyer|envoyez|envoie|send|transfer|transferer|transferez)\b[^.!?\n]{0,40}\b(argent|money|somme|fonds|funds)\b/;
 const MONEY = /(\d[\d .,]*\s?(fcfa|f cfa|cfa|xaf|xof|naira|ngn|cedis?|ghs|ksh|kes|\$|cad|usd|euros?|eur|€|dollars?)(?![a-z])|(\$|€|usd|cad)\s?\d)/;
@@ -123,7 +125,7 @@ export const SCAM_RULES: ScamRule[] = [
     detect: (ctx) =>
       hitIfAny(
         matchingSegments(ctx, (s) => {
-          if (FEE_NEGATION.test(s)) return false;
+          if (FEE_NEGATION.test(s) || NOT_A_FEE.test(s)) return false;
           const wage = hasWageRate(s);
           const pays = FEE_STRONG.test(s) || ((FEE_WEAK.test(s) || SEND_MONEY.test(s) || MONEY.test(s)) && !wage);
           if (FEE_TARGET.test(s) && pays) return true;

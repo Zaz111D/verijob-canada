@@ -66,7 +66,18 @@ const WEAK = [
 
 export function classifyInternational(text: string): InternationalVerdict {
   const { segments } = prepareText(text);
-  const find = (res: RegExp[]) => [...new Set(segments.filter((s) => res.some((r) => r.test(s.norm))).map((s) => excerpt(s.raw)))];
+  // Extrait centré sur l'expression trouvée : les annonces ont souvent de très longues « phrases » sans ponctuation.
+  const around = (s: { raw: string; norm: string }, r: RegExp) => {
+    const i = s.norm.search(r);
+    const raw = s.raw.length === s.norm.length ? s.raw : s.norm;
+    if (raw.length <= 160 || i < 0) return excerpt(raw);
+    const start = Math.max(0, i - 60);
+    return `${start > 0 ? '…' : ''}${excerpt(raw.slice(start), start > 0 ? 159 : 160)}`;
+  };
+  const find = (res: RegExp[]) => [...new Set(segments.flatMap((s) => {
+    const r = res.find((x) => x.test(s.norm));
+    return r ? [around(s, r)] : [];
+  }))];
   const evidence = find(OPEN);
   const against = find(CLOSED);
   const caution = find(WEAK).filter((c) => !against.includes(c));

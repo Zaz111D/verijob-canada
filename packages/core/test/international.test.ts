@@ -54,6 +54,10 @@ describe('Offres ouvertes aux candidats de l’étranger', () => {
     expect(v.caution).toHaveLength(1);
   });
 
+  it('extrait centré sur la preuve dans un long paragraphe sans ponctuation', () => {
+    const long = 'Why work for us? Flexible scheduling Employee meal discount Premium Rate of Pay Referral incentives Fast pace work environment Support in skills development Advancement Opportunities Can hire under the Francophone Mobility Program or LMIA exempt The Storefront Production Team Member';
+    expect(classifyInternational(long).evidence[0]).toContain('Francophone Mobility Program');
+  });
   it('extraits avec les accents d’origine', () => {
     expect(classifyInternational('Poste avec EIMT approuvée.').evidence[0]).toBe('Poste avec EIMT approuvée.');
   });
