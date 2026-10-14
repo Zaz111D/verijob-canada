@@ -23,9 +23,13 @@ import { writeDataFile, type WrittenFile } from './lib/output';
 
 const API = 'https://api.adzuna.com/v1/api/jobs/ca/search/';
 /** Expressions exactes du recrutement international (cherchées par Adzuna dans l'annonce complète). */
-// « visa sponsorship » et « international applicants » écartés après diagnostic : surtout des annonces
-// « without visa sponsorship » (souvent pour les États-Unis). On garde les expressions propres au PTET/EIMT.
-const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt', 'temporary foreign worker'];
+// Écartés après diagnostic (15 oct. 2026) :
+// - « visa sponsorship », « international applicants » : surtout « without visa sponsorship » (souvent pour les États-Unis) ;
+// - « temporary foreign worker » : au Québec, mention légale du permis des agences de placement
+//   (« Temporary Foreign Worker Recruitment Agency Permit Number »), sans rapport avec l'ouverture du poste.
+const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt'];
+/** Postes dont le TRAVAIL porte sur l'immigration ou le recrutement (ils citent « LMIA » comme tâche). */
+const OFF_TOPIC_TITLE = /\b(immigration|lawyer|avocate?|paralegal|parajuriste|consultant|rcic|recruiter|recruteur|recruteuse|talent acquisition)\b/i;
 /** Pour chaque métier suivi : au moins un de ces mots en plus du métier. */
 const NOC_WORDS = 'lmia eimt';
 const MAX_DAYS_OLD = 45;
@@ -76,6 +80,7 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
       seen++;
       if (!j.id || !j.redirect_url || rejected.has(j.id)) continue;
       const title = clean(j.title), snippet = clean(j.description);
+      if (OFF_TOPIC_TITLE.test(title)) continue;
       const text = `${title}.\n${snippet}`;
       const verdict = classifyInternational(text);
       if (verdict.status === 'ferme') { closed++; stat.closed++; rejected.add(j.id); offers.delete(j.id); continue; }
