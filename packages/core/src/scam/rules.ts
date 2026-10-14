@@ -63,7 +63,9 @@ function domains(norm: string): string[] {
 // ---------------------------------------------------------------------------
 
 const FEE_STRONG = /\b(frais|fee|fees|caution|depot|acompte|cotisation|tarif|deposit)\b/;
-const FEE_WEAK = /\b(payer|payez|paye|payes|paiement|versement|verser|versez|envoyer|envoyez|envoie|cout|coute|montant|pay|paying|payment|send|transfer|charge|charged|cost|costs)\b/;
+const FEE_WEAK = /\b(payer|payez|paye|payes|paiement|versement|verser|versez|cout|coute|montant|pay|paying|payment|charge|charged|cost|costs)\b/;
+/** « Envoyez » ne parle d'argent que si un montant ou le mot « argent » suit (sinon : envoyer un CV, une copie…). */
+const SEND_MONEY = /\b(envoyer|envoyez|envoie|send|transfer|transferer|transferez)\b[^.!?\n]{0,40}\b(argent|money|somme|fonds|funds)\b/;
 const MONEY = /(\d[\d .,]*\s?(fcfa|f cfa|cfa|xaf|xof|naira|ngn|cedis?|ghs|ksh|kes|\$|cad|usd|euros?|eur|€|dollars?)(?![a-z])|(\$|€|usd|cad)\s?\d)/;
 const FEE_TARGET = /\b(eimt|lmia|contrat|contract|dossier|file|traitement|processing|reservation|reserver|booking|placement|recrutement|recruitment|inscription|registration|offre d'emploi|job offer|lettre d'offre|offer letter|approbation|approval|application|candidature|hold the position|secure your (spot|place|position)|votre place)\b/;
 const VISA_CONTEXT = /\b(visa|permis de travail|work permit|biometrie|biometrics|ircc)\b/;
@@ -95,6 +97,15 @@ const PERMANENT_RESIDENCE = /\b(residence permanente|residents? permanents?|resi
 const PR_PROMISE = /\b(garanti\w*|guarantee\w*|direct|directe|directement|directly|automatique\w*|automatic\w*|assuree?|apres \d+|after \d+|obten\w*|obtain\w*|get your|you will (get|receive|obtain)|recevrez)\b/;
 const LIVE_IN = /\b(live[- ]in|logee?s? (chez|par|dans) (l'employeur|la famille|votre employeur)|nourrie?s?,? et logee?s?|logee?s? et nourrie?s?|logee?s?,? nourrie?s?|nourrie?s?,? logee?s?|vivre (chez|avec) (la famille|l'employeur)|live with (the )?(family|employer)|room and board (in|at) the employer)\b/;
 
+// Petites annonces, groupes de messagerie (variantes décrites par le Centre antifraude du Canada).
+const MESSAGING_APP = /\b(whatsapp|whats app|telegram|messenger|wa\.me|t\.me)\b/;
+const MESSAGING_NEGATED = /\b(jamais|never|aucun|aucune|ne (communiqu|contact)\w* pas|do(es)? not (communicate|contact))\b/;
+const ID_DOC = /\b(copie|copies|scan|scanne|photo|photos|photocopie|copy|picture|image)\b[^.!?\n]{0,40}\b(passeport|passport|carte d'identite|cni|piece d'identite|pieces d'identite|id card|identity card|national id|acte de naissance|birth certificate)\b/;
+const SEND_VERB = /\b(envoyer|envoyez|envoie|envoi|transmettre|transmettez|fournir|fournissez|joindre|joignez|send|provide|submit|attach|share)\b/;
+const SECRET_DATA = /\b(coordonnees bancaires|numero de (votre )?compte bancaire|releve d'identite bancaire|rib|bank details|bank account (number|details)|numero d'assurance sociale|social insurance number|code pin|code secret|code de verification|code recu par sms|mot de passe|password|verification code|otp)\b/;
+const CHEQUE = /\b(cheque|cheques|check)\b[^.!?\n]{0,40}\b(deposer|deposez|encaisser|encaissez|deposit|cash)\b|\b(deposer|deposez|encaisser|encaissez|deposit|cash)\b[^.!?\n]{0,40}\b(cheque|cheques|check)\b/;
+const MONEY_MULE = /\b(agent financier|agente financiere|financial agent|client mystere|cliente mystere|mystery shopper|recevoir (des |les )?(paiements|virements|fonds) (sur|dans) votre compte|receive (payments|funds|transfers) (in|into|to|on) your (bank )?account|renvoyer (l'argent|le reste|la difference)|send (back )?the (rest|difference|balance))\b/;
+
 // ---------------------------------------------------------------------------
 // Règles
 // ---------------------------------------------------------------------------
@@ -114,7 +125,7 @@ export const SCAM_RULES: ScamRule[] = [
         matchingSegments(ctx, (s) => {
           if (FEE_NEGATION.test(s)) return false;
           const wage = hasWageRate(s);
-          const pays = FEE_STRONG.test(s) || ((FEE_WEAK.test(s) || MONEY.test(s)) && !wage);
+          const pays = FEE_STRONG.test(s) || ((FEE_WEAK.test(s) || SEND_MONEY.test(s) || MONEY.test(s)) && !wage);
           if (FEE_TARGET.test(s) && pays) return true;
           // « Acompte de 250 000 FCFA », « Deposit of $500 » : frais explicites, hors frais de visa.
           return FEE_STRONG.test(s) && MONEY.test(s) && !VISA_CONTEXT.test(s) && !wage;
@@ -218,7 +229,8 @@ export const SCAM_RULES: ScamRule[] = [
     sourceIds: (r) => [r.authorizedRepresentatives.source, r.authorizedRepresentatives.registerSource],
     detect: (ctx) => {
       if (CICC_NUMBER.test(ctx.norm) || LAWYER.test(ctx.norm)) return undefined;
-      return hitIfAny(matchingSegments(ctx, (s) => AGENT.test(s)));
+      // « Agent financier » est une autre arnaque (règle « cheque-ou-mule »), pas un agent d'immigration.
+      return hitIfAny(matchingSegments(ctx, (s) => AGENT.test(s.replace(/\b(financial agent|agente? financiere?)\b/g, ''))));
     },
   },
   {
@@ -334,5 +346,39 @@ export const SCAM_RULES: ScamRule[] = [
         },
       };
     },
+  },
+  // ----- Règles propres aux petites annonces et aux groupes de messagerie (Centre antifraude du Canada)
+  {
+    id: 'messagerie-seule',
+    severity: 'moyen',
+    title: { fr: 'Contact ou « entretien » par WhatsApp ou Telegram', en: 'Contact or "interview" by WhatsApp or Telegram' },
+    explanation: () => ({
+      fr: "Les escrocs contactent leurs victimes par WhatsApp, Telegram ou Messenger et y font de faux « entretiens » par écrit. Un vrai employeur canadien a un site, une adresse e-mail à son nom et fait un entretien en direct (vidéo, téléphone ou en personne). Vérifiez l'employeur avant de continuer.",
+      en: 'Scammers contact victims on WhatsApp, Telegram or Messenger and hold fake written "interviews" there. A real Canadian employer has a website, an e-mail address in its own name and interviews you live (video, phone or in person). Check the employer before going further.',
+    }),
+    sourceIds: () => ['cafc-job-scams'],
+    detect: (ctx) => hitIfAny(matchingSegments(ctx, (s) => MESSAGING_APP.test(s) && !MESSAGING_NEGATED.test(s))),
+  },
+  {
+    id: 'documents-sensibles',
+    severity: 'moyen',
+    title: { fr: 'Demande de documents ou de données personnelles', en: 'Request for documents or personal data' },
+    explanation: () => ({
+      fr: "On vous demande une copie de votre passeport ou de votre pièce d'identité, vos coordonnées bancaires, un code ou un mot de passe. Ces informations servent aux escrocs à voler votre identité ou votre argent. N'envoyez jamais de code, de mot de passe ni de coordonnées bancaires. Pour le passeport, attendez d'avoir vérifié l'employeur et passé un vrai entretien.",
+      en: 'You are asked for a copy of your passport or ID, your bank details, a code or a password. Scammers use this to steal your identity or your money. Never send a code, password or bank details. For your passport, wait until you have checked the employer and had a real interview.',
+    }),
+    sourceIds: () => ['cafc-job-scams', 'ircc-fraud'],
+    detect: (ctx) => hitIfAny(matchingSegments(ctx, (s) => (ID_DOC.test(s) && SEND_VERB.test(s)) || SECRET_DATA.test(s))),
+  },
+  {
+    id: 'cheque-ou-mule',
+    severity: 'eleve',
+    title: { fr: 'Chèque à encaisser ou argent à faire transiter', en: 'Cheque to cash or money to pass on' },
+    explanation: () => ({
+      fr: "On vous envoie un chèque à déposer, ou on vous demande de recevoir de l'argent sur votre compte pour le renvoyer ailleurs (« agent financier », « client mystère »). Le chèque est faux et vous devrez rembourser la banque ; faire transiter de l'argent fait de vous une « mule », ce qui est du blanchiment d'argent.",
+      en: 'You are sent a cheque to deposit, or asked to receive money in your account and send it on ("financial agent", "mystery shopper"). The cheque is fake and you will owe the bank; passing money on makes you a "money mule", which is money laundering.',
+    }),
+    sourceIds: () => ['cafc-job-scams'],
+    detect: (ctx) => hitIfAny(matchingSegments(ctx, (s) => CHEQUE.test(s) || MONEY_MULE.test(s))),
   },
 ];

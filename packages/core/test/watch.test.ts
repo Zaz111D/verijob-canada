@@ -9,6 +9,7 @@ describe('veille réglementaire', () => {
     expect(s['ptas']).toBe('restreint');
     expect(s['eimt-agricole']).toBe('ouvert');
     expect(s['mesures-rurales']).toBe('ouvert');
+    expect(s['entree-express']).toBe('ouvert');
   });
   it('mesures rurales expirées après le 31 mars 2027', () => {
     const s = programStatuses(rules, '2027-04-02').find((p) => p.id === 'mesures-rurales');
@@ -16,8 +17,10 @@ describe('veille réglementaire', () => {
   });
   it('échéances futures triées, avec jours restants', () => {
     const u = upcomingDates(rules, TODAY);
-    expect(u[0]?.date).toBe('2027-01-08');
-    expect(u[0]?.daysLeft).toBe(87);
+    // La plus proche : revérification des salons de recrutement (14 déc. 2026), puis la liste RMR (8 janv. 2027).
+    expect(u[0]?.date).toBe('2026-12-14');
+    expect(u[0]?.daysLeft).toBe(62);
+    expect(u.some((x) => x.date === '2027-01-08' && x.daysLeft === 87)).toBe(true);
     expect(u.map((x) => x.date)).toEqual([...u.map((x) => x.date)].sort());
   });
   it('historique trié du plus récent au plus ancien, chaque entrée sourcée', () => {

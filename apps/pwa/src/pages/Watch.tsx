@@ -1,10 +1,12 @@
 /**
- * Veille réglementaire : état des programmes, prochaines dates, historique daté et sourcé,
+ * Programmes et actualités : état des programmes, rondes Entrée express, actualités IRCC en direct,
+ * prochaines dates, historique daté et sourcé,
  * fraîcheur des données et règles dont la date de révision est dépassée.
  */
 import { useEffect, useState } from 'preact/hooks';
 import { changeLog, formatDate, programStatuses, sourceRef, upcomingDates } from '@verijob/core';
 import { Badge, Sources } from '../components/common';
+import { ExpressEntryRounds, IrccNews } from '../components/LiveUpdates';
 import { loadDesignated, loadEmployersIndex, rules } from '../data';
 import { STRINGS as S, tr, useLang } from '../i18n';
 
@@ -40,6 +42,9 @@ export function Watch() {
           <Sources sources={[p.source]} />
         </article>
       ))}
+
+      <ExpressEntryRounds lang={lang} />
+      <IrccNews lang={lang} />
 
       <h2>{tr(S.upcomingTitle, lang)}</h2>
       <ul class="timeline">

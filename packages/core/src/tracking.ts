@@ -7,6 +7,16 @@ export type ApplicationStatus = 'a-envoyer' | 'envoyee' | 'relancee' | 'entretie
 
 export const APPLICATION_STATUSES: ApplicationStatus[] = ['a-envoyer', 'envoyee', 'relancee', 'entretien', 'offre', 'refus', 'abandon'];
 
+/** Où l'offre a été trouvée. */
+export type ApplicationOrigin = 'guichet-emplois' | 'site-emploi' | 'petite-annonce' | 'messagerie' | 'site-employeur' | 'salon' | 'reseau' | 'demarchage' | 'autre';
+
+export const APPLICATION_ORIGINS: ApplicationOrigin[] = [
+  'guichet-emplois', 'site-emploi', 'petite-annonce', 'messagerie', 'site-employeur', 'salon', 'reseau', 'demarchage', 'autre',
+];
+
+/** Taille maximale de la copie d'annonce conservée (les annonces disparaissent vite : c'est une preuve). */
+export const MAX_AD_TEXT = 20_000;
+
 /** Statuts terminés : plus de relance à faire. */
 const CLOSED: ApplicationStatus[] = ['offre', 'refus', 'abandon'];
 
@@ -32,6 +42,12 @@ export interface Application {
   notes?: string;
   contact?: string;
   verification?: Verification;
+  /** Provenance de l'offre. */
+  origin?: ApplicationOrigin;
+  /** Adresse de l'annonce. */
+  adUrl?: string;
+  /** Copie du texte de l'annonce. */
+  adText?: string;
   updatedAt: string;
 }
 
@@ -88,6 +104,9 @@ function isApplication(x: unknown): x is Application {
     && (a.followUp === undefined || (typeof a.followUp === 'string' && DATE.test(a.followUp)))
     && (a.notes === undefined || (typeof a.notes === 'string' && a.notes.length <= 5000))
     && (a.contact === undefined || (typeof a.contact === 'string' && a.contact.length <= 300))
+    && (a.origin === undefined || APPLICATION_ORIGINS.includes(a.origin as ApplicationOrigin))
+    && (a.adUrl === undefined || (typeof a.adUrl === 'string' && a.adUrl.length <= 2000 && /^https?:\/\//i.test(a.adUrl)))
+    && (a.adText === undefined || (typeof a.adText === 'string' && a.adText.length <= MAX_AD_TEXT))
     && typeof a.updatedAt === 'string';
 }
 
@@ -103,8 +122,8 @@ export function parseImport(text: string): { ok: true; applications: Application
     return { ok: false, error: 'format' };
   }
   const applications = d.applications.filter(isApplication).map((a) => {
-    const { id, employer, job, date, status, followUp, notes, contact, verification, updatedAt } = a;
-    return { id, employer, job, date, status, followUp, notes, contact, verification, updatedAt };
+    const { id, employer, job, date, status, followUp, notes, contact, verification, origin, adUrl, adText, updatedAt } = a;
+    return { id, employer, job, date, status, followUp, notes, contact, verification, origin, adUrl, adText, updatedAt };
   });
   return { ok: true, applications, rejected: d.applications.length - applications.length };
 }

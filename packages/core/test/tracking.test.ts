@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  addDays, dueFollowUps, exportApplications, mergeApplications, parseImport, sortApplications, type Application,
+  addDays, dueFollowUps, exportApplications, mergeApplications, parseImport, sortApplications, MAX_AD_TEXT, type Application,
 } from '../src';
 
 const app = (over: Partial<Application>): Application => ({
@@ -28,6 +28,18 @@ describe('export / import', () => {
     const list = [app({ id: 'x', notes: 'Relancer par e-mail', followUp: '2026-10-20', verification: { lmiaFound: true, checkedAt: '2026-10-01' } })];
     const r = parseImport(JSON.stringify(exportApplications(list, '2026-10-13T00:00:00Z')));
     expect(r).toEqual({ ok: true, applications: list, rejected: 0 });
+  });
+  it('provenance, lien et copie de l’annonce : conservés et contrôlés', () => {
+    const ok = app({ id: 'pa', origin: 'petite-annonce', adUrl: 'https://exemple.test/annonce/42', adText: 'Soudeur, 30 $/h, Moncton.' });
+    const file = { app: 'verijob-canada', kind: 'candidatures', version: 1, exportedAt: 'x', applications: [
+      ok,
+      { ...app({ id: 'mauvaise-provenance' }), origin: 'pirate' },
+      { ...app({ id: 'lien-js' }), adUrl: 'javascript:alert(1)' },
+      { ...app({ id: 'trop-long' }), adText: 'x'.repeat(MAX_AD_TEXT + 1) },
+    ] };
+    const r = parseImport(JSON.stringify(file));
+    expect(r.ok && r.applications).toEqual([ok]);
+    expect(r.ok && r.rejected).toBe(3);
   });
   it('refuse un fichier qui n’est pas une sauvegarde VériJob', () => {
     expect(parseImport('pas du json')).toEqual({ ok: false, error: 'json' });

@@ -22,11 +22,19 @@ export { employerKey } from './employer';
 export { searchEmployers, boundedLevenshtein, type SearchHit } from './search';
 export {
   addDays, dueFollowUps, exportApplications, mergeApplications, newId, parseImport, sortApplications,
-  APPLICATION_STATUSES, DEFAULT_FOLLOW_UP_DAYS,
-  type Application, type ApplicationStatus, type TrackingExport, type Verification,
+  APPLICATION_STATUSES, APPLICATION_ORIGINS, DEFAULT_FOLLOW_UP_DAYS, MAX_AD_TEXT,
+  type Application, type ApplicationOrigin, type ApplicationStatus, type TrackingExport, type Verification,
 } from './tracking';
 export { programStatuses, upcomingDates, changeLog, jobBankLink, type ProgramStatus, type ProgramState, type UpcomingDate, type ChangeEntry } from './watch';
 export { filterProspects, prospectPathway, prospectsToCsv, totalPositions, type Prospect, type ProspectFilter } from './prospects';
+export {
+  searchLinks, recruitmentEvents, networks, riskyChannels,
+  type SearchLink, type EventInfo, type NetworkInfo,
+} from './opportunities';
+export {
+  classifyRound, parseExpressEntryRounds, latestRoundByCategory, filterNews,
+  type RawRound, type ExpressEntryRound, type ExpressEntryData, type NewsItem,
+} from './live';
 export { makeWageLookup, type WagesData } from './wages';
 export { extractWages, parseAmount } from './salary';
 export { analyzeOffer, type AnalyzeOptions } from './scam/analyze';

@@ -4,10 +4,11 @@
  */
 import { useState } from 'preact/hooks';
 import {
-  addDays, APPLICATION_STATUSES, DEFAULT_FOLLOW_UP_DAYS, dueFollowUps, exportApplications, formatDate,
-  mergeApplications, newId, parseImport, sortApplications, type Application, type ApplicationStatus,
+  addDays, APPLICATION_ORIGINS, APPLICATION_STATUSES, DEFAULT_FOLLOW_UP_DAYS, MAX_AD_TEXT, dueFollowUps, exportApplications, formatDate,
+  mergeApplications, newId, parseImport, sortApplications, type Application, type ApplicationOrigin, type ApplicationStatus,
 } from '@verijob/core';
 import { Badge } from '../components/common';
+import { openOfferCheck } from './CheckOffer';
 import { STRINGS as S, tr, useLang } from '../i18n';
 import { loadApplications, saveApplications, upsertApplication, useApplications } from '../store';
 
@@ -27,11 +28,19 @@ function Editor({ initial, onDone }: { initial: Application; onDone: () => void 
   const lang = useLang();
   const [a, setA] = useState(initial);
   const field = (k: keyof Application) => (e: Event) => setA({ ...a, [k]: (e.target as HTMLInputElement).value || undefined });
+  /** Enregistre (si l'employeur est renseigné) ; renvoie faux si le formulaire est incomplet. */
+  const save = async (): Promise<boolean> => {
+    if (!a.employer?.trim()) return false;
+    // Un lien qui n'est pas une adresse web (ex. « javascript: ») n'est pas gardé.
+    const url = a.adUrl?.trim();
+    const adUrl = url && /^https?:[/][/]/i.test(url) ? url : undefined;
+    await upsertApplication({ ...a, employer: a.employer.trim(), job: (a.job ?? '').trim(), adUrl, adText: a.adText?.trim() || undefined, updatedAt: nowIso() });
+    return true;
+  };
   return (
     <form class="panel" onSubmit={(e) => {
       e.preventDefault();
-      if (!a.employer?.trim()) return;
-      void upsertApplication({ ...a, employer: a.employer.trim(), job: (a.job ?? '').trim(), updatedAt: nowIso() }).then(onDone);
+      void save().then((ok) => { if (ok) onDone(); });
     }}>
       <h2>{tr(initial.employer ? S.editApplication : S.addApplication, lang)}</h2>
       <label>{tr(S.fieldEmployer, lang)}<input required value={a.employer} onInput={field('employer')} /></label>
@@ -45,6 +54,18 @@ function Editor({ initial, onDone }: { initial: Application; onDone: () => void 
           {APPLICATION_STATUSES.map((s) => <option value={s}>{tr(S.appStatus[s], lang)}</option>)}
         </select>
       </label>
+      <label>{tr(S.fieldOrigin, lang)}
+        <select value={a.origin ?? ''} onChange={(e) => setA({ ...a, origin: ((e.target as HTMLSelectElement).value || undefined) as ApplicationOrigin | undefined })}>
+          <option value="">{tr(S.choose, lang)}</option>
+          {APPLICATION_ORIGINS.map((o) => <option value={o}>{tr(S.appOrigin[o], lang)}</option>)}
+        </select>
+      </label>
+      <label>{tr(S.fieldAdUrl, lang)}<input type="url" inputMode="url" placeholder="https://" value={a.adUrl ?? ''} onInput={field('adUrl')} /></label>
+      <label>{tr(S.fieldAdText, lang)}
+        <textarea rows={4} maxLength={MAX_AD_TEXT} value={a.adText ?? ''} onInput={field('adText')} />
+      </label>
+      <p class="muted">{tr(S.adTextHelp, lang)}</p>
+      {a.adText?.trim() && <p><button type="button" class="link" onClick={() => void save().then(() => openOfferCheck(a.adText!))}>{tr(S.analyzeAd, lang)}</button></p>}
       <label>{tr(S.fieldContact, lang)}<input value={a.contact ?? ''} onInput={field('contact')} /></label>
       <label>{tr(S.fieldNotes, lang)}<textarea rows={3} value={a.notes ?? ''} onInput={field('notes')} /></label>
       <div class="row">
@@ -116,6 +137,15 @@ export function Tracking() {
                 {a.verification.designated && <Badge kind="ok">{tr(S.verifDesignated, lang)}</Badge>}{' '}
                 {a.verification.scamSignals !== undefined && <Badge kind={a.verification.scamSignals ? 'eleve' : 'info'}>{a.verification.scamSignals} {tr(S.verifSignals, lang)}</Badge>}
               </p>
+            )}
+            {a.origin && <p class="muted">{tr(S.originShort, lang)} : {tr(S.appOrigin[a.origin], lang)}</p>}
+            {a.adUrl && <p><a href={a.adUrl} target="_blank" rel="noopener noreferrer nofollow">{tr(S.viewAd, lang)} ↗</a></p>}
+            {a.adText && (
+              <details class="sources">
+                <summary>{tr(S.savedAd, lang)}</summary>
+                <p class="ad-copy">{a.adText}</p>
+                <button type="button" class="link" onClick={() => openOfferCheck(a.adText!)}>{tr(S.analyzeAd, lang)}</button>
+              </details>
             )}
             {a.contact && <p class="muted">{a.contact}</p>}
             {a.notes && <p>{a.notes}</p>}

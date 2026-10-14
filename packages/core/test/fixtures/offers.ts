@@ -205,4 +205,37 @@ Applications by email only: jobs@prairiefoods.ca. No fees are charged to applica
     text: `Urgent need: Kitchen helper, Halifax NS, $16.50/hour. Apply by email: hiring@harbourgrill.ca`,
     expected: [],
   },
+  // ------------------------------------------- Petites annonces et groupes de messagerie
+  {
+    name: 'Petite annonce : entretien sur Telegram + copie du passeport',
+    lang: 'fr',
+    kind: 'arnaque',
+    text: `Emploi au Canada pour soudeurs. Entretien uniquement sur Telegram : t.me/canadajobs_recrut
+Envoyez la copie de votre passeport et votre CV pour l'étude du dossier.`,
+    expected: ['messagerie-seule', 'documents-sensibles'],
+  },
+  {
+    name: 'Faux chèque « client mystère »',
+    lang: 'fr',
+    kind: 'arnaque',
+    text: `Vous avez été choisi comme client mystère pour une enseigne canadienne.
+Encaissez le chèque reçu sur votre compte, gardez 300 $ et renvoyez la différence par transfert.`,
+    expected: ['cheque-ou-mule'],
+  },
+  {
+    name: 'Classified ad: WhatsApp interview + bank details + financial agent',
+    lang: 'en',
+    kind: 'arnaque',
+    text: `Remote financial agent needed for a Toronto company. Interview on WhatsApp.
+You will receive payments into your bank account. Please provide your bank details and the verification code we text you.`,
+    expected: ['messagerie-seule', 'documents-sensibles', 'cheque-ou-mule'],
+  },
+  {
+    name: 'Mission officielle : « nous ne communiquons jamais par WhatsApp »',
+    lang: 'fr',
+    kind: 'saine',
+    text: `Mission de recrutement francophone à Abidjan. Inscription sur le site officiel uniquement.
+Attention : nous ne communiquons jamais par texto ou WhatsApp. Vérifiez toujours l'employeur.`,
+    expected: [],
+  },
 ];

@@ -1,6 +1,6 @@
 {
   "$comment": "Règles d'immigration versionnées. NE JAMAIS coder ces valeurs en dur dans la logique : le moteur lit ce fichier. Chaque section pointe vers une source officielle (champ 'source') qui porte sa date de vérification et sa date de prochaine révision. Mettre à jour 'version' à chaque modification.",
-  "version": "2026-10-13",
+  "version": "2026-10-14",
   "sources": {
     "esdc-refusal": {
       "titleFr": "EDSC — Refus de traiter certaines demandes d'EIMT (RMR à chômage ≥ 6 %)",
@@ -136,6 +136,87 @@
       "pageModified": null,
       "verifiedAt": "2026-10-13",
       "nextReview": "2027-01-13"
+    },
+    "ircc-ee-rounds": {
+      "titleFr": "IRCC — Entrée express : rondes d'invitations",
+      "titleEn": "IRCC — Express Entry: rounds of invitations",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/rondes-invitations.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/rounds-invitations.html",
+      "pageModified": "2026-07-10",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-01-14"
+    },
+    "ircc-ee-categories": {
+      "titleFr": "IRCC — Entrée express : sélection axée sur les catégories (ensembles)",
+      "titleEn": "IRCC — Express Entry: category-based selection",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/rondes-invitations/selection-axee-ensembles.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/rounds-invitations/category-based-selection.html",
+      "pageModified": "2026-03-31",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-01-14"
+    },
+    "ircc-news": {
+      "titleFr": "IRCC — Salle de presse",
+      "titleEn": "IRCC — Newsroom",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/nouvelles.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/news.html",
+      "pageModified": null,
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-01-14"
+    },
+    "ircc-destination-canada": {
+      "titleFr": "IRCC — Destination Canada Forum Mobilité : participer en tant que candidat",
+      "titleEn": "IRCC — Destination Canada Mobility Forum: attend as a candidate",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/embaucher-etranger-temporaires/travailleurs-francophones-bilingues-exterieur-quebec/destination-canada/candidats.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/hire-temporary-foreign/french-speaking-bilingual-workers-outside-quebec/destination-canada/candidates.html",
+      "pageModified": "2026-08-05",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2026-12-14"
+    },
+    "ircc-francophone-recruitment": {
+      "titleFr": "IRCC — Trouver un travailleur francophone ou bilingue pour un poste hors Québec",
+      "titleEn": "IRCC — Find a Francophone or bilingual worker for a position outside Quebec",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/embaucher-etranger-temporaires/travailleurs-francophones-bilingues-exterieur-quebec/trouver-travailleur.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/hire-temporary-foreign/french-speaking-bilingual-workers-outside-quebec/find-worker.html",
+      "pageModified": "2025-09-17",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-01-14"
+    },
+    "fcfa-immigration-francophone": {
+      "titleFr": "FCFA (financé par IRCC) — Portail de l'immigration francophone",
+      "titleEn": "FCFA (funded by IRCC) — Francophone immigration portal",
+      "urlFr": "https://immigrationfrancophone.ca/fr/",
+      "urlEn": "https://immigrationfrancophone.ca/en/",
+      "pageModified": null,
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-04-14"
+    },
+    "quebec-recrutement-international": {
+      "titleFr": "Gouvernement du Québec — Activités de recrutement international (MIFI)",
+      "titleEn": "Government of Quebec — International recruitment activities (MIFI, French only)",
+      "urlFr": "https://www.quebec.ca/entreprises-et-travailleurs-autonomes/administrer-gerer/embauche-gestion-personnel/recruter/embaucher-immigrant/journees-quebec",
+      "urlEn": "https://www.quebec.ca/entreprises-et-travailleurs-autonomes/administrer-gerer/embauche-gestion-personnel/recruter/embaucher-immigrant/journees-quebec",
+      "pageModified": "2025-12-16",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-01-14"
+    },
+    "cdem-destination-manitoba": {
+      "titleFr": "CDEM (Manitoba, en collaboration avec IRCC) — Destination Manitoba",
+      "titleEn": "CDEM (Manitoba, in collaboration with IRCC) — Destination Manitoba",
+      "urlFr": "https://www.cdem.com/en/events/destination-manitoba/",
+      "urlEn": "https://www.cdem.com/en/events/destination-manitoba/",
+      "pageModified": null,
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2026-12-14"
+    },
+    "cafc-job-scams": {
+      "titleFr": "Centre antifraude du Canada — Fraudes liées à l'emploi",
+      "titleEn": "Canadian Anti-Fraud Centre — Job scams",
+      "urlFr": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/job-emploi-fra.htm",
+      "urlEn": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/job-emploi-eng.htm",
+      "pageModified": "2025-12-12",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-01-14"
     }
   },
   "lmiaLowWage": {
@@ -883,6 +964,153 @@
     "$comment": "MODE LIENS UNIQUEMENT : les conditions d'utilisation de Job Bank interdisent tout accès automatisé. Seul le paramètre fglo=1 (offres ouvertes aux candidats étrangers) a été confirmé. searchTemplate reste null tant qu'un modèle d'URL n'a pas été relevé à la main dans un navigateur (placeholders {keyword} et {province}).",
     "foreignJobsUrl": "https://www.jobbank.gc.ca/jobsearch/jobsearch?fglo=1&sort=D",
     "searchTemplate": null
+  },
+  "opportunities": {
+    "$comment": "MODE LIENS UNIQUEMENT : aucun de ces sites n'est lu automatiquement (leurs conditions d'utilisation l'interdisent). L'appli construit seulement des liens de recherche à ouvrir dans le navigateur. Placeholders des modèles : {keyword} et {location}.",
+    "searchSites": [
+      {
+        "id": "indeed",
+        "name": "Indeed Canada",
+        "template": "https://ca.indeed.com/jobs?q={keyword}&l={location}",
+        "noteFr": "Grand site privé. Beaucoup d'offres demandent d'être déjà au Canada : lisez la ligne sur le permis de travail ou la citoyenneté avant de postuler.",
+        "noteEn": "Large private site. Many postings require you to already be in Canada: read the line about work permits or citizenship before applying.",
+        "verifiedAt": "2026-10-14"
+      },
+      {
+        "id": "linkedin",
+        "name": "LinkedIn",
+        "template": "https://www.linkedin.com/jobs/search/?keywords={keyword}&location={location}",
+        "noteFr": "Compte gratuit nécessaire. Utile aussi pour trouver les recruteurs d'une entreprise et leur écrire directement.",
+        "noteEn": "Free account needed. Also useful to find a company's recruiters and write to them directly.",
+        "verifiedAt": "2026-10-14"
+      },
+      {
+        "id": "quebec-emploi",
+        "name": "Québec emploi",
+        "template": null,
+        "url": "https://www.quebecemploi.gouv.qc.ca/plateforme-emploi",
+        "provinces": ["QC"],
+        "noteFr": "Site officiel du gouvernement du Québec. Attention : l'immigration au Québec suit ses propres règles (MIFI), différentes du reste du Canada.",
+        "noteEn": "Official Government of Quebec site. Note: immigration to Quebec follows its own rules (MIFI), different from the rest of Canada.",
+        "verifiedAt": "2026-10-14"
+      }
+    ],
+    "events": [
+      {
+        "id": "destination-canada",
+        "source": "ircc-destination-canada",
+        "nameFr": "Destination Canada Forum Mobilité",
+        "nameEn": "Destination Canada Mobility Forum",
+        "audienceFr": "Salon de recrutement du gouvernement du Canada pour les travailleurs qualifiés francophones ou bilingues, postes hors Québec. Gratuit, sur inscription puis invitation.",
+        "audienceEn": "Government of Canada recruitment fair for skilled Francophone or bilingual workers, jobs outside Quebec. Free, by registration then invitation.",
+        "statusFr": "Édition 2026 : en ligne (3 au 5 février), Tunis (9 au 11 février), Paris (14 février). 22e édition : inscriptions des candidats annoncées pour l'automne 2026.",
+        "statusEn": "2026 edition: online (February 3–5), Tunis (February 9–11), Paris (February 14). 22nd edition: candidate registration announced for fall 2026.",
+        "lastEditionEnd": "2026-02-14"
+      },
+      {
+        "id": "destination-manitoba",
+        "source": "cdem-destination-manitoba",
+        "nameFr": "Destination Manitoba (CDEM)",
+        "nameEn": "Destination Manitoba (CDEM)",
+        "audienceFr": "Mission francophone du Manitoba en Afrique, avec la province et IRCC. Ouverte à tous ; invitations envoyées aux personnes admissibles à l'immigration au Manitoba.",
+        "audienceEn": "Manitoba Francophone mission in Africa, with the province and IRCC. Open to everyone; invitations sent to people eligible to immigrate to Manitoba.",
+        "statusFr": "Dernière édition publiée sur le site officiel : Dakar et Abidjan, décembre 2024. La CDEM indique ne jamais communiquer par texto, téléphone ou WhatsApp.",
+        "statusEn": "Last edition published on the official site: Dakar and Abidjan, December 2024. CDEM states it never communicates by text message, phone or WhatsApp.",
+        "lastEditionEnd": "2024-12-10"
+      },
+      {
+        "id": "recrutement-quebec",
+        "source": "quebec-recrutement-international",
+        "nameFr": "Recrutement international du Québec (Journées Québec)",
+        "nameEn": "Quebec international recruitment (Journées Québec)",
+        "audienceFr": "Missions du gouvernement du Québec pour des travailleurs temporaires dans les secteurs prioritaires : construction, éducation, petite enfance, santé et services sociaux.",
+        "audienceEn": "Government of Quebec missions for temporary workers in priority sectors: construction, education, early childhood, health and social services.",
+        "statusFr": "Nombre limité d'activités annoncé. Les offres sont publiées sur Québec emploi.",
+        "statusEn": "A limited number of activities announced. Job offers are posted on Québec emploi.",
+        "lastEditionEnd": null
+      }
+    ],
+    "networks": [
+      {
+        "id": "services-publics-emploi",
+        "source": "ircc-francophone-recruitment",
+        "nameFr": "Le service public de l'emploi de votre pays",
+        "nameEn": "Your country's public employment service",
+        "detailFr": "Le Canada oriente les employeurs vers les services publics d'emploi de plusieurs pays pour recruter gratuitement des francophones. Pays cités par IRCC : France, Belgique, Maroc, Tunisie, Côte d'Ivoire, Sénégal, Maurice. Inscrivez-vous auprès de celui de votre pays.",
+        "detailEn": "Canada refers employers to the public employment services of several countries to recruit Francophones for free. Countries listed by IRCC: France, Belgium, Morocco, Tunisia, Côte d'Ivoire, Senegal, Mauritius. Register with your country's service.",
+        "countries": ["FR", "BE", "MA", "TN", "CI", "SN", "MU"]
+      },
+      {
+        "id": "reseaux-immigration-francophone",
+        "source": "fcfa-immigration-francophone",
+        "nameFr": "Réseaux en immigration francophone (RIF)",
+        "nameEn": "Francophone Immigration Networks (RIF)",
+        "detailFr": "Réseaux des communautés francophones hors Québec, coordonnés par la FCFA avec le financement d'IRCC : informations pour immigrer et vivre en français, communautés accueillantes, contacts locaux.",
+        "detailEn": "Networks of Francophone communities outside Quebec, coordinated by the FCFA with IRCC funding: information on immigrating and living in French, welcoming communities, local contacts.",
+        "url": "https://immigrationfrancophone.ca/strategie-communautaire/reseaux-en-immigration-francophone/"
+      },
+      {
+        "id": "communautes-picr",
+        "source": "ircc-community-pilots",
+        "nameFr": "Communautés des pilotes PICR et PICRF",
+        "nameEn": "RCIP and FCIP pilot communities",
+        "detailFr": "Chaque communauté publie sa liste d'employeurs désignés : écrivez-leur directement depuis l'onglet « Démarcher ».",
+        "detailEn": "Each community publishes its list of designated employers: write to them directly from the “Reach out” tab.",
+        "internal": "#/demarcher"
+      }
+    ],
+    "riskyChannels": [
+      {
+        "id": "groupes-messagerie",
+        "source": "cafc-job-scams",
+        "nameFr": "Groupes Facebook, WhatsApp et Telegram « Emplois Canada »",
+        "nameEn": "“Jobs in Canada” Facebook, WhatsApp and Telegram groups",
+        "detailFr": "Personne ne contrôle ces groupes. Les offres « avec visa » qui y circulent sont très souvent des arnaques : passez chaque message dans l'onglet « Offre » et vérifiez l'employeur.",
+        "detailEn": "Nobody checks these groups. “Visa included” offers shared there are very often scams: run each message through the “Offer” tab and check the employer."
+      },
+      {
+        "id": "petites-annonces",
+        "source": "cafc-job-scams",
+        "nameFr": "Sites de petites annonces (dans votre pays ou au Canada)",
+        "nameEn": "Classified ad sites (in your country or in Canada)",
+        "detailFr": "Les sites de petites annonces généralistes (par exemple Jiji, CoinAfrique, Kijiji, Craigslist) ne vérifient pas les annonces d'emploi à l'étranger. Le Centre antifraude du Canada signale des arnaques à l'emploi publiées dans les petites annonces en ligne.",
+        "detailEn": "General classified ad sites (for example Jiji, CoinAfrique, Kijiji, Craigslist) do not check job ads for work abroad. The Canadian Anti-Fraud Centre reports job scams posted in online classifieds."
+      }
+    ]
+  },
+  "expressEntry": {
+    "source": "ircc-ee-categories",
+    "roundsSource": "ircc-ee-rounds",
+    "$comment": "Fichiers JSON publiés par IRCC (lus par le pipeline et, sur demande, par l'appli : canada.ca autorise la lecture depuis un navigateur). Les catégories sont reconnues dans le nom de la ronde (texte normalisé : minuscules, sans accents), dans l'ordre de la liste. access : 'etranger' = accessible depuis l'étranger, 'nomination' = nomination d'une province requise, 'canada' = expérience au Canada requise, 'autre'.",
+    "roundsJson": {
+      "fr": "https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_fr.json",
+      "en": "https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json"
+    },
+    "minFrenchNclc": 7,
+    "categoryMinExperienceMonths": 12,
+    "categories": [
+      { "id": "francais", "match": ["french-language", "competence linguistique en francais"], "access": "etranger", "nameFr": "Compétence en français", "nameEn": "French-language proficiency" },
+      { "id": "transport", "match": ["transport"], "access": "etranger", "nameFr": "Métiers des transports", "nameEn": "Transport occupations" },
+      { "id": "education", "match": ["education"], "access": "etranger", "nameFr": "Métiers de l'éducation", "nameEn": "Education occupations" },
+      { "id": "sante", "match": ["healthcare", "sante"], "access": "etranger", "nameFr": "Santé et services sociaux", "nameEn": "Healthcare and social services" },
+      { "id": "stim", "match": ["stem", "stim"], "access": "etranger", "nameFr": "Sciences, technologie, ingénierie et mathématiques", "nameEn": "Science, technology, engineering and math (STEM)" },
+      { "id": "metiers", "match": ["trades", "metiers specialises"], "access": "etranger", "nameFr": "Métiers spécialisés", "nameEn": "Trades" },
+      { "id": "pcp", "match": ["provincial nominee", "candidats des provinces"], "access": "nomination", "nameFr": "Candidats des provinces", "nameEn": "Provincial nominees" },
+      { "id": "cec", "match": ["canadian experience", "experience canadienne"], "access": "canada", "nameFr": "Expérience canadienne", "nameEn": "Canadian Experience Class" },
+      { "id": "canada-experience", "match": ["physicians", "medecins", "senior managers", "cadres superieurs", "researchers", "chercheurs"], "access": "canada", "nameFr": "Profession avec expérience au Canada", "nameEn": "Occupation with Canadian experience" },
+      { "id": "generale", "match": ["no program specified", "aucun programme", "general"], "access": "etranger", "nameFr": "Ronde générale", "nameEn": "General round" }
+    ]
+  },
+  "liveNews": {
+    "source": "ircc-news",
+    "$comment": "Fil d'actualités officiel du gouvernement du Canada (api.io.canada.ca, lecture autorisée depuis un navigateur). L'appli le lit en direct et garde les nouvelles qui contiennent un mot de 'include' sans contenir de mot de 'exclude' (texte normalisé : minuscules, sans accents).",
+    "url": {
+      "fr": "https://api.io.canada.ca/io-server/gc/news/fr/v2?dept=departmentofcitizenshipandimmigration&type=newsreleases&sort=publishedDate&orderBy=desc&pick=50&format=json",
+      "en": "https://api.io.canada.ca/io-server/gc/news/en/v2?dept=departmentofcitizenshipandimmigration&type=newsreleases&sort=publishedDate&orderBy=desc&pick=50&format=json"
+    },
+    "maxItems": 8,
+    "include": ["immigration", "immigrant", "travailleur", "worker", "permis de travail", "work permit", "entree express", "express entry", "residence permanente", "permanent residen", "francophone", "main-d'oeuvre", "workforce", "labour", "pilote", "pilot", "consultant", "fraude", "fraud", "emploi", "employer", "employeur", "recrutement", "recruit"],
+    "exclude": ["passeport", "passport", "allocation canadienne pour enfants", "child benefit", "taxe d'accise", "excise tax", "megadeduction", "mega deduction", "sport", "regles de citoyennete", "semaine de la citoyennete", "nouveaux canadiens", "citizenship rules", "citizenship week", "new canadians", "asile", "asylum", "refugie", "refugee"]
   },
   "changes": [
     {

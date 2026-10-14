@@ -159,3 +159,6 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 .timeline, .sources-list { padding-left: 1.2rem; }
 .timeline li, .sources-list li { margin: 0.5rem 0; }
 .disclaimer p { margin: 0.3rem 0; }
+
+/* Copie d'annonce enregistrée dans le suivi : texte brut, retours à la ligne conservés. */
+.ad-copy { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 16rem; overflow-y: auto; font-size: 0.9rem; }

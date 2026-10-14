@@ -230,3 +230,20 @@ Méthode : chaque site a été lu **une seule fois**, après vérification de so
 - Pictou County, Thunder Bay, Steinbach, North Okanagan Shuswap, Superior East, Kelowna : protégées par une **vérification anti-robots**, que je ne contourne pas.
 - North Bay : liste chargée en JavaScript depuis `/wp-admin/admin-ajax.php`, chemin **interdit par son robots.txt**. Ses 26 métiers prioritaires, publiés en clair, ont été relevés.
 - St-Pierre-Jolys : le lien vers le PDF renvoie une erreur **403** en dehors d'une session de navigateur.
+
+## 14. Pistes d'emploi, Entrée express et actualités (14 oct. 2026)
+
+Demande de Jessica : suivre aussi les petites annonces et, plus largement, les réseaux, cercles et opportunités utiles depuis l'étranger, ainsi qu'un résumé à jour des programmes d'immigration. Décisions : mode **liens uniquement** pour tous les sites d'offres, section dans l'onglet Emplois (pas de 8e onglet), provenance et copie de l'annonce dans le Suivi.
+
+| Élément | Source vérifiée | Ce qu'on en tire |
+|---|---|---|
+| Rondes Entrée express | `ee_rounds_123_fr.json` / `_en.json` sur canada.ca (lisibles depuis un navigateur, ≈ 800 Ko chacun) | 40 dernières rondes : date, nom, invitations, score minimum. Préparées chaque semaine par le pipeline (1,5 Ko compressé). |
+| Catégories Entrée express | Page « Sélection axée sur les catégories » (modifiée le 31 mars 2026) | Français : NCLC 7 dans les 4 compétences. Santé, STIM, métiers, éducation, transport : 12 mois d'expérience en 3 ans, **au Canada ou à l'étranger**. Médecins, cadres supérieurs, chercheurs : expérience **au Canada**. |
+| Actualités IRCC | `api.io.canada.ca` (fil officiel, lecture autorisée depuis un navigateur), communiqués seulement (`type=newsreleases`) | Filtrées par mots-clés de `rules.json` (on écarte passeports, fiscalité, citoyenneté, asile). |
+| Destination Canada Forum Mobilité | Page candidats IRCC (modifiée le 5 août 2026) + page « Trouver un travailleur francophone » | Édition 2026 : en ligne, Tunis, Paris. 22e édition : inscriptions annoncées pour l'automne. Services publics d'emploi partenaires : France, Belgique, Maroc, Tunisie, Côte d'Ivoire, Sénégal, Maurice. |
+| Destination Manitoba | cdem.com (avec la province et IRCC) | Dernière édition publiée : Dakar et Abidjan, déc. 2024. La CDEM n'écrit jamais par texto, téléphone ou WhatsApp. Les dates 2026 vues sur un blog n'ont **pas** été reprises (non confirmées). |
+| Journées Québec | quebec.ca (MIFI, mise à jour le 16 déc. 2025) | Secteurs prioritaires : construction, éducation, petite enfance, santé et services sociaux ; nombre limité d'activités. |
+| Réseaux en immigration francophone | immigrationfrancophone.ca (FCFA, financé par IRCC) | Lien vers la page des RIF. |
+| Arnaques à l'emploi | Centre antifraude du Canada, page « Emploi » (modifiée le 12 déc. 2025) | Nouvelles règles : contact/entretien par WhatsApp ou Telegram, demande de documents ou de codes, faux chèque / « agent financier » / « client mystère ». |
+
+Non retenu : lecture automatique d'Indeed, LinkedIn, Kijiji, Craigslist, Jiji, CoinAfrique ou des groupes Facebook/WhatsApp (conditions d'utilisation et absence de contrôle des annonces). Ces sites sont seulement cités, avec une mise en garde.

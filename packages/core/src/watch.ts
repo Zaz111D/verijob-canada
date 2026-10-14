@@ -46,6 +46,11 @@ export function programStatuses(rules: Rules, today: string): ProgramStatus[] {
   const rm = rules.ruralMeasures;
   const rmActive = today >= rm.validFrom && today <= rm.validTo;
   const fd = (d: string) => ({ fr: formatDate(d, 'fr'), en: formatDate(d, 'en') });
+  const ee = rules.expressEntry;
+  const eeAbroad = (l: 'fr' | 'en') => ee.categories
+    .filter((c) => c.access === 'etranger' && c.id !== 'generale')
+    .map((c) => (l === 'fr' ? c.nameFr : c.nameEn).toLowerCase())
+    .join(', ');
   return [
     {
       id: 'pilotes-aides-familiaux',
@@ -95,6 +100,16 @@ export function programStatuses(rules: Rules, today: string): ProgramStatus[] {
       state: 'ouvert',
       detail: { fr: `Hors Québec, NCLC ${rules.francophoneMobility.minOralNclc} à l'oral, sans EIMT.`, en: `Outside Quebec, NCLC ${rules.francophoneMobility.minOralNclc} oral, no LMIA.` },
       source: src(rules.francophoneMobility.source),
+    },
+    {
+      id: 'entree-express',
+      name: { fr: 'Entrée express (résidence permanente)', en: 'Express Entry (permanent residence)' },
+      state: 'ouvert',
+      detail: {
+        fr: `Rondes par catégorie possibles depuis l'étranger : ${eeAbroad('fr')}. Français : NCLC ${ee.minFrenchNclc} dans les 4 compétences. Autres catégories : ${ee.categoryMinExperienceMonths} mois d'expérience dans un métier de la liste (3 dernières années, au Canada ou à l'étranger).`,
+        en: `Category rounds open from abroad: ${eeAbroad('en')}. French: NCLC ${ee.minFrenchNclc} in all 4 skills. Other categories: ${ee.categoryMinExperienceMonths} months of experience in a listed occupation (last 3 years, in Canada or abroad).`,
+      },
+      source: src(ee.source),
     },
     {
       id: 'pilotes-communautaires',

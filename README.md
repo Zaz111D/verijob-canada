@@ -18,14 +18,14 @@ Application web gratuite (PWA), sans serveur, qui aide les candidats africains, 
 
 | Onglet | Rôle |
 |---|---|
-| **Offre** | Collez un message : l'appli liste les signaux d'alerte (frais demandés, visa « garanti », Western Union, faux e-mail gouvernemental, PTAS proposé à un Africain…), avec une explication simple et la source officielle de chacun. Elle ne dit jamais « offre sûre ». |
+| **Offre** | Collez un message : l'appli liste les signaux d'alerte (frais demandés, visa « garanti », Western Union, faux e-mail gouvernemental, PTAS proposé à un Africain, « entretien » sur WhatsApp/Telegram, copie du passeport ou code demandés, faux chèque…), avec une explication simple et la source officielle de chacun. Elle ne dit jamais « offre sûre ». |
 | **Employeur** | Recherche tolérante aux fautes dans les listes officielles d'EIMT positives et refusées (8 derniers trimestres) et dans les employeurs désignés des pilotes PICR/PICRF. |
-| **Emplois** | Lien vers les offres du Guichet-Emplois ouvertes aux candidats étrangers, mots-clés à copier, villes où les EIMT bas salaire sont gelées, et évaluation d'un poste trouvé. |
+| **Emplois** | Lien vers les offres du Guichet-Emplois ouvertes aux candidats étrangers, mots-clés à copier, villes où les EIMT bas salaire sont gelées. Autres sites (Indeed, LinkedIn, Québec emploi) avec recherche pré-remplie, salons de recrutement (Destination Canada, Destination Manitoba, Journées Québec), réseaux (services publics d'emploi partenaires, réseaux francophones, communautés PICR/PICRF), mises en garde sur les groupes WhatsApp/Facebook et les petites annonces. Évaluation d'un poste trouvé. |
 | **Démarcher** | Employeurs qui obtiennent des EIMT pour vos métiers trimestre après trimestre, et employeurs désignés. Export CSV, modèle de message de candidature FR/EN, bouton « Suivre ». |
-| **Suivi** | Vos candidatures : statut, relances, notes, export et import (sauvegarde JSON). |
+| **Suivi** | Vos candidatures : statut, relances, notes, provenance de l'offre (petite annonce, Job Bank, salon…), lien et **copie du texte de l'annonce** (preuve si elle disparaît), bouton « Analyser cette annonce », export et import (sauvegarde JSON). |
 | **Mon profil** | Pays, niveaux de langue, métiers, provinces. Affiche les voies d'immigration possibles (probable, possible, bloquée, à préciser), toujours avec les raisons et les sources. |
 | **Consultant** | Guide pour vérifier un consultant dans le registre officiel du CICC (accessible depuis l'accueil et le pied de page). |
-| **Ce qui a changé** | État des programmes, prochaines dates (nouvelle liste des RMR…), historique des changements, fraîcheur des données (accessible depuis l'accueil et le pied de page). |
+| **Programmes et actualités** | État des programmes (dont Entrée express et ses catégories accessibles depuis l'étranger), dernières invitations Entrée express par catégorie avec le score minimum, **actualités d'IRCC lues en direct** sur canada.ca, prochaines dates, historique des changements, fraîcheur des données (accessible depuis l'accueil et le pied de page). |
 
 L'appli est en français par défaut. Le bouton **English** en haut à droite bascule en anglais, et ce choix est mémorisé.
 
@@ -89,9 +89,13 @@ docs/data-report.md      Rapport de contrôle généré par le pipeline
 | `cma-lookup.json` | Municipalité → RMR (gel des EIMT bas salaire) | Statistique Canada, Recensement 2021 |
 | `wages.json` | Salaires bas, médian et haut des métiers ciblés | Salaires Job Bank, open.canada.ca |
 | `designated-employers.json`, `community-priorities.json` | Employeurs désignés et métiers prioritaires PICR/PICRF | Relevés manuels : `data/manual/*.csv` |
+| `express-entry.json` | 40 dernières rondes d'invitations Entrée express, avec leur catégorie | Fichiers JSON officiels d'IRCC (canada.ca) |
+
+Lu **en direct** par l'appli (pas de fichier) : le fil d'actualités d'IRCC (`api.io.canada.ca`) à l'ouverture de « Programmes et actualités », et le fichier officiel des rondes Entrée express quand on appuie sur « Actualiser maintenant ». Canada.ca autorise cette lecture depuis un navigateur ; le service worker garde la dernière réponse pour le mode hors ligne.
 
 Règles d'accès respectées :
 - **Job Bank n'est jamais lu automatiquement**, car ses conditions d'utilisation l'interdisent. L'appli ne fait que des liens.
+- Même règle pour **Indeed, LinkedIn, Québec emploi et les sites de petites annonces** : aucun n'est lu ; l'appli ouvre seulement une recherche pré-remplie (`rules.json` → `opportunities`).
 - Les téléchargements s'identifient clairement et respectent les délais demandés par chaque site (`Crawl-delay`).
 - Aucune protection anti-robots n'est contournée. Les sites protégés sont relevés à la main.
 
@@ -107,6 +111,11 @@ Règles d'accès respectées :
 - Après chaque modification, lancez `npm test` : les tests vérifient que chaque règle a bien une source datée.
 
 Tant qu'une règle est périmée, l'appli affiche un bandeau « données possiblement périmées ». Le workflow GitHub signale aussi l'échec par e-mail.
+
+### Salons, réseaux et actualités
+- **Salons de recrutement** (`rules.json` → `opportunities.events`) : leurs sources sont à revoir tous les 2 mois (`nextReview`). Mettez à jour `statusFr`/`statusEn` et `lastEditionEnd` quand une nouvelle édition est annoncée (Destination Canada : inscriptions annoncées pour l'automne 2026).
+- **Actualités IRCC** : si des nouvelles inutiles apparaissent (ou si des nouvelles utiles manquent), ajustez les listes de mots `liveNews.include` / `liveNews.exclude`.
+- **Entrée express** : si IRCC crée une nouvelle catégorie, ajoutez-la dans `expressEntry.categories` (sinon elle s'affiche comme « Cas particulier »).
 
 ### Employeurs désignés PICR/PICRF
 Ajoutez ou corrigez des lignes dans `data/manual/designated-employers.csv`. Colonnes :

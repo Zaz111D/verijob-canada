@@ -29,7 +29,9 @@ describe('data/rules.json', () => {
 
   it('chaque source a une URL officielle https, une date de vérification et de révision', () => {
     for (const [id, s] of Object.entries(rules.sources)) {
-      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca|www\.jobbank\.gc\.ca)\//);
+      // Gouvernements du Canada et du Québec, registre du CICC, Centre antifraude, et organismes partenaires
+      // financés par IRCC (FCFA, CDEM) pour les salons et réseaux francophones.
+      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca|www\.jobbank\.gc\.ca|antifraudcentre-centreantifraude\.ca|www\.quebec\.ca|immigrationfrancophone\.ca|www\.cdem\.com)\//);
       if (s.urlFr) expect(s.urlFr, id).toMatch(/^https:\/\//);
       expect(s.verifiedAt, id).toMatch(DATE);
       expect(s.nextReview, id).toMatch(DATE);

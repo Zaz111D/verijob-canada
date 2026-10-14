@@ -5,7 +5,10 @@
  */
 import rulesJson from '../../../data/rules.json';
 import nocJson from '../../../data/noc.json';
-import { makeWageLookup, type CmaLookup, type NocData, type Prospect, type Rules, type WageLookup, type WagesData } from '@verijob/core';
+import {
+  filterNews, makeWageLookup, parseExpressEntryRounds,
+  type CmaLookup, type ExpressEntryData, type NewsItem, type NocData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
+} from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
 export const nocData = nocJson as unknown as NocData;
@@ -58,6 +61,32 @@ export const loadCmaLookup = () => load<CmaLookup>('cma-lookup.json');
 export const loadProspects = () => load<Prospect[]>('prospects.json');
 export interface CommunityPriority { community: string; program: 'RCIP' | 'FCIP'; noc: string; title: string; year: string; sourceUrl: string; recordedAt: string; notes?: string }
 export const loadPriorities = () => load<CommunityPriority[]>('community-priorities.json');
+
+export const loadExpressEntry = () => load<ExpressEntryData>('express-entry.json');
+
+// ---------------------------------------------------------------------------
+// Lecture EN DIRECT des fichiers officiels (canada.ca autorise la lecture depuis un navigateur).
+// Le service worker garde la dernière réponse pour la consultation hors ligne.
+// ---------------------------------------------------------------------------
+
+async function getJson(url: string): Promise<unknown> {
+  const r = await fetch(url, { cache: 'no-cache' });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+/** Actualités d'IRCC utiles à la recherche d'emploi (fil officiel, filtré par les mots de rules.json). */
+export async function fetchLiveNews(lang: 'fr' | 'en'): Promise<NewsItem[]> {
+  return filterNews(rules, await getJson(rules.liveNews.url[lang]));
+}
+
+/** Rondes Entrée express lues directement sur canada.ca (fichier d'environ 800 Ko). */
+export async function fetchLiveRounds(lang: 'fr' | 'en'): Promise<ExpressEntryData> {
+  const file = (await getJson(rules.expressEntry.roundsJson[lang])) as { rounds?: RawRound[] };
+  const data = parseExpressEntryRounds(rules, { [lang]: file });
+  if (!data.rounds.length) throw new Error('Fichier officiel illisible');
+  return data;
+}
 
 export async function loadEmployers(province: string): Promise<EmployerRecord[]> {
   const f = await load<EmployerRecord[]>(`employers-${province}.json`);

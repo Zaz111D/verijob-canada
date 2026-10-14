@@ -1,7 +1,7 @@
 /**
  * Vérificateur d'offre : analyse locale d'un message collé (aucun envoi sur Internet).
  */
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { analyzeOffer, PROVINCE_NAMES, SEVERITY_LABEL, type ScamAnalysis } from '@verijob/core';
 import { Badge, Sources } from '../components/common';
 import { getWageLookup, nocData, rules } from '../data';
@@ -12,6 +12,14 @@ const EXAMPLE = `URGENT !!! Recrutement pour fermes au Canada 🇨🇦
 Visa garanti à 100%, sans entretien. Salaire 7000$ par mois.
 Frais de dossier EIMT : 350 000 FCFA à envoyer par Western Union avant vendredi.
 Places limitées ! Contact : canada.recrutement2026@gmail.com`;
+
+/** Texte transmis par une autre page (ex. « Analyser cette annonce » dans le Suivi). */
+const HANDOFF_KEY = 'verijob-offre-a-analyser';
+
+export function openOfferCheck(text: string) {
+  try { sessionStorage.setItem(HANDOFF_KEY, text); } catch { /* stockage indisponible : l'utilisateur collera le texte */ }
+  location.hash = '#/offre';
+}
 
 export function CheckOffer() {
   const lang = useLang();
@@ -24,6 +32,12 @@ export function CheckOffer() {
     const wageLookup = await getWageLookup();
     setResult(analyzeOffer(t, { rules, nocData, profile, wageLookup }));
   };
+
+  useEffect(() => {
+    let handed: string | null = null;
+    try { handed = sessionStorage.getItem(HANDOFF_KEY); sessionStorage.removeItem(HANDOFF_KEY); } catch { /* voir openOfferCheck */ }
+    if (handed) { setText(handed); void run(handed); }
+  }, []);
 
   return (
     <section>
