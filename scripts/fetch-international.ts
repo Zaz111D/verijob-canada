@@ -49,8 +49,14 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
   }
   const offers = new Map<string, InternationalOffer>();
   let queries = 0, seen = 0, closed = 0;
+  // Diagnostic publié avec les données : volume par métier et exemples d'extraits non reconnus.
+  const perNoc: Array<{ noc: string; what: string; total: number; results: number; open: number; closed: number; unknown: number }> = [];
+  const samples: Array<{ noc: string; title: string; snippet: string }> = [];
   for (const n of nocData.nocs) {
-    const what = n.jobEn ?? n.titleEn;
+    // Mot-clé simple : partie avant « ( » ou « / » (Adzuna exige tous les mots de « what »).
+    const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim();
+    const stat = { noc: n.code, what, total: 0, results: 0, open: 0, closed: 0, unknown: 0 };
+    perNoc.push(stat);
     const params = new URLSearchParams({
       app_id: id, app_key: key, what, what_or: INTERNATIONAL_WORDS, max_days_old: String(MAX_DAYS_OLD),
       sort_by: 'date', results_per_page: String(PER_PAGE), 'content-type': 'application/json',
@@ -59,15 +65,23 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     queries++;
     const res = await fetch(`${API}?${params}`, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
     if (!res.ok) throw new Error(`Adzuna : HTTP ${res.status} pour « ${what} »`);
-    const results = ((await res.json()) as { results?: AdzunaJob[] }).results ?? [];
+    const body = (await res.json()) as { results?: AdzunaJob[]; count?: number };
+    const results = body.results ?? [];
+    stat.total = body.count ?? 0;
+    stat.results = results.length;
     for (const j of results) {
       seen++;
       if (!j.id || !j.redirect_url || offers.has(j.id)) continue;
       const title = clean(j.title), snippet = clean(j.description);
       const text = `${title}.\n${snippet}`;
       const verdict = classifyInternational(text);
-      if (verdict.status === 'ferme') closed++;
+      if (verdict.status === 'ferme') { closed++; stat.closed++; }
+      if (verdict.status === 'inconnu') {
+        stat.unknown++;
+        if (samples.filter((x) => x.noc === n.code).length < 2) samples.push({ noc: n.code, title, snippet });
+      }
       if (verdict.status !== 'ouvert') continue;
+      stat.open++;
       const area = j.location?.area ?? [];
       const scam = analyzeOffer(text, { rules, nocData }).signals.map((s) => s.id);
       offers.set(j.id, {
@@ -102,5 +116,11 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     list,
   );
   console.log(`  ${queries} requêtes, ${seen} annonces lues, ${list.length} ouvertes à l'international, ${closed} écartées (Canada exigé)`);
+  writeDataFile(
+    'international-diagnostic.json',
+    { name: 'Diagnostic du tri des offres internationales', publisher: 'VériJob', url: 'https://www.adzuna.ca/', licence: 'Extraits d’annonces Adzuna' },
+    perNoc.length,
+    { perNoc, samples },
+  );
   return { queries, seen, kept: list.length, closed, file };
 }
