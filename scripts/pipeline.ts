@@ -17,6 +17,15 @@ import { fetchWages, type WagesStats } from './fetch-wages';
 import { DOCS_DIR, ROOT } from './lib/paths';
 import type { WrittenFile } from './lib/output';
 
+// Sur Cloudflare (Workers Builds : WORKERS_CI, Pages : CF_PAGES), les serveurs de construction sont bloqués
+// par Statistique Canada : on reprend les données déjà préparées par GitHub Actions (release « site-latest »).
+if (process.env.WORKERS_CI || process.env.CF_PAGES) {
+  console.log('▶ Construction Cloudflare : données reprises de la release « site-latest » (GitHub Actions)');
+  const { execFileSync } = await import('node:child_process');
+  execFileSync(process.execPath, [join(ROOT, 'scripts', 'fetch-built-site.mjs'), '--data-only'], { stdio: 'inherit' });
+  process.exit(0);
+}
+
 const rules = JSON.parse(readFileSync(join(ROOT, 'data', 'rules.json'), 'utf8')) as Rules;
 const nocData = JSON.parse(readFileSync(join(ROOT, 'data', 'noc.json'), 'utf8')) as NocData;
 const quarters = Number(/--quarters=(\d+)/.exec(process.argv.join(' '))?.[1] ?? 8);
