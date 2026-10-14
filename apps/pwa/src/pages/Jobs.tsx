@@ -10,6 +10,7 @@ import {
 import { Badge, PathwayCards, Sources } from '../components/common';
 import { Opportunities } from '../components/Opportunities';
 import { RecentPostings } from '../components/Postings';
+import { InternationalOffers } from '../components/InternationalOffers';
 import { loadCmaLookup, loadDesignated, loadEmployers, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
@@ -102,6 +103,7 @@ export function Jobs() {
       <p><a class="button primary" href={main.url} target="_blank" rel="noopener noreferrer">{tr(S.jobsOpen, lang)} ↗</a></p>
       <p class="muted">{tr(S.jobsLinkNote, lang)}</p>
       <p class="callout">{tr(S.jobsIcon, lang)}</p>
+      <InternationalOffers nocs={nocs} provinces={provinces} lang={lang} />
 
       {nocs.length > 0 && (
         <>

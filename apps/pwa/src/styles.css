@@ -167,3 +167,7 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 .meter { height: 10px; border-radius: 999px; background: var(--info-bg); overflow: hidden; margin: 6px 0 10px; }
 .meter span { display: block; height: 100%; background: var(--brand); }
 .chip-missing { background: var(--warn-bg); }
+
+/* Mention obligatoire « Adzuna » sur chaque annonce (conditions de l'API : au moins 116 × 23 px, lien vers adzuna.ca). */
+.adzuna { display: inline-flex; align-items: center; justify-content: center; min-width: 116px; min-height: 23px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 4px; font-weight: 700; text-decoration: none; }
+.quote { border-left: 3px solid var(--ok); padding-left: 8px; margin: 6px 0; font-style: italic; }

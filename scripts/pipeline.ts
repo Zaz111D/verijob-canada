@@ -13,6 +13,7 @@ import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildDesignated, type DesignatedStats } from './build-designated';
 import { fetchPermits, type PermitsStats } from './fetch-permits';
+import { fetchInternational, type InternationalStats } from './fetch-international';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
 import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
@@ -46,6 +47,11 @@ try { permits = await fetchPermits(); } catch (e) {
   permits = { error: e instanceof Error ? e.message : String(e) };
   console.warn(`  ⚠ Permis par pays non mis à jour : ${permits.error}`);
 }
+let intl: InternationalStats | { error: string };
+try { intl = await fetchInternational(rules, nocData); } catch (e) {
+  intl = { error: e instanceof Error ? e.message : String(e) };
+  console.warn(`  ⚠ Offres internationales non mises à jour : ${intl.error}`);
+}
 // Offres du mois (données ouvertes) : une erreur ne bloque pas le reste, l'appli fonctionne sans.
 let postings: PostingsStats | { error: string };
 try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
@@ -53,7 +59,7 @@ try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
   console.warn(`  ⚠ Offres du Guichet-Emplois non mises à jour : ${postings.error}`);
 }
 
-writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits));
+writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl));
 console.log('✔ Terminé. Rapport : docs/data-report.md');
 
 // ---------------------------------------------------------------------------
@@ -68,8 +74,8 @@ function pct(a: number, total: number): string {
   return total ? `${Math.round((100 * a) / total)} %` : '–';
 }
 
-function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }): string {
-  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : [])];
+function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | { error: string }): string {
+  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file] : [])];
   const totalPos = l.geo.positionsCma + l.geo.positionsOutside + l.geo.positionsUnknown;
   const totalRec = l.geo.cma + l.geo.outside + l.geo.unknown;
   const recurringTargets = l.recurring.slice(0, 20);
@@ -149,5 +155,9 @@ ${'error' in p ? `⚠ Non mises à jour : ${p.error}` : `- Mois ${p.month} : ${n
 
 - Preuves relevées à la main (\`data/manual/recrutement-afrique.csv\`) : ${af.rows} preuves, ${af.employers} employeurs.
 - Permis de travail par pays de citoyenneté (IRCC) : ${'error' in pm ? `⚠ non mis à jour : ${pm.error}` : `${pm.countries} pays d'Afrique, jusqu'à ${pm.lastMonth}`}.
+
+## 9. Offres ouvertes aux candidats de l'étranger (API Adzuna, tri VériJob)
+
+${'error' in it ? `⚠ Non mises à jour : ${it.error}` : it.skipped ? `Étape sautée : ${it.skipped}.` : `- ${it.queries} requêtes, ${n(it.seen)} annonces lues, **${n(it.kept)} ouvertes à l'international**, ${n(it.closed)} écartées (Canada exigé).`}
 `;
 }

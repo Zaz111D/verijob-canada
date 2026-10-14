@@ -294,6 +294,23 @@ export const STRINGS = {
     en: 'Apply only through the method shown in a Job Bank posting (“How to apply” section) or on the employer’s official website. Official lists only give the city and postal code: VériJob never guesses an e-mail address.',
   },
 
+  // Offres ouvertes aux candidats de l'étranger (API Adzuna, tri VériJob)
+  intlTitle: { fr: 'Offres ouvertes aux candidats de l’étranger', en: 'Offers open to candidates abroad' },
+  intlIntro: {
+    fr: 'Chaque semaine, VériJob lit les annonces publiées au Canada et garde seulement celles qui disent clairement accepter les candidats de l’étranger (EIMT, parrainage du permis, candidatures internationales). Celles qui exigent d’être déjà au Canada sont écartées. La phrase qui le prouve est affichée : lisez toujours l’offre complète.',
+    en: 'Every week, VériJob reads job ads posted in Canada and keeps only those that clearly accept candidates abroad (LMIA, permit sponsorship, international applications). Those requiring you to already be in Canada are removed. The sentence that proves it is shown: always read the full offer.',
+  },
+  intlProof: { fr: 'Ce que dit l’annonce', en: 'What the ad says' },
+  intlCaution: { fr: 'L’annonce mentionne aussi « autorisé à travailler au Canada » : vérifiez avec l’employeur que le permis sera bien parrainé.', en: 'The ad also says “authorized to work in Canada”: check with the employer that the permit will be sponsored.' },
+  intlScam: { fr: 'signal(s) d’arnaque dans l’annonce : analysez-la avant tout contact', en: 'scam sign(s) in the ad: check it before any contact' },
+  intlAnalyze: { fr: 'Analyser l’annonce', en: 'Check the ad' },
+  intlOpen: { fr: 'Voir l’offre et postuler', en: 'View the offer and apply' },
+  intlEstimated: { fr: 'salaire estimé par Adzuna', en: 'salary estimated by Adzuna' },
+  intlAllJobs: { fr: 'Afficher tous les métiers', en: 'Show all jobs' },
+  intlNone: { fr: 'Aucune offre ouverte à l’international trouvée cette semaine pour vos métiers et provinces.', en: 'No offer open to international candidates found this week for your jobs and provinces.' },
+  intlUpdated: { fr: 'Mise à jour le', en: 'Updated on' },
+  intlPoweredBy: { fr: 'Annonces fournies par', en: 'Jobs by' },
+
   // Employeurs qui ont fait leurs preuves en Afrique
   africaTitle: { fr: 'Employeurs qui ont fait leurs preuves en Afrique', en: 'Employers with a proven track record in Africa' },
   africaIntro: {

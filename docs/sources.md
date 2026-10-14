@@ -278,3 +278,11 @@ Non retenu : lecture automatique d'Indeed, LinkedIn, Kijiji, Craigslist, Jiji, C
 
 Vérifiés mais non retenus : Division scolaire franco-manitobaine à Destination Manitoba 2024 (absente du texte de l'article consulté) ; entreprise Laurin (article sur des frais payés par les travailleurs à un intermédiaire, sans preuve d'embauche dans la source retenue) ; L'actualité (lecture bloquée, non vérifiable).
 
+## 17. Offres ouvertes aux candidats de l'étranger (15 oct. 2026)
+
+Demande de Jessica : les offres ne manquent pas, mais les filtres des sites sont vagues pour les candidats hors Canada. Le Guichet-Emplois, Indeed, LinkedIn et les sites de petites annonces interdisent la lecture automatique : **non lus**. Solution : l'API officielle d'Adzuna (conditions lues le 14 oct. 2026 : usage « Publishing Adzuna ad listings » permis, limites par défaut 25/min, 250/jour, 1 000/semaine, 2 500/mois, mention « Adzuna » d'au moins 116 × 23 px liée au site sur chaque annonce). Compte créé par Jessica ; clés dans les secrets GitHub.
+
+Tri VériJob (`packages/core/src/international.ts`, testé) : expressions explicables FR/EN, sans IA. Une exigence explicite (« citoyens/résidents permanents seulement », « no sponsorship », « permis de travail valide exigé ») l'emporte sur une mention d'EIMT. « Légalement autorisé à travailler au Canada » n'est qu'une mise en garde (formule fréquente même sur des offres EIMT).
+
+Portail officiel réservé au recrutement international ajouté en lien : **Travailler en santé au Québec** (MSSS, quebec.ca, mis à jour le 25 nov. 2025). Portails d'enseignants (« En route vers l'Ontario », « Enseigner en Alberta ») : adresse officielle non trouvée, non ajoutés.
+

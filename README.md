@@ -129,6 +129,11 @@ Le pipeline refuse un fichier invalide et signale les relevés de plus de 90 jou
 ### Liens Job Bank
 `jobBank.searchTemplate` a été relevé à la main le 14 oct. 2026 : `searchstring` (mot-clé ou nom d'employeur) et `fglo=1` (offres ouvertes aux candidats internationaux) fonctionnent ; la province ne peut pas être imposée par l'adresse. Si le Guichet-Emplois change son format, refaites une recherche dans un navigateur et recopiez l'adresse en remplaçant le mot-clé par `{keyword}`.
 
+### Offres ouvertes aux candidats de l'étranger (Adzuna)
+Les sites d'emploi ne peuvent pas être lus automatiquement (conditions d'utilisation), sauf par une API officielle. Le pipeline utilise l'**API Adzuna** (accès de base gratuit : 250 requêtes par jour, 1 000 par semaine ; affichage autorisé avec la mention « Adzuna » liée à adzuna.ca). Clés dans les secrets GitHub `ADZUNA_APP_ID` et `ADZUNA_APP_KEY` ; sans clés, l'étape est sautée et la section n'apparaît pas.
+
+Pour chaque métier suivi : annonces des 45 derniers jours contenant le métier et au moins un mot du recrutement international. VériJob (`classifyInternational`) garde seulement celles qui disent explicitement accepter les candidats de l'étranger (EIMT/LMIA, parrainage, candidatures internationales) et écarte celles qui exigent d'être déjà au Canada ; chaque offre gardée affiche la phrase qui le prouve et passe dans le vérificateur d'arnaques. Adzuna ne fournit qu'un extrait de l'annonce : une offre dont l'extrait ne parle pas d'international n'est pas repérée.
+
 ### Employeurs qui ont fait leurs preuves en Afrique
 Ajoutez une ligne dans `data/manual/recrutement-afrique.csv` seulement après avoir **lu vous-même** une source publique : page officielle de l'employeur, article de presse reconnue ou communiqué. Colonnes :
 

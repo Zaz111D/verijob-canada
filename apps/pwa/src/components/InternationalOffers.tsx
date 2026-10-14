@@ -1,0 +1,74 @@
+/**
+ * Offres ouvertes aux candidats de l'étranger (onglet Emplois) : annonces Adzuna triées chaque semaine
+ * par le pipeline (classifyInternational) et passées au vérificateur d'arnaques.
+ * Conditions de l'API Adzuna : chaque annonce affichée porte la mention « Adzuna » liée à adzuna.ca.
+ */
+import { useEffect, useState } from 'preact/hooks';
+import { findNoc, formatAmount, formatDate, PROVINCE_NAMES, type InternationalOffer, type ProvinceCode } from '@verijob/core';
+import { loadInternationalOffers, nocData } from '../data';
+import { STRINGS as S, tr, type Lang } from '../i18n';
+import { openOfferCheck } from '../pages/CheckOffer';
+import { Badge } from './common';
+
+const ext = { target: '_blank', rel: 'noopener noreferrer nofollow' } as const;
+const ADZUNA = 'https://www.adzuna.ca/';
+const LIMIT = 15;
+
+function salary(o: InternationalOffer, lang: Lang): string | null {
+  if (o.salaryMin === null) return null;
+  // Adzuna ne précise pas l'unité : un montant de moins de 200 $ est un taux horaire, sinon un salaire annuel.
+  const hourly = o.salaryMin < 200;
+  const v = (n: number) => (hourly ? n : Math.round(n));
+  const f = (n: number) => (lang === 'fr' ? `${formatAmount(v(n), 'fr')} $` : `$${formatAmount(v(n), 'en')}`);
+  const unit = hourly ? '/h' : lang === 'fr' ? '/an' : '/year';
+  const range = `${o.salaryMax && o.salaryMax > o.salaryMin ? `${f(o.salaryMin)} – ${f(o.salaryMax)}` : f(o.salaryMin)}${unit}`;
+  return o.salaryPredicted ? `${range} (${tr(S.intlEstimated, lang)})` : range;
+}
+
+function OfferCard({ o, lang }: { o: InternationalOffer; lang: Lang }) {
+  const sal = salary(o, lang);
+  const noc = findNoc(nocData, o.noc);
+  return (
+    <article class={`card-result ${o.scam.length ? 'sev-moyen' : ''}`}>
+      <h3>{o.title}</h3>
+      <p>{o.company || '—'} — {o.location}{o.province ? ` (${o.province})` : ''}</p>
+      <p class="muted">{formatDate(o.date, lang)}{noc ? ` · ${noc.code} – ${lang === 'fr' ? noc.titleFr : noc.titleEn}` : ''}{sal ? ` · ${sal}` : ''}</p>
+      <p><Badge kind="ok">✓ {tr(S.intlTitle, lang)}</Badge></p>
+      <p class="muted">{tr(S.intlProof, lang)} :</p>
+      {o.evidence.slice(0, 2).map((e) => <p class="quote">« {e} »</p>)}
+      {o.caution.length > 0 && <p class="warn">{tr(S.intlCaution, lang)}</p>}
+      {o.scam.length > 0 && <p class="alert">{o.scam.length} {tr(S.intlScam, lang)}</p>}
+      <div class="row">
+        <a class="button primary" href={o.url} {...ext}>{tr(S.intlOpen, lang)} ↗</a>
+        <button type="button" onClick={() => openOfferCheck(`${o.title}\n${o.company}\n${o.location}\n${o.snippet}`)}>{tr(S.intlAnalyze, lang)}</button>
+        <a class="adzuna" href={ADZUNA} {...ext} title={tr(S.intlPoweredBy, lang)}>Adzuna</a>
+      </div>
+    </article>
+  );
+}
+
+export function InternationalOffers({ nocs, provinces, lang }: { nocs: string[]; provinces: ProvinceCode[]; lang: Lang }) {
+  const [data, setData] = useState<{ list: InternationalOffer[]; at: string }>();
+  const [all, setAll] = useState(false);
+  useEffect(() => { loadInternationalOffers().then((f) => setData({ list: f.data, at: f.fetchedAt.slice(0, 10) })).catch(() => undefined); }, []);
+  if (!data) return null; // pas encore de fichier (clés Adzuna absentes) : section masquée
+  const mine = data.list.filter((o) =>
+    (all || !nocs.length || nocs.includes(o.noc)) && (all || !provinces.length || !o.province || provinces.includes(o.province)));
+  // Les annonces sans signal d'arnaque d'abord, puis les plus récentes.
+  const shown = [...mine].sort((a, b) => a.scam.length - b.scam.length || b.date.localeCompare(a.date)).slice(0, LIMIT);
+  return (
+    <>
+      <h2>{tr(S.intlTitle, lang)}</h2>
+      <p class="muted">{tr(S.intlIntro, lang)}</p>
+      <p class="muted">
+        {tr(S.intlUpdated, lang)} {formatDate(data.at, lang)} — {mine.length} / {data.list.length}
+        {provinces.length > 0 && <> · {provinces.map((p) => PROVINCE_NAMES[p][lang]).join(', ')}</>}
+      </p>
+      {(nocs.length > 0 || provinces.length > 0) && (
+        <label class="check"><input type="checkbox" checked={all} onChange={() => setAll(!all)} />{tr(S.intlAllJobs, lang)}</label>
+      )}
+      {shown.length ? shown.map((o) => <OfferCard o={o} lang={lang} />) : <p class="muted">{tr(S.intlNone, lang)}</p>}
+      <p class="muted">{tr(S.intlPoweredBy, lang)} <a class="adzuna" href={ADZUNA} {...ext}>Adzuna</a></p>
+    </>
+  );
+}

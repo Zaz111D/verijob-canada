@@ -45,6 +45,10 @@ jobs:
           restore-keys: raw-
       - name: Pipeline de données (open.canada.ca, Statistique Canada)
         run: npm run data
+        env:
+          # Facultatif : offres ouvertes aux candidats de l'étranger (API Adzuna, accès gratuit). Sans clés, étape sautée.
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
       - name: Construction de la PWA
         run: |
           node scripts/make-icons.mjs

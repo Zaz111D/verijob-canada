@@ -60,3 +60,4 @@ export {
   isOldEvidence, permitSummary, recruiterEvidence, sortRecruiters, EVIDENCE_LABEL, OLD_EVIDENCE_YEARS,
   type AfricanRecruiter, type EvidenceType, type PermitsData, type PermitsByYear, type PermitSummary,
 } from './africa';
+export { classifyInternational, type InternationalOffer, type InternationalStatus, type InternationalVerdict } from './international';
