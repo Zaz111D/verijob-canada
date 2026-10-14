@@ -71,7 +71,9 @@ export function classifyInternational(text: string): InternationalVerdict {
     const i = s.norm.search(r);
     const raw = s.raw.length === s.norm.length ? s.raw : s.norm;
     if (raw.length <= 160 || i < 0) return excerpt(raw);
-    const start = Math.max(0, i - 60);
+    // Début de l'extrait environ 60 caractères avant l'expression, sur une limite de mot.
+    let start = Math.max(0, i - 60);
+    while (start > 0 && raw[start - 1] !== ' ') start--;
     return `${start > 0 ? '…' : ''}${excerpt(raw.slice(start), start > 0 ? 159 : 160)}`;
   };
   const find = (res: RegExp[]) => [...new Set(segments.flatMap((s) => {

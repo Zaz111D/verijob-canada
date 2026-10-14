@@ -286,3 +286,5 @@ Tri VériJob (`packages/core/src/international.ts`, testé) : expressions explic
 
 Portail officiel réservé au recrutement international ajouté en lien : **Travailler en santé au Québec** (MSSS, quebec.ca, mis à jour le 25 nov. 2025). Portails d'enseignants (« En route vers l'Ontario », « Enseigner en Alberta ») : adresse officielle non trouvée, non ajoutés.
 
+Diagnostic du 15 oct. 2026 (4 itérations sur les vraies données) : l'API ne renvoie que le début des annonces ; les mots généraux (visa, international) et « visa sponsorship » donnaient surtout des refus (« without visa sponsorship ») ; « temporary foreign worker » est au Québec la mention légale des agences (« Recruitment Agency Permit Number AR-… », vérifié sur des annonces Aerotek). Méthode finale : expressions EIMT/LMIA exactes + preuve visible dans l'extrait OU employeur présent dans les listes officielles d'EIMT positives. Résultat : 12 offres gardées (6 avec preuve visible, 6 recoupées EDSC) sur 400 annonces lues.
+
