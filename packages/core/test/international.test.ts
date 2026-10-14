@@ -31,6 +31,10 @@ describe('Offres ouvertes aux candidats de l’étranger', () => {
     'Applicants must be legally authorized to work in the United States without current or future visa sponsorship.',
     'This role is offered without visa sponsorship.',
     'Poste sans parrainage.',
+    'Not a LMIA position.',
+    'Please note that we do not offer LMIA or sponsorship for this role.',
+    'We are unable to support work permits.',
+    'Nous n’offrons pas d’EIMT pour ce poste.',
   ])('fermée : %s', (t) => expect(status(t)).toBe('ferme'));
 
   it('une exigence explicite l’emporte sur une mention d’EIMT', () => {

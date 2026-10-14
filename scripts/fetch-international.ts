@@ -67,7 +67,7 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
   const diag: Array<{ query: string; total: number; results: number; kept: number; closed: number }> = [];
   let queries = 0, seen = 0, closed = 0;
 
-  const search = async (label: string, params: Record<string, string>, matched: string, noc?: string) => {
+  const search = async (label: string, params: Record<string, string>, matched: string) => {
     const q = new URLSearchParams({
       app_id: id, app_key: key, max_days_old: String(MAX_DAYS_OLD), sort_by: 'date',
       results_per_page: String(PER_PAGE), 'content-type': 'application/json', ...params,
@@ -101,7 +101,8 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
         salaryMax: typeof j.salary_max === 'number' ? j.salary_max : null,
         salaryPredicted: String(j.salary_is_predicted) === '1',
         url: j.redirect_url,
-        noc: noc ?? detectNocInText(nocData, normalize(title))?.code ?? '',
+        // Métier déduit du TITRE seulement : Adzuna trouve le mot-clé n'importe où dans l'annonce.
+        noc: detectNocInText(nocData, normalize(title))?.code ?? '',
         snippet,
         evidence: verdict.evidence,
         matched: [matched],
@@ -115,7 +116,7 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
   for (const p of PHRASES) await search(`« ${p} »`, { what_phrase: p }, p);
   for (const n of nocData.nocs) {
     const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim(); // Adzuna exige tous les mots de « what »
-    await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt', n.code);
+    await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt');
   }
 
   // Recoupement avec les listes officielles d'EIMT positives (fichiers employers-XX.json produits plus tôt par le
