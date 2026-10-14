@@ -303,6 +303,8 @@ export const STRINGS = {
   intlProof: { fr: 'Ce que dit l’annonce', en: 'What the ad says' },
   intlMatched: { fr: 'Adzuna a trouvé {mots} dans l’annonce complète (pas dans l’extrait reçu par VériJob) : ouvrez l’offre pour lire la phrase exacte.', en: 'Adzuna found {mots} in the full ad (not in the excerpt VériJob received): open the offer to read the exact sentence.' },
   intlMatchedBadge: { fr: 'Mention internationale trouvée par Adzuna', en: 'International mention found by Adzuna' },
+  intlLmia: { fr: 'Employeur présent dans les listes officielles d’EIMT positives d’EDSC : {n} poste(s) approuvé(s), dernier trimestre {q}', en: 'Employer listed in ESDC’s official positive LMIA lists: {n} approved position(s), latest quarter {q}' },
+  intlLmiaSameNoc: { fr: ' — dont ce métier', en: ' — including this job' },
   intlCaution: { fr: 'L’annonce mentionne aussi « autorisé à travailler au Canada » : vérifiez avec l’employeur que le permis sera bien parrainé.', en: 'The ad also says “authorized to work in Canada”: check with the employer that the permit will be sponsored.' },
   intlScam: { fr: 'signal(s) d’arnaque dans l’annonce : analysez-la avant tout contact', en: 'scam sign(s) in the ad: check it before any contact' },
   intlAnalyze: { fr: 'Analyser l’annonce', en: 'Check the ad' },

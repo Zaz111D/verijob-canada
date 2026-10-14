@@ -45,6 +45,9 @@ function OfferCard({ o, lang }: { o: InternationalOffer; lang: Lang }) {
           <p class="muted">{tr(S.intlMatched, lang).replace('{mots}', (o.matched ?? []).map((m) => `« ${m} »`).join(', '))}</p>
         </>
       )}
+      {o.lmia && (
+        <p class="ok">✓ {tr(S.intlLmia, lang).replace('{n}', String(o.lmia.positions)).replace('{q}', o.lmia.lastQuarter)}{o.lmia.sameNoc ? tr(S.intlLmiaSameNoc, lang) : ''}. <a href="#/employeur">{tr(S.cardEmployerTitle, lang)} →</a></p>
+      )}
       {o.caution.length > 0 && <p class="warn">{tr(S.intlCaution, lang)}</p>}
       {o.scam.length > 0 && <p class="alert">{o.scam.length} {tr(S.intlScam, lang)}</p>}
       <div class="row">
@@ -64,7 +67,7 @@ export function InternationalOffers({ nocs, provinces, lang }: { nocs: string[];
   const mine = data.list.filter((o) =>
     (all || !nocs.length || nocs.includes(o.noc)) && (all || !provinces.length || !o.province || provinces.includes(o.province)));
   // Sans signal d'arnaque d'abord, puis preuve visible dans l'extrait, puis les plus récentes.
-  const shown = [...mine].sort((a, b) => a.scam.length - b.scam.length || Number(b.evidence.length > 0) - Number(a.evidence.length > 0) || b.date.localeCompare(a.date)).slice(0, LIMIT);
+  const shown = [...mine].sort((a, b) => a.scam.length - b.scam.length || Number(b.evidence.length > 0) - Number(a.evidence.length > 0) || Number(!!b.lmia?.sameNoc) - Number(!!a.lmia?.sameNoc) || b.date.localeCompare(a.date)).slice(0, LIMIT);
   return (
     <>
       <h2>{tr(S.intlTitle, lang)}</h2>

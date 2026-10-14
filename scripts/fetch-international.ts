@@ -15,10 +15,13 @@
  * Produit : apps/pwa/public/data/international-offers.json (+ international-diagnostic.json)
  */
 import {
-  analyzeOffer, classifyInternational, detectNocInText, normalize, PROVINCE_NAMES,
+  analyzeOffer, classifyInternational, detectNocInText, employerKey, normalize, PROVINCE_NAMES,
   type InternationalOffer, type NocData, type ProvinceCode, type Rules,
 } from '../packages/core/src';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { USER_AGENT } from './lib/http';
+import { OUT_DIR } from './lib/paths';
 import { writeDataFile, type WrittenFile } from './lib/output';
 
 const API = 'https://api.adzuna.com/v1/api/jobs/ca/search/';
@@ -115,6 +118,40 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt', n.code);
   }
 
+  // Recoupement avec les listes officielles d'EIMT positives (fichiers employers-XX.json produits plus tôt par le
+  // pipeline). Une offre sans phrase de preuve visible n'est gardée que si l'employeur y figure : l'expression
+  // trouvée par Adzuna dans l'annonce complète peut être négative (« LMIA not supported »), la liste d'EDSC non.
+  const byProvince = new Map<string, Map<string, { p: Array<[string, string, string, number, number]> }>>();
+  const recordsOf = (prov: string) => {
+    if (!byProvince.has(prov)) {
+      const path = join(OUT_DIR, `employers-${prov}.json`);
+      const recs = existsSync(path) ? (JSON.parse(readFileSync(path, 'utf8')).data as Array<{ k: string; p: Array<[string, string, string, number, number]> }>) : [];
+      const m = new Map<string, { p: Array<[string, string, string, number, number]> }>();
+      for (const r of recs) {
+        const cur = m.get(r.k);
+        if (cur) cur.p.push(...r.p); else m.set(r.k, { p: [...r.p] });
+      }
+      byProvince.set(prov, m);
+    }
+    return byProvince.get(prov)!;
+  };
+  let corroborated = 0, dropped = 0;
+  for (const [oid, o] of offers) {
+    const k = employerKey(o.company);
+    const rec = k && o.province ? recordsOf(o.province).get(k) : undefined;
+    if (rec && rec.p.length) {
+      o.lmia = {
+        positions: rec.p.reduce((s, e) => s + e[4], 0),
+        lastQuarter: rec.p.map((e) => e[0]).sort().at(-1)!,
+        sameNoc: !!o.noc && rec.p.some((e) => e[2] === o.noc),
+      };
+      corroborated++;
+    } else if (!o.evidence.length) {
+      offers.delete(oid);
+      dropped++;
+    }
+  }
+  console.log(`  recoupement EIMT : ${corroborated} employeurs trouvés dans les listes officielles, ${dropped} offres non vérifiables écartées`);
   const list = [...offers.values()].sort((a, b) => b.date.localeCompare(a.date));
   const file = writeDataFile(
     'international-offers.json',

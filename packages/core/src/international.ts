@@ -91,6 +91,8 @@ export interface InternationalOffer {
   evidence: string[];
   /** Expressions trouvées par Adzuna dans l'annonce COMPLÈTE (l'API ne renvoie qu'un extrait). */
   matched: string[];
+  /** Recoupement avec les listes officielles d'EIMT positives (EDSC) : même employeur, même province. */
+  lmia?: { positions: number; lastQuarter: string; sameNoc: boolean };
   caution: string[];
   /** Identifiants des signaux d'arnaque repérés dans le titre + l'extrait. */
   scam: string[];
