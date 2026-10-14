@@ -56,6 +56,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Commit construit : Cloudflare attend que la release corresponde à son propre commit.
+          printf '{"commit":"%s","builtAt":"%s"}\n' "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > apps/pwa/dist/build-info.json
           (cd apps/pwa/dist && zip -qr "$GITHUB_WORKSPACE/site.zip" .)
           gh release view site-latest >/dev/null 2>&1 || gh release create site-latest --title "Site construit (automatique)" --notes "Mis à jour par le workflow « Données et déploiement ». Utilisé par Cloudflare." --latest=false
           gh release upload site-latest site.zip --clobber
