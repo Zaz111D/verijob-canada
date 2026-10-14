@@ -129,6 +129,13 @@ Le pipeline refuse un fichier invalide et signale les relevés de plus de 90 jou
 ### Liens Job Bank
 `jobBank.searchTemplate` a été relevé à la main le 14 oct. 2026 : `searchstring` (mot-clé ou nom d'employeur) et `fglo=1` (offres ouvertes aux candidats internationaux) fonctionnent ; la province ne peut pas être imposée par l'adresse. Si le Guichet-Emplois change son format, refaites une recherche dans un navigateur et recopiez l'adresse en remplaçant le mot-clé par `{keyword}`.
 
+### Employeurs qui ont fait leurs preuves en Afrique
+Ajoutez une ligne dans `data/manual/recrutement-afrique.csv` seulement après avoir **lu vous-même** une source publique : page officielle de l'employeur, article de presse reconnue ou communiqué. Colonnes :
+
+`employer, province, city, sector, countries (codes ISO-2 séparés par |), evidence_type (page-employeur|presse|mission|gouvernement), evidence_fr, evidence_en, event_date, source_title, source_url, recorded_at`
+
+Écrivez exactement ce que la source prouve : des embauches chiffrées, ou seulement une mission de recrutement. Ne citez jamais le nom d'un travailleur. Les listes de blogs (« 30 entreprises qui recrutent en Afrique ») ne sont pas des preuves. Le pipeline refuse un fichier invalide ; l'appli signale les preuves de plus de 3 ans.
+
 ### Adresses pour postuler
 Les listes officielles d'EIMT ne donnent que la ville et le code postal de l'employeur. L'appli ne devine jamais d'adresse e-mail : elle propose ses offres sur le Guichet-Emplois (chaque offre indique comment postuler), la recherche de son site officiel et la carte. Dans le Suivi, la personne note le contact et la page officielle où elle l'a trouvé ; une adresse Gmail/Yahoo est signalée.
 

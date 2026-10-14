@@ -258,3 +258,23 @@ Non retenu : lecture automatique d'Indeed, LinkedIn, Kijiji, Craigslist, Jiji, C
 | Recherche Guichet-Emplois | Relevé à la main dans un navigateur | `searchstring` (intitulé ou nom d'employeur) et `fglo=1` fonctionnent ; `locationstring` est ignoré. |
 | Adresses des employeurs | Listes EIMT d'EDSC | La colonne « Address » ne contient que ville, province et code postal (pas de rue ni d'e-mail). |
 
+## 16. Employeurs qui recrutent en Afrique (14 oct. 2026)
+
+**Constat** : aucune donnée publique ne relie un employeur à la nationalité de ses travailleurs (les listes EIMT d'EDSC ne donnent pas la nationalité ; IRCC publie les permis par pays, mais pas par employeur). Les listes d'exposants de Destination Canada ne sont pas publiques (guide réservé aux invités). Les listes « entreprises qui recrutent en Afrique » trouvées en ligne sont des blogs sans preuve : écartées.
+
+**Solution retenue** :
+1. Relevé manuel `data/manual/recrutement-afrique.csv` : uniquement des preuves lues et datées, une source par ligne, en distinguant embauches et simples missions.
+2. Statistiques officielles d'IRCC : permis PTET et PMI par pays de citoyenneté (mensuel, jusqu'à juillet 2026 au 14 oct.), pays d'Afrique seulement. Le croisement province × pays n'existe que pour 2016 : écarté.
+3. Mise en garde santé : liste d'appui et de sauvegarde de l'OMS (Cameroun confirmé par le profil pays d'IRCC ; Sénégal et Côte d'Ivoire cités par Radio-Canada en 2023).
+
+| Employeur | Preuve | Source (date) |
+|---|---|---|
+| Santé Québec – Côte-Nord | Infirmières et infirmiers venus d'Algérie, du Cameroun, du Maroc, du Burkina Faso et de Tunisie ; recrutement international en cours (4 métiers) | Page officielle de l'employeur (non datée, lue le 14 oct. 2026) |
+| Conseil scolaire du Grand Nord (ON) | 11 enseignants recrutés via « En route vers l'Ontario », notamment du Cameroun, d'Algérie, de Tunisie et du Maroc | Radio-Canada, 19 sept. 2024 |
+| CSDC des Aurores boréales (ON) | 9 enseignants sur 89 venus d'Afrique francophone (Cameroun, Côte d'Ivoire, Algérie) | Radio-Canada, 16 oct. 2023 |
+| Réseau de santé Vitalité (NB) | Missions au Sénégal et en Côte d'Ivoire (travailleurs de la santé), embauches non chiffrées | Radio-Canada, 6 févr. 2023 |
+| Soudure Camille Castonguay (QC) | 2 soudeurs tunisiens arrivés en sept. 2020 | Le Courrier Sud, 28 déc. 2020 |
+| Plastik MP, Métal Sigma (QC) | Mission d'embauche à Tunis | Radio-Canada, 8 nov. 2019 |
+
+Vérifiés mais non retenus : Division scolaire franco-manitobaine à Destination Manitoba 2024 (absente du texte de l'article consulté) ; entreprise Laurin (article sur des frais payés par les travailleurs à un intermédiaire, sans preuve d'embauche dans la source retenue) ; L'actualité (lecture bloquée, non vérifiable).
+

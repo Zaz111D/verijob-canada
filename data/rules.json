@@ -218,6 +218,33 @@
       "verifiedAt": "2026-10-14",
       "nextReview": "2027-04-14"
     },
+    "ircc-permits-citizenship": {
+      "titleFr": "IRCC — Titulaires de permis de travail (PTET et PMI) par pays de citoyenneté (données ouvertes mensuelles)",
+      "titleEn": "IRCC — Work permit holders (TFWP and IMP) by country of citizenship (monthly open data)",
+      "urlFr": "https://open.canada.ca/data/fr/dataset/360024f2-17e9-4558-bfc1-3616485d65b9",
+      "urlEn": "https://open.canada.ca/data/en/dataset/360024f2-17e9-4558-bfc1-3616485d65b9",
+      "pageModified": "2026-09-15",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-01-14"
+    },
+    "ircc-country-profiles": {
+      "titleFr": "IRCC — Immigration francophone : profils de pays",
+      "titleEn": "IRCC — Francophone immigration: country profiles",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/campagnes/immigration-francophone-hors-quebec/profils-pays.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/campaigns/francophone-immigration-outside-quebec/country-profiles.html",
+      "pageModified": "2025-10-22",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-04-14"
+    },
+    "who-safeguards-list": {
+      "titleFr": "OMS — Liste d'appui et de sauvegarde pour les personnels de santé (questions-réponses, en anglais)",
+      "titleEn": "WHO — Health workforce support and safeguards list (questions and answers)",
+      "urlFr": "https://www.who.int/news-room/questions-and-answers/item/who-health-workforce-support-and-safeguards-list",
+      "urlEn": "https://www.who.int/news-room/questions-and-answers/item/who-health-workforce-support-and-safeguards-list",
+      "pageModified": null,
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-04-14"
+    },
     "cafc-job-scams": {
       "titleFr": "Centre antifraude du Canada — Fraudes liées à l'emploi",
       "titleEn": "Canadian Anti-Fraud Centre — Job scams",
@@ -1001,6 +1028,16 @@
         "provinces": ["QC"],
         "noteFr": "Site officiel du gouvernement du Québec. Attention : l'immigration au Québec suit ses propres règles (MIFI), différentes du reste du Canada.",
         "noteEn": "Official Government of Quebec site. Note: immigration to Quebec follows its own rules (MIFI), different from the rest of Canada.",
+        "verifiedAt": "2026-10-14"
+      },
+      {
+        "id": "travailler-sante-quebec",
+        "name": "Travailler en santé au Québec",
+        "template": null,
+        "url": "https://travaillerensanteauquebec.ca/",
+        "provinces": ["QC"],
+        "noteFr": "Plateforme officielle du ministère de la Santé du Québec, RÉSERVÉE au recrutement international pour les établissements de Santé Québec. Services gratuits. Pour passer une entrevue : français de niveau 5 (intermédiaire) sur l'échelle québécoise.",
+        "noteEn": "Official platform of Quebec's Ministry of Health, RESERVED for international recruitment for Santé Québec facilities. Free services. To get an interview: French level 5 (intermediate) on the Quebec scale.",
         "verifiedAt": "2026-10-14"
       }
     ],

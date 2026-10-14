@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { EMPLOYER_LIST_WARNING, findNoc, PROVINCE_NAMES, searchEmployers, type ProvinceCode } from '@verijob/core';
 import { Badge } from '../components/common';
+import { AfricaBadge } from '../components/Africa';
 import { ContactLinks, HowToApply } from '../components/ContactLinks';
 import {
   loadDesignated, loadEmployers, loadEmployersIndex, nocData, rules,
@@ -44,6 +45,7 @@ function LmiaCard({ r, index }: { r: EmployerRecord; index?: EmployersIndex }) {
   return (
     <article class="card-result">
       <h3>{r.n}</h3>
+      <AfricaBadge name={r.n} lang={lang} />
       <p>{tr(S.location, lang)} : {r.c}{r.pc ? ` (${r.pc})` : ''}, {provinceLabel(r.prov ?? '', lang)}</p>
       <p><CmaStatus g={r.g} /></p>
       {pos > 0 && <p><Badge kind="ok">{tr(S.positive, lang)}</Badge> {pos} {tr(S.positions, lang)} — {tr(S.quarters, lang)} : {quarters.join(', ')}</p>}
@@ -62,6 +64,7 @@ function DesignatedCard({ d }: { d: DesignatedEmployer[] }) {
   return (
     <article class="card-result">
       <h3>{first.employer}</h3>
+      <AfricaBadge name={first.employer} lang={lang} />
       <p>{first.community} ({provinceLabel(first.province, lang)}) — {[...new Set(d.map((x) => x.program === 'RCIP' ? (lang === 'fr' ? 'PICR' : 'RCIP') : (lang === 'fr' ? 'PICRF' : 'FCIP')))].join(' + ')}</p>
       {first.address && <p>{tr(S.location, lang)} : {first.address}</p>}
       <p><Badge kind={first.hiring === 'recrute' ? 'ok' : first.hiring === 'inconnu' ? 'info' : 'moyen'}>{tr(S.hiringStatus[first.hiring], lang)}</Badge></p>

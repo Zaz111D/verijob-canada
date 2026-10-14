@@ -56,3 +56,7 @@ export {
   recentPostings, salaryLabel, EDUCATION_LABEL, EXPERIENCE_LABEL, POSTING_LANG_LABEL, TERM_LABEL, TYPE_LABEL,
   type PostingRow, type PostingStats, type PostingsData, type PostingView, type Education, type Experience,
 } from './postings';
+export {
+  isOldEvidence, permitSummary, recruiterEvidence, sortRecruiters, EVIDENCE_LABEL, OLD_EVIDENCE_YEARS,
+  type AfricanRecruiter, type EvidenceType, type PermitsData, type PermitsByYear, type PermitSummary,
+} from './africa';

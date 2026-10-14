@@ -294,6 +294,38 @@ export const STRINGS = {
     en: 'Apply only through the method shown in a Job Bank posting (“How to apply” section) or on the employer’s official website. Official lists only give the city and postal code: VériJob never guesses an e-mail address.',
   },
 
+  // Employeurs qui ont fait leurs preuves en Afrique
+  africaTitle: { fr: 'Employeurs qui ont fait leurs preuves en Afrique', en: 'Employers with a proven track record in Africa' },
+  africaIntro: {
+    fr: 'Aucune donnée publique ne dit quels employeurs embauchent des Africains. Cette liste ne contient donc que des employeurs pour lesquels une preuve publique existe (page officielle de l’employeur, article de presse, mission de recrutement). Chaque preuve est datée et cliquable : vérifiez-la. Un employeur absent de la liste peut tout à fait recruter en Afrique.',
+    en: 'No public data says which employers hire Africans. This list therefore only includes employers for which public evidence exists (employer’s official page, news article, recruitment mission). Each piece of evidence is dated and clickable: check it. An employer missing from the list may well recruit in Africa.',
+  },
+  africaYourCountry: { fr: 'Votre pays', en: 'Your country' },
+  africaOld: { fr: 'Preuve de plus de 3 ans : vérifiez que l’employeur recrute encore.', en: 'Evidence older than 3 years: check the employer still recruits.' },
+  africaCountries: { fr: 'Pays cités', en: 'Countries mentioned' },
+  africaSource: { fr: 'Source', en: 'Source' },
+  africaReadOn: { fr: 'lue le', en: 'read on' },
+  africaUndated: { fr: 'page non datée', en: 'undated page' },
+  africaNone: { fr: 'Aucune preuve enregistrée pour le moment.', en: 'No evidence recorded yet.' },
+  africaBadge: { fr: 'A recruté en Afrique (preuve publique)', en: 'Has recruited in Africa (public evidence)' },
+  statsTitle: { fr: 'Votre pays en chiffres officiels', en: 'Your country in official figures' },
+  statsTfwp: {
+    fr: 'permis de travail liés à une EIMT (Programme des travailleurs étrangers temporaires) délivrés à des ressortissants de ce pays',
+    en: 'work permits tied to an LMIA (Temporary Foreign Worker Program) issued to citizens of this country',
+  },
+  statsRank: { fr: '{n}e pays d’Afrique', en: 'no. {n} among African countries' },
+  statsImp: {
+    fr: 'permis du Programme de mobilité internationale (tous motifs : Mobilité francophone, permis post-diplôme, conjoints…)',
+    en: 'International Mobility Program permits (all purposes: Francophone Mobility, post-graduation, spouses…)',
+  },
+  statsPartial: { fr: 'jusqu’à', en: 'up to' },
+  statsNote: { fr: 'Chiffres d’IRCC, arrondis ; les valeurs de 1 à 5 sont masquées par IRCC. Ils ne disent pas quels employeurs ont embauché.', en: 'IRCC figures, rounded; values from 1 to 5 are hidden by IRCC. They do not say which employers hired.' },
+  statsChoose: { fr: 'Indiquez votre pays dans « Mon profil » pour voir ses chiffres.', en: 'Set your country in “My profile” to see its figures.' },
+  whoNote: {
+    fr: 'Santé : plusieurs pays d’Afrique figurent sur la liste d’appui et de sauvegarde de l’OMS (par exemple le Cameroun, selon IRCC). L’OMS y décourage le recrutement international actif de personnel de santé : certains employeurs canadiens de la santé limitent donc leurs missions dans ces pays. Postuler soi-même reste possible.',
+    en: 'Health: several African countries are on the WHO support and safeguards list (for example Cameroon, according to IRCC). WHO discourages active international recruitment of health workers there: some Canadian health employers therefore limit their missions in these countries. Applying on your own is still possible.',
+  },
+
   // Offres récentes (données ouvertes du Guichet-Emplois)
   postingsTitle: { fr: 'Offres récentes pour vos métiers', en: 'Recent offers for your jobs' },
   postingsIntro: {

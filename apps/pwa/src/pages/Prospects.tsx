@@ -8,6 +8,7 @@ import {
   type PathwayId, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge } from '../components/common';
+import { AfricaBadge, AfricaSection } from '../components/Africa';
 import { ContactLinks, HowToApply, websiteSearchUrl } from '../components/ContactLinks';
 import { loadDesignated, loadPriorities, loadProspects, nocData, rules, type CommunityPriority, type DesignatedEmployer } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
@@ -159,6 +160,7 @@ export function Prospects() {
       <h1>{tr(S.prospectsTitle, lang)}</h1>
       <p>{tr(S.prospectsIntro, lang)}</p>
       <p class="callout">{tr(S.prospectsWarning, lang)}</p>
+      <AfricaSection citizenship={profile.citizenship} provinces={profile.provinces ?? []} lang={lang} />
 
       <fieldset>
         <legend>{tr(S.filters, lang)}</legend>
@@ -188,6 +190,7 @@ export function Prospects() {
             return (
               <article class="card-result">
                 <h3>{x.n}</h3>
+                <AfricaBadge name={x.n} lang={lang} />
                 <p>{x.c}, {provinceLabel(x.p, lang)} <Badge kind={cma.kind}>{cma.text}</Badge></p>
                 <p>{x.q} {tr(S.quartersSeen, lang)} ({tr(S.lastQuarter, lang)} : {x.lq}) — {totalPositions(x, nocSet)} {tr(totalPositions(x, nocSet) > 1 ? S.positions : S.position, lang)}</p>
                 <p class="muted">{x.j.filter(([n]) => !nocSet || nocSet.has(n)).map(([n, c]) => `${nocName(n, lang)} (${c})`).join(' ; ')}</p>
@@ -215,6 +218,7 @@ export function Prospects() {
       {desList.slice(0, shown).map(({ d, star }) => (
         <article class="card-result">
           <h3>{star ? '⭐ ' : ''}{d.employer}</h3>
+          <AfricaBadge name={d.employer} lang={lang} />
           <p>{d.community} ({provinceLabel(d.province, lang)}) — {d.program === 'RCIP' ? (lang === 'fr' ? 'PICR' : 'RCIP') : (lang === 'fr' ? 'PICRF' : 'FCIP')} <Badge kind={d.hiring === 'recrute' ? 'ok' : 'info'}>{tr(S.hiringStatus[d.hiring], lang)}</Badge></p>
           {star && <p class="ok">{tr(S.priorityJob, lang)}</p>}
           <div class="row">
