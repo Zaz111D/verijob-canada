@@ -18,10 +18,10 @@ export {
   type CmaLookup,
   type WorkplaceLocation,
 } from './geo';
-export { employerKey } from './employer';
+export { employerKey, employerSearchName } from './employer';
 export { searchEmployers, boundedLevenshtein, type SearchHit } from './search';
 export {
-  addDays, dueFollowUps, exportApplications, mergeApplications, newId, parseImport, sortApplications,
+  addDays, dueFollowUps, exportApplications, isFreeEmail, mergeApplications, newId, parseImport, sortApplications,
   APPLICATION_STATUSES, APPLICATION_ORIGINS, DEFAULT_FOLLOW_UP_DAYS, MAX_AD_TEXT,
   type Application, type ApplicationOrigin, type ApplicationStatus, type TrackingExport, type Verification,
 } from './tracking';
@@ -50,3 +50,9 @@ export {
   type PathwayStatus,
   type EvaluateOptions,
 } from './feasibility/evaluate';
+export { analyzeCv, detectLanguage, offerKeywords, matchKeywords, extractPeriods, type CvInput, type CvAnalysis, type CvCheck, type CvCheckStatus, type CvCategory, type KeywordMatch, type DetectedLang } from './cv';
+export {
+  computeStats, hourlyOf, parseEducation, parseEmploymentType, parseExperience, parsePostingLang, parseSalaryPer, parseTerm,
+  recentPostings, salaryLabel, EDUCATION_LABEL, EXPERIENCE_LABEL, POSTING_LANG_LABEL, TERM_LABEL, TYPE_LABEL,
+  type PostingRow, type PostingStats, type PostingsData, type PostingView, type Education, type Experience,
+} from './postings';

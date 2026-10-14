@@ -209,6 +209,15 @@
       "verifiedAt": "2026-10-14",
       "nextReview": "2026-12-14"
     },
+    "jobbank-resume": {
+      "titleFr": "Guichet-Emplois — Comment rédiger un bon CV",
+      "titleEn": "Job Bank — How to write a good resume",
+      "urlFr": "https://www.guichetemplois.gc.ca/trouverunemploi/ressources/rediger-bon-cv",
+      "urlEn": "https://www.jobbank.gc.ca/findajob/resources/write-good-resume",
+      "pageModified": "2024-05-30",
+      "verifiedAt": "2026-10-14",
+      "nextReview": "2027-04-14"
+    },
     "cafc-job-scams": {
       "titleFr": "Centre antifraude du Canada — Fraudes liées à l'emploi",
       "titleEn": "Canadian Anti-Fraud Centre — Job scams",
@@ -961,9 +970,9 @@
   },
   "jobBank": {
     "source": "jobbank-foreign",
-    "$comment": "MODE LIENS UNIQUEMENT : les conditions d'utilisation de Job Bank interdisent tout accès automatisé. Seul le paramètre fglo=1 (offres ouvertes aux candidats étrangers) a été confirmé. searchTemplate reste null tant qu'un modèle d'URL n'a pas été relevé à la main dans un navigateur (placeholders {keyword} et {province}).",
+    "$comment": "MODE LIENS UNIQUEMENT : les conditions d'utilisation de Job Bank interdisent tout accès automatisé. Modèle relevé à la main le 14 oct. 2026 dans un navigateur : searchstring (mot-clé) et fglo=1 (offres ouvertes aux candidats internationaux) fonctionnent ; le lieu (locationstring) n'est PAS pris en compte par l'adresse, d'où l'absence de {province}.",
     "foreignJobsUrl": "https://www.jobbank.gc.ca/jobsearch/jobsearch?fglo=1&sort=D",
-    "searchTemplate": null
+    "searchTemplate": "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring={keyword}&fglo=1&sort=D"
   },
   "opportunities": {
     "$comment": "MODE LIENS UNIQUEMENT : aucun de ces sites n'est lu automatiquement (leurs conditions d'utilisation l'interdisent). L'appli construit seulement des liens de recherche à ouvrir dans le navigateur. Placeholders des modèles : {keyword} et {location}.",
@@ -1077,6 +1086,22 @@
         "detailEn": "General classified ad sites (for example Jiji, CoinAfrique, Kijiji, Craigslist) do not check job ads for work abroad. The Canadian Anti-Fraud Centre reports job scams posted in online classifieds."
       }
     ]
+  },
+  "cv": {
+    "source": "jobbank-resume",
+    "$comment": "Seuils du vérificateur de CV. Les règles « Guichet-Emplois » viennent de la page « Comment rédiger un bon CV » ; les contrôles de lisibilité par logiciel (ATS) sont des vérifications techniques de VériJob, sans source officielle, et sont présentés comme tels.",
+    "maxPages": 2,
+    "maxWordsIfPagesUnknown": 1000,
+    "maxBulletsPerSection": 7,
+    "oldExperienceYears": 15,
+    "minTextChars": 300,
+    "$minTextChars": "PDF : en dessous de minTextChars caractères (≈ par page), le fichier est probablement un scan (image).",
+    "maxPronouns": 2,
+    "gapMonths": 12,
+    "offerKeywords": 20,
+    "keywordMatchGood": 0.6,
+    "keywordMatchLow": 0.35,
+    "resumeBuilder": { "fr": "https://www.guichetemplois.gc.ca/trouverunemploi/concepteur-cv", "en": "https://www.jobbank.gc.ca/findajob/resume-builder" }
   },
   "expressEntry": {
     "source": "ircc-ee-categories",

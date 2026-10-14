@@ -33,9 +33,13 @@ describe('veille réglementaire', () => {
 
 describe('liens Job Bank (mode liens)', () => {
   it('sans modèle vérifié : lien confirmé « candidats étrangers », non filtré', () => {
-    expect(jobBankLink(rules, { keyword: 'farm worker', province: 'ON' })).toEqual({
+    const r = { ...rules, jobBank: { ...rules.jobBank, searchTemplate: null } } as Rules;
+    expect(jobBankLink(r, { keyword: 'farm worker', province: 'ON' })).toEqual({
       url: 'https://www.jobbank.gc.ca/jobsearch/jobsearch?fglo=1&sort=D', filtered: false,
     });
+  });
+  it('modèle relevé à la main (rules.json) : mot-clé encodé, filtre international', () => {
+    expect(jobBankLink(rules, { keyword: 'personal support worker' }).url).toBe('https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=personal%20support%20worker&fglo=1&sort=D');
   });
   it('avec un modèle relevé à la main : mots-clés encodés', () => {
     const r = { ...rules, jobBank: { ...rules.jobBank, searchTemplate: 'https://example.test/s?q={keyword}&p={province}&fglo=1' } } as Rules;

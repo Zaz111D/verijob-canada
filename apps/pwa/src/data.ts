@@ -7,7 +7,7 @@ import rulesJson from '../../../data/rules.json';
 import nocJson from '../../../data/noc.json';
 import {
   filterNews, makeWageLookup, parseExpressEntryRounds,
-  type CmaLookup, type ExpressEntryData, type NewsItem, type NocData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
+  type CmaLookup, type ExpressEntryData, type NewsItem, type NocData, type PostingsData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
 } from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
@@ -63,6 +63,7 @@ export interface CommunityPriority { community: string; program: 'RCIP' | 'FCIP'
 export const loadPriorities = () => load<CommunityPriority[]>('community-priorities.json');
 
 export const loadExpressEntry = () => load<ExpressEntryData>('express-entry.json');
+export const loadPostings = () => load<PostingsData>('postings.json');
 
 // ---------------------------------------------------------------------------
 // Lecture EN DIRECT des fichiers officiels (canada.ca autorise la lecture depuis un navigateur).

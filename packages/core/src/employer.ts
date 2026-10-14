@@ -27,3 +27,13 @@ export function employerKey(name: string): string {
   const kept = words.filter((w) => !LEGAL_SUFFIXES.has(w));
   return (kept.length > 0 ? kept : words).join(' ');
 }
+
+/** Forme juridique en fin de nom (« Inc. », « Ltée »…), à retirer pour une recherche sur un site d'offres. */
+const TRAILING_LEGAL = /[\s,.]+(inc|incorporated|ltd|lt[eé]e|limited|limit[eé]e|corp|corporation|llc|ulc|enr|s\.?e\.?n\.?c\.?(r\.?l\.?)?)\.?$/i;
+
+/** Nom d'employeur pour une recherche (Guichet-Emplois, moteur de recherche) : sans forme juridique finale. */
+export function employerSearchName(name: string): string {
+  let n = name.trim();
+  for (let i = 0; i < 3 && TRAILING_LEGAL.test(n); i++) n = n.replace(TRAILING_LEGAL, '').trim();
+  return n || name.trim();
+}

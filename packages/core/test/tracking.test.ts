@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  addDays, dueFollowUps, exportApplications, mergeApplications, parseImport, sortApplications, MAX_AD_TEXT, type Application,
+  addDays, dueFollowUps, exportApplications, mergeApplications, parseImport, sortApplications, isFreeEmail, MAX_AD_TEXT, type Application,
 } from '../src';
 
 const app = (over: Partial<Application>): Application => ({
@@ -40,6 +40,15 @@ describe('export / import', () => {
     const r = parseImport(JSON.stringify(file));
     expect(r.ok && r.applications).toEqual([ok]);
     expect(r.ok && r.rejected).toBe(3);
+  });
+  it('source du contact : adresse web seulement ; messagerie gratuite repérée', () => {
+    const ok = app({ id: 'c', contact: 'rh@ferme-tremblay.ca', contactSource: 'https://www.jobbank.gc.ca/jobsearch/jobposting/123' });
+    const file = { app: 'verijob-canada', kind: 'candidatures', version: 1, exportedAt: 'x', applications: [ok, { ...app({ id: 'js' }), contactSource: 'javascript:alert(1)' }] };
+    const r = parseImport(JSON.stringify(file));
+    expect(r.ok && r.applications).toEqual([ok]);
+    expect(isFreeEmail('canada.jobs2026@gmail.com')).toBe(true);
+    expect(isFreeEmail('rh@ferme-tremblay.ca')).toBe(false);
+    expect(isFreeEmail(undefined)).toBe(false);
   });
   it('refuse un fichier qui n’est pas une sauvegarde VériJob', () => {
     expect(parseImport('pas du json')).toEqual({ ok: false, error: 'json' });

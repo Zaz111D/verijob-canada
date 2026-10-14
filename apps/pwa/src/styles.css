@@ -162,3 +162,8 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 
 /* Copie d'annonce enregistrée dans le suivi : texte brut, retours à la ligne conservés. */
 .ad-copy { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 16rem; overflow-y: auto; font-size: 0.9rem; }
+
+/* Vérificateur de CV : jauge de correspondance avec l'offre, mots manquants. */
+.meter { height: 10px; border-radius: 999px; background: var(--info-bg); overflow: hidden; margin: 6px 0 10px; }
+.meter span { display: block; height: 100%; background: var(--brand); }
+.chip-missing { background: var(--warn-bg); }

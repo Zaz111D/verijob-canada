@@ -4,11 +4,12 @@
  */
 import { useState } from 'preact/hooks';
 import {
-  addDays, APPLICATION_ORIGINS, APPLICATION_STATUSES, DEFAULT_FOLLOW_UP_DAYS, MAX_AD_TEXT, dueFollowUps, exportApplications, formatDate,
+  addDays, isFreeEmail, APPLICATION_ORIGINS, APPLICATION_STATUSES, DEFAULT_FOLLOW_UP_DAYS, MAX_AD_TEXT, dueFollowUps, exportApplications, formatDate,
   mergeApplications, newId, parseImport, sortApplications, type Application, type ApplicationOrigin, type ApplicationStatus,
 } from '@verijob/core';
 import { Badge } from '../components/common';
 import { openOfferCheck } from './CheckOffer';
+import { openCvCheck } from './CheckCv';
 import { STRINGS as S, tr, useLang } from '../i18n';
 import { loadApplications, saveApplications, upsertApplication, useApplications } from '../store';
 
@@ -34,7 +35,9 @@ function Editor({ initial, onDone }: { initial: Application; onDone: () => void 
     // Un lien qui n'est pas une adresse web (ex. « javascript: ») n'est pas gardé.
     const url = a.adUrl?.trim();
     const adUrl = url && /^https?:[/][/]/i.test(url) ? url : undefined;
-    await upsertApplication({ ...a, employer: a.employer.trim(), job: (a.job ?? '').trim(), adUrl, adText: a.adText?.trim() || undefined, updatedAt: nowIso() });
+    const src = a.contactSource?.trim();
+    const contactSource = src && /^https?:[/][/]/i.test(src) ? src : undefined;
+    await upsertApplication({ ...a, employer: a.employer.trim(), job: (a.job ?? '').trim(), adUrl, contactSource, adText: a.adText?.trim() || undefined, updatedAt: nowIso() });
     return true;
   };
   return (
@@ -67,6 +70,7 @@ function Editor({ initial, onDone }: { initial: Application; onDone: () => void 
       <p class="muted">{tr(S.adTextHelp, lang)}</p>
       {a.adText?.trim() && <p><button type="button" class="link" onClick={() => void save().then(() => openOfferCheck(a.adText!))}>{tr(S.analyzeAd, lang)}</button></p>}
       <label>{tr(S.fieldContact, lang)}<input value={a.contact ?? ''} onInput={field('contact')} /></label>
+      <label>{tr(S.fieldContactSource, lang)}<input type="url" inputMode="url" placeholder="https://" value={a.contactSource ?? ''} onInput={field('contactSource')} /></label>
       <label>{tr(S.fieldNotes, lang)}<textarea rows={3} value={a.notes ?? ''} onInput={field('notes')} /></label>
       <div class="row">
         <button type="submit" class="primary">{tr(S.save, lang)}</button>
@@ -147,7 +151,12 @@ export function Tracking() {
                 <button type="button" class="link" onClick={() => openOfferCheck(a.adText!)}>{tr(S.analyzeAd, lang)}</button>
               </details>
             )}
+            {a.adText && <p><button type="button" class="link" onClick={() => openCvCheck(a.adText!)}>{tr(S.checkCvForOffer, lang)}</button></p>}
             {a.contact && <p class="muted">{a.contact}</p>}
+            {a.contact && isFreeEmail(a.contact) && <p class="warn">{tr(S.contactFreeMail, lang)}</p>}
+            {a.contact && (a.contactSource
+              ? <p class="muted">{tr(S.contactVerified, lang)} <a href={a.contactSource} target="_blank" rel="noopener noreferrer nofollow">{a.contactSource.replace(/^https?:[/][/](www[.])?/, '').split('/')[0]} ↗</a></p>
+              : <p class="warn">{tr(S.contactUnverified, lang)}</p>)}
             {a.notes && <p>{a.notes}</p>}
             <div class="row">
               {isDue && <button type="button" class="primary" onClick={() => followedUp(a)}>{tr(S.markFollowedUp, lang)}</button>}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cityKey, employerKey, evaluatePathways, locateWorkplace, makeWageLookup, type CmaLookup } from '../src';
+import { cityKey, employerKey, employerSearchName, evaluatePathways, locateWorkplace, makeWageLookup, type CmaLookup } from '../src';
 import { nocData, rules, TODAY } from './helpers';
 
 describe('employerKey — tolérance aux variantes de nom', () => {
@@ -63,4 +63,14 @@ describe('makeWageLookup', () => {
     expect(lookup('85101', 'BC')?.medianHourly).toBe(17);
     expect(lookup('99999', 'ON')).toBeUndefined();
   });
+});
+
+describe('employerSearchName — nom pour une recherche', () => {
+  it.each([
+    ['Pointcare Health Services Inc.', 'Pointcare Health Services'],
+    ['Aliments Breton Ltée', 'Aliments Breton'],
+    ['1059066 Ontario Inc.', '1059066 Ontario'],
+    ['Ferme Tremblay S.E.N.C.', 'Ferme Tremblay'],
+    ['Inc.', 'Inc.'],
+  ])('%s → %s', (name, out) => expect(employerSearchName(name)).toBe(out));
 });

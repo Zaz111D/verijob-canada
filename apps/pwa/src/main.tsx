@@ -2,6 +2,7 @@ import { render } from 'preact';
 import { registerSW } from 'virtual:pwa-register';
 import { Layout, useRoute } from './components/common';
 import { CheckConsultant } from './pages/CheckConsultant';
+import { CheckCv } from './pages/CheckCv';
 import { CheckEmployer } from './pages/CheckEmployer';
 import { CheckOffer } from './pages/CheckOffer';
 import { Home } from './pages/Home';
@@ -26,6 +27,7 @@ function App() {
         : route === 'demarcher' ? <Prospects />
         : route === 'consultant' ? <CheckConsultant />
         : route === 'profil' ? <Profile />
+        : route === 'cv' ? <CheckCv />
         : <Home />}
     </Layout>
   );

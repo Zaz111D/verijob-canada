@@ -8,6 +8,7 @@ import {
   type PathwayId, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge } from '../components/common';
+import { ContactLinks, HowToApply, websiteSearchUrl } from '../components/ContactLinks';
 import { loadDesignated, loadPriorities, loadProspects, nocData, rules, type CommunityPriority, type DesignatedEmployer } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { upsertApplication, useApplications, useProfile, type StoredProfile } from '../store';
@@ -36,9 +37,6 @@ function cmaText(g: string, lang: Lang, agricultureOnly = false): { kind: string
   return { kind: frozen ? 'moyen' : 'ok', text: `${g} — ${tr(frozen ? S.cmaFrozen : S.cmaOpen, lang)}` };
 }
 /** Lien de recherche web neutre (seul le nom de l'employeur et sa ville sont envoyés au moteur de recherche). */
-function searchUrl(name: string, city: string): string {
-  return `https://duckduckgo.com/?q=${encodeURIComponent(`${name} ${city} Canada`)}`;
-}
 function download(name: string, content: string) {
   const url = URL.createObjectURL(new Blob([content], { type: 'text/csv;charset=utf-8' }));
   const a = Object.assign(document.createElement('a'), { href: url, download: name });
@@ -89,7 +87,7 @@ function MessagePanel({ target, profile, onClose }: { target: Target; profile: S
       <p class="callout">{tr(S.messageAdvice, uiLang)}</p>
       <div class="row">
         <button type="button" class="primary" onClick={() => void copy()}>{tr(S.copy, uiLang)}</button>
-        <a class="button" href={searchUrl(target.employer, target.city)} target="_blank" rel="noopener noreferrer">{tr(S.findWebsite, uiLang)}</a>
+        <a class="button" href={websiteSearchUrl(target.employer, target.city)} target="_blank" rel="noopener noreferrer">{tr(S.findWebsite, uiLang)}</a>
         <button type="button" onClick={onClose}>{tr(S.close, uiLang)}</button>
       </div>
       {copied && <p class="ok" role="status">{tr(S.copied, uiLang)}</p>}
@@ -183,6 +181,7 @@ export function Prospects() {
             <strong>{list.length} {tr(S.resultsCount, lang)}</strong>
             {list.length > 0 && <button type="button" onClick={exportProspects}>{tr(S.exportCsv, lang)}</button>}
           </div>
+          <HowToApply lang={lang} />
           {list.slice(0, shown).map((x) => {
             const r = prospectPathway(x, profile, { rules, nocData, nocs });
             const cma = cmaText(x.g, lang, x.s.every((s) => s === 'PA'));
@@ -197,9 +196,9 @@ export function Prospects() {
                 <p>{tr(S.bestRoute, lang)} : <strong>{r.best.nom[lang]}</strong> <Badge kind={r.best.statut}>{tr(S.status[r.best.statut], lang)}</Badge></p>
                 <div class="row">
                   <button type="button" class="primary" onClick={() => { setTarget({ employer: x.n, city: x.c, noc: r.noc, pathway: r.best.voie }); }}>{tr(S.writeMessage, lang)}</button>
-                  <a class="button" href={searchUrl(x.n, x.c)} target="_blank" rel="noopener noreferrer">{tr(S.findWebsite, lang)}</a>
                   <button type="button" disabled={isTracked(x.n)} onClick={() => track(x.n, r.noc, { lmiaFound: true })}>{isTracked(x.n) ? `✓ ${tr(S.tracked, lang)}` : tr(S.track, lang)}</button>
                 </div>
+                <ContactLinks name={x.n} city={x.c} province={x.p} postal={x.pc} lang={lang} />
               </article>
             );
           })}
@@ -223,6 +222,8 @@ export function Prospects() {
             <a class="button" href={d.sourceUrl} target="_blank" rel="noopener noreferrer">{d.community}</a>
             <button type="button" disabled={isTracked(d.employer)} onClick={() => track(d.employer, nocs[0] ?? '44101', { designated: true })}>{isTracked(d.employer) ? `✓ ${tr(S.tracked, lang)}` : tr(S.track, lang)}</button>
           </div>
+          {d.address && <p>{tr(S.location, lang)} : {d.address}</p>}
+          <ContactLinks name={d.employer} city={d.community} province={d.province} lang={lang} />
           <p class="muted">{tr(S.recordedOn, lang)} {d.recordedAt}</p>
         </article>
       ))}

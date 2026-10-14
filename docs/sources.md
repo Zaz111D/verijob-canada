@@ -247,3 +247,14 @@ Demande de Jessica : suivre aussi les petites annonces et, plus largement, les r
 | Arnaques à l'emploi | Centre antifraude du Canada, page « Emploi » (modifiée le 12 déc. 2025) | Nouvelles règles : contact/entretien par WhatsApp ou Telegram, demande de documents ou de codes, faux chèque / « agent financier » / « client mystère ». |
 
 Non retenu : lecture automatique d'Indeed, LinkedIn, Kijiji, Craigslist, Jiji, CoinAfrique ou des groupes Facebook/WhatsApp (conditions d'utilisation et absence de contrôle des annonces). Ces sites sont seulement cités, avec une mise en garde.
+
+## 15. Vérificateur de CV, offres récentes, adresses pour postuler (14 oct. 2026)
+
+| Élément | Source vérifiée | Ce qu'on en tire |
+|---|---|---|
+| Règles du CV | Guichet-Emplois, « Comment rédiger un bon CV » (modifiée le 30 mai 2024) | 2 pages maximum ; expériences de plus de 15 ans résumées ; reprendre les termes de l'offre ; chiffrer les réalisations ; coordonnées en haut ; e-mail basé sur le nom ; pas d'âge, poids, taille, état civil, religion, opinions politiques, ni NAS ; pas de photo ; 5 à 7 puces par section ; pas de « je » ; pas de simple liste de tâches ; pas de raison de départ ; pas de références ; pas de loisirs sauf s'ils sont liés au poste. |
+| Lisibilité par les logiciels de tri (ATS) | Aucune source officielle | Vérifications techniques (texte lisible, tableaux, zones de texte, titres de sections) présentées comme telles dans l'appli. |
+| Offres récentes | « Offres d'emploi affichées sur le Guichet-Emplois », open.canada.ca (licence ouverte, mensuel, ≈ 45 Mo en UTF-16, tabulations) | 65 colonnes : intitulé, CNP 2021, date de 1re publication, province, ville, salaire, études, expérience, type, contrat, langue, nombre de postes. **Pas** d'employeur, de lien, de description ni d'indicateur « candidats étrangers ». Septembre 2026 : 52 368 offres, dont 9 449 pour les métiers suivis. |
+| Recherche Guichet-Emplois | Relevé à la main dans un navigateur | `searchstring` (intitulé ou nom d'employeur) et `fglo=1` fonctionnent ; `locationstring` est ignoré. |
+| Adresses des employeurs | Listes EIMT d'EDSC | La colonne « Address » ne contient que ville, province et code postal (pas de rue ni d'e-mail). |
+

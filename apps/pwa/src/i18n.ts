@@ -286,6 +286,72 @@ export const STRINGS = {
   newsOffline: { fr: 'Actualités indisponibles hors ligne.', en: 'News unavailable offline.' },
   newsAll: { fr: 'Toutes les actualités d’IRCC', en: 'All IRCC news' },
 
+  // Joindre un employeur (sans deviner d'e-mail)
+  employerJobs: { fr: 'Ses offres sur le Guichet-Emplois', en: 'Its jobs on Job Bank' },
+  seeOnMap: { fr: 'Voir sur la carte', en: 'See on the map' },
+  howToApply: {
+    fr: 'Postulez uniquement par le moyen indiqué dans une offre du Guichet-Emplois (rubrique « Comment postuler ») ou sur le site officiel de l’employeur. Les listes officielles ne donnent que la ville et le code postal : VériJob ne devine jamais d’adresse e-mail.',
+    en: 'Apply only through the method shown in a Job Bank posting (“How to apply” section) or on the employer’s official website. Official lists only give the city and postal code: VériJob never guesses an e-mail address.',
+  },
+
+  // Offres récentes (données ouvertes du Guichet-Emplois)
+  postingsTitle: { fr: 'Offres récentes pour vos métiers', en: 'Recent offers for your jobs' },
+  postingsIntro: {
+    fr: 'D’après les données ouvertes officielles du Guichet-Emplois, publiées chaque mois. Elles donnent la date, la ville, le salaire et les attentes, mais pas le nom de l’employeur ni le lien : utilisez « Retrouver sur le Guichet-Emplois », puis postulez seulement si l’offre porte l’icône « ouvert aux candidats étrangers ».',
+    en: 'From Job Bank’s official open data, published monthly. It gives the date, city, salary and requirements, but not the employer’s name or the link: use “Find it on Job Bank”, then apply only if the posting shows the “open to foreign candidates” icon.',
+  },
+  postingsMonth: { fr: 'Offres publiées en', en: 'Offers posted in' },
+  postingsNone: { fr: 'Aucune offre ce mois-là pour ce métier dans vos provinces.', en: 'No offer that month for this job in your provinces.' },
+  postingsNeedProfile: { fr: 'Choisissez vos métiers et vos provinces dans « Mon profil » pour voir les offres récentes.', en: 'Choose your jobs and provinces in “My profile” to see recent offers.' },
+  statOffers: { fr: 'offres', en: 'offers' },
+  statPositions: { fr: 'postes', en: 'positions' },
+  statMedian: { fr: 'salaire médian proposé', en: 'median offered wage' },
+  statNoDegree: { fr: 'sans diplôme exigé', en: 'no degree required' },
+  statNoExp: { fr: 'sans expérience exigée', en: 'no experience required' },
+  statSeasonal: { fr: 'saisonnières', en: 'seasonal' },
+  postedOn: { fr: 'Publiée le', en: 'Posted on' },
+  findOnJobBank: { fr: 'Retrouver sur le Guichet-Emplois', en: 'Find it on Job Bank' },
+  positionsShort: { fr: 'poste(s)', en: 'position(s)' },
+
+  // Vérificateur de CV
+  navCv: { fr: 'Vérifier mon CV', en: 'Check my resume' },
+  cardCvTitle: { fr: 'Vérifier mon CV', en: 'Check my resume' },
+  cardCvText: { fr: 'Format canadien, cohérence, langue, mots de l’offre, lisibilité par les logiciels de tri.', en: 'Canadian format, consistency, language, words from the offer, readability by screening software.' },
+  cvTitle: { fr: 'Vérifier mon CV avant de postuler', en: 'Check my resume before applying' },
+  cvIntro: {
+    fr: 'Ajoutez votre CV (PDF, Word .docx ou texte) et, si possible, le texte de l’offre visée. L’appli vérifie le format canadien, le contenu, la cohérence des dates, la langue, les mots importants de l’offre et la lisibilité par les logiciels de tri (ATS).',
+    en: 'Add your resume (PDF, Word .docx or text) and, if possible, the text of the target offer. The app checks the Canadian format, content, date consistency, language, important words from the offer and readability by screening software (ATS).',
+  },
+  cvPrivacy: { fr: 'Votre CV est lu sur ce téléphone. Il n’est envoyé nulle part et n’est pas enregistré.', en: 'Your resume is read on this phone. It is not sent anywhere and not saved.' },
+  cvFile: { fr: 'Mon CV (PDF, .docx ou .txt, 5 Mo maximum)', en: 'My resume (PDF, .docx or .txt, 5 MB max)' },
+  cvOffer: { fr: 'Texte de l’offre visée (facultatif, mais recommandé)', en: 'Text of the target offer (optional, but recommended)' },
+  cvAnalyze: { fr: 'Vérifier', en: 'Check' },
+  cvReading: { fr: 'Lecture du CV…', en: 'Reading the resume…' },
+  cvErr: {
+    'trop-gros': { fr: 'Fichier trop gros (5 Mo maximum).', en: 'File too large (5 MB max).' },
+    format: { fr: 'Format non pris en charge : utilisez un PDF, un fichier Word .docx ou un fichier texte. (Ancien format .doc : ouvrez-le dans Word et enregistrez-le en .docx.)', en: 'Unsupported format: use a PDF, a Word .docx or a text file. (Old .doc format: open it in Word and save it as .docx.)' },
+    illisible: { fr: 'Impossible de lire ce fichier. Il est peut-être protégé ou abîmé.', en: 'Cannot read this file. It may be protected or damaged.' },
+  },
+  cvCategory: {
+    lisibilite: { fr: 'Lisibilité par les logiciels de tri (ATS)', en: 'Readability by screening software (ATS)' },
+    format: { fr: 'Format canadien', en: 'Canadian format' },
+    contenu: { fr: 'Contenu', en: 'Content' },
+    coherence: { fr: 'Cohérence', en: 'Consistency' },
+    offre: { fr: 'Correspondance avec l’offre', en: 'Match with the offer' },
+  },
+  cvStatus: {
+    'a-corriger': { fr: 'À corriger', en: 'To fix' },
+    conseil: { fr: 'Conseil', en: 'Tip' },
+    ok: { fr: 'OK', en: 'OK' },
+  },
+  cvTechnical: { fr: 'Vérification technique de VériJob (pas de règle officielle sur ce point).', en: 'Technical check by VériJob (no official rule on this point).' },
+  cvMissingWords: { fr: 'Mots de l’offre absents du CV (ajoutez seulement ceux qui sont vrais pour vous)', en: 'Words from the offer missing from the resume (add only those that are true for you)' },
+  cvFoundWords: { fr: 'Mots de l’offre présents', en: 'Words from the offer found' },
+  cvShowOk: { fr: 'Points conformes', en: 'Points that are fine' },
+  cvBuilder: { fr: 'Pour refaire un CV au format canadien, le Guichet-Emplois propose un outil gratuit de création de CV (compte gratuit).', en: 'To rebuild a resume in Canadian format, Job Bank offers a free Resume Builder (free account).' },
+  cvEvidence: { fr: 'Dans votre CV :', en: 'In your resume:' },
+  checkCvForOffer: { fr: 'Vérifier mon CV pour cette offre', en: 'Check my resume for this offer' },
+
   // Suivi : provenance et copie de l'annonce
   fieldOrigin: { fr: 'Où avez-vous trouvé l’offre ?', en: 'Where did you find the offer?' },
   appOrigin: {
@@ -299,6 +365,10 @@ export const STRINGS = {
     demarchage: { fr: 'Candidature spontanée', en: 'Unsolicited application' },
     autre: { fr: 'Autre', en: 'Other' },
   },
+  fieldContactSource: { fr: 'Où avez-vous trouvé ce contact ? (lien de l’offre officielle ou du site de l’employeur)', en: 'Where did you find this contact? (link to the official posting or the employer’s website)' },
+  contactVerified: { fr: 'Contact trouvé sur', en: 'Contact found on' },
+  contactUnverified: { fr: 'Contact non vérifié : retrouvez-le dans une offre du Guichet-Emplois ou sur le site officiel de l’employeur avant d’envoyer quoi que ce soit.', en: 'Contact not verified: find it in a Job Bank posting or on the employer’s official website before sending anything.' },
+  contactFreeMail: { fr: 'Adresse de messagerie gratuite (Gmail, Yahoo…) : une vraie entreprise écrit normalement depuis une adresse à son nom. Vérifiez avant d’envoyer vos documents.', en: 'Free e-mail address (Gmail, Yahoo…): a real company normally writes from an address in its own name. Check before sending your documents.' },
   originShort: { fr: 'Provenance', en: 'Found on' },
   fieldAdUrl: { fr: 'Lien de l’annonce', en: 'Link to the ad' },
   fieldAdText: { fr: 'Copie du texte de l’annonce', en: 'Copy of the ad text' },

@@ -128,6 +128,21 @@ export interface Rules {
     networks: OpportunityNetwork[];
     riskyChannels: Array<{ id: string; source: string; nameFr: string; nameEn: string; detailFr: string; detailEn: string }>;
   };
+  cv: {
+    source: string;
+    maxPages: number;
+    maxWordsIfPagesUnknown: number;
+    maxBulletsPerSection: number;
+    oldExperienceYears: number;
+    minTextChars: number;
+    maxPronouns: number;
+    gapMonths: number;
+    offerKeywords: number;
+    keywordMatchGood: number;
+    keywordMatchLow: number;
+    /** Outil gratuit de création de CV du Guichet-Emplois (compte nécessaire). */
+    resumeBuilder: Localized;
+  };
   expressEntry: {
     source: string;
     roundsSource: string;

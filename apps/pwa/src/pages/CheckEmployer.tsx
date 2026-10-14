@@ -5,6 +5,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { EMPLOYER_LIST_WARNING, findNoc, PROVINCE_NAMES, searchEmployers, type ProvinceCode } from '@verijob/core';
 import { Badge } from '../components/common';
+import { ContactLinks, HowToApply } from '../components/ContactLinks';
 import {
   loadDesignated, loadEmployers, loadEmployersIndex, nocData, rules,
   type DesignatedEmployer, type EmployerRecord, type EmployersIndex,
@@ -50,6 +51,7 @@ function LmiaCard({ r, index }: { r: EmployerRecord; index?: EmployersIndex }) {
       <p>{tr(S.jobs, lang)} : {nocs.map((c) => `${c} – ${nocTitle(c, index, lang)}`).join(' ; ')}</p>
       {streams.length > 0 && <p>{tr(S.streams, lang)} : {streams.map((s) => index?.streams[s]?.[lang] ?? s).join(', ')}</p>}
       {streams.includes('PA') && <p class="muted">{tr(S.paWarning, lang)}</p>}
+      <ContactLinks name={r.n} city={r.c} province={r.prov} postal={r.pc} lang={lang} />
     </article>
   );
 }
@@ -64,6 +66,7 @@ function DesignatedCard({ d }: { d: DesignatedEmployer[] }) {
       {first.address && <p>{tr(S.location, lang)} : {first.address}</p>}
       <p><Badge kind={first.hiring === 'recrute' ? 'ok' : first.hiring === 'inconnu' ? 'info' : 'moyen'}>{tr(S.hiringStatus[first.hiring], lang)}</Badge></p>
       <p class="muted"><a href={first.sourceUrl} target="_blank" rel="noopener noreferrer">{first.community}</a> — {tr(S.recordedOn, lang)} {first.recordedAt}</p>
+      <ContactLinks name={first.employer} city={first.address || first.community} province={first.province} lang={lang} />
     </article>
   );
 }
@@ -135,6 +138,7 @@ export function CheckEmployer() {
           {lmia.map((r) => <LmiaCard r={r} index={index} />)}
           <h2>{designated?.length ? tr(S.designatedFound, lang) : tr(S.designatedNone, lang)}</h2>
           {designated?.map((d) => <DesignatedCard d={d} />)}
+          {(lmia.length > 0 || !!designated?.length) && <HowToApply lang={lang} />}
         </div>
       )}
     </section>

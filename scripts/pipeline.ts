@@ -12,6 +12,7 @@ import type { NocData, Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildDesignated, type DesignatedStats } from './build-designated';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
+import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
 import { fetchWages, type WagesStats } from './fetch-wages';
@@ -37,8 +38,14 @@ const geo = await fetchGeo(rules);
 const lmia = await fetchLmia(rules, nocData, geo.lookup, quarters);
 const wages = await fetchWages(nocData);
 const ee = await fetchExpressEntry(rules);
+// Offres du mois (données ouvertes) : une erreur ne bloque pas le reste, l'appli fonctionne sans.
+let postings: PostingsStats | { error: string };
+try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
+  postings = { error: e instanceof Error ? e.message : String(e) };
+  console.warn(`  ⚠ Offres du Guichet-Emplois non mises à jour : ${postings.error}`);
+}
 
-writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee));
+writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings));
 console.log('✔ Terminé. Rapport : docs/data-report.md');
 
 // ---------------------------------------------------------------------------
@@ -53,8 +60,8 @@ function pct(a: number, total: number): string {
   return total ? `${Math.round((100 * a) / total)} %` : '–';
 }
 
-function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats): string {
-  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : [])];
+function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }): string {
+  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : [])];
   const totalPos = l.geo.positionsCma + l.geo.positionsOutside + l.geo.positionsUnknown;
   const totalRec = l.geo.cma + l.geo.outside + l.geo.unknown;
   const recurringTargets = l.recurring.slice(0, 20);
@@ -125,5 +132,9 @@ ${d.stale.length ? `- ⚠ Relevés de plus de 90 jours à refaire : ${d.stale.jo
 ## 6. Entrée express — rondes d'invitations (IRCC)
 
 ${ee.error ? `⚠ Non mises à jour : ${ee.error} (l'appli lit alors le fichier officiel en direct).` : `- ${ee.rounds} rondes gardées, la plus récente le ${ee.latest}.`}
+
+## 7. Offres du Guichet-Emplois (données ouvertes, mensuelles)
+
+${'error' in p ? `⚠ Non mises à jour : ${p.error}` : `- Mois ${p.month} : ${n(p.total)} offres au total, ${n(p.kept)} pour les métiers suivis, ${n(p.rows)} gardées en détail (les plus récentes par métier et province).`}
 `;
 }

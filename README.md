@@ -21,6 +21,7 @@ Application web gratuite (PWA), sans serveur, qui aide les candidats africains, 
 | **Offre** | Collez un message : l'appli liste les signaux d'alerte (frais demandés, visa « garanti », Western Union, faux e-mail gouvernemental, PTAS proposé à un Africain, « entretien » sur WhatsApp/Telegram, copie du passeport ou code demandés, faux chèque…), avec une explication simple et la source officielle de chacun. Elle ne dit jamais « offre sûre ». |
 | **Employeur** | Recherche tolérante aux fautes dans les listes officielles d'EIMT positives et refusées (8 derniers trimestres) et dans les employeurs désignés des pilotes PICR/PICRF. |
 | **Emplois** | Lien vers les offres du Guichet-Emplois ouvertes aux candidats étrangers, mots-clés à copier, villes où les EIMT bas salaire sont gelées. Autres sites (Indeed, LinkedIn, Québec emploi) avec recherche pré-remplie, salons de recrutement (Destination Canada, Destination Manitoba, Journées Québec), réseaux (services publics d'emploi partenaires, réseaux francophones, communautés PICR/PICRF), mises en garde sur les groupes WhatsApp/Facebook et les petites annonces. Évaluation d'un poste trouvé. |
+| **Vérifier mon CV** | Ajoutez votre CV (PDF, Word .docx ou texte) et l'offre visée : format canadien (règles du Guichet-Emplois), renseignements personnels à retirer, cohérence des dates, langue, mots de l'offre présents ou absents, lisibilité par les logiciels de tri (ATS). Le CV est lu sur le téléphone et n'est envoyé nulle part (accessible depuis l'accueil et depuis chaque candidature du Suivi). |
 | **Démarcher** | Employeurs qui obtiennent des EIMT pour vos métiers trimestre après trimestre, et employeurs désignés. Export CSV, modèle de message de candidature FR/EN, bouton « Suivre ». |
 | **Suivi** | Vos candidatures : statut, relances, notes, provenance de l'offre (petite annonce, Job Bank, salon…), lien et **copie du texte de l'annonce** (preuve si elle disparaît), bouton « Analyser cette annonce », export et import (sauvegarde JSON). |
 | **Mon profil** | Pays, niveaux de langue, métiers, provinces. Affiche les voies d'immigration possibles (probable, possible, bloquée, à préciser), toujours avec les raisons et les sources. |
@@ -89,6 +90,7 @@ docs/data-report.md      Rapport de contrôle généré par le pipeline
 | `cma-lookup.json` | Municipalité → RMR (gel des EIMT bas salaire) | Statistique Canada, Recensement 2021 |
 | `wages.json` | Salaires bas, médian et haut des métiers ciblés | Salaires Job Bank, open.canada.ca |
 | `designated-employers.json`, `community-priorities.json` | Employeurs désignés et métiers prioritaires PICR/PICRF | Relevés manuels : `data/manual/*.csv` |
+| `postings.json` | Offres du dernier mois pour les métiers suivis : statistiques par métier et province, et offres récentes (date, ville, salaire, études, expérience) | « Offres d'emploi affichées sur le Guichet-Emplois », données ouvertes mensuelles d'EDSC (open.canada.ca). Sans nom d'employeur ni lien : l'appli propose une recherche sur le Guichet-Emplois. |
 | `express-entry.json` | 40 dernières rondes d'invitations Entrée express, avec leur catégorie | Fichiers JSON officiels d'IRCC (canada.ca) |
 
 Lu **en direct** par l'appli (pas de fichier) : le fil d'actualités d'IRCC (`api.io.canada.ca`) à l'ouverture de « Programmes et actualités », et le fichier officiel des rondes Entrée express quand on appuie sur « Actualiser maintenant ». Canada.ca autorise cette lecture depuis un navigateur ; le service worker garde la dernière réponse pour le mode hors ligne.
@@ -124,10 +126,11 @@ Ajoutez ou corrigez des lignes dans `data/manual/designated-employers.csv`. Colo
 
 Le pipeline refuse un fichier invalide et signale les relevés de plus de 90 jours. Huit communautés restent à relever à la main : leurs sites bloquent les robots (voir `docs/sources.md`, §13).
 
-### Liens Job Bank pré-filtrés (optionnel)
-Seul le filtre « candidats étrangers » (`fglo=1`) est confirmé. Pour avoir des liens filtrés par métier et province :
-1. faites une recherche à la main sur jobbank.gc.ca (mot-clé, province, offres pour candidats étrangers) ;
-2. copiez l'adresse obtenue dans `data/rules.json` → `jobBank.searchTemplate`, en remplaçant le mot-clé par `{keyword}` et la province par `{province}`.
+### Liens Job Bank
+`jobBank.searchTemplate` a été relevé à la main le 14 oct. 2026 : `searchstring` (mot-clé ou nom d'employeur) et `fglo=1` (offres ouvertes aux candidats internationaux) fonctionnent ; la province ne peut pas être imposée par l'adresse. Si le Guichet-Emplois change son format, refaites une recherche dans un navigateur et recopiez l'adresse en remplaçant le mot-clé par `{keyword}`.
+
+### Adresses pour postuler
+Les listes officielles d'EIMT ne donnent que la ville et le code postal de l'employeur. L'appli ne devine jamais d'adresse e-mail : elle propose ses offres sur le Guichet-Emplois (chaque offre indique comment postuler), la recherche de son site officiel et la carte. Dans le Suivi, la personne note le contact et la page officielle où elle l'a trouvé ; une adresse Gmail/Yahoo est signalée.
 
 ---
 

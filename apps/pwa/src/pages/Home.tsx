@@ -5,6 +5,7 @@ const CARDS = [
   { href: '#/employeur', title: S.cardEmployerTitle, text: S.cardEmployerText },
   { href: '#/emplois', title: S.cardJobsTitle, text: S.cardJobsText },
   { href: '#/veille', title: S.cardWatchTitle, text: S.cardWatchText },
+  { href: '#/cv', title: S.cardCvTitle, text: S.cardCvText },
   { href: '#/demarcher', title: S.cardProspectsTitle, text: S.cardProspectsText },
   { href: '#/suivi', title: S.cardTrackingTitle, text: S.cardTrackingText },
   { href: '#/consultant', title: S.cardConsultantTitle, text: S.cardConsultantText },

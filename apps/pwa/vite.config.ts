@@ -30,8 +30,11 @@ export default defineConfig({
         // L'application et les petits fichiers de données sont disponibles hors ligne dès l'installation.
         globPatterns: [
           '**/*.{js,css,html,svg,png,webmanifest}',
-          'data/{employers-index,wages,cma-lookup,designated-employers,community-priorities,express-entry}.json',
+          'data/{employers-index,wages,cma-lookup,designated-employers,community-priorities,express-entry,postings}.json',
         ],
+        // pdf.js (lecture des CV en PDF, environ 1,7 Mo) n'est pas préchargé : il est téléchargé
+        // la première fois qu'on vérifie un CV PDF, puis gardé en cache (règle plus bas).
+        globIgnores: ['**/assets/pdf-*.js', '**/assets/pdf.worker*'],
         navigateFallback: 'index.html',
         // Les listes d'employeurs par province (plus lourdes) sont gardées en cache après la 1re consultation.
         runtimeCaching: [
@@ -39,6 +42,11 @@ export default defineConfig({
             urlPattern: ({ url }) => /\/data\/(employers-[A-Z]{2}|prospects)\.json$/.test(url.pathname),
             handler: 'StaleWhileRevalidate',
             options: { cacheName: 'verijob-employeurs', expiration: { maxEntries: 20 } },
+          },
+          {
+            urlPattern: ({ url }) => /\/assets\/pdf(\.worker[^/]*|-[^/]*)\.m?js$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: { cacheName: 'verijob-pdfjs', expiration: { maxEntries: 6 } },
           },
           {
             // Actualités IRCC et rondes Entrée express lues en direct : réseau d'abord, dernière réponse hors ligne.

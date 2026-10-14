@@ -41,6 +41,8 @@ export interface Application {
   followUp?: string;
   notes?: string;
   contact?: string;
+  /** Page officielle où le contact a été trouvé (offre du Guichet-Emplois, site de l'employeur). */
+  contactSource?: string;
   verification?: Verification;
   /** Provenance de l'offre. */
   origin?: ApplicationOrigin;
@@ -60,6 +62,15 @@ export interface TrackingExport {
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+const HTTP_URL = /^https?:[/][/]/i;
+
+/** Messageries gratuites : un employeur qui a un site utilise normalement une adresse à son nom. */
+const FREE_MAIL = /@(gmail|googlemail|yahoo|ymail|outlook|hotmail|live|msn|aol|icloud|proton|protonmail|gmx|yandex|mail)\.[a-z.]+$/i;
+
+/** Vrai si le contact est une adresse e-mail de messagerie gratuite (Gmail, Yahoo…). */
+export function isFreeEmail(contact: string | undefined): boolean {
+  return !!contact && FREE_MAIL.test(contact.trim());
+}
 
 /** Ajoute des jours à une date AAAA-MM-JJ. */
 export function addDays(iso: string, n: number): string {
@@ -104,6 +115,7 @@ function isApplication(x: unknown): x is Application {
     && (a.followUp === undefined || (typeof a.followUp === 'string' && DATE.test(a.followUp)))
     && (a.notes === undefined || (typeof a.notes === 'string' && a.notes.length <= 5000))
     && (a.contact === undefined || (typeof a.contact === 'string' && a.contact.length <= 300))
+    && (a.contactSource === undefined || (typeof a.contactSource === 'string' && a.contactSource.length <= 2000 && HTTP_URL.test(a.contactSource)))
     && (a.origin === undefined || APPLICATION_ORIGINS.includes(a.origin as ApplicationOrigin))
     && (a.adUrl === undefined || (typeof a.adUrl === 'string' && a.adUrl.length <= 2000 && /^https?:\/\//i.test(a.adUrl)))
     && (a.adText === undefined || (typeof a.adText === 'string' && a.adText.length <= MAX_AD_TEXT))
@@ -122,8 +134,8 @@ export function parseImport(text: string): { ok: true; applications: Application
     return { ok: false, error: 'format' };
   }
   const applications = d.applications.filter(isApplication).map((a) => {
-    const { id, employer, job, date, status, followUp, notes, contact, verification, origin, adUrl, adText, updatedAt } = a;
-    return { id, employer, job, date, status, followUp, notes, contact, verification, origin, adUrl, adText, updatedAt };
+    const { id, employer, job, date, status, followUp, notes, contact, contactSource, verification, origin, adUrl, adText, updatedAt } = a;
+    return { id, employer, job, date, status, followUp, notes, contact, contactSource, verification, origin, adUrl, adText, updatedAt };
   });
   return { ok: true, applications, rejected: d.applications.length - applications.length };
 }

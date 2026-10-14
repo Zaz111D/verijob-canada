@@ -9,6 +9,7 @@ import {
 } from '@verijob/core';
 import { Badge, PathwayCards, Sources } from '../components/common';
 import { Opportunities } from '../components/Opportunities';
+import { RecentPostings } from '../components/Postings';
 import { loadCmaLookup, loadDesignated, loadEmployers, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
@@ -121,6 +122,7 @@ export function Jobs() {
       )}
       {provinces.length > 0 && <WhereToLook provinces={provinces} nocs={nocs} lang={lang} />}
       {!nocs.length && <p class="muted">{tr(S.routesEmpty, lang)} <a href="#/profil">{tr(S.navProfile, lang)}</a></p>}
+      <RecentPostings nocs={nocs} provinces={provinces} lang={lang} />
       <Opportunities nocs={nocs} provinces={provinces} citizenship={profile.citizenship} lang={lang} />
 
       <h2>{tr(S.evalTitle, lang)}</h2>
