@@ -10,6 +10,7 @@ import {
 import { loadPostings, nocData, rules } from '../data';
 import { STRINGS as S, tr, type Lang } from '../i18n';
 import { Badge } from './common';
+import { openSampleCv } from '../pages/SampleCv';
 
 const MONTHS_FR = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -38,7 +39,10 @@ function PostingCard({ p, lang }: { p: PostingView; lang: Lang }) {
       <p class="muted">{tr(S.postedOn, lang)} {formatDate(p.date, lang)} — {p.city || '—'} ({p.province})</p>
       <p><CmaBadge cma={p.cma} lang={lang} /></p>
       <p>{facts.join(' · ')}</p>
-      <a class="button" href={link.url} target="_blank" rel="noopener noreferrer">{tr(S.findOnJobBank, lang)} ↗</a>
+      <div class="row">
+        <a class="button" href={link.url} target="_blank" rel="noopener noreferrer">{tr(S.findOnJobBank, lang)} ↗</a>
+        <button type="button" onClick={() => openSampleCv({ noc: p.noc, title: p.title, province: p.province })}>{tr(S.sampleOpen, lang)}</button>
+      </div>
     </article>
   );
 }

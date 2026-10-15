@@ -302,3 +302,13 @@ Demandes de Jessica : mise en relation avec des employeurs qui ont des besoins s
 - Registre des entreprises du Québec (Données Québec, fichier du 1er oct. 2026, 990 Mo décompressés) : il contient l'activité (code CAE 7791 « Services de sécurité et d'enquêtes ») et le nombre d'employés. Sur les 137 entreprises de sécurité immatriculées entre oct. 2025 et oct. 2026, 83 déclarent **aucun employé** et 47 **de 1 à 5** ; seules 7 en ont 6 ou plus. Beaucoup installent des alarmes ou sont des consultants, et une partie sont des **personnes physiques** (données personnelles). Une jeune entreprise sans employés n'a presque aucune chance d'obtenir une EIMT. Conclusion : pas un bon signal de besoin pour un candidat à l'étranger.
 - Registre fédéral (Corporations Canada, open.canada.ca) : nom et adresse seulement, **aucun secteur d'activité ni effectif** ; souvent une adresse résidentielle. Non utilisable.
 - Signal retenu à la place : les **nouveaux recruteurs** des listes d'EIMT (l'employeur a déjà prouvé à EDSC qu'il est réel et qu'il a un besoin).
+
+## 19. CV d'exemple pour chaque poste (15 oct. 2026)
+
+Demande de Jessica : un CV type canadien, adapté à chaque offre, pour un candidat hors Canada, avec un contexte professionnel vrai.
+
+- **Contenu vrai** : chaque puce d'expérience est une « fonction principale » officielle du métier (CNP 2021 v1.0, fichier « éléments » de Statistique Canada, FR et EN, extrait par `scripts/build-noc-elements.ts` le 15 oct. 2026 dans `data/noc-elements.json`, 22 métiers). Les conditions d'accès officielles sont affichées à côté. Un test vérifie qu'aucune puce n'est inventée.
+- **Présentation** : règles du Guichet-Emplois (« Comment rédiger un bon CV », lue le 15 oct. 2026) : 2 pages au plus, coordonnées en haut, sans photo, âge ni état civil, verbes à l'infinitif, 5 à 7 puces, réalisations chiffrées, termes de l'offre repris, « je » seulement dans le sommaire, honnêteté.
+- **Candidat fictif** : nom, dates, établissement et résultats sont des repères [entre crochets], surlignés en jaune dans le fichier Word. Les employeurs sont décrits par leur type, jamais par un vrai nom. Le CV donné en exemple par Jessica (avec l'accord de la personne) n'a servi qu'à la structure (profil, compétences clés, expérience avec puces, formation, langues) : aucune de ses données n'est dans l'appli.
+- **Adaptation à l'offre** : intitulé repris, puces qui contiennent les mots de l'offre en premier, liste des mots de l'offre absents « à prouver seulement si c'est vrai ».
+- **Word** : fichier .docx minimal (Office Open XML) fabriqué sur le téléphone, une colonne, sans tableau ni image (lisible par les logiciels de tri), vraies puces Word. Ouvert sans erreur dans Microsoft Word (1 page pour l'exemple agent·e de sécurité).

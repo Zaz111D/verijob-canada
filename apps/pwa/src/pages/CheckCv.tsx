@@ -8,6 +8,7 @@ import { Badge, Sources } from '../components/common';
 import { CvFileError, readCvFile } from '../cvfile';
 import { rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
+import { openSampleCv } from './SampleCv';
 
 /** Offre transmise par une autre page (ex. « Vérifier mon CV pour cette offre » dans le Suivi). */
 const HANDOFF_KEY = 'verijob-cv-offre';
@@ -79,6 +80,7 @@ export function CheckCv() {
       <textarea id="cv-offer" rows={6} value={offer} onInput={(e) => setOffer((e.target as HTMLTextAreaElement).value)} />
       <div class="row">
         <button type="button" class="primary" disabled={!file || busy} onClick={() => void run()}>{tr(busy ? S.cvReading : S.cvAnalyze, lang)}</button>
+        <button type="button" onClick={() => openSampleCv({ text: offer })}>{tr(S.sampleTitle, lang)}</button>
       </div>
       {error && <p class="alert" role="status">{error}</p>}
 

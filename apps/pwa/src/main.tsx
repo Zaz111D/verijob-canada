@@ -3,6 +3,7 @@ import { registerSW } from 'virtual:pwa-register';
 import { Layout, useRoute } from './components/common';
 import { CheckConsultant } from './pages/CheckConsultant';
 import { CheckCv } from './pages/CheckCv';
+import { SampleCvPage } from './pages/SampleCv';
 import { CheckEmployer } from './pages/CheckEmployer';
 import { CheckOffer } from './pages/CheckOffer';
 import { Home } from './pages/Home';
@@ -28,6 +29,7 @@ function App() {
         : route === 'consultant' ? <CheckConsultant />
         : route === 'profil' ? <Profile />
         : route === 'cv' ? <CheckCv />
+        : route === 'cv-exemple' ? <SampleCvPage />
         : <Home />}
     </Layout>
   );

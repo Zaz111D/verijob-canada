@@ -51,6 +51,7 @@ export {
   type EvaluateOptions,
 } from './feasibility/evaluate';
 export { analyzeCv, detectLanguage, offerKeywords, matchKeywords, extractPeriods, type CvInput, type CvAnalysis, type CvCheck, type CvCheckStatus, type CvCategory, type KeywordMatch, type DetectedLang } from './cv';
+export { buildSampleCv, sampleCvToText, type NocElements, type NocElementsData, type SampleCv, type SampleBullet, type SampleJob, type SampleCvOptions } from './samplecv';
 export {
   computeStats, hourlyOf, parseEducation, parseEmploymentType, parseExperience, parsePostingLang, parseSalaryPer, parseTerm,
   recentPostings, salaryLabel, EDUCATION_LABEL, EXPERIENCE_LABEL, POSTING_LANG_LABEL, TERM_LABEL, TYPE_LABEL,

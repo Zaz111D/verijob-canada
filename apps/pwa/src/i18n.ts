@@ -382,6 +382,61 @@ export const STRINGS = {
   navCv: { fr: 'Vérifier mon CV', en: 'Check my resume' },
   cardCvTitle: { fr: 'Vérifier mon CV', en: 'Check my resume' },
   cardCvText: { fr: 'Format canadien, cohérence, langue, mots de l’offre, lisibilité par les logiciels de tri.', en: 'Canadian format, consistency, language, words from the offer, readability by screening software.' },
+  sampleTitle: { fr: 'CV d’exemple pour ce poste', en: 'Sample resume for this job' },
+  sampleOpen: { fr: 'CV d’exemple', en: 'Sample resume' },
+  sampleIntro: {
+    fr: 'Exemple d’un candidat FICTIF qui vit hors du Canada, au format canadien. Chaque tâche vient des fonctions officielles du métier (CNP 2021, Statistique Canada) ; la présentation suit le Guichet-Emplois. Remplacez chaque [repère surligné] par vos vraies informations et gardez seulement les tâches que vous avez réellement faites.',
+    en: 'Example of a FICTIONAL candidate living outside Canada, in Canadian format. Each task comes from the official duties of the job (NOC 2021, Statistics Canada); the layout follows Job Bank. Replace each [highlighted placeholder] with your real information and keep only the tasks you have really done.',
+  },
+  sampleHonest: {
+    fr: 'Ne recopiez jamais une tâche ou un chiffre qui n’est pas vrai : un employeur peut vérifier, et le Guichet-Emplois rappelle que mentir dans un CV peut coûter l’emploi.',
+    en: 'Never copy a task or a number that is not true: an employer can check, and Job Bank reminds that lying on a resume can cost you the job.',
+  },
+  sampleJob: { fr: 'Métier', en: 'Job' },
+  sampleChooseJob: { fr: '— Choisir un métier —', en: '— Choose a job —' },
+  sampleLang: { fr: 'Langue du CV', en: 'Resume language' },
+  sampleOfferTitle: { fr: 'Intitulé du poste (facultatif)', en: 'Job title (optional)' },
+  sampleOfferText: { fr: 'Texte de l’offre (facultatif) : le CV reprend ses mots importants', en: 'Job posting text (optional): the resume reuses its key words' },
+  sampleDownload: { fr: 'Télécharger le CV Word (.docx)', en: 'Download the Word resume (.docx)' },
+  sampleCopy: { fr: 'Copier le texte', en: 'Copy the text' },
+  sampleCheck: { fr: 'Vérifier mon propre CV pour cette offre', en: 'Check my own resume for this posting' },
+  sampleFromOffer: { fr: 'Mot de l’offre', en: 'Posting word' },
+  sampleToProve: {
+    fr: 'Mots de l’offre absents de l’exemple : montrez-les dans votre CV avec un exemple réel, seulement si c’est vrai',
+    en: 'Posting words missing from the example: show them in your resume with a real example, only if true',
+  },
+  sampleMatched: { fr: 'Mots de l’offre déjà repris', en: 'Posting words already used' },
+  sampleRequirements: { fr: 'Conditions d’accès officielles du métier (à prouver si elles s’appliquent)', en: 'Official employment requirements (prove them when they apply)' },
+  sampleTransfer: {
+    fr: 'Ce CV part de votre métier actuel (Mon profil) : il met en avant les tâches communes avec le métier visé.',
+    en: 'This resume starts from your current job (My profile): it highlights the tasks shared with the target job.',
+  },
+  sampleWhy: {
+    header: {
+      fr: 'En haut de la 1re page : nom, ville et pays, téléphone avec l’indicatif, courriel simple (prénom.nom). Sans photo, âge, état civil ni religion. Pour un candidat hors Canada, une ligne claire sur votre disponibilité et le permis de travail rassure l’employeur.',
+      en: 'At the top of page 1: name, city and country, phone with country code, simple e-mail (first.last). No photo, age, marital status or religion. For a candidate outside Canada, a clear line on availability and the work permit reassures the employer.',
+    },
+    summary: {
+      fr: '3 à 4 lignes qui reprennent l’intitulé du poste visé et vos années d’expérience. C’est la seule section où « je » est permis.',
+      en: '3 to 4 lines that repeat the target job title and your years of experience. This is the only section where “I” is allowed.',
+    },
+    skills: {
+      fr: 'Les compétences que l’offre demande et que vous pouvez prouver plus bas.',
+      en: 'The skills the posting asks for and that you can prove below.',
+    },
+    experience: {
+      fr: 'Du plus récent au plus ancien. 5 à 7 puces au plus, chacune commence par un verbe à l’infinitif. Pas seulement des tâches : ajoutez un résultat chiffré (combien, à quelle fréquence). Les puces marquées « Mot de l’offre » reprennent ses termes.',
+      en: 'Most recent first. 5 to 7 bullets at most, each starting with an action verb. Not just tasks: add a measurable result (how many, how often). Bullets marked “Posting word” reuse its terms.',
+    },
+    education: {
+      fr: 'Le nom exact du diplôme, l’établissement, le pays et l’année. N’inventez pas d’équivalence canadienne.',
+      en: 'The exact diploma name, school, country and year. Do not invent a Canadian equivalence.',
+    },
+    languages: {
+      fr: 'Indiquez le résultat d’un test officiel (TEF/TCF, IELTS/CELPIP) si vous l’avez ; sinon, votre niveau réel.',
+      en: 'Give an official test result (TEF/TCF, IELTS/CELPIP) if you have one; otherwise your real level.',
+    },
+  },
   cvTitle: { fr: 'Vérifier mon CV avant de postuler', en: 'Check my resume before applying' },
   cvIntro: {
     fr: 'Ajoutez votre CV (PDF, Word .docx ou texte) et, si possible, le texte de l’offre visée. L’appli vérifie le format canadien, le contenu, la cohérence des dates, la langue, les mots importants de l’offre et la lisibilité par les logiciels de tri (ATS).',

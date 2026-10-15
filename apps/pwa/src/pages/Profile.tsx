@@ -10,6 +10,7 @@ import { PathwayCards } from '../components/common';
 import { nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { eraseProfile, saveProfile, useProfile, type StoredProfile } from '../store';
+import { openSampleCv } from './SampleCv';
 
 const SKILLS = ['speaking', 'listening', 'reading', 'writing'] as const;
 const LEVELS = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -93,6 +94,7 @@ function Routes({ profile }: { profile: StoredProfile }) {
           <div class="route-group">
             <h3>{code} – {n ? (lang === 'fr' ? n.titleFr : n.titleEn) : ''} <span class="muted">(TEER {teerOf(code)})</span></h3>
             <PathwayCards results={res} />
+            <button type="button" onClick={() => openSampleCv({ noc: code, province })}>{tr(S.sampleTitle, lang)}</button>
           </div>
         );
       })}

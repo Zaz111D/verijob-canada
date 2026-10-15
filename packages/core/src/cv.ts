@@ -106,6 +106,7 @@ const STOP = new Set([
   'hour', 'hours', 'hourly', 'week', 'weeks', 'weekly', 'year', 'years', 'month', 'months', 'full', 'time', 'part', 'start', 'location', 'canadian',
   'required', 'requis', 'requise', 'requises', 'preferred', 'atout', 'atouts', 'asset', 'assets', 'etc', 'including', 'notamment', 'minimum', 'maximum',
   'duties', 'duty', 'requirements', 'requirement', 'responsibilities', 'qualifications', 'exigences', 'taches', 'fonctions', 'description', 'profil',
+  'lors', 'exige', 'exigee', 'exiges', 'exigees', 'souhaite', 'souhaitee',
   'first', 'premier', 'premiere', 'need', 'needs', 'help', 'every', 'besoin', 'aide', 'other', 'autres', 'benefits', 'avantages',
 ]);
 

@@ -8,6 +8,7 @@ import { findNoc, formatAmount, formatDate, PROVINCE_NAMES, type InternationalOf
 import { loadInternationalOffers, nocData } from '../data';
 import { STRINGS as S, tr, type Lang } from '../i18n';
 import { openOfferCheck } from '../pages/CheckOffer';
+import { openSampleCv } from '../pages/SampleCv';
 import { Badge } from './common';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer nofollow' } as const;
@@ -53,6 +54,7 @@ function OfferCard({ o, lang }: { o: InternationalOffer; lang: Lang }) {
       <div class="row">
         <a class="button primary" href={o.url} {...ext}>{tr(S.intlOpen, lang)} ↗</a>
         <button type="button" onClick={() => openOfferCheck(`${o.title}\n${o.company}\n${o.location}\n${o.snippet}`)}>{tr(S.intlAnalyze, lang)}</button>
+        <button type="button" onClick={() => openSampleCv({ noc: o.noc || undefined, title: o.title, text: o.snippet, province: o.province })}>{tr(S.sampleOpen, lang)}</button>
         <a class="adzuna" href={ADZUNA} {...ext} title={tr(S.intlPoweredBy, lang)}>Adzuna</a>
       </div>
     </article>

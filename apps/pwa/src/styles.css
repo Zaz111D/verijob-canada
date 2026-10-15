@@ -181,3 +181,17 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
   .compare td { display: block; border: 0; padding: 2px 0; }
   .compare td::before { content: attr(data-label) ' '; font-weight: 700; }
 }
+
+/* CV d'exemple : aperçu « feuille », repères à remplacer surlignés, conseils par section. */
+.paper { background: #fff; color: #1b1f24; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin: 12px 0; line-height: 1.45; }
+.paper h3 { color: #1f4e79; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 0.03em; border-bottom: 2px solid #1f4e79; padding-bottom: 2px; margin: 16px 0 6px; }
+.paper p { margin: 2px 0; }
+.paper ul { margin: 4px 0 4px 18px; padding: 0; }
+.paper .muted { color: #555; }
+.paper-head { text-align: center; }
+.paper-name { font-size: 1.3rem; font-weight: 700; }
+.paper-title { font-weight: 700; }
+.paper-job { margin-bottom: 8px; }
+.paper mark { background: #fff2a8; color: inherit; padding: 0 2px; border-radius: 2px; }
+.paper .why { background: #eef4fb; color: #1b1f24; border-left: 3px solid #1f4e79; padding: 6px 8px; margin: 6px 0; font-size: 0.85rem; }
+.paper .chip.kw { margin-left: 6px; font-size: 0.75rem; padding: 1px 6px; }

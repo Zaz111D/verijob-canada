@@ -7,7 +7,7 @@ import rulesJson from '../../../data/rules.json';
 import nocJson from '../../../data/noc.json';
 import {
   filterNews, makeWageLookup, parseExpressEntryRounds,
-  type CmaLookup, type ExpressEntryData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
+  type CmaLookup, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
 } from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
@@ -58,6 +58,8 @@ function load<T>(file: string): Promise<DataFile<T>> {
 export const loadEmployersIndex = () => load<EmployersIndex>('employers-index.json');
 export const loadDesignated = () => load<DesignatedEmployer[]>('designated-employers.json');
 export const loadCmaLookup = () => load<CmaLookup>('cma-lookup.json');
+/** Fonctions officielles des métiers (CNP 2021) : chargées seulement par la page « CV d'exemple ». */
+export const loadNocElements = () => import('../../../data/noc-elements.json').then((m) => m.default as unknown as NocElementsData);
 export const loadProspects = () => load<Prospect[]>('prospects.json');
 export interface CommunityPriority { community: string; program: 'RCIP' | 'FCIP'; noc: string; title: string; year: string; sourceUrl: string; recordedAt: string; notes?: string }
 export const loadPriorities = () => load<CommunityPriority[]>('community-priorities.json');

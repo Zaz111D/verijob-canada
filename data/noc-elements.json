@@ -1,0 +1,2097 @@
+{
+ "$comment": "Généré par scripts/build-noc-elements.ts — ne pas modifier à la main. Textes officiels de Statistique Canada (CNP 2021 v1.0), Licence ouverte de Statistique Canada.",
+ "source": {
+  "id": "statcan-noc-elements",
+  "urlFr": "https://www.statcan.gc.ca/fr/sujets/norme/cnp/2021/indexV1/cnp-2021-v1.0-elements.csv",
+  "urlEn": "https://www.statcan.gc.ca/en/subjects/standard/noc/2021/indexV1/noc-2021-v1.0-elements.csv",
+  "verifiedAt": "2026-10-15"
+ },
+ "nocs": [
+  {
+   "code": "33102",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "répondre aux appels, fournir et vider les bassins, laver et habiller les patients et faire leur toilette; servir les plateaux de nourriture et nourrir les patients ou les aider à se nourrir ainsi qu'à choisir leur menu; peser, lever, retourner, ou positionner les patients; raser les patients avant les interventions chirurgicales; superviser les séries d'exercices effectuées par les patients, organiser et proposer des activités de loisir aux patients, accompagner les patients au cours des sorties récréatives et s'acquitter d'autres tâches reliées aux soins et au confort des patients",
+       "en": "Answer call signals; supply and empty bed pans; bathe, dress and groom patients; serve meal trays, feed or assist in feeding of patients and assist patients with menu selection; weigh, lift, turn, and position patients; shave patients prior to operations; supervise patients' exercise routines, set up and provide leisure activities for patients, accompany patients on outside recreational activities and perform other duties related to patient care and comfort"
+      },
+      {
+       "fr": "mesurer la tension artérielle des patients, et prendre leur température et leur pouls; rendre compte des liquides absorbés et rejetés; observer et surveiller l'état des patients et noter dans les dossiers des patients les soins administrés; prélever des spécimens tels que l'urine, les fèces ou les expectorations; administrer des suppositoires, effectuer des irrigations du côlon et des lavements, et effectuer d'autres tâches suivant les instructions du personnel infirmier et hospitalier",
+       "en": "Take patients' blood pressure, temperature and pulse; report or record fluid intake and output; observe or monitor patients' status and document patient care on charts; collect specimens such as urine, faeces or sputum; administer suppositories, colonic irrigations and enemas and perform other procedures as directed by nursing and hospital staff"
+      },
+      {
+       "fr": "administrer, en cas d'urgence, les soins de premiers secours aux personnes blessées ou malades dans les limites du champ de compétences",
+       "en": "Administer, in emergency situations, first aid to injured or ill individuals within the scope of competencies"
+      },
+      {
+       "fr": "conduire, en fauteuil roulant ou en civière, les patients qui doivent subir un traitement ou une intervention chirurgicale",
+       "en": "Transport patients by wheelchair or stretcher for treatment or surgery"
+      },
+      {
+       "fr": "livrer les messages, les rapports, les réquisitions et les prélèvements d'un service à un autre",
+       "en": "Carry messages, reports, requisitions and specimens between departments"
+      },
+      {
+       "fr": "faire les lits et veiller à ce que les chambres des patients soient propres",
+       "en": "Make beds and maintain patients' rooms"
+      },
+      {
+       "fr": "tenir à jour l'inventaire des fournitures",
+       "en": "Maintain inventory of supplies"
+      },
+      {
+       "fr": "effectuer, au besoin, des travaux d'entretien, tels qu'aider à installer et à entretenir le matériel de traction, laver, stériliser, entretenir ou réparer le matériel, monter, mettre en place et utiliser d'autre matériel employé",
+       "en": "May perform maintenance tasks such as assisting with the set-up and maintenance of traction equipment, cleaning or sterilizing equipment, maintaining and repairing equipment, and assembling, setting-up and operating job-related equipment"
+      },
+      {
+       "fr": "transporter, au besoin, les patients d'un établissement de soins à un autre",
+       "en": "May transport patients between care facilities"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires et une formation en cours d'emploi ou un programme d'études en préposé au service de soutien personnel, d'aide-infirmier ou d'aide-soignant en milieu collégial ou en établissement privé, ou un programme collégial de préposé aux soins infirmiers, ainsi qu'une formation pratique supervisée sont exigés.",
+     "en": "Some secondary school education and on-the-job training or a personal support worker, nursing aide or health care aide college or private institutional program, or a college nursing orderly program and supervised practical training are required."
+    },
+    {
+     "fr": "Des cours spécialisés, par exemple en réanimation cardiorespiratoire (RCR) et en premiers soins sont habituellement exigés.",
+     "en": "Completion of specialized courses such as cardiopulmonary resuscitation (CPR) and first aid is usually required."
+    },
+    {
+     "fr": "Un permis de conduite d'un niveau approprié peut être exigé pour les préposés médicaux.",
+     "en": "An appropriate class of driver's licence may be required for medical attendants."
+    }
+   ],
+   "examplesFr": [
+    "aide aux soins de longue durée",
+    "aide aux soins des patients",
+    "aide en psychiatrie",
+    "aide-infirmier/aide-infirmière",
+    "aide-résident/aide-résidente en soins - secteur médical",
+    "aide-soignant/aide-soignante",
+    "associé/associée au service de soins aux patients",
+    "préposé/préposée aux bénéficiaires",
+    "préposé/préposée aux soins infirmiers",
+    "préposé/préposée aux soins personnels - secteur médical",
+    "préposé/préposée d'hôpital"
+   ],
+   "examplesEn": [
+    "health care aide",
+    "hospital attendant",
+    "long term care aide",
+    "nurse aide",
+    "nursing attendant",
+    "orderly",
+    "patient care aide",
+    "patient service associate",
+    "personal care attendant - medical",
+    "psychiatric aide",
+    "resident care aide - medical"
+   ]
+  },
+  {
+   "code": "43201",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "surveiller la conduite et le comportement des contrevenants et des détenus afin de prévenir les émeutes et les évasions",
+       "en": "Observe conduct and behaviour of offenders and detainees to prevent disturbances and escapes"
+      },
+      {
+       "fr": "surveiller les contrevenants durant leurs périodes de travail, les repas et les périodes de loisirs",
+       "en": "Supervise offenders during work assignments, meals and recreation periods"
+      },
+      {
+       "fr": "faire des rondes dans les secteurs qui leur sont dévolus et signaler les problèmes à leur supérieur",
+       "en": "Patrol assigned area and report any problems to supervisor"
+      },
+      {
+       "fr": "effectuer des contrôles de sécurité ainsi que des vérifications de sécurité concernant les visiteurs, les détenus et leurs cellules, les zones de travail et les aires de loisirs",
+       "en": "Conduct security checks and scanning of visitors, inmates and their cells, working areas and recreational activity areas"
+      },
+      {
+       "fr": "observer le comportement des contrevenants et préparer des rapports",
+       "en": "Observe behaviour of offenders and prepare reports"
+      },
+      {
+       "fr": "escorter les détenus pendant les déplacements ou durant une absence temporaire",
+       "en": "Escort detainees in transit and during temporary leaves"
+      },
+      {
+       "fr": "rédiger les rapports d'admission, de programmes, de libération et de transfert ainsi que d'autres rapports",
+       "en": "Prepare admission, program, release, transfer and other reports"
+      },
+      {
+       "fr": "superviser et coordonner, s'il y a lieu, le travail d'autres agents de services correctionnels",
+       "en": "May supervise and coordinate work of other correctional service officers"
+      },
+      {
+       "fr": "développer, s'il y a lieu, un plan correctionnel des délinquantes et faciliter la participation des délinquantes aux programmes de réinsertion à la société en collaboration avec des psychologues, des conseillers en comportement, des agents de libération conditionnelle et d'autres",
+       "en": "May develop offenders' correctional plan and facilitate their participation in reintegration programs in collaboration with psychologists, behavioral counsellors, parole officers and others"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est exigé.",
+     "en": "Completion of secondary school is required."
+    },
+    {
+     "fr": "Des études postsecondaires dans les services correctionnels, les études de technique policière ou la criminologie sont exigées au Nouveau-Brunswick, au Québec, en Alberta et en Île-du-Prince-Édouard.",
+     "en": "Post-secondary education in correctional services, police studies or criminology is required in New Brunswick, Quebec, Alberta and Prince Edward Island."
+    },
+    {
+     "fr": "Les agents de services correctionnels doivent réussir le cours de formation du Service correctionnel du Canada pour être employés dans les établissements fédéraux.",
+     "en": "Correctional officer recruits must successfully complete the Correctional Service of Canada training course to be employed by federal institutions."
+    },
+    {
+     "fr": "Les agents de services correctionnels doivent habituellement réussir un cours de formation de base pour être employés dans les établissements provinciaux et territoriaux.",
+     "en": "Correctional officer recruits are usually required to complete a basic training course to be employed by provincial/territorial institutions."
+    },
+    {
+     "fr": "Des exigences d'agilité physique, de force et de forme physique doivent être respectées.",
+     "en": "Physical agility, strength and fitness requirements must be met."
+    },
+    {
+     "fr": "Les superviseurs des agents de services correctionnels doivent avoir travaillé comme agents de services correctionnels.",
+     "en": "Correctional service supervisors require experience as a correctional service officer."
+    },
+    {
+     "fr": "Un certificat en secourisme et en réanimation cardiorespiratoire (RCR) est habituellement exigé.",
+     "en": "First aid certification and cardiopulmonary resuscitation (CPR) training are usually required."
+    }
+   ],
+   "examplesFr": [
+    "agent/agente des services correctionnels",
+    "gardien/gardienne de prison",
+    "gardien/gardienne d'établissement correctionnel",
+    "intervenant de première ligne/Kimisinaw - services correctionnels",
+    "superviseur/superviseure d'agents de correction"
+   ],
+   "examplesEn": [
+    "correctional facility guard",
+    "correctional officers supervisor",
+    "correctional service officer",
+    "primary worker/kimisinaw - correctional service",
+    "prison guard"
+   ]
+  },
+  {
+   "code": "44100",
+   "duties": [
+    {
+     "headingFr": "Les gardiens d'enfants en milieu familial",
+     "headingEn": "Home child care providers",
+     "items": [
+      {
+       "fr": "surveiller et prendre soin des enfants chez l'employeur ou à leur propre domicile",
+       "en": "Supervise and care for children in employer's or own residence"
+      },
+      {
+       "fr": "donner le bain aux bébés et aux enfants, les habiller et les nourrir",
+       "en": "Bathe, dress and feed infants and children"
+      },
+      {
+       "fr": "préparer les biberons des bébés et changer leurs couches",
+       "en": "Prepare formulas and change diapers for infants"
+      },
+      {
+       "fr": "planifier, préparer et servir les repas des enfants et exécuter, au besoin, d'autres tâches d'entretien ménager",
+       "en": "Plan, prepare and serve meals for children and may perform other housekeeping duties"
+      },
+      {
+       "fr": "surveiller les activités des enfants, telles que les repas et les siestes, selon les directives de l'employeur",
+       "en": "Oversee children's activities, such as meals and rest periods, as instructed by employer"
+      },
+      {
+       "fr": "veiller à créer un environnement sain et sécuritaire à la maison",
+       "en": "Maintain a safe and healthy environment in the home"
+      },
+      {
+       "fr": "initier les enfants à l'hygiène personnelle",
+       "en": "Instruct children in personal hygiene"
+      },
+      {
+       "fr": "veiller au bien-être émotionnel des enfants et appuyer leur développement social",
+       "en": "Tend to the emotional well-being of children and support their social development"
+      },
+      {
+       "fr": "discipliner les enfants en employant les moyens indiqués par les parents",
+       "en": "Discipline children according to the methods requested by the parents"
+      },
+      {
+       "fr": "offrir une formation pédagogique appropriée en fonction de l'âge par l'entremise d'activités organisées, telles que des jeux, des bricolages, des lectures et des sorties",
+       "en": "Provide age-appropriate educational training through organized activities such as games, crafts, reading and outings"
+      },
+      {
+       "fr": "accompagner les enfants à l'école et pour le retour à la maison, et les accompagner à des rendez-vous",
+       "en": "Take children to and from school and appointments"
+      },
+      {
+       "fr": "tenir, au besoin, un registre des activités quotidiennes de chaque enfant ainsi que de son état de santé",
+       "en": "May be required to keep records of daily activities and health information regarding each child"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les parents de famille d'accueil",
+     "headingEn": "Foster parents",
+     "items": [
+      {
+       "fr": "élever des enfants au même titre que des membres de leur famille, habituellement de façon temporaire ou dans des cas d'urgence, sous la direction générale d'un service de placement en famille d'accueil",
+       "en": "Care for foster children, usually on an emergency or temporary basis, as a primary guardian under general direction of foster parent agency"
+      },
+      {
+       "fr": "consulter les surveillants du service de placement en famille d'accueil pour leur demander conseil et lorsque des problèmes se posent",
+       "en": "Consult foster parent agency supervisors for advice and when problems arise"
+      },
+      {
+       "fr": "administrer des programmes de soins aux enfants des familles d'accueil conformément aux directives des travailleurs sociaux du service de placement en famille d'accueil",
+       "en": "Administer foster care programs for foster children, as directed by foster parent agency social workers"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires peut être exigé.",
+     "en": "Completion of secondary school may be required."
+    },
+    {
+     "fr": "Un programme de formation en soins des enfants ou dans un domaine connexe peut être exigé des dispensateurs de soins aux enfants à domicile, des aides à la famille et des parents de famille d'accueil.",
+     "en": "Home child care providers, parent's helpers and foster parents may require completion of a training program in child care or a related field."
+    },
+    {
+     "fr": "De l'expérience en soins des enfants ou en économie domestique peut être exigée.",
+     "en": "Child care or household management experience may be required."
+    },
+    {
+     "fr": "Une aptitude manifeste à exécuter le travail est habituellement exigée.",
+     "en": "Demonstrated ability to perform work is usually required."
+    },
+    {
+     "fr": "Un certificat en secourisme et une formation en réanimation cardiorespiratoire (RCR) peuvent être exigés.",
+     "en": "First aid certification and cardiopulmonary resuscitation (CPR) training may be required."
+    }
+   ],
+   "examplesFr": [
+    "aide familial résident - soins à l'enfant",
+    "aide familial/aide familiale",
+    "dispensateur/dispensatrice de soins aux enfants - résidence privée",
+    "gardien/gardienne d'enfants",
+    "nourrice"
+   ],
+   "examplesEn": [
+    "babysitter",
+    "child care live-in caregiver",
+    "child care provider - private home",
+    "nanny",
+    "parent's helper"
+   ]
+  },
+  {
+   "code": "44101",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "fournir des soins aux personnes et à leurs familles pendant les périodes d'incapacité, de convalescence ou de crise familiale, et leur tenir compagnie",
+       "en": "Provide care and companionship for individuals and families during periods of incapacitation, convalescence or family disruption"
+      },
+      {
+       "fr": "dispenser des soins de chevet et des soins personnels aux clients, par exemple, les aider à marcher, à prendre leur bain, à s'occuper de leur hygiène personnelle, à s'habiller et à se déshabiller",
+       "en": "Administer bedside and personal care to clients such as aid in ambulation, bathing, personal hygiene, and dressing and undressing"
+      },
+      {
+       "fr": "planifier et préparer les repas et les régimes spéciaux et nourrir les clients ou les aider à se nourrir",
+       "en": "Plan and prepare meals and special diets, and feed or assist in feeding clients"
+      },
+      {
+       "fr": "administrer, s'il y a lieu, des soins médicaux courants, par exemple changer des pansements non stériles, aider à donner des médicaments et prendre des spécimens, sous la direction générale d'un surveillant du service de soins à domicile ou d'un infirmier",
+       "en": "May perform routine health-related duties such as changing non-sterile dressings, assisting in the administration of medications and collecting specimens under the general direction of home care agency supervisor or nurse"
+      },
+      {
+       "fr": "accomplir, s'il y a lieu, des tâches ménagères courantes, telles que faire la lessive, laver la vaisselle et faire les lits",
+       "en": "May perform routine housekeeping duties such as laundry, washing dishes and making beds"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires sont habituellement exigées.",
+     "en": "Some secondary school education is usually required."
+    },
+    {
+     "fr": "De l'expérience en économie domestique peut être exigée.",
+     "en": "Home management experience may be required."
+    },
+    {
+     "fr": "Une formation collégiale ou d'autres cours en services de maintien à domicile peut être exigée.",
+     "en": "College or other courses in home support may be required."
+    },
+    {
+     "fr": "Un certificat en secourisme peut être exigé.",
+     "en": "First aid certification may be required."
+    },
+    {
+     "fr": "La réussite d'un programme de formation en soins des personnes âgées, handicapées ou convalescentes, ou d'un programme connexe, peut être exigée.",
+     "en": "Completion of a training program in care of the elderly, care of persons with disabilities, convalescent care or in a related field may be required."
+    }
+   ],
+   "examplesFr": [
+    "accompagnateur/accompagnatrice de personnes handicapées",
+    "aide à domicile",
+    "aide de maintien à domicile",
+    "aide familial résident/aide familiale résidente",
+    "aide familial résident/aide familiale résidente - personnes âgées",
+    "préposé/préposée - service de répit à domicile",
+    "préposé/préposée aux soins personnels - soins à domicile",
+    "travailleur familial/travailleuse familiale"
+   ],
+   "examplesEn": [
+    "attendant for persons with disabilities - home care",
+    "family caregiver",
+    "home support worker",
+    "live-in caregiver",
+    "live-in caregiver - seniors",
+    "personal aide - home support",
+    "personal care attendant - home care",
+    "respite worker - home support"
+   ]
+  },
+  {
+   "code": "64410",
+   "duties": [
+    {
+     "headingFr": "Gardiens de sécurité",
+     "headingEn": "Security guards",
+     "items": [
+      {
+       "fr": "contrôler l'accès aux établissements, actionner l'équipement dans les postes de garde, faire des rondes dans des zones désignées afin de les protéger contre le vol, le vandalisme et le feu",
+       "en": "Control access to establishments, operate security control-room equipment and patrol assigned areas to guard against theft, vandalism and fire"
+      },
+      {
+       "fr": "faire respecter les règlements d'un établissement pour maintenir l'ordre et résoudre les conflits et veiller aux activités de l'établissement",
+       "en": "Enforce regulations to maintain order and resolve conflicts and to monitor establishment activities"
+      },
+      {
+       "fr": "veiller à ce que les procédures de sécurité et d'urgence en vigueur dans l'établissement soient respectées",
+       "en": "Ensure safety and emergency procedures are followed"
+      },
+      {
+       "fr": "délivrer des laissez-passer et diriger les visiteurs vers les endroits appropriés et vérifier l'âge des clients",
+       "en": "Issue passes and direct visitors to appropriate areas and check age identification of patrons"
+      }
+     ]
+    },
+    {
+     "headingFr": "Agents de contrôle de sécurité",
+     "headingEn": "Screening officers",
+     "items": [
+      {
+       "fr": "inspecter et contrôler les bagages ou les cargaisons à l'aide d'équipements ou à la main",
+       "en": "Inspect and screen luggage or cargo using equipment or hands"
+      },
+      {
+       "fr": "effectuer les fouilles des passagers à l'aide d'outils ou à la main",
+       "en": "Perform searches of passengers with tools or by hand"
+      },
+      {
+       "fr": "surveiller et contrôler les passagers aux points de contrôle et dans le cadre d'autres procédures",
+       "en": "Monitor and screen passengers through screening checkpoints and other procedures"
+      }
+     ]
+    },
+    {
+     "headingFr": "Gardiens de voitures blindées",
+     "headingEn": "Armoured car guards",
+     "items": [
+      {
+       "fr": "conduire et garder des voitures blindées et ramasser et livrer l'argent et les objets de valeur aux banques, aux guichets automatiques et aux établissements de vente au détail",
+       "en": "Drive and guard armoured trucks, pick-up and deliver cash and valuables to banks, automated teller machines and retail establishments"
+      }
+     ]
+    },
+    {
+     "headingFr": "Agents de sécurité d'entreprise",
+     "headingEn": "Corporate security officers",
+     "items": [
+      {
+       "fr": "enquêter sur les actes illégaux commis par les employés ou les clients des établissements",
+       "en": "Investigate unlawful acts of employees or patrons of establishments"
+      },
+      {
+       "fr": "recommander des systèmes de sécurité, tels que des dispositifs d'accès et de détection électroniques",
+       "en": "Recommend security systems such as electronic detection devices and access devices"
+      }
+     ]
+    },
+    {
+     "headingFr": "Enquêteurs privés",
+     "headingEn": "Private investigators",
+     "items": [
+      {
+       "fr": "mener des enquêtes afin de trouver des personnes disparues",
+       "en": "Conduct investigations to locate missing persons"
+      },
+      {
+       "fr": "obtenir des renseignements à utiliser dans les affaires civiles et criminelles ou à d'autres fins",
+       "en": "Obtain information for use in civil and criminal litigation matters or for other purposes"
+      },
+      {
+       "fr": "effectuer, s'il y a lieu, des tests polygraphiques (tests d'intégrité) pour le compte de leurs clients",
+       "en": "May also conduct polygraph tests (integrity surveys) for clients"
+      }
+     ]
+    },
+    {
+     "headingFr": "Agents de prévention des vols",
+     "headingEn": "Retail loss prevention officers",
+     "items": [
+      {
+       "fr": "prévenir et déceler le vol à l'étalage et le vol dans les établissements de vente au détail",
+       "en": "Prevent and detect shoplifting and theft in retail establishments"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Un diplôme d'études collégiales en droit et sécurité ou en techniques policières peut être exigé.",
+     "en": "A college diploma in law and security or police technology may be required."
+    },
+    {
+     "fr": "La certification de l'Administration canadienne de la sûreté du transport aérien (ACSTA) est exigée des agents de contrôle de sécurité.",
+     "en": "Canadian Air Transport Security Authority (CATSA) certification is required for screening officers."
+    },
+    {
+     "fr": "Un permis de port d'armes est exigé des gardiens de sécurité qui portent des armes à feu.",
+     "en": "Security guards carrying firearms require a licence."
+    },
+    {
+     "fr": "Un permis de possession et d'acquisition (PPA) et une autorisation d'acquisition d'armes à feu (AAAF) pour les armes à autorisation restreinte et sans restriction sont exigés des conducteurs de voitures blindées.",
+     "en": "Armoured car drivers require a valid Possession and Acquisition Licence (PAL) for both restricted and non-restricted firearms."
+    },
+    {
+     "fr": "Un permis émis par le Bureau de la sécurité privée est exigé au Québec pour travailler à titre de détective privé ou d'agent de sécurité.",
+     "en": "In Quebec, a permit issued by the Bureau de la sécurité privée (BSP) is required to work as a private detective or security officer."
+    },
+    {
+     "fr": "De l'expérience en tant qu'agent de la paix peut être exigée des agents de sécurité d'entreprise.",
+     "en": "Corporate security officers may require experience as a police officer."
+    },
+    {
+     "fr": "Un permis d'exercice provincial est requis des détectives privés.",
+     "en": "Private investigators require provincial licensure."
+    },
+    {
+     "fr": "Une certification pour le service raisonnable des boissons est obligatoire pour le personnel de sécurité qui travaille dans des établissements qui servent des boissons alcoolisées en Alberta, en Saskatchewan, au Manitoba, en Ontario et à l'Île-du-Prince-Édouard.",
+     "en": "Certification for responsible beverage service is mandatory for security staff in establishments serving alcoholic beverages in Alberta, Saskatchewan, Manitoba, Ontario and Prince Edward Island."
+    }
+   ],
+   "examplesFr": [
+    "agent de sécurité privé/agente de sécurité privée",
+    "agent/agente de contrôle",
+    "agent/agente de prévention des vols",
+    "agent/agente de sécurité d'entreprise",
+    "agent/agente d'inspection postale",
+    "commissionnaire",
+    "détective de magasin",
+    "détective d'hôtel",
+    "enquêteur privé/enquêteuse privée",
+    "enquêteur/enquêteuse de signaux d'alarme",
+    "garde du corps (sauf policiers)",
+    "gardien/gardienne de nuit",
+    "gardien/gardienne de sécurité",
+    "gardien/gardienne de voiture blindée"
+   ],
+   "examplesEn": [
+    "alarm investigator",
+    "armoured car guard",
+    "bodyguard (except police)",
+    "commissionaire",
+    "corporate security officer",
+    "house detective",
+    "night guard",
+    "postal inspection officer",
+    "private investigator",
+    "private security officer",
+    "screening officer",
+    "security guard",
+    "store detective",
+    "theft prevention officer"
+   ]
+  },
+  {
+   "code": "65201",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "Les serveurs au comptoir et les préparateurs d'aliments",
+       "en": "Food counter attendants and food preparers"
+      },
+      {
+       "fr": "prendre les commandes des clients",
+       "en": "Take customers' orders"
+      },
+      {
+       "fr": "laver, éplucher, trancher et parer les denrées alimentaires en se servant d'appareils manuels et électriques",
+       "en": "Clean, peel, slice and trim foodstuffs using manual and electric appliances"
+      },
+      {
+       "fr": "utiliser la friteuse, le gril, le four, les distributeurs et d'autres équipements pour préparer des plats rapides, comme des sandwiches, des hambourgeois, des frites, des salades, de la crème glacée, des laits frappés et d'autres boissons",
+       "en": "Use deep fryer, grill, oven, dispensers and other equipment to prepare fast food items such as sandwiches, hamburgers, fries, salads, ice cream dishes, milkshakes and other beverages"
+      },
+      {
+       "fr": "diviser les aliments en portions, les assembler, et les emballer ou les poser directement sur des assiettes pour les servir aux clients, et emballer les aliments à emporter",
+       "en": "Portion, assemble, and wrap food or place it directly on plates for service to patrons, and package take-out food"
+      },
+      {
+       "fr": "utiliser de l'équipement pour préparer des boissons chaudes spécialisées telles que le café ou le thé",
+       "en": "Use equipment to prepare hot beverages such as coffee and tea specialties"
+      },
+      {
+       "fr": "servir les aliments aux clients, au comptoir ou à la table de buffet",
+       "en": "Serve customers at counters or buffet tables"
+      },
+      {
+       "fr": "remplir les réfrigérateurs et les bars à salades, et tenir des registres des quantités d'aliments consommés",
+       "en": "Stock refrigerators and salad bars and keep records of the quantities of food used"
+      },
+      {
+       "fr": "recevoir, au besoin, les paiements pour les aliments achetés",
+       "en": "May receive payment for food items purchased"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les aides de cuisine",
+     "headingEn": "Kitchen helpers",
+     "items": [
+      {
+       "fr": "laver et éplucher les fruits et les légumes",
+       "en": "Wash and peel vegetables and fruit"
+      },
+      {
+       "fr": "nettoyer les tables de travail, les armoires et les appareils",
+       "en": "Wash work tables, cupboards and appliances"
+      },
+      {
+       "fr": "sortir les déchets et nettoyer les poubelles de la cuisine",
+       "en": "Remove trash and clean kitchen garbage containers"
+      },
+      {
+       "fr": "déballer et ranger les provisions dans les réfrigérateurs, les armoires et autres endroits réservés au rangement",
+       "en": "Unpack and store supplies in refrigerators, cupboards and other storage areas"
+      },
+      {
+       "fr": "balayer et essuyer les planchers, et exécuter d'autres tâches pour aider le cuisinier et le personnel de cuisine",
+       "en": "Sweep and mop floors, and perform other duties to assist cook and kitchen staff"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les aides de services alimentaires",
+     "headingEn": "Food service helpers",
+     "items": [
+      {
+       "fr": "débarrasser et nettoyer les tables et les plateaux dans les salles à manger",
+       "en": "Clear and clean tables and trays in eating establishments"
+      },
+      {
+       "fr": "transporter la vaisselle propre, les ustensiles et autres objets aux aires de service et dresser les tables",
+       "en": "Bring clean dishes, flatware and other items to serving areas and set tables"
+      },
+      {
+       "fr": "remplir les contenants de condiments et autres sur les tables et dans les aires de service",
+       "en": "Replenish condiments and other supplies at tables and in serving areas"
+      },
+      {
+       "fr": "enlever les couverts avant et après les services",
+       "en": "Remove dishes before and after courses"
+      },
+      {
+       "fr": "effectuer d'autres tâches, par exemple racler et empiler les assiettes, transporter le linge de table à la blanchisserie ou de la blanchisserie et faire des courses",
+       "en": "Perform other duties such as scraping and stacking dishes, carrying linen to and from laundry area and running errands"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les plongeurs",
+     "headingEn": "Dishwashers",
+     "items": [
+      {
+       "fr": "laver la vaisselle, les verres, les ustensiles, les marmites et les casseroles à la main ou à la machine",
+       "en": "Wash dishes, glassware, flatware, pots and pans using dishwasher or by hand"
+      },
+      {
+       "fr": "ranger la vaisselle à l'endroit prévu",
+       "en": "Place dishes in storage area"
+      },
+      {
+       "fr": "récurer les marmites et les casseroles et, au besoin, nettoyer et polir l'argenterie",
+       "en": "Scour pots and pans, and may clean and polish silverware"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires sont habituellement exigées.",
+     "en": "Some secondary school education is usually required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est offerte.",
+     "en": "On-the-job training is provided."
+    }
+   ],
+   "examplesFr": [
+    "aide de cuisine",
+    "aide de services alimentaires",
+    "aide-cuisinier/aide-cuisinière",
+    "aide-serveur/aide-serveuse de bar",
+    "plongeur/plongeuse - services alimentaires",
+    "préparateur/préparatrice d'aliments",
+    "préparateur/préparatrice de repas-minute",
+    "préparateur/préparatrice de sandwichs",
+    "préposé/préposée au buffet à salades",
+    "préposé/préposée aux tables",
+    "serveur/serveuse au comptoir de cafétéria",
+    "serveur/serveuse au comptoir de crème glacée",
+    "serveur/serveuse au comptoir de service alimentaire"
+   ],
+   "examplesEn": [
+    "bartender helper",
+    "bus boy/girl",
+    "cafeteria counter attendant",
+    "cook's helper",
+    "dishwasher",
+    "fast-food preparer",
+    "food counter attendant",
+    "food preparer",
+    "food service helper",
+    "ice cream counter attendant",
+    "kitchen helper",
+    "salad bar attendant",
+    "sandwich maker"
+   ]
+  },
+  {
+   "code": "65310",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "balayer, essuyer, laver, cirer et astiquer les parquets",
+       "en": "Sweep, mop, wash, wax and polish floors"
+      },
+      {
+       "fr": "épousseter les meubles et passer l'aspirateur sur les moquettes et les tapis, les tentures et les meubles rembourrés",
+       "en": "Dust furniture and vacuum carpeting and area rugs, draperies and upholstered furniture"
+      },
+      {
+       "fr": "faire les lits, changer les draps et assurer la distribution des serviettes et accessoires de toilette",
+       "en": "Make beds, change sheets and distribute clean towels and toiletries"
+      },
+      {
+       "fr": "donner aux clients des fournitures supplémentaires",
+       "en": "Attend to guests' requests for extra supplies"
+      },
+      {
+       "fr": "approvisionner la lingerie et l'armoire à fournitures",
+       "en": "Stock linen closets and other supplies' areas"
+      },
+      {
+       "fr": "nettoyer, désinfecter et astiquer les appareils ménagers et les accessoires dans la cuisine et les salles de bain",
+       "en": "Clean, disinfect and polish kitchen and bathroom fixtures and appliances"
+      },
+      {
+       "fr": "nettoyer et désinfecter les lieux publics, tels que les cabines de déshabillage, les douches et les ascenseurs",
+       "en": "Clean and disinfect public areas such as changing rooms, showers and elevators"
+      },
+      {
+       "fr": "désinfecter les salles d'opération et autres aires des centres hospitaliers",
+       "en": "Disinfect operating rooms and other hospital areas"
+      },
+      {
+       "fr": "ramasser et vider les poubelles",
+       "en": "Pick up debris and empty trash containers"
+      },
+      {
+       "fr": "laver les fenêtres, les murs et les plafonds",
+       "en": "Wash windows, walls and ceilings"
+      },
+      {
+       "fr": "déclarer et ranger les objets perdus",
+       "en": "Report and store lost and found items"
+      },
+      {
+       "fr": "donner, s'il y a lieu, des renseignements de base sur les installations de l'établissement",
+       "en": "May provide basic information on facilities"
+      },
+      {
+       "fr": "s'occuper, s'il y a lieu, des plaintes",
+       "en": "May handle complaints"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est habituellement fournie.",
+     "en": "On-the-job training is usually provided."
+    }
+   ],
+   "examplesFr": [
+    "aide ménager/aide ménagère",
+    "aide-ménager/aide-ménagère",
+    "balayeur/balayeuse",
+    "nettoyeur/nettoyeuse - entretien ménager",
+    "nettoyeur/nettoyeuse - travaux légers",
+    "nettoyeur/nettoyeuse dans un hôpital",
+    "nettoyeur/nettoyeuse de bureaux",
+    "nettoyeur/nettoyeuse de résidences",
+    "nettoyeur/nettoyeuse d'hôtel",
+    "préposé/préposée aux chambres"
+   ],
+   "examplesEn": [
+    "cleaner",
+    "hospital cleaner",
+    "hotel cleaner",
+    "house cleaner",
+    "housekeeper",
+    "housekeeping aide",
+    "housekeeping room attendant",
+    "light duty cleaner",
+    "office cleaner",
+    "sweeper"
+   ]
+  },
+  {
+   "code": "75101",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "charger, décharger et déplacer des produits et des matériaux, à la main ou à l'aide d'accessoires de manutention",
+       "en": "Load, unload and move products and materials by hand or using basic material handling equipment"
+      },
+      {
+       "fr": "charger des appareils ménagers et des meubles dans un camion de déménagement et les décharger",
+       "en": "Move household appliances and furniture onto and off moving trucks or vans"
+      },
+      {
+       "fr": "remplir d'autres fonctions liées à la manutention, telles que compter, peser, trier, emballer et déballer divers produits et matériaux",
+       "en": "Perform other material handling activities such as counting, weighing, sorting, packing and unpacking"
+      },
+      {
+       "fr": "charger et décharger, à l'aide de treuils et d'autres appareils de levage, des camions et des wagons, sur des quais d'entrepôts et dans des établissements industriels",
+       "en": "Operate winches and other loading devices to load and unload materials onto and off trucks, railway cars and loading docks of warehouses and industrial establishments"
+      },
+      {
+       "fr": "conduire des camions, des tracteurs, des chargeuses et d'autre matériel industriel pour assurer le déplacement d'articles à partir de véhicules de transport et de quais ou vers ceux-ci, et pour entreposer et retirer le matériel des entrepôts",
+       "en": "Operate industrial trucks, tractors, loaders and other equipment to transport materials to and from transportation vehicles and loading docks and to store and retrieve materials in warehouses"
+      },
+      {
+       "fr": "raccorder des tuyaux souples ou rigides à du matériel servant à remplir et à vider des wagons-citernes, des camions-citernes ou des réservoirs de produits chimiques ou pétroliers ou d'autres fluides et faire fonctionner ce matériel",
+       "en": "Connect hoses or pipes and operate equipment to load and unload liquid petroleum, chemical or other products into or from tank cars, tank trucks or storage tanks"
+      },
+      {
+       "fr": "se servir de matériel de manutention de vrac pour charger ou vider des matières telles que charbon, minerai et céréales, dans des wagons, des camions ou d'autres véhicules",
+       "en": "Operate equipment to dump materials such as coal, ore and grain into or to remove materials from railway cars, trucks or other vehicles"
+      },
+      {
+       "fr": "faire fonctionner des transporteurs, des convoyeurs et divers appareils afin de transférer des céréales ou d'autres produits des véhicules de transport aux élévateurs, aux contenants et aux aires d'entreposage",
+       "en": "Operate conveyors and equipment to transfer grain or other materials from transportation vehicles to elevators, bins or other storage areas"
+      },
+      {
+       "fr": "exécuter d'autres tâches, s'il y a lieu, telles qu'ouvrir des conteneurs et des caisses, remplir des commandes dans un entrepôt, participer à la prise d'inventaire et peser et vérifier divers articles",
+       "en": "May perform other activities, such as opening containers and crates, filling warehouse orders, assisting in taking inventory and weighing and checking materials"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    },
+    {
+     "fr": "Les manutentionnaires d'objets lourds doivent faire preuve de force physique pour accomplir leurs tâches.",
+     "en": "Physical strength is required for manual material handlers who work with heavy materials."
+    }
+   ],
+   "examplesFr": [
+    "chargeur/chargeuse de camions",
+    "chargeur/chargeuse de wagons",
+    "conducteur/conductrice de chariot élévateur à fourche",
+    "déménageur/déménageuse de meubles",
+    "empileur/empileuse de bois d'oeuvre - matériaux de construction",
+    "entreposeur/entreposeuse",
+    "manutentionnaire",
+    "manutentionnaire de charbon",
+    "manutentionnaire de fret (sauf transport aérien)",
+    "ouvrier/ouvrière à la pile de stockage",
+    "ouvrier/ouvrière d'entrepôt - manutention",
+    "pupitreur/pupitreuse au convoyeur",
+    "remplisseur/remplisseuse de bacs"
+   ],
+   "examplesEn": [
+    "bin filler",
+    "coal handler",
+    "conveyor console operator",
+    "forklift truck operator",
+    "freight handler (except air transport)",
+    "furniture mover",
+    "lumber piler - building supplies",
+    "material handler",
+    "railway car loader",
+    "stockpiler",
+    "storage worker - material handling",
+    "truck loader",
+    "warehouseman/woman"
+   ]
+  },
+  {
+   "code": "75110",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "charger et décharger des matériaux de construction et les placer dans les aires de travail",
+       "en": "Load and unload construction materials, and move materials to work areas"
+      },
+      {
+       "fr": "monter et démonter des coffrages de béton, des échafaudages, des rampes d'accès, des passerelles, des étayages et des barrières sur les chantiers de construction",
+       "en": "Erect and dismantle concrete forms, scaffolding, ramps, catwalks, shoring and barricades required at construction sites"
+      },
+      {
+       "fr": "mélanger, verser et étendre des matériaux, notamment du béton et de l'asphalte",
+       "en": "Mix, pour and spread materials such as concrete and asphalt"
+      },
+      {
+       "fr": "aider les travailleurs qualifiés, tels que les charpentiers, les briqueteurs, les cimentiers-finisseurs, les couvreurs et les vitriers, dans l'exécution de leurs travaux respectifs",
+       "en": "Assist tradespersons such as carpenters, bricklayers, cement finishers, roofers and glaziers in construction activities"
+      },
+      {
+       "fr": "aider les conducteurs de matériel lourd à assujettir des fixations spéciales sur les machines ou aider en guidant les conducteurs lors du déplacement des machines ou autres travaux",
+       "en": "Assist heavy equipment operators to secure special attachments to equipment, signal operators to guide them in moving equipment and provide assistance in other activities"
+      },
+      {
+       "fr": "aider à aligner des tuyaux ou faire un travail connexe pendant la construction d'oléoducs ou de gazoducs",
+       "en": "Assist in aligning pipes and perform related activities during oil and gas pipeline construction"
+      },
+      {
+       "fr": "aider au forage et au minage de roches sur les chantiers de construction",
+       "en": "Assist in drilling and blasting rock at construction sites"
+      },
+      {
+       "fr": "aider les mineurs à monter et à conduire diverses machines de forage et autre machinerie de mines à ciel ouvert, et aider à l'excavation",
+       "en": "Assist miners in excavating and in setting up and operating various drills and other surface mining machinery"
+      },
+      {
+       "fr": "niveler le sol selon la pente spécifiée à l'aide de râteaux et de pelles",
+       "en": "Level earth to fine grade specifications using rake and shovel"
+      },
+      {
+       "fr": "aider aux travaux de démolition de bâtiments à l'aide de barres-leviers ou autres outils, et trier, nettoyer et empiler les matériaux récupérés",
+       "en": "Assist in demolishing buildings using prying bars and other tools, and sort, clean and pile salvaged materials"
+      },
+      {
+       "fr": "enlever les moellons et autres débris sur les chantiers de construction à l'aide de râteaux, de pelles, de brouettes et autre équipement",
+       "en": "Remove rubble and other debris at construction sites using rakes, shovels, wheelbarrows and other equipment"
+      },
+      {
+       "fr": "manoeuvrer des marteaux, des vibrateurs et des pilons pneumatiques selon les directives",
+       "en": "Operate pneumatic hammers, vibrators and tampers as directed"
+      },
+      {
+       "fr": "alimenter les machines ou manoeuvrer le matériel utilisé sur les chantiers de construction, notamment les mélangeurs, les compresseurs et les pompes, ou en surveiller le fonctionnement",
+       "en": "Tend or feed machines or equipment used in construction such as mixers, compressors and pumps"
+      },
+      {
+       "fr": "nettoyer les déversements de produits chimiques et d'autres contaminants, et enlever l'amiante et d'autres matériaux dangereux",
+       "en": "Clean up chemical spills and other contaminants, and remove asbestos and other hazardous materials"
+      },
+      {
+       "fr": "huiler et graisser des treuils et du matériel similaire",
+       "en": "Oil and grease hoists and similar equipment"
+      },
+      {
+       "fr": "diriger la circulation sur le chantier de construction ou à proximité de ce dernier",
+       "en": "Direct traffic at or near construction sites"
+      },
+      {
+       "fr": "exécuter d'autres tâches sur les chantiers de construction, selon les directives",
+       "en": "Perform other activities at construction sites, as directed"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Une certaine expérience comme manoeuvre en construction peut être exigée des aides de soutien des métiers.",
+     "en": "Some experience as a general construction labourer may be required for construction trade helpers."
+    },
+    {
+     "fr": "On exige habituellement une expérience d'une saison dans la construction de gazoducs et d'oléoducs pour certains ouvriers des pipelines, tels que les poseurs de pipelines par abattage et les ouvriers aux préchauffeurs.",
+     "en": "Some pipeline workers, such as stabbers, mandrel operators and pre-heater tenders, usually require one season of experience in oil and gas pipeline construction."
+    },
+    {
+     "fr": "Un certificat en contrôle de la circulation peut être exigé des signaleurs.",
+     "en": "Flagmen/women may require a traffic control certificate."
+    },
+    {
+     "fr": "Un certificat en gréage/élingage peut être exigé des élingueurs et des gréeurs.",
+     "en": "Riggers and slingers may require a rigging certificate."
+    },
+    {
+     "fr": "Une formation en cours d'emploi peut être fournie.",
+     "en": "On-the-job training may be provided."
+    }
+   ],
+   "examplesFr": [
+    "aide en construction",
+    "aide-briqueteur/aide-briqueteuse",
+    "aide-charpentier/aide-charpentière",
+    "aide-couvreur/aide-couvreuse",
+    "aide-foreur/aide-foreuse - exploitation de mines à ciel ouvert",
+    "aide-opérateur/aide-opératrice de bétonnière",
+    "aide-plombier/aide-plombière",
+    "aide-vitrier/aide-vitrière",
+    "bitumier/bitumière",
+    "journalier/journalière en construction",
+    "manoeuvre à la démolition",
+    "manoeuvre au bétonnage de routes",
+    "manoeuvre terrassier/manoeuvre terrassière",
+    "opérateur/opératrice de mandrin",
+    "ponceur/ponceuse de cloisons sèches",
+    "poseur/poseuse de pipelines par battage",
+    "signaleur/signaleuse"
+   ],
+   "examplesEn": [
+    "asphalt spreader",
+    "bricklayer helper",
+    "carpenter helper",
+    "concrete mixer helper",
+    "concrete paving labourer",
+    "construction helper",
+    "construction labourer",
+    "demolition worker",
+    "driller helper - surface mining",
+    "drywall sander",
+    "excavation labourer",
+    "flagperson",
+    "glazier helper",
+    "pipeline mandrel operator",
+    "plumber helper",
+    "roofer helper",
+    "stabber - pipeline construction"
+   ]
+  },
+  {
+   "code": "75119",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "déplacer des outils, de l'équipement et d'autre matériel des aires de travail",
+       "en": "Move tools, equipment and other materials to and from work areas"
+      },
+      {
+       "fr": "aider à épisser les câbles aériens et souterrains de communication et de transmission d'électricité",
+       "en": "Assist in splicing overhead and underground communications and electric power transmission cables"
+      },
+      {
+       "fr": "aider à réparer, à entretenir et à installer de la machinerie et du matériel industriels",
+       "en": "Assist in repairing, maintaining and installing industrial machinery and equipment"
+      },
+      {
+       "fr": "aider à réparer, à entretenir et à installer du matériel de réfrigération, de chauffage et de climatisation",
+       "en": "Assist in repairing, maintaining and installing refrigeration, heating and air conditioning equipment"
+      },
+      {
+       "fr": "aider à réparer, à entretenir et à installer des ascenseurs",
+       "en": "Assist in repairing, maintaining and installing elevators"
+      },
+      {
+       "fr": "aider à réparer et à entretenir de la machinerie fixe génératrice et distributrice d'électricité",
+       "en": "Assist in repairing and maintaining stationary electric power generating and distribution equipment"
+      },
+      {
+       "fr": "aider à effectuer des réparations mécaniques, électriques et à la carrosserie d'aéronefs, de wagons de chemins de fer, d'automobiles, de camions, d'autobus, d'équipement lourd et de motocyclettes",
+       "en": "Assist in mechanical, electrical and body repairs of aircraft, railway cars, automobiles, trucks, buses, heavy equipment and motorcycles"
+      },
+      {
+       "fr": "aider à réparer des appareils électroménagers, des petits moteurs et de l'équipement similaire",
+       "en": "Assist in repairing electrical appliances, small engines or other similar equipment"
+      },
+      {
+       "fr": "mélanger des engrais, des herbicides et des pesticides et charger les mélanges dans les avions pour la pulvérisation aérienne",
+       "en": "Mix fertilizers, herbicides and pesticides and load mixture into airplane for aerial spraying"
+      },
+      {
+       "fr": "aider à effectuer des tâches d'arpentage telles que tenir et déplacer les piquets et les mires, dégager les lignes d'arpentage de broussailles et de débris et transporter les outils d'arpentage aux lieux de travail",
+       "en": "Assist in land surveying activities, such as holding or moving stakes and rods, clearing brush and debris from line of survey and transporting surveying tools to work area"
+      },
+      {
+       "fr": "accomplir, au besoin, toute autre tâche élémentaire et de manoeuvre",
+       "en": "Perform other labouring and elemental tasks as required"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est offerte.",
+     "en": "On-the-job training is provided."
+    }
+   ],
+   "examplesFr": [
+    "aide-arpenteur-géomètre/aide-arpenteuse-géomètre",
+    "aide-diéséliste",
+    "aide-épisseur/aide-épisseuse - télécommunications",
+    "aide-mécanicien/aide-mécanicienne d'aéronefs",
+    "aide-mécanicien/aide-mécanicienne de véhicules automobiles",
+    "aide-mécanicien/aide-mécanicienne d'entretien",
+    "aide-mécanicien/aide-mécanicienne en réfrigération",
+    "aide-poseur/aide-poseuse de câbles",
+    "assistant/assistante en pulvérisation aérienne",
+    "ouvrier-monteur/ouvrière-monteuse au sol - télécommunications"
+   ],
+   "examplesEn": [
+    "aerial spraying assistant",
+    "aircraft mechanic helper",
+    "cable installer helper",
+    "diesel mechanic helper",
+    "ground worker - telecommunications",
+    "mechanic's helper - automotive",
+    "millwright helper",
+    "refrigeration mechanic helper",
+    "splicer helper - telecommunications",
+    "surveyor helper"
+   ]
+  },
+  {
+   "code": "84120",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "Les ouvriers spécialisés dans l'élevage du bétail",
+       "en": "Specialized livestock workers"
+      },
+      {
+       "fr": "effectuer ou assister aux activités d'élevage des animaux de ferme",
+       "en": "Perform or assist in performing animal husbandry activities"
+      },
+      {
+       "fr": "mettre en oeuvre des pâturages ou des programmes d'accouplement en parquets",
+       "en": "Implement pasture or pen breeding programs"
+      },
+      {
+       "fr": "élaborer et mettre en oeuvre des programmes alimentaires",
+       "en": "Develop and implement feeding programs"
+      },
+      {
+       "fr": "assurer le respect des procédures de sécurité et de biosécurité",
+       "en": "Follow safety and bio-security procedures"
+      },
+      {
+       "fr": "déceler et traiter certaines maladies et les problèmes de santé du bétail",
+       "en": "Detect and treat certain diseases and health problems in livestock"
+      },
+      {
+       "fr": "tenir des registres de performance du bétail",
+       "en": "Maintain livestock performance records"
+      },
+      {
+       "fr": "sélectionner le bétail à vendre",
+       "en": "Select livestock for sale"
+      },
+      {
+       "fr": "installer et contrôler les conduites d'eau et les dispositifs d'aération et de régulation de la température dans des granges, des enclos et des poulaillers",
+       "en": "Set and monitor water lines, air flow and temperature in barns, pens and chicken coops"
+      },
+      {
+       "fr": "dresser les chevaux",
+       "en": "Train horses"
+      },
+      {
+       "fr": "tenir l'inventaire et commander des fournitures au besoin",
+       "en": "Maintain inventory and order materials as required"
+      },
+      {
+       "fr": "être responsable, au besoin, de la collecte de sperme et de l'insémination des femelles donneuses",
+       "en": "May be responsible for the collection of semen and the insemination of donor females"
+      },
+      {
+       "fr": "superviser, s'il y a lieu, les ouvriers agricoles",
+       "en": "May supervise general farm labourers"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les opérateurs de machinerie agricole",
+     "headingEn": "Farm machinery operators",
+     "items": [
+      {
+       "fr": "faire fonctionner l'équipement et les machines agricoles pour labourer le sol, planter, cultiver et récolter les cultures, et charger et décharger les cultures ou les conteneurs de matériaux",
+       "en": "Operate farm equipment and machinery to till soil, plant, cultivate and harvest crops, and load and unload crops or containers of materials"
+      },
+      {
+       "fr": "effectuer la maintenance des équipements et des machines",
+       "en": "Perform equipment and machinery maintenance"
+      },
+      {
+       "fr": "surveiller les opérations des machines et des équipements pour détecter les dysfonctionnements",
+       "en": "Monitor equipment and machinery operations to detect malfunctions"
+      },
+      {
+       "fr": "assurer le respect des procédures de sécurité",
+       "en": "Follow safety procedures"
+      },
+      {
+       "fr": "effectuer, s'il y a lieu, des réparations mineures aux machines et équipements agricoles",
+       "en": "May perform minor repairs to farm equipment and machinery"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études collégiales ou une autre formation spécialisée en agriculture ou en élevage du bétail peut être exigé pour les ouvriers agricoles spécialisés dans l'élevage.",
+     "en": "Specialized livestock workers may require a college certificate or other specialized training in agriculture or livestock husbandry."
+    },
+    {
+     "fr": "Aucune scolarité spécifique ou formation n'est exigée. Cependant, une formation spécialisée en milieu scolaire est offerte, par exemple, en mécanique de machinerie agricole, en soudure agricole et en application de pesticides.",
+     "en": "There are no specific education or training requirements for farm machinery operators. However, a college certificate or specialized courses related to farming, such as farm equipment mechanics, agricultural welding and pesticide application, are available."
+    },
+    {
+     "fr": "Des connaissances de base en agriculture, habituellement acquises en travaillant dans une ferme familiale, peuvent être exigées pour obtenir un emploi.",
+     "en": "Basic farm knowledge, usually obtained from working on a family farm, may be required for employment."
+    },
+    {
+     "fr": "Une formation ou une certification de premiers soins peut être exigée.",
+     "en": "A course or certificate in first aid may be required."
+    }
+   ],
+   "examplesFr": [
+    "conducteur/conductrice de machinerie agricole",
+    "conducteur/conductrice de moissonneuse",
+    "entraîneur/entraîneuse de chevaux",
+    "gardien/gardienne de troupeau laitier",
+    "inséminateur/inséminatrice",
+    "porcher/porchère",
+    "préposé/préposée aux soins des bovins",
+    "technicien/technicienne en production de viande de porc"
+   ],
+   "examplesEn": [
+    "artificial inseminator",
+    "cattle herdsperson",
+    "dairy herdsperson",
+    "farm machinery operator",
+    "harvester machine operator",
+    "horse trainer",
+    "pork production technician",
+    "swine herdsperson"
+   ]
+  },
+  {
+   "code": "85100",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "nourrir et soigner le bétail, la volaille et d'autres animaux",
+       "en": "Feed and tend livestock, poultry and other animals"
+      },
+      {
+       "fr": "traire les animaux tels que les vaches et les chèvres, manuellement ou avec une machine",
+       "en": "Milk animals such as cows and goats, manually or with a machine"
+      },
+      {
+       "fr": "trier, marquer et gérer les animaux",
+       "en": "Sort, brand and handle animals"
+      },
+      {
+       "fr": "entretenir ou aider à l'entretien des installations et des infrastructures agricoles, y compris le nettoyage des étables, des granges des cours et des enclos",
+       "en": "Maintain or assist in the maintenance of facilities and farm infrastructure including cleaning stables, barns, barnyards and pens"
+      },
+      {
+       "fr": "aider aux activités de reproduction",
+       "en": "Assist with breeding activities"
+      },
+      {
+       "fr": "surveiller, au besoin, la santé des animaux et leur fournir des soins",
+       "en": "May monitor health of animals and provide care"
+      },
+      {
+       "fr": "préparer, au besoin, les animaux pour leur transport",
+       "en": "May prepare animals for transportation"
+      },
+      {
+       "fr": "opérer et entretenir, au besoin, des machines et du matériel agricole",
+       "en": "May operate and maintain farm machinery and equipment"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Ce groupe de base n'exige pas de scolarité ni de formation spécifiques.",
+     "en": "There are no specific education or training requirements."
+    }
+   ],
+   "examplesFr": [
+    "manoeuvre aux soins du bétail",
+    "manoeuvre d'exploitation bovine",
+    "ouvrier/ouvrière de ferme d'élevage de bovins de boucherie",
+    "ouvrier/ouvrière de ferme d'élevage de volaille",
+    "ouvrier/ouvrière de ferme laitière"
+   ],
+   "examplesEn": [
+    "beef cattle farm worker",
+    "cattle ranch labourer",
+    "dairy farm worker",
+    "livestock labourer",
+    "poultry farm worker"
+   ]
+  },
+  {
+   "code": "85101",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "préparer et irriguer le sol",
+       "en": "Prepare and irrigate soil"
+      },
+      {
+       "fr": "planter, fertiliser, réduire et récolter les cultures",
+       "en": "Plant, fertilize, thin and harvest crops"
+      },
+      {
+       "fr": "récolter les cultures en rangée et les fruits des vergers",
+       "en": "Pick row and orchard crops"
+      },
+      {
+       "fr": "trier, peser et empaqueter des fruits et des légumes à la ferme",
+       "en": "Sort, weigh and pack fruit and vegetables at the farm"
+      },
+      {
+       "fr": "charger, décharger et transporter des caisses, des provisions et des produits agricoles destinés au transport",
+       "en": "Load, unload and transfer crates, supplies, farm produce and products for transport"
+      },
+      {
+       "fr": "nettoyer des grilles, des plateaux et des bennes de récolte et faire le nettoyage général des endroits réservés à la culture, à la production et à l'emballage",
+       "en": "Clean up racks, trays, and harvest bins and general clean-up of growing, producing and packing areas"
+      },
+      {
+       "fr": "aider à l'entretien général de la ferme, du matériel et des outils",
+       "en": "Assist with general farm maintenance and maintenance of equipment and tools"
+      },
+      {
+       "fr": "préparer, au besoin, les planches de jardin pour la plantation",
+       "en": "May assist in preparing garden beds for planting"
+      },
+      {
+       "fr": "rédiger, s'il y a lieu, des rapports d'étape quotidiens relatifs à l'inventaire des récoltes effectuées",
+       "en": "May write daily progress reports of inventory harvested"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Ce groupe de base n'exige pas de scolarité ni de formation spécifiques.",
+     "en": "There are no specific education or training requirements."
+    }
+   ],
+   "examplesFr": [
+    "cueilleur/cueilleuse de baies",
+    "cueilleur/cueilleuse de fruits",
+    "cueilleur/cueilleuse de pommes",
+    "empaqueteur/empaqueteuse de légumes - agriculture",
+    "manoeuvre agricole en cultures-récolte",
+    "travailleur affecté/travailleuse affectée à la récolte",
+    "trieur/trieuse de fruits - agriculture"
+   ],
+   "examplesEn": [
+    "apple picker",
+    "berry picker",
+    "crop farm labourer - harvesting",
+    "fruit picker",
+    "fruit sorter - farm",
+    "harvest hand",
+    "vegetable packer - farm"
+   ]
+  },
+  {
+   "code": "85102",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "aider les techniciens en aquaculture dans l'exploitation d'alevinières ou d'autres établissements aquacoles",
+       "en": "Assist aquaculture technicians in the operation of fish hatcheries or other aquatic farms"
+      },
+      {
+       "fr": "nourrir les stocks aquacoles, vacciner les stocks, appliquer des techniques d'élimination sélective et de marquage ou de bande, et signaler toute irrégularité dans les stocks",
+       "en": "Feed aquaculture stocks, vaccinate stocks, perform culling and marking or banding techniques and report any observed irregularities in stocks"
+      },
+      {
+       "fr": "opérer, entretenir et nettoyer les pompes, les filtres, les bassins et autre matériel aquacole, et nettoyer et entretenir les enceintes du parc aquacole",
+       "en": "Operate, maintain and clean pumps, filters, tanks and other aquaculture equipment and clean and maintain aquaculture enclosures"
+      },
+      {
+       "fr": "tenir un registre quotidien des mouvements d'eau et des échantillons de poissons, de crustacés, de coquillages ou de plantes marines",
+       "en": "Keep daily records of water flow and fish, shellfish and marine plant samples"
+      },
+      {
+       "fr": "classer et peser les stocks piscicoles",
+       "en": "Grade and weigh aquaculture stocks"
+      },
+      {
+       "fr": "préparer les stocks aquacoles en vue de leur vente sur le marché",
+       "en": "Prepare aquaculture stocks for market"
+      },
+      {
+       "fr": "ramasser des algues ou de la mousse d'Irlande sur des plages, dans des rochers ou en eau peu profonde et les déposer dans des paniers, des chariots ou d'autres récipients",
+       "en": "Rake seaweed, dulse or Irish moss from beach, rocks or shallow water and load into a cart, wagon or other receptacles"
+      },
+      {
+       "fr": "répandre des algues pour les faire sécher et en retirer les corps étrangers",
+       "en": "Spread gatherings to dry and remove foreign objects"
+      },
+      {
+       "fr": "transporter les algues à l'usine de conditionnement",
+       "en": "Transport gatherings to processing plant"
+      },
+      {
+       "fr": "creuser pour recueillir des myes des bancs à l'aide d'une pelle, d'une fourche, ou d'autres instruments, ou ramasser d'autres coquillages",
+       "en": "Dig clams from beds with spades, forks or other instruments, or collect other mollusks"
+      },
+      {
+       "fr": "nettoyer, trier et transporter les coquillages aux points de vente",
+       "en": "Clean, sort and transport mollusks to market"
+      },
+      {
+       "fr": "conduire des bateaux, s'il y a lieu, dans les activités d'aquaculture",
+       "en": "May operate boats for aquaculture operations"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires sont habituellement exigées.",
+     "en": "Some secondary school education is usually required."
+    },
+    {
+     "fr": "Un permis de pêche commerciale est exigé des ramasseurs de coquillages.",
+     "en": "Shellfish harvesters require commercial fishing licences."
+    },
+    {
+     "fr": "Un certificat de fonctions d'urgence en mer peut être exigé pour certains postes de ce groupe de base.",
+     "en": "Marine Emergency Duties certificate may be required for some occupations in this unit group."
+    }
+   ],
+   "examplesFr": [
+    "aide-pisciculteur/aide-piscicultrice",
+    "étiqueteur/étiqueteuse de poissons",
+    "marqueur/marqueuse d'alevins",
+    "préposé/préposée à la mariculture",
+    "ramasseur/ramasseuse d'algues",
+    "ramasseur/ramasseuse de coques",
+    "ramasseur/ramasseuse de coquillages",
+    "ramasseur/ramasseuse de dulses",
+    "ramasseur/ramasseuse de plantes marines",
+    "ramasseur/ramasseuse d'huîtres",
+    "travailleur/travailleuse de soutien en aquaculture"
+   ],
+   "examplesEn": [
+    "aquaculture support worker",
+    "clam digger",
+    "dulse gatherer",
+    "fish farm helper",
+    "fish tagger",
+    "fry marker",
+    "marine plant gatherer",
+    "oyster picker",
+    "sea farm attendant",
+    "seaweed gatherer",
+    "shellfish harvester"
+   ]
+  },
+  {
+   "code": "85103",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "préparer le sol, planter des bulbes, des graines et des boutures, greffer et faire bourgeonner des plantes et transplanter des semis de fleurs, d'arbres et d'arbustes et des boutures racinées",
+       "en": "Prepare soil; plant bulbs, seeds and cuttings; graft and bud plants; and transplant seedlings and rooted cuttings"
+      },
+      {
+       "fr": "surveiller les plantes afin d'assurer leur saine croissance et de déceler les problèmes potentiels de mauvaises herbes, d'insectes, de maladie ou d'engrais pour les cultures sous serre",
+       "en": "Monitor plants for healthy growth and potential weed, insect, disease, and fertilizer problems in greenhouse crops"
+      },
+      {
+       "fr": "vaporiser les arbres, les arbustes, les fleurs et les plantes pour les protéger contre les maladies et les insectes",
+       "en": "Spray trees, shrubs, flowers and plants to prevent disease and pests"
+      },
+      {
+       "fr": "positionner et régler les systèmes d'irrigation à l'extérieur et dans les serres, pour arroser les plantes et les champs",
+       "en": "Position and regulate greenhouse and outdoor irrigation systems to water plants and fields"
+      },
+      {
+       "fr": "déterrer, couper et transplanter des arbres, des arbustes, des fleurs et des plantes, et les préparer pour la vente",
+       "en": "Dig, cut and transplant trees, shrubs, flowers and plants and prepare them for sale"
+      },
+      {
+       "fr": "renseigner les clients sur les techniques de jardinage, l'utilisation des outils et les différents produits de jardin et le soin des arbres, des arbustes, des fleurs, des plantes et des pelouses",
+       "en": "Provide information to customers on gardening, the use of various garden tools and products and the care of trees, shrubs, flowers, plants and lawns"
+      },
+      {
+       "fr": "conduire, s'il y a lieu, des tracteurs et d'autres machines et équipements pour fertiliser, cultiver, moissonner et vaporiser les champs et les plantes",
+       "en": "May operate tractors and other machinery and equipment to fertilize, cultivate, harvest and spray fields and plants"
+      },
+      {
+       "fr": "tenir l'inventaire et commander des fournitures au besoin",
+       "en": "Maintain inventory and order materials as required"
+      },
+      {
+       "fr": "nettoyer les espaces de travail",
+       "en": "Clean working areas"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires peut être exigé.",
+     "en": "Completion of secondary school may be required."
+    },
+    {
+     "fr": "Un diplôme d'études collégiales en horticulture ou dans un domaine connexe peut être exigé.",
+     "en": "Completion of college courses in horticulture or a related field may be required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est offerte.",
+     "en": "On-the-job training is provided."
+    },
+    {
+     "fr": "Un permis provincial d'application d'engrais chimique, de fongicides, d'herbicides et de pesticides peut être exigé.",
+     "en": "A provincial licence to apply chemical fertilizers, fungicides, herbicides and pesticides may be required."
+    }
+   ],
+   "examplesFr": [
+    "manoeuvre de pépinière",
+    "manoeuvre de pépinière forestière",
+    "manoeuvre de serre",
+    "manoeuvre de serre chaude",
+    "manoeuvre en horticulture",
+    "ouvrier/ouvrière en culture hydroponique"
+   ],
+   "examplesEn": [
+    "forest nursery labourer",
+    "greenhouse labourer",
+    "horticulture labourer",
+    "hothouse labourer",
+    "hydroponics worker",
+    "nursery labourer"
+   ]
+  },
+  {
+   "code": "85121",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "étendre de la terre arable, poser des plaques de gazon, planter des fleurs, du gazon, des arbustes et des arbres, et exécuter d'autres tâches afin de collaborer à la construction d'un aménagement paysager et des structures connexes",
+       "en": "Spread top soil, lay sod, plant flowers, grass, shrubs and trees and perform other duties to assist with the construction of a landscape and related structures"
+      },
+      {
+       "fr": "tondre le gazon, râteler, aérer, déchaumer, fertiliser et arroser les pelouses, désherber les jardins, tailler les arbustes et les arbres et exécuter d'autres tâches d'entretien sous la surveillance du superviseur",
+       "en": "Cut grass, rake, aerate, dethatch, fertilize and water lawns, weed gardens, prune shrubs and trees and perform other maintenance duties as directed by supervisor"
+      },
+      {
+       "fr": "entretenir les pelouses et le gazon aux abords des routes",
+       "en": "Maintain lawns and grass along roadsides"
+      },
+      {
+       "fr": "utiliser et entretenir des tondeuses, des tracteurs, des scies à chaîne, des cisailles électriques, des couteaux à pelouses, des scies à émonder, des déneigeuses et d'autres outils pour l'entretien des terrains",
+       "en": "Operate and maintain power mowers, tractors, chain saws, electric clippers, sod cutters, pruning saws, snowblowers and other landscape maintenance equipment"
+      },
+      {
+       "fr": "pulvériser et répandre, sous surveillance, des produits sur les arbres, les arbustes, les pelouses et les jardins pour les protéger contre les insectes et les maladies",
+       "en": "Spray and dust trees, shrubs, lawns and gardens, as directed, to control insects and disease"
+      },
+      {
+       "fr": "exécuter d'autres tâches manuelles pour nettoyer et entretenir l'environnement paysager",
+       "en": "Perform other manual duties to clean and maintain landscaped environments"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    },
+    {
+     "fr": "Un permis provincial pour l'application d'engrais chimiques, de fongicides, d'insecticides et de pesticides peut être exigé.",
+     "en": "A provincial licence to apply chemical fertilizers, fungicides, herbicides and pesticides may be required."
+    }
+   ],
+   "examplesFr": [
+    "aide-jardinier/aide-jardinière",
+    "coupeur/coupeuse d'herbe",
+    "manoeuvre à l'entretien des parcs",
+    "manoeuvre de cimetière",
+    "ouvrier/ouvrière à l'entretien de parcs",
+    "ouvrier/ouvrière de terrain de golf",
+    "planteur/planteuse de bulbes - aménagement paysager",
+    "poseur/poseuse de plaques de gazon",
+    "préposé/préposée à l'aménagement paysager",
+    "préposé/préposée à l'entretien de terrains",
+    "repiqueur/repiqueuse - entretien paysager"
+   ],
+   "examplesEn": [
+    "bulb planter - landscaping",
+    "cemetery labourer",
+    "gardening helper",
+    "golf course worker",
+    "grass cutter",
+    "grounds maintenance worker",
+    "landscape labourer",
+    "park maintenance labourer",
+    "park maintenance worker",
+    "sod layer",
+    "transplanter - landscape maintenance"
+   ]
+  },
+  {
+   "code": "94140",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "Les opérateurs de procédés industriels dans la transformation des aliments et des boissons",
+       "en": "Process control operators"
+      },
+      {
+       "fr": "faire fonctionner des machines multifonctionnelles de procédés industriels par le biais de tableaux de commande, de terminaux informatiques ou d'autres pour broyer, extraire, mélanger, cuire ou transformer de quelque autre manière des produits d'alimentation, et pour ensacher, mettre en boîte ou empaqueter, selon des procédés divers, des produits d'alimentation",
+       "en": "Operate multi-function process control machinery through control panels, computer terminals or other control systems to grind, extract, mix, blend, cook or otherwise process food products and to bag, box or otherwise package food products"
+      },
+      {
+       "fr": "faire fonctionner des machines multifonctionnelles de procédés industriels pour broyer, extraire, mélanger, distiller, faire fermenter ou transformer de quelque autre manière les boissons alcoolisées ou non alcoolisées, et embouteiller, mettre en conserve ou empaqueter, selon des procédés divers, les boissons",
+       "en": "Operate multi-function process control machinery to grind, extract, mix, blend, distill, ferment or otherwise process alcoholic or non-alcoholic beverages and to bottle, can or otherwise package beverages"
+      },
+      {
+       "fr": "surveiller les indicateurs, les relevés d'ordinateur et les écrans de contrôle pour vérifier les conditions de transformation prescrites et faire des réglages pour modifier des variables comme les temps de cuisson, l'apport d'ingrédients, les débits et les températures",
+       "en": "Observe gauges, computer printouts and video monitors to verify specified processing conditions and make adjustments to process variables such as cooking times, ingredient inputs, flow rates and temperature settings"
+      },
+      {
+       "fr": "tenir des registres de production et d'autres données",
+       "en": "Maintain shift log of production and other data"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les opérateurs de machines",
+     "headingEn": "Machine operators",
+     "items": [
+      {
+       "fr": "installer et régler des machines de transformation et d'empaquetage des aliments ou des boissons",
+       "en": "Set up and adjust food or beverage processing and packaging machines"
+      },
+      {
+       "fr": "actionner des machines à fonction unique pour meuler, extraire, mélanger, sécher, mêler, congeler, cuire ou transformer de quelque autre manière des aliments ou des boissons",
+       "en": "Operate single-function machines to grind, extract, mix, blend, dry, freeze, cook or otherwise process food or beverage products"
+      },
+      {
+       "fr": "manoeuvrer des machines à fonction unique pour emboîter, mettre en conserve ou empaqueter de quelque autre manière des aliments ou des boissons",
+       "en": "Operate single-function machines to box, can or otherwise package food or beverage products"
+      },
+      {
+       "fr": "vérifier des produits pour assurer leur conformité aux normes de la compagnie, et débloquer, au besoin, les machines",
+       "en": "Check products to ensure conformance to company standards and clear machine blockages as required"
+      },
+      {
+       "fr": "tenir des registres d'information sur la production, tels que la quantité, le poids, la taille, la date et les différents types de produits emballés",
+       "en": "Record production information such as quantity, weight, size, date and type of products packaged"
+      },
+      {
+       "fr": "effectuer des réglages correctifs aux machines, et nettoyer les machines et les aires de travail immédiates",
+       "en": "Perform corrective machine adjustments, clean machines and immediate work areas"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires peut être exigé.",
+     "en": "Completion of secondary school may be required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est offerte.",
+     "en": "On-the-job training is provided."
+    },
+    {
+     "fr": "De l'expérience en tant qu'opérateur de machine dans la transformation des aliments ou des boissons est habituellement exigée des opérateurs de machines de procédés industriels.",
+     "en": "Experience as a machine operator in food or beverage processing is usually required for industrial process control operators."
+    },
+    {
+     "fr": "De l'expérience en tant que manoeuvre dans la transformation des aliments ou des boissons peut être exigée des opérateurs de machines.",
+     "en": "Experience as a labourer in food or beverage processing may be required for machine operators."
+    }
+   ],
+   "examplesFr": [
+    "extracteur/extractrice de jus d'agrumes",
+    "hacheur/hacheuse de viandes - transformation des aliments et boissons",
+    "opérateur/opératrice à la fermentation",
+    "opérateur/opératrice à la salle de commande - transformation des aliments et boissons",
+    "opérateur/opératrice de friteuse - transformation des aliments et boissons",
+    "opérateur/opératrice de machine d'appertisation",
+    "opérateur/opératrice de machine de boulangerie - transformation des aliments et boissons",
+    "opérateur/opératrice de machine de traitement des grains",
+    "opérateur/opératrice de mélangeur d'aliments secs",
+    "opérateur/opératrice de pasteurisateur - transformation des aliments et boissons",
+    "opérateur/opératrice de pressoir de vinerie",
+    "opérateur/opératrice de salle de brassage",
+    "opérateur/opératrice d'installation de raffinage du dextrose",
+    "ouvrier/ouvrière à la conservation de fruits - transformation des aliments et boissons",
+    "ouvrier/ouvrière à la machine à cigarettes",
+    "préposé/préposée au mélange du tabac",
+    "préposé/préposée au sécheur - traitement du tabac",
+    "raffineur/raffineuse de chocolat"
+   ],
+   "examplesEn": [
+    "bakery machine operator - food and beverage processing",
+    "brewhouse operator",
+    "canning machine operator",
+    "chocolate refiner",
+    "cigarette machine tender",
+    "citrus juice extractor",
+    "control room operator - food and beverage processing",
+    "corn sugar refinery operator",
+    "dry foods mixer operator",
+    "dryer tender - tobacco processing",
+    "fermenter operator",
+    "fruit preserver - food and beverage processing",
+    "fryer operator - food and beverage processing",
+    "grain-processing machine operator",
+    "meat grinder - food and beverage processing",
+    "pasteurizer operator - food and beverage processing",
+    "tobacco blender",
+    "winery-press operator"
+   ]
+  },
+  {
+   "code": "94141",
+   "duties": [
+    {
+     "headingFr": "Bouchers industriels",
+     "headingEn": "Industrial butchers",
+     "items": [
+      {
+       "fr": "abattre les animaux à l'aide d'appareils d'étourdissement et de couteaux",
+       "en": "Slaughter livestock using stunning devices and knives"
+      },
+      {
+       "fr": "dépouiller, nettoyer et dégraisser les carcasses",
+       "en": "Skin, clean and trim carcasses"
+      },
+      {
+       "fr": "enlever des carcasses les viscères et les autres parties non comestibles",
+       "en": "Remove viscera and other inedible parts from carcasses"
+      },
+      {
+       "fr": "débiter les carcasses en plus petits morceaux afin d'en faciliter la manutention",
+       "en": "Split carcasses into smaller portions to facilitate handling"
+      },
+      {
+       "fr": "abattre, s'il y a lieu, des bovins, des veaux et des moutons, selon les prescriptions des rites religieux",
+       "en": "May slaughter cattle, calves and sheep as prescribed by religious laws"
+      }
+     ]
+    },
+    {
+     "headingFr": "Découpeurs de viande industrielle",
+     "headingEn": "Industrial meat cutters",
+     "items": [
+      {
+       "fr": "dépecer des carcasses, des demi-carcasses ou des quartiers de boeuf, d'agneau, de porc ou de veau en vue d'une coupe, d'une transformation ou d'un emballage ultérieurs",
+       "en": "Cut beef, lamb, pork or veal carcasses or sides or quarters of carcasses into primal cuts for further cutting, processing or packaging"
+      },
+      {
+       "fr": "désosser la viande",
+       "en": "Remove bones from meat"
+      },
+      {
+       "fr": "couper la viande et la volaille en coupes particulières destinées à des institutions, à des entreprises commerciales ou à d'autres usages dans le commerce de gros",
+       "en": "Cut meat and poultry into specific cuts for institutional, commercial or other wholesale use"
+      },
+      {
+       "fr": "enlever la peau, l'excès de gras, les meurtrissures ou les autres parties endommagées des carcasses ou des morceaux de viande",
+       "en": "Remove skin, excess fat, bruises or other blemishes from carcasses or meat portions"
+      }
+     ]
+    },
+    {
+     "headingFr": "Préparateurs de volaille",
+     "headingEn": "Poultry preparers",
+     "items": [
+      {
+       "fr": "abattre la volaille et enlever les parties non comestibles",
+       "en": "Slaughter poultry and remove inedible parts"
+      },
+      {
+       "fr": "plumer, flamber et laver la volaille en vue des opérations ultérieures de transformation ou d'emballage",
+       "en": "Remove feathers and singe and wash poultry to prepare for further processing or packaging"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires peut être exigé.",
+     "en": "Completion of secondary school may be required."
+    },
+    {
+     "fr": "La réussite d'un cours en boucherie industrielle ou une expérience en tant que boucher industriel est exigée des découpeurs de viande industrielle.",
+     "en": "For industrial meat cutters, completion of a program in industrial meat cutting or Experience as an industrial butcher is required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est offerte aux bouchers industriels, aux découpeurs de viande industrielle et aux préparateurs de volaille.",
+     "en": "On-the-job training is provided for industrial butchers, meat cutters and poultry preparers."
+    }
+   ],
+   "examplesFr": [
+    "abatteur/abatteuse - abattoir",
+    "boucher industriel/bouchère industrielle",
+    "coupeur/coupeuse de jambons",
+    "découpeur/découpeuse de viande industrielle",
+    "désosseur/désosseuse de boeufs",
+    "pareur/pareuse de viandes",
+    "préparateur/préparatrice de volailles"
+   ],
+   "examplesEn": [
+    "beef boner",
+    "ham cutter",
+    "industrial butcher",
+    "industrial meat cutter",
+    "meat trimmer",
+    "poultry preparer",
+    "slaughterer"
+   ]
+  },
+  {
+   "code": "94142",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "Les opérateurs de machines de traitement et d'emballage du poisson et de fruits de mer",
+       "en": "Fish and seafood plant machine operators"
+      },
+      {
+       "fr": "régler et manoeuvrer des machines pour nettoyer, couper, faire cuire, fumer, saler, déshydrater ou traiter de toute autre manière les produits du poisson et de fruits de mer",
+       "en": "Set up and operate machines to clean, cut, cook, smoke, brine, dehydrate or otherwise process fish or seafood products"
+      },
+      {
+       "fr": "régler et manoeuvrer des machines pour mettre en boîte, en sac, en caisse ou emballer de toute autre manière les produits du poisson et de fruits de mer",
+       "en": "Set up and operate machines to can, bag, box or otherwise package fish and seafood products"
+      },
+      {
+       "fr": "vérifier les produits et l'emballage pour déceler les irrégularités et assurer le respect des normes de l'entreprise et faire les ajustements nécessaires aux machines",
+       "en": "Check products and packaging for defects and to ensure conformance to company standards and perform corrective machine adjustments as required"
+      },
+      {
+       "fr": "consigner des renseignements sur la production, par exemple : la quantité, le poids, la date et la nature des produits emballés",
+       "en": "Record production information such as quantity, weight, date and type of products packaged"
+      },
+      {
+       "fr": "Les nettoyeurs-coupeurs de poisson et de fruits de mer",
+       "en": "Fish and seafood plant cutters and cleaners"
+      },
+      {
+       "fr": "couper, nettoyer et parer le poisson et les fruits de mer avant la mise en vente ou le conditionnement",
+       "en": "Cut, clean and trim fish or seafood prior to marketing or further processing"
+      },
+      {
+       "fr": "écailler le poisson, le couper, séparer les filets et enlever les viscères à l'aide d'un couteau",
+       "en": "Scrape away scales, cut fish, separate fillets and remove scrap parts using knife"
+      },
+      {
+       "fr": "examiner les filets pour déterminer le nombre possible et la taille des morceaux, découper ces morceaux selon les spécifications et les placer dans des récipients pour la pesée",
+       "en": "Check fish fillets to determine optimal number and size of fillet sections, cut sections according to specifications and place in container for weighing"
+      },
+      {
+       "fr": "décortiquer des homards et d'autres crustacés et en retirer la chair pour la mise en conserve ou un autre traitement",
+       "en": "Disjoint and remove meat from lobsters or other crustaceans preparatory to canning or further processing"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est exigée.",
+     "en": "On-the-job training is required."
+    }
+   ],
+   "examplesFr": [
+    "confectionneur/confectionneuse de croquettes de poisson",
+    "décortiqueur/décortiqueuse de mollusques et de crustacés",
+    "nettoyeur-coupeur/nettoyeuse-coupeuse de poissons - traitement du poisson",
+    "opérateur/opératrice de machine à couper le poisson - traitement du poisson",
+    "opérateur/opératrice de machine de mise en conserve du poisson - traitement du poisson",
+    "pareur/pareuse - traitement du poisson",
+    "préparateur/préparatrice de mollusques et de crustacés",
+    "préparateur/préparatrice de poissons et de fruits de mer - traitement du poisson et de fruits de mer",
+    "travailleur/travailleuse d'usine de traitement du poisson"
+   ],
+   "examplesEn": [
+    "fish cake maker",
+    "fish canning machine operator - fish processing",
+    "fish cleaner and cutter - fish processing",
+    "fish cutting machine operator - fish processing",
+    "fish plant worker",
+    "seafood preparer - fish and seafood processing",
+    "shellfish processor",
+    "shellfish shucker",
+    "trimmer - fish processing"
+   ]
+  },
+  {
+   "code": "95106",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "transporter, manuellement ou à l'aide d'équipement mécanique, des matières premières, des produits finis et des matériaux d'emballage dans les usines et les entrepôts",
+       "en": "Transport raw materials, finished products and packaging materials throughout plant and warehouse manually, or with powered equipment"
+      },
+      {
+       "fr": "mesurer et charger des ingrédients dans les trémies des mélangeurs et des broyeurs ou des camions-citernes",
+       "en": "Measure and dump ingredients into hoppers of mixing and grinding machines or mobile tank trucks"
+      },
+      {
+       "fr": "alimenter et décharger des machines de transformation des aliments et des boissons",
+       "en": "Feed and unload food and beverage processing machines"
+      },
+      {
+       "fr": "placer des boîtes aplaties dans des machines de formage de contenants",
+       "en": "Feed flattened boxes into forming machines to construct containers"
+      },
+      {
+       "fr": "enlever les contenants remplis des tapis roulants et charger manuellement les marchandises dans des sacs, des boîtes ou d'autres contenants",
+       "en": "Remove filled containers from conveyors and manually pack goods into bags, boxes or other containers"
+      },
+      {
+       "fr": "nettoyer les aires de travail et l'équipement",
+       "en": "Clean work areas and equipment"
+      },
+      {
+       "fr": "vérifier les produits et les emballages pour y déceler tout défaut élémentaire dans la qualité",
+       "en": "Check products and packaging for basic quality defects"
+      },
+      {
+       "fr": "aider les opérateurs de machines et de contrôle des procédés dans l'exercice de leurs fonctions",
+       "en": "Assist process control and machine operators in performing their duties"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    }
+   ],
+   "examplesFr": [
+    "aide à la production - transformation des aliments et boissons",
+    "aide de laiterie - traitement des aliments et des boissons",
+    "empaqueteur/empaqueteuse d'aliments congelés",
+    "empaqueteur/empaqueteuse de bonbons",
+    "empaqueteur/empaqueteuse de viande",
+    "manoeuvre à la transformation des aliments",
+    "manoeuvre au traitement du tabac",
+    "manoeuvre de brasserie",
+    "préposé/préposée à la machine à laver les bouteilles - transformation des aliments et boissons",
+    "trieur/trieuse de noix - transformation des aliments et boissons"
+   ],
+   "examplesEn": [
+    "bottle-washing machine tender - food and beverage processing",
+    "brewery labourer",
+    "candy packer",
+    "dairy helper - food and beverage processing",
+    "food processing labourer",
+    "frozen food packer",
+    "meat packager",
+    "nut sorter - food and beverage processing",
+    "production helper - food and beverage processing",
+    "tobacco processing labourer"
+   ]
+  },
+  {
+   "code": "95107",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "décharger le poisson et les crustacés des bateaux de pêche et les transporter, au moyen d'un chariot à bras ou d'un chariot à fourche, à l'aire de travail de l'usine de conditionnement de poisson",
+       "en": "Unload fish and shellfish from fishing vessels and transport them by hand or forklift truck to work area in fish processing plant"
+      },
+      {
+       "fr": "plonger les filets de poisson frais dans une saumure afin de les conditionner pour l'emballage ou la congélation",
+       "en": "Immerse fresh fish fillets in brine solution to condition them for wrapping or freezing"
+      },
+      {
+       "fr": "peser le poisson ou les crustacés, enregistrer leur poids et les placer dans la glace concassée",
+       "en": "Weigh fish or shellfish, record weight and pack fish in ice"
+      },
+      {
+       "fr": "trier les poissons selon l'espèce, le poids et la destination",
+       "en": "Sort fish according to species, weight and destination"
+      },
+      {
+       "fr": "nettoyer les aires de travail et le matériel",
+       "en": "Clean work areas and equipment"
+      },
+      {
+       "fr": "transporter les fournitures et le matériel d'emballage dans l'usine et l'entrepôt, à la main ou à l'aide de matériel mécanisé",
+       "en": "Transport supplies and packaging materials throughout plant and storage area manually or with powered equipment"
+      },
+      {
+       "fr": "mesurer et verser des ingrédients dans les trémies des malaxeurs et des broyeuses",
+       "en": "Measure and dump ingredients into hoppers of mixing and grinding machines"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    }
+   ],
+   "examplesFr": [
+    "emballeur/emballeuse de mollusques et crustacés - traitement du poisson",
+    "manoeuvre - traitement de mollusques et de crustacés",
+    "manoeuvre de conserverie",
+    "manoeuvre d'usine de traitement du poisson",
+    "peseur/peseuse de poissons",
+    "saleur/saleuse de poissons - traitement du poisson",
+    "saumurier/saumurière de poissons - traitement du poisson"
+   ],
+   "examplesEn": [
+    "cannery labourer",
+    "fish briner - fish processing",
+    "fish plant labourer",
+    "fish salter - fish processing",
+    "fish weigher",
+    "shellfish labourer",
+    "shellfish packer - fish processing"
+   ]
+  },
+  {
+   "code": "95109",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "transporter, manuellement ou à l'aide d'équipement mécanique, les matières premières, les produits finis et l'équipement dans l'usine",
+       "en": "Transport raw materials, finished products and equipment throughout plant manually or using powered equipment"
+      },
+      {
+       "fr": "vérifier et peser le matériel et les produits",
+       "en": "Check and weigh materials and products"
+      },
+      {
+       "fr": "trier, empaqueter, mettre en caisse et emballer le matériel et les produits",
+       "en": "Sort, pack, crate and package materials and products"
+      },
+      {
+       "fr": "aider les opérateurs de machines, les monteurs et les autres travailleurs",
+       "en": "Assist machine operators, assemblers and other workers"
+      },
+      {
+       "fr": "nettoyer les aires de travail et le matériel",
+       "en": "Clean work areas and equipment"
+      },
+      {
+       "fr": "effectuer d'autres tâches de manoeuvres et activités élémentaires",
+       "en": "Perform other labouring and elemental activities"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires peuvent être exigées.",
+     "en": "Some secondary school education may be required."
+    }
+   ],
+   "examplesFr": [
+    "aide d'atelier à la reliure",
+    "aide-rembourreur/aide-rembourreuse",
+    "bloqueur/bloqueuse de lentilles",
+    "découpeur/découpeuse de pellicules - traitement de films",
+    "emballeur/emballeuse à la machine",
+    "emballeur/emballeuse de boîtes",
+    "emballeur/emballeuse de grains",
+    "emballeur/emballeuse de meubles",
+    "manoeuvre à la fabrication de chaussures",
+    "manoeuvre d'articles électriques",
+    "manoeuvre de manufacture de vêtements",
+    "marqueur/marqueuse de cartons",
+    "plieur/plieuse de vêtements",
+    "ponceur/ponceuse de chaises",
+    "trieur/trieuse - matériaux de recyclage"
+   ],
+   "examplesEn": [
+    "bindery helper",
+    "box packer",
+    "carton marker",
+    "chair sander",
+    "clothing plant labourer",
+    "electrical products labourer",
+    "film cutter - film processing",
+    "furniture packer",
+    "garment folder",
+    "lens blocker",
+    "machine packager",
+    "seed packager",
+    "shoe manufacturing labourer",
+    "sorter - recyclable materials",
+    "upholsterer helper"
+   ]
+  }
+ ]
+}

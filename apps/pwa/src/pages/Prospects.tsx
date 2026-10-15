@@ -14,6 +14,7 @@ import { loadDesignated, loadPriorities, loadProspects, nocData, rules, type Com
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { upsertApplication, useApplications, useProfile, type StoredProfile } from '../store';
 import { buildMessage } from '../templates';
+import { openSampleCv } from './SampleCv';
 
 const PAGE = 40;
 
@@ -228,6 +229,7 @@ export function Prospects() {
                 <p>{tr(S.bestRoute, lang)} : <strong>{r.best.nom[lang]}</strong> <Badge kind={r.best.statut}>{tr(S.status[r.best.statut], lang)}</Badge></p>
                 <div class="row">
                   <button type="button" class="primary" onClick={() => { setTarget({ employer: x.n, city: x.c, noc: r.noc, pathway: r.best.voie, lmiaHistory: { quarters: x.q, last: x.lq } }); }}>{tr(S.writeMessage, lang)}</button>
+                  <button type="button" onClick={() => openSampleCv({ noc: r.noc, province: x.p })}>{tr(S.sampleOpen, lang)}</button>
                   <button type="button" disabled={isTracked(x.n)} onClick={() => track(x.n, r.noc, { lmiaFound: true })}>{isTracked(x.n) ? `✓ ${tr(S.tracked, lang)}` : tr(S.track, lang)}</button>
                 </div>
                 <ContactLinks name={x.n} city={x.c} province={x.p} postal={x.pc} lang={lang} />
