@@ -145,6 +145,12 @@ Ajoutez une ligne dans `data/manual/recrutement-afrique.csv` seulement après av
 ### Fonctions officielles des métiers (CV d'exemple)
 `data/noc-elements.json` est produit par `npx tsx scripts/build-noc-elements.ts` à partir du fichier « éléments » de la CNP 2021 (Statistique Canada). À relancer après l'ajout d'un métier dans `data/noc.json` ou d'une passerelle ; le test vérifie que chaque métier y figure.
 
+### Test de langue obligatoire ou non (offres divisées)
+`rules.json › languageTest` classe chaque voie : test **non obligatoire** pour obtenir le permis (EIMT : art. 200 du Règlement ; Mobilité francophone : preuve d'études en français acceptée, instructions C16) ou **obligatoire** (pilotes PICR/PICRF, résidence permanente). Les offres internationales, les offres récentes et les employeurs de **Démarcher** sont divisés en onglets « Sans test de langue obligatoire » / « Test de langue obligatoire », selon le profil. Toute nouvelle voie doit y être classée (le test l'exige).
+
+### Règles en préparation
+`rules.json › proposals` liste les règles annoncées mais pas en vigueur (ex. test de langue obligatoire pour certains permis du Programme de mobilité internationale). Chaque semaine, le pipeline relit la date de modification de la page officielle (`proposals-status.json`) : si elle a changé, l'appli et `docs/data-report.md` (§ 10) le signalent. Relisez alors la page et mettez à jour `status`, `detailFr/En` et `checkedAt`.
+
 ### Passerelles de métier et permis provinciaux
 `rules.json › occupationTransfers` : un métier d'origine peu accessible depuis l'étranger vers un métier proche. N'ajoutez une passerelle que si les **fonctions principales officielles** des deux groupes (fichier « éléments » de la CNP 2021, Statistique Canada) se recoupent ; citez-les telles quelles. `rules.json › securityLicences` : n'ajoutez une province qu'après avoir ouvert vous-même la page officielle du permis.
 

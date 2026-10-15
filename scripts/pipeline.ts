@@ -15,6 +15,7 @@ import { buildDesignated, type DesignatedStats } from './build-designated';
 import { fetchPermits, type PermitsStats } from './fetch-permits';
 import { fetchInternational, type InternationalStats } from './fetch-international';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
+import { fetchProposals, type ProposalsStats } from './fetch-proposals';
 import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
@@ -42,6 +43,11 @@ const geo = await fetchGeo(rules);
 const lmia = await fetchLmia(rules, nocData, geo.lookup, quarters);
 const wages = await fetchWages(nocData);
 const ee = await fetchExpressEntry(rules);
+let proposals: ProposalsStats;
+try { proposals = await fetchProposals(rules, today); } catch (e) {
+  proposals = { checked: 0, changed: [], error: e instanceof Error ? e.message : String(e) };
+  console.warn(`  ⚠ Règles en préparation non vérifiées : ${proposals.error}`);
+}
 let permits: PermitsStats | { error: string };
 try { permits = await fetchPermits(); } catch (e) {
   permits = { error: e instanceof Error ? e.message : String(e) };
@@ -59,7 +65,7 @@ try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
   console.warn(`  ⚠ Offres du Guichet-Emplois non mises à jour : ${postings.error}`);
 }
 
-writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl));
+writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl, proposals));
 console.log('✔ Terminé. Rapport : docs/data-report.md');
 
 // ---------------------------------------------------------------------------
@@ -74,8 +80,8 @@ function pct(a: number, total: number): string {
   return total ? `${Math.round((100 * a) / total)} %` : '–';
 }
 
-function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | { error: string }): string {
-  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file] : [])];
+function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | { error: string }, pr: ProposalsStats): string {
+  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file] : []), ...(pr.file ? [pr.file] : [])];
   const totalPos = l.geo.positionsCma + l.geo.positionsOutside + l.geo.positionsUnknown;
   const totalRec = l.geo.cma + l.geo.outside + l.geo.unknown;
   const recurringTargets = l.recurring.slice(0, 20);
@@ -159,5 +165,9 @@ ${'error' in p ? `⚠ Non mises à jour : ${p.error}` : `- Mois ${p.month} : ${n
 ## 9. Offres ouvertes aux candidats de l'étranger (API Adzuna, tri VériJob)
 
 ${'error' in it ? `⚠ Non mises à jour : ${it.error}` : it.skipped ? `Étape sautée : ${it.skipped}.` : `- ${it.queries} requêtes, ${n(it.seen)} annonces lues, **${n(it.kept)} ouvertes à l'international**, ${n(it.closed)} écartées (Canada exigé).`}
+
+## 10. Règles en préparation
+
+${pr.error ? `⚠ Non vérifiées : ${pr.error}` : `- ${pr.checked} page(s) vérifiée(s). ${pr.changed.length ? `**⚠ Page modifiée depuis la dernière vérification : ${pr.changed.join(', ')} — relire et mettre à jour rules.json (proposals).**` : 'Aucune page modifiée.'}`}
 `;
 }

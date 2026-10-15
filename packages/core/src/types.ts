@@ -158,10 +158,32 @@ export interface Rules {
     include: string[];
     exclude: string[];
   };
+  languageTest: {
+    byPathway: Record<string, { required: boolean; source: string; noteFr: string; noteEn: string }>;
+    permanentResidenceNoteFr: string;
+    permanentResidenceNoteEn: string;
+  };
+  /** Règles en préparation (pas encore en vigueur), suivies par l'appli. */
+  proposals: RuleProposal[];
   occupationTransfers: OccupationTransfer[];
   /** Province → identifiant de source de la page officielle du permis d'agent de sécurité. */
   securityLicences: Partial<Record<ProvinceCode, string>>;
   changes: RuleChange[];
+}
+
+export interface RuleProposal {
+  id: string;
+  source: string;
+  /** Voies concernées si la règle est adoptée. */
+  affects: string[];
+  status: 'propose' | 'publie' | 'en-vigueur' | 'abandonne';
+  expectedFr: string;
+  expectedEn: string;
+  titleFr: string;
+  titleEn: string;
+  detailFr: string;
+  detailEn: string;
+  checkedAt: string;
 }
 
 /** Métier d'origine → métier proche, justifié par les fonctions officielles des deux groupes (CNP 2021). */
@@ -307,4 +329,6 @@ export interface Profile {
   provinces?: ProvinceCode[];
   /** Métier actuel ou passé, s'il n'est pas dans la liste des métiers suivis (ex. « 43201 »). */
   currentNoc?: string;
+  /** Études faites en français (diplôme ou relevé) : preuve de français acceptée sans test pour la Mobilité francophone. */
+  frenchStudies?: boolean;
 }

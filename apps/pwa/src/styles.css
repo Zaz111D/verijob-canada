@@ -195,3 +195,11 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 .paper mark { background: #fff2a8; color: inherit; padding: 0 2px; border-radius: 2px; }
 .paper .why { background: #eef4fb; color: #1b1f24; border-left: 3px solid #1f4e79; padding: 6px 8px; margin: 6px 0; font-size: 0.85rem; }
 .paper .chip.kw { margin-left: 6px; font-size: 0.75rem; padding: 1px 6px; }
+
+/* Onglets « sans test / test obligatoire » : boutons segmentés qui passent à la ligne sur téléphone. */
+.test-tabs { margin: 8px 0 12px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { border-radius: 999px; padding: 6px 12px; font-size: 0.9rem; }
+.seg button.on { background: var(--brand); color: var(--brand-fg); border-color: var(--brand); }
+.test-line summary { cursor: pointer; }
+.test-line ul { margin: 6px 0 0 18px; font-size: 0.9rem; }

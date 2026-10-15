@@ -68,6 +68,8 @@ export const loadExpressEntry = () => load<ExpressEntryData>('express-entry.json
 export const loadPostings = () => load<PostingsData>('postings.json');
 export const loadAfricanRecruiters = () => load<AfricanRecruiter[]>('african-recruiters.json');
 export const loadPermits = () => load<PermitsData>('permits-africa.json');
+export interface ProposalStatus { id: string; pageModified: string | null; changed: boolean; checkedAt: string }
+export const loadProposalsStatus = () => load<ProposalStatus[]>('proposals-status.json');
 export const loadInternationalOffers = () => load<InternationalOffer[]>('international-offers.json');
 
 // ---------------------------------------------------------------------------

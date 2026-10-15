@@ -11,6 +11,8 @@ import { loadPostings, nocData, rules } from '../data';
 import { STRINGS as S, tr, type Lang } from '../i18n';
 import { Badge } from './common';
 import { openSampleCv } from '../pages/SampleCv';
+import { countGroups, inTab, makeGrouper, TestLine, TestTabs, type Grouped, type TestTab } from './TestGroups';
+import { useProfile } from '../store';
 
 const MONTHS_FR = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -23,7 +25,7 @@ function CmaBadge({ cma, lang }: { cma: string; lang: Lang }) {
   return <Badge kind={frozen ? 'moyen' : 'info'}>{cma} · {tr(frozen ? S.cmaFrozen : S.cmaOpen, lang)}</Badge>;
 }
 
-function PostingCard({ p, lang }: { p: PostingView; lang: Lang }) {
+function PostingCard({ p, g, lang }: { p: PostingView; g: Grouped; lang: Lang }) {
   const link = jobBankLink(rules, { keyword: p.title });
   const facts = [
     p.salary?.[lang],
@@ -39,6 +41,7 @@ function PostingCard({ p, lang }: { p: PostingView; lang: Lang }) {
       <p class="muted">{tr(S.postedOn, lang)} {formatDate(p.date, lang)} — {p.city || '—'} ({p.province})</p>
       <p><CmaBadge cma={p.cma} lang={lang} /></p>
       <p>{facts.join(' · ')}</p>
+      <TestLine g={g} lang={lang} />
       <div class="row">
         <a class="button" href={link.url} target="_blank" rel="noopener noreferrer">{tr(S.findOnJobBank, lang)} ↗</a>
         <button type="button" onClick={() => openSampleCv({ noc: p.noc, title: p.title, province: p.province })}>{tr(S.sampleOpen, lang)}</button>
@@ -49,18 +52,26 @@ function PostingCard({ p, lang }: { p: PostingView; lang: Lang }) {
 
 export function RecentPostings({ nocs, provinces, lang }: { nocs: string[]; provinces: ProvinceCode[]; lang: Lang }) {
   const [data, setData] = useState<{ d: PostingsData; source: string }>();
+  const [tab, setTab] = useState<TestTab>('sans-test');
+  const profile = useProfile();
   useEffect(() => { loadPostings().then((f) => setData({ d: f.data, source: f.source.url })).catch(() => undefined); }, []);
   if (!data) return null;
   const { d } = data;
+  // Lieu → situation RMR connue (gel des EIMT bas salaire) pour une évaluation juste de la voie.
+  const grouper = makeGrouper(profile);
+  const groupOf = (p: PostingView) => grouper({ noc: p.noc, province: p.province, ...(p.cma === '-' ? { outsideCma: true } : p.cma !== '?' ? { city: p.cma } : {}) });
+  const all = nocs.flatMap((code) => recentPostings(d, code, provinces, 8).map((p) => ({ p, g: groupOf(p) })));
+  const counts = countGroups(all.map((e) => e.g));
   return (
     <>
       <h2>{tr(S.postingsTitle, lang)}</h2>
       <p class="muted">{tr(S.postingsIntro, lang)}</p>
       <p><strong>{tr(S.postingsMonth, lang)} {monthName(d.month, lang)}</strong> — <a href={data.source} target="_blank" rel="noopener noreferrer">open.canada.ca ↗</a></p>
+      {all.length > 0 && <TestTabs counts={counts} value={tab} onChange={setTab} lang={lang} />}
       {!nocs.length && <p class="muted">{tr(S.postingsNeedProfile, lang)} <a href="#/profil">{tr(S.navProfile, lang)}</a></p>}
       {nocs.map((code) => {
         const n = findNoc(nocData, code);
-        const list = recentPostings(d, code, provinces, 8);
+        const list = all.filter((e) => e.p.noc === code && inTab(e.g, tab));
         const provs = (provinces.length ? provinces : (Object.keys(d.stats[code] ?? {}) as ProvinceCode[]));
         return (
           <details class="sources" open={nocs.length === 1}>
@@ -80,7 +91,7 @@ export function RecentPostings({ nocs, provinces, lang }: { nocs: string[]; prov
                 );
               })}
             </ul>
-            {list.length ? list.map((p) => <PostingCard p={p} lang={lang} />) : <p class="muted">{tr(S.postingsNone, lang)}</p>}
+            {list.length ? list.map(({ p, g }) => <PostingCard p={p} g={g} lang={lang} />) : <p class="muted">{tr(S.postingsNone, lang)}</p>}
           </details>
         );
       })}

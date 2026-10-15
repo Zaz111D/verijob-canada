@@ -306,13 +306,29 @@ function francophoneMobility(ctx: Ctx): PathwayResult {
       fr: "Permis de travail sans EIMT : l'employeur n'a pas besoin d'EIMT, mais il faut une offre d'emploi d'un employeur hors Québec.",
       en: 'LMIA-exempt work permit: the employer does not need an LMIA, but you need a job offer from an employer outside Quebec.',
     },
+    // Règle en préparation qui changerait cette voie (rules.proposals) : signalée tant qu'elle n'est pas tranchée.
+    ...rules.proposals.filter((p) => p.affects.includes('mobilite-francophone') && (p.status === 'propose' || p.status === 'publie')).map((p) => ({
+      fr: `⚠ ${p.titleFr} — ${p.expectedFr}. Pas en vigueur au ${formatDate(p.checkedAt, 'fr')}.`,
+      en: `⚠ ${p.titleEn} — ${p.expectedEn}. Not in force as of ${formatDate(p.checkedAt, 'en')}.`,
+    })),
   ];
+  if (rules.proposals.some((p) => p.affects.includes('mobilite-francophone'))) ids.push(...rules.proposals.filter((p) => p.affects.includes('mobilite-francophone')).map((p) => p.source));
   const fr = profile.french;
   const min = fm.minOralNclc;
+  const studies: Localized = {
+    fr: "Sans test : IRCC accepte aussi la confirmation écrite de la réussite d'un programme en français d'un collège ou d'une université, ou d'autres documents qui montrent que vos études ont été faites en français. L'agent peut juger la preuve insuffisante.",
+    en: 'Without a test: IRCC also accepts written confirmation of completing a French-language college or university program, or other documents showing your studies were done in French. The officer may find the proof insufficient.',
+  };
   if (fr?.speaking === undefined || fr?.listening === undefined) {
+    if (profile.frenchStudies) {
+      return result(ctx, 'mobilite-francophone', 'possible', [
+        { fr: `Il faut prouver un niveau NCLC ${min} à l'oral en français. Vous avez indiqué des études faites en français.`, en: `You must prove NCLC ${min} oral French. You indicated studies done in French.` },
+        studies, ...common,
+      ], ids);
+    }
     return result(ctx, 'mobilite-francophone', 'inconnue', [
-      { fr: `Il faut un niveau NCLC ${min} en expression orale et en compréhension orale du français. Indiquez votre niveau dans votre profil.`, en: `You need NCLC ${min} in French speaking and listening. Add your level to your profile.` },
-      ...common,
+      { fr: `Il faut un niveau NCLC ${min} en expression orale et en compréhension orale du français. Indiquez votre niveau (test TEF ou TCF) ou vos études en français dans votre profil.`, en: `You need NCLC ${min} in French speaking and listening. Add your level (TEF or TCF test) or your French-language studies to your profile.` },
+      studies, ...common,
     ], ids);
   }
   if (fr.speaking < min || fr.listening < min) {

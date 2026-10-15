@@ -312,3 +312,17 @@ Demande de Jessica : un CV type canadien, adapté à chaque offre, pour un candi
 - **Candidat fictif** : nom, dates, établissement et résultats sont des repères [entre crochets], surlignés en jaune dans le fichier Word. Les employeurs sont décrits par leur type, jamais par un vrai nom. Le CV donné en exemple par Jessica (avec l'accord de la personne) n'a servi qu'à la structure (profil, compétences clés, expérience avec puces, formation, langues) : aucune de ses données n'est dans l'appli.
 - **Adaptation à l'offre** : intitulé repris, puces qui contiennent les mots de l'offre en premier, liste des mots de l'offre absents « à prouver seulement si c'est vrai ».
 - **Word** : fichier .docx minimal (Office Open XML) fabriqué sur le téléphone, une colonne, sans tableau ni image (lisible par les logiciels de tri), vraies puces Word. Ouvert sans erreur dans Microsoft Word (1 page pour l'exemple agent·e de sécurité).
+
+## 20. Voies sans test de langue obligatoire (15 oct. 2026)
+
+Demande de Jessica : explorer la voie sans test de langue, et diviser les offres entre les voies qui exigent un test et celles qui n'en exigent pas.
+
+| Voie | Test obligatoire ? | Source officielle (lue le 15 oct. 2026) |
+|---|---|---|
+| Permis avec EIMT (bas salaire, volet agricole, PTAS) | Non. L'agent peut refuser s'il croit que la personne est incapable d'exercer l'emploi (art. 200(3)a)) | Règlement sur l'immigration et la protection des réfugiés, art. 200 (Justice, version du 15 juill. 2026) |
+| Mobilité francophone (C16) | Non : preuve NCLC 5 oral exigée, mais IRCC accepte « entre autres » la confirmation de réussite d'un programme en français d'un collège ou d'une université, ou d'autres documents montrant des études en français | Instructions C16 d'IRCC (modifiées le 23 juin 2026) |
+| Pilote francophone (PICRF) → résidence permanente | Oui : « évaluation linguistique approuvée » | IRCC, PICRF, « Qui peut présenter une demande » (2 avril 2026) |
+
+**Règle en préparation** : le Plan prospectif de la réglementation d'IRCC (page du 7 avril 2026) annonce un règlement permettant d'**exiger un test de langue désigné** pour certains volets du Programme de mobilité internationale (pré-publication visée au printemps ou à l'été 2026). Au 15 oct. 2026, aucune publication officielle trouvée (seulement des articles de presse, non retenus). Suivi automatique hebdomadaire de la date de la page officielle ; revérification humaine mensuelle (`nextReview` 2026-11-15).
+
+Profil : nouvelle case « études faites en français ». Sans niveau de test mais avec cette case, la Mobilité francophone passe de « à préciser » à « possible », avec la mise en garde que l'agent peut juger la preuve insuffisante.

@@ -10,6 +10,8 @@ import { STRINGS as S, tr, type Lang } from '../i18n';
 import { openOfferCheck } from '../pages/CheckOffer';
 import { openSampleCv } from '../pages/SampleCv';
 import { Badge } from './common';
+import { countGroups, inTab, makeGrouper, TestLine, TestTabs, type Grouped, type TestTab } from './TestGroups';
+import { useProfile } from '../store';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer nofollow' } as const;
 const ADZUNA = 'https://www.adzuna.ca/';
@@ -26,7 +28,7 @@ function salary(o: InternationalOffer, lang: Lang): string | null {
   return o.salaryPredicted ? `${range} (${tr(S.intlEstimated, lang)})` : range;
 }
 
-function OfferCard({ o, lang }: { o: InternationalOffer; lang: Lang }) {
+function OfferCard({ o, g, lang }: { o: InternationalOffer; g: Grouped; lang: Lang }) {
   const sal = salary(o, lang);
   const noc = findNoc(nocData, o.noc);
   return (
@@ -49,6 +51,7 @@ function OfferCard({ o, lang }: { o: InternationalOffer; lang: Lang }) {
       {o.lmia && (
         <p class="ok">✓ {tr(S.intlLmia, lang).replace('{n}', String(o.lmia.positions)).replace('{q}', o.lmia.lastQuarter)}{o.lmia.sameNoc ? tr(S.intlLmiaSameNoc, lang) : ''}. <a href="#/employeur">{tr(S.cardEmployerTitle, lang)} →</a></p>
       )}
+      <TestLine g={g} lang={lang} />
       {o.caution.length > 0 && <p class="warn">{tr(S.intlCaution, lang)}</p>}
       {o.scam.length > 0 && <p class="alert">{o.scam.length} {tr(S.intlScam, lang)}</p>}
       <div class="row">
@@ -64,12 +67,18 @@ function OfferCard({ o, lang }: { o: InternationalOffer; lang: Lang }) {
 export function InternationalOffers({ nocs, provinces, lang }: { nocs: string[]; provinces: ProvinceCode[]; lang: Lang }) {
   const [data, setData] = useState<{ list: InternationalOffer[]; at: string }>();
   const [all, setAll] = useState(false);
+  const [tab, setTab] = useState<TestTab>('sans-test');
+  const profile = useProfile();
   useEffect(() => { loadInternationalOffers().then((f) => setData({ list: f.data, at: f.fetchedAt.slice(0, 10) })).catch(() => undefined); }, []);
   if (!data) return null; // pas encore de fichier (clés Adzuna absentes) : section masquée
   const mine = data.list.filter((o) =>
     (all || !nocs.length || nocs.includes(o.noc)) && (all || !provinces.length || !o.province || provinces.includes(o.province)));
   // Sans signal d'arnaque d'abord, puis preuve visible dans l'extrait, puis les plus récentes.
-  const shown = [...mine].sort((a, b) => a.scam.length - b.scam.length || Number(b.evidence.length > 0) - Number(a.evidence.length > 0) || Number(!!b.lmia?.sameNoc) - Number(!!a.lmia?.sameNoc) || b.date.localeCompare(a.date)).slice(0, LIMIT);
+  const grouper = makeGrouper(profile);
+  const grouped = mine.map((o) => ({ o, g: grouper({ noc: o.noc || undefined, province: o.province }) }));
+  const counts = countGroups(grouped.map((e) => e.g));
+  const shown = grouped.filter((e) => inTab(e.g, tab))
+    .sort(({ o: a }, { o: b }) => a.scam.length - b.scam.length || Number(b.evidence.length > 0) - Number(a.evidence.length > 0) || Number(!!b.lmia?.sameNoc) - Number(!!a.lmia?.sameNoc) || b.date.localeCompare(a.date)).slice(0, LIMIT);
   return (
     <>
       <h2>{tr(S.intlTitle, lang)}</h2>
@@ -81,7 +90,8 @@ export function InternationalOffers({ nocs, provinces, lang }: { nocs: string[];
       {(nocs.length > 0 || provinces.length > 0) && (
         <label class="check"><input type="checkbox" checked={all} onChange={() => setAll(!all)} />{tr(S.intlAllJobs, lang)}</label>
       )}
-      {shown.length ? shown.map((o) => <OfferCard o={o} lang={lang} />) : <p class="muted">{tr(S.intlNone, lang)}</p>}
+      {mine.length > 0 && <TestTabs counts={counts} value={tab} onChange={setTab} lang={lang} />}
+      {shown.length ? shown.map(({ o, g }) => <OfferCard o={o} g={g} lang={lang} />) : <p class="muted">{tr(S.intlNone, lang)}</p>}
       <p class="muted">{tr(S.intlPoweredBy, lang)} <a class="adzuna" href={ADZUNA} {...ext}>Adzuna</a></p>
     </>
   );

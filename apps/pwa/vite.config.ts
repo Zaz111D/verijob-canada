@@ -30,7 +30,7 @@ export default defineConfig({
         // L'application et les petits fichiers de données sont disponibles hors ligne dès l'installation.
         globPatterns: [
           '**/*.{js,css,html,svg,png,webmanifest}',
-          'data/{employers-index,wages,cma-lookup,designated-employers,community-priorities,express-entry,postings,african-recruiters,permits-africa,international-offers}.json',
+          'data/{employers-index,wages,cma-lookup,designated-employers,community-priorities,express-entry,postings,african-recruiters,permits-africa,international-offers,proposals-status}.json',
         ],
         // pdf.js (lecture des CV en PDF, environ 1,7 Mo) n'est pas préchargé : il est téléchargé
         // la première fois qu'on vérifie un CV PDF, puis gardé en cache (règle plus bas).

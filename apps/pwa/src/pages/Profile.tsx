@@ -129,6 +129,8 @@ export function Profile() {
 
         <p class="muted">{tr(S.levelHelp, lang)}</p>
         <LevelGrid label={tr(S.frenchLevel, lang)} value={p.french} onChange={(v) => setP({ ...p, french: v })} />
+        <label class="check"><input type="checkbox" checked={!!p.frenchStudies} onChange={() => setP({ ...p, frenchStudies: !p.frenchStudies || undefined })} />{tr(S.frenchStudies, lang)}</label>
+        <p class="muted">{tr(S.frenchStudiesHelp, lang)}</p>
         <LevelGrid label={tr(S.englishLevel, lang)} value={p.english} onChange={(v) => setP({ ...p, english: v })} />
 
         <fieldset>

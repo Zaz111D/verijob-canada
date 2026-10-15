@@ -17,9 +17,9 @@ describe('veille réglementaire', () => {
   });
   it('échéances futures triées, avec jours restants', () => {
     const u = upcomingDates(rules, TODAY);
-    // La plus proche : revérification des salons de recrutement (14 déc. 2026), puis la liste RMR (8 janv. 2027).
-    expect(u[0]?.date).toBe('2026-12-14');
-    expect(u[0]?.daysLeft).toBe(62);
+    // La plus proche : revérification mensuelle du projet de règlement (15 nov. 2026, seule la prochaine révision de source est listée), puis la liste RMR (8 janv. 2027).
+    expect(u[0]?.date).toBe('2026-11-15');
+    expect(u[0]?.daysLeft).toBe(33);
     expect(u.some((x) => x.date === '2027-01-08' && x.daysLeft === 87)).toBe(true);
     expect(u.map((x) => x.date)).toEqual([...u.map((x) => x.date)].sort());
   });

@@ -254,6 +254,33 @@
       "verifiedAt": "2026-10-14",
       "nextReview": "2027-01-14"
     },
+    "irpr-r200": {
+      "titleFr": "Règlement sur l'immigration et la protection des réfugiés — article 200 (délivrance du permis de travail)",
+      "titleEn": "Immigration and Refugee Protection Regulations — section 200 (work permit issuance)",
+      "urlFr": "https://laws-lois.justice.gc.ca/fra/reglements/DORS-2002-227/section-200.html",
+      "urlEn": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-2002-227/section-200.html",
+      "pageModified": "2026-07-15",
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-01-15"
+    },
+    "ircc-fcip-eligibility": {
+      "titleFr": "IRCC — Pilote d'immigration dans les communautés francophones : qui peut présenter une demande",
+      "titleEn": "IRCC — Francophone Community Immigration Pilot: who can apply",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/pilotes-rurale-franco/immigration-franco/admissibilite.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/franco-immigration/eligibility.html",
+      "pageModified": "2026-04-02",
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-01-15"
+    },
+    "ircc-imp-language-proposal": {
+      "titleFr": "IRCC — Plan prospectif de la réglementation : tests de langue pour certains permis du Programme de mobilité internationale",
+      "titleEn": "IRCC — Forward Regulatory Plan: language testing for certain International Mobility Program work permits",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/organisation/mandat/lois-reglements/plan-prospectif-reglementation/liste/modifiant-exigences-linguistiques-mobilite-internationale.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/mandate/acts-regulations/forward-regulatory-plan/list/amending-language-requirements-international-mobility.html",
+      "pageModified": "2026-04-07",
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2026-11-15"
+    },
     "statcan-noc-elements": {
       "titleFr": "Statistique Canada — CNP 2021 v1.0, éléments (fonctions principales, conditions d'accès)",
       "titleEn": "Statistics Canada — NOC 2021 v1.0, elements (main duties, employment requirements)",
@@ -1228,6 +1255,46 @@
     "include": ["immigration", "immigrant", "travailleur", "worker", "permis de travail", "work permit", "entree express", "express entry", "residence permanente", "permanent residen", "francophone", "main-d'oeuvre", "workforce", "labour", "pilote", "pilot", "consultant", "fraude", "fraud", "emploi", "employer", "employeur", "recrutement", "recruit"],
     "exclude": ["passeport", "passport", "allocation canadienne pour enfants", "child benefit", "taxe d'accise", "excise tax", "megadeduction", "mega deduction", "sport", "regles de citoyennete", "semaine de la citoyennete", "nouveaux canadiens", "citizenship rules", "citizenship week", "new canadians", "asile", "asylum", "refugie", "refugee"]
   },
+  "languageTest": {
+    "$comment": "Test de langue OBLIGATOIRE ou non, par voie, pour OBTENIR le permis ou la résidence. 'required: false' ne veut pas dire « sans preuve de langue » : voir noteFr.",
+    "byPathway": {
+      "eimt-bas-salaire": { "required": false, "source": "irpr-r200",
+        "noteFr": "Aucun test officiel exigé pour le permis avec EIMT. L'agent peut refuser s'il pense que vous ne pouvez pas faire le travail (art. 200(3)a)) et vérifier votre langue en entrevue ; l'employeur peut exiger le français ou l'anglais.",
+        "noteEn": "No official test required for the LMIA-based permit. The officer may refuse if they believe you cannot do the work (s. 200(3)(a)) and may check your language in an interview; the employer may require French or English." },
+      "eimt-agricole": { "required": false, "source": "irpr-r200",
+        "noteFr": "Aucun test officiel exigé pour le permis avec EIMT. L'agent peut refuser s'il pense que vous ne pouvez pas faire le travail (art. 200(3)a)).",
+        "noteEn": "No official test required for the LMIA-based permit. The officer may refuse if they believe you cannot do the work (s. 200(3)(a))." },
+      "ptas": { "required": false, "source": "irpr-r200",
+        "noteFr": "Aucun test officiel exigé, mais le PTAS est réservé au Mexique et aux pays des Caraïbes.",
+        "noteEn": "No official test required, but SAWP is limited to Mexico and Caribbean countries." },
+      "mobilite-francophone": { "required": false, "source": "ircc-c16",
+        "noteFr": "Preuve de français NCLC 5 à l'oral exigée, mais le test n'est pas obligatoire : IRCC accepte aussi la confirmation écrite de la réussite d'un programme en français d'un collège ou d'une université, ou d'autres documents qui montrent que les études ont été faites en français. L'agent peut juger la preuve insuffisante.",
+        "noteEn": "Proof of NCLC 5 oral French is required, but the test is not mandatory: IRCC also accepts written confirmation of completing a French-language college or university program, or other documents showing studies were done in French. The officer may find the proof insufficient." },
+      "pilotes-communautaires": { "required": true, "source": "ircc-fcip-eligibility",
+        "noteFr": "Résidence permanente : une évaluation linguistique approuvée (test) est obligatoire.",
+        "noteEn": "Permanent residence: an approved language assessment (test) is mandatory." },
+      "pilotes-aides-familiaux": { "required": true, "source": "ircc-hcwp",
+        "noteFr": "Résidence permanente : un test de langue approuvé est obligatoire (programme fermé aux nouvelles demandes).",
+        "noteEn": "Permanent residence: an approved language test is mandatory (program closed to new applications)." }
+    },
+    "permanentResidenceNoteFr": "Pour rester au Canada (résidence permanente : Entrée express, pilotes PICR et PICRF…), un test de langue approuvé sera obligatoire plus tard.",
+    "permanentResidenceNoteEn": "To stay in Canada (permanent residence: Express Entry, RCIP and FCIP pilots…), an approved language test will be mandatory later."
+  },
+  "proposals": [
+    {
+      "id": "imp-language-tests",
+      "source": "ircc-imp-language-proposal",
+      "affects": ["mobilite-francophone"],
+      "status": "propose",
+      "expectedFr": "pré-publication dans la Gazette du Canada visée au printemps ou à l'été 2026",
+      "expectedEn": "pre-publication in the Canada Gazette targeted for spring/summer 2026",
+      "titleFr": "Projet : test de langue obligatoire pour certains permis sans EIMT (Programme de mobilité internationale)",
+      "titleEn": "Proposal: mandatory language test for certain LMIA-exempt permits (International Mobility Program)",
+      "detailFr": "IRCC prévoit de pouvoir exiger les résultats d'un test de langue désigné pour certains volets du Programme de mobilité internationale (dont relève la Mobilité francophone). Au 15 octobre 2026, aucune publication officielle n'a été trouvée : la règle n'est pas en vigueur. Si vous visez la voie sans test, agissez tôt.",
+      "detailEn": "IRCC plans to be able to require designated language test results for certain International Mobility Program streams (which include Francophone Mobility). As of October 15, 2026, no official publication was found: the rule is not in force. If you aim for the test-free route, act early.",
+      "checkedAt": "2026-10-15"
+    }
+  ],
   "occupationTransfers": [
     {
       "source": "statcan-noc-elements",

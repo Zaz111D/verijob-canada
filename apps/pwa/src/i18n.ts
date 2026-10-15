@@ -382,6 +382,35 @@ export const STRINGS = {
   navCv: { fr: 'Vérifier mon CV', en: 'Check my resume' },
   cardCvTitle: { fr: 'Vérifier mon CV', en: 'Check my resume' },
   cardCvText: { fr: 'Format canadien, cohérence, langue, mots de l’offre, lisibilité par les logiciels de tri.', en: 'Canadian format, consistency, language, words from the offer, readability by screening software.' },
+  testTabsLabel: { fr: 'Classer selon le test de langue', en: 'Sort by language test' },
+  testTab: {
+    'sans-test': { fr: 'Sans test de langue obligatoire', en: 'No mandatory language test' },
+    test: { fr: 'Test de langue obligatoire', en: 'Language test required' },
+    aucune: { fr: 'Aucune voie pour votre profil', en: 'No route for your profile' },
+    inconnu: { fr: 'Métier non reconnu', en: 'Job not recognized' },
+    tout: { fr: 'Tout', en: 'All' },
+  },
+  testExplainFree: {
+    fr: '« Sans test obligatoire » = pour OBTENIR le permis de travail, aucun test de langue officiel n’est exigé (permis avec EIMT), ou une autre preuve de français est acceptée (Mobilité francophone). Ouvrez chaque fiche pour les conditions.',
+    en: '“No mandatory test” = to GET the work permit, no official language test is required (LMIA-based permit), or another proof of French is accepted (Francophone Mobility). Open each card for the conditions.',
+  },
+  testExplainTest: {
+    fr: '« Test obligatoire » = la seule voie possible pour votre profil exige un test de langue approuvé (ex. pilotes PICR et PICRF vers la résidence permanente).',
+    en: '“Test required” = the only route possible for your profile requires an approved language test (e.g. RCIP and FCIP pilots to permanent residence).',
+  },
+  testProposalMore: { fr: 'Suivi dans Programmes et actualités', en: 'Tracked in Programs and news' },
+  testUnknownJob: { fr: 'Métier non reconnu dans le titre : ouvrez l’offre pour vérifier les conditions.', en: 'Job not recognized in the title: open the posting to check the conditions.' },
+  frenchStudies: { fr: 'J’ai fait mes études en français (diplôme ou relevé de notes d’un collège ou d’une université)', en: 'I studied in French (diploma or transcript from a college or university)' },
+  frenchStudiesHelp: {
+    fr: 'Pour la Mobilité francophone, IRCC accepte cette preuve à la place d’un test TEF ou TCF (l’agent peut la juger insuffisante).',
+    en: 'For Francophone Mobility, IRCC accepts this proof instead of a TEF or TCF test (the officer may find it insufficient).',
+  },
+  proposalsTitle: { fr: 'Règles en préparation (pas encore en vigueur)', en: 'Rules in preparation (not yet in force)' },
+  proposalChecked: { fr: 'Dernière vérification', en: 'Last checked' },
+  proposalPageChanged: {
+    fr: 'La page officielle a été modifiée le {d} (après notre vérification) : la règle a peut-être avancé. Vérifiez-la.',
+    en: 'The official page was modified on {d} (after our check): the rule may have moved forward. Check it.',
+  },
   sampleTitle: { fr: 'CV d’exemple pour ce poste', en: 'Sample resume for this job' },
   sampleOpen: { fr: 'CV d’exemple', en: 'Sample resume' },
   sampleIntro: {

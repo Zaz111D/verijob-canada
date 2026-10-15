@@ -96,6 +96,16 @@ describe('Mobilité francophone (C16)', () => {
     expect(status(evaluate({ french: { speaking: 4, listening: 6 } }, { noc: '75101' }), 'mobilite-francophone')).toBe('bloquee');
     expect(status(evaluate({}, { noc: '75101' }), 'mobilite-francophone')).toBe('inconnue');
   });
+  it('sans test mais avec des études en français → possible, preuve acceptée par IRCC citée', () => {
+    const res = evaluate({ citizenship: 'CM', frenchStudies: true }, { noc: '64410', province: 'NB' });
+    expect(status(res, 'mobilite-francophone')).toBe('possible');
+    expect(reasons(res, 'mobilite-francophone')).toMatch(/programme en français d'un collège ou d'une université/);
+  });
+  it('signale le projet de règlement (test obligatoire) tant qu’il n’est pas tranché', () => {
+    expect(reasons(evaluate(FRANCO_NCLC5, { noc: '75101' }), 'mobilite-francophone')).toMatch(/⚠ Projet : test de langue obligatoire/);
+    const src = evaluate(FRANCO_NCLC5, { noc: '75101' }).find((r) => r.voie === 'mobilite-francophone')!.sources.map((x) => x.id);
+    expect(src).toContain('ircc-imp-language-proposal');
+  });
   it('aquaculture (85102) n’est pas de l’agriculture primaire → admissible', () => {
     expect(status(evaluate(FRANCO_NCLC5, { noc: '85102' }), 'mobilite-francophone')).toBe('probable');
   });

@@ -15,6 +15,7 @@ import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { upsertApplication, useApplications, useProfile, type StoredProfile } from '../store';
 import { buildMessage } from '../templates';
 import { openSampleCv } from './SampleCv';
+import { countGroups, inTab, makeGrouper, TestLine, TestTabs, type TestTab } from '../components/TestGroups';
 
 const PAGE = 40;
 
@@ -130,6 +131,7 @@ export function Prospects() {
   const [province, setProvince] = useState('');
   const [hideAgri, setHideAgri] = useState(false);
   const [onlyNew, setOnlyNew] = useState(false);
+  const [testTab, setTestTab] = useState<TestTab>('sans-test');
   const [windowStart, setWindowStart] = useState('');
   const [shown, setShown] = useState(PAGE);
   const [target, setTarget] = useState<Target>();
@@ -155,6 +157,16 @@ export function Prospects() {
     () => (all ? filterProspects(all, { nocs, provinces, excludeAgricultureOnly: hideAgri, onlyNew }) : []),
     [all, nocs.join(), provinces.join(), hideAgri, onlyNew],
   );
+  // Chaque employeur : voie estimée + groupe « sans test / test obligatoire » (calculé une fois par liste).
+  const evaluated = useMemo(() => {
+    const grouper = makeGrouper(profile);
+    return list.map((x) => {
+      const r = prospectPathway(x, profile, { rules, nocData, nocs });
+      return { x, r, g: grouper({}, r.all) };
+    });
+  }, [list, profile]);
+  const counts = useMemo(() => countGroups(evaluated.map((e) => e.g)), [evaluated]);
+  const visible = evaluated.filter((e) => inTab(e.g, testTab));
   const desList = useMemo(() => {
     const prio = (community: string, program: string) => priorities.some((p) => p.community === community && p.program === program && nocs.includes(p.noc));
     return designated
@@ -207,13 +219,13 @@ export function Prospects() {
       {all && (
         <>
           <div class="row">
-            <strong>{list.length} {tr(S.resultsCount, lang)}</strong>
+            <strong>{visible.length} {tr(S.resultsCount, lang)}</strong>
             {list.length > 0 && <button type="button" onClick={exportProspects}>{tr(S.exportCsv, lang)}</button>}
           </div>
+          <TestTabs counts={counts} value={testTab} onChange={(t) => { setTestTab(t); setShown(PAGE); }} lang={lang} />
           <p class="callout">{tr(S.directContact, lang)}</p>
           <HowToApply lang={lang} />
-          {list.slice(0, shown).map((x) => {
-            const r = prospectPathway(x, profile, { rules, nocData, nocs });
+          {visible.slice(0, shown).map(({ x, r, g }) => {
             const cma = cmaText(x.g, lang, x.s.every((s) => s === 'PA'));
             return (
               <article class="card-result">
@@ -227,6 +239,7 @@ export function Prospects() {
                 {x.neg > 0 && <p class="warn">{x.neg} {tr(x.neg > 1 ? S.refused : S.refusedOne, lang)}</p>}
                 {x.s.length === 1 && x.s[0] === 'PA' && <p class="muted">{tr(S.paWarning, lang)}</p>}
                 <p>{tr(S.bestRoute, lang)} : <strong>{r.best.nom[lang]}</strong> <Badge kind={r.best.statut}>{tr(S.status[r.best.statut], lang)}</Badge></p>
+                <TestLine g={g} lang={lang} />
                 <div class="row">
                   <button type="button" class="primary" onClick={() => { setTarget({ employer: x.n, city: x.c, noc: r.noc, pathway: r.best.voie, lmiaHistory: { quarters: x.q, last: x.lq } }); }}>{tr(S.writeMessage, lang)}</button>
                   <button type="button" onClick={() => openSampleCv({ noc: r.noc, province: x.p })}>{tr(S.sampleOpen, lang)}</button>
@@ -239,7 +252,7 @@ export function Prospects() {
               </article>
             );
           })}
-          {shown < list.length && <button type="button" onClick={() => setShown(shown + PAGE)}>{tr(S.showMore, lang)}</button>}
+          {shown < visible.length && <button type="button" onClick={() => setShown(shown + PAGE)}>{tr(S.showMore, lang)}</button>}
         </>
       )}
 

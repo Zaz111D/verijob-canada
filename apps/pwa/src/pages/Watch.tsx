@@ -7,7 +7,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { changeLog, formatDate, programStatuses, sourceRef, upcomingDates } from '@verijob/core';
 import { Badge, Sources } from '../components/common';
 import { ExpressEntryRounds, IrccNews } from '../components/LiveUpdates';
-import { loadDesignated, loadEmployersIndex, rules } from '../data';
+import { loadDesignated, loadEmployersIndex, loadProposalsStatus, rules, type ProposalStatus } from '../data';
 import { STRINGS as S, tr, useLang } from '../i18n';
 
 const STATE_KIND = { ouvert: 'ok', restreint: 'moyen', ferme: 'eleve', expire: 'info' } as const;
@@ -17,9 +17,11 @@ export function Watch() {
   const today = new Date().toISOString().slice(0, 10);
   const [lmia, setLmia] = useState<{ from?: string; to?: string; fetchedAt: string }>();
   const [designatedDate, setDesignatedDate] = useState<string>();
+  const [proposalStatus, setProposalStatus] = useState<ProposalStatus[]>([]);
 
   useEffect(() => {
     loadEmployersIndex().then((f) => setLmia({ from: f.data.quarters[0]?.quarter, to: f.data.quarters.at(-1)?.quarter, fetchedAt: f.fetchedAt.slice(0, 10) })).catch(() => undefined);
+    loadProposalsStatus().then((f) => setProposalStatus(f.data)).catch(() => undefined);
     loadDesignated().then((f) => setDesignatedDate(f.data.map((d) => d.recordedAt).sort()[0])).catch(() => undefined);
   }, []);
 
@@ -33,6 +35,24 @@ export function Watch() {
       {stale.length > 0
         ? <p class="alert">{tr(S.staleBanner, lang)} ({stale.map((s) => s.title[lang]).join(' ; ')})</p>
         : <p class="ok">{tr(S.noStale, lang)}</p>}
+
+      {rules.proposals.length > 0 && (
+        <>
+          <h2>{tr(S.proposalsTitle, lang)}</h2>
+          {rules.proposals.map((p) => {
+            const st = proposalStatus.find((x) => x.id === p.id);
+            return (
+              <article class="card-result">
+                <div class="route-head"><strong>{lang === 'fr' ? p.titleFr : p.titleEn}</strong><Badge kind="moyen">{lang === 'fr' ? p.expectedFr : p.expectedEn}</Badge></div>
+                <p>{lang === 'fr' ? p.detailFr : p.detailEn}</p>
+                {st?.changed && st.pageModified && <p class="alert">⚠ {tr(S.proposalPageChanged, lang).replace('{d}', formatDate(st.pageModified, lang))}</p>}
+                <p class="muted">{tr(S.proposalChecked, lang)} : {formatDate(st?.checkedAt ?? p.checkedAt, lang)}</p>
+                <Sources sources={[sourceRef(rules, p.source, today)]} />
+              </article>
+            );
+          })}
+        </>
+      )}
 
       <h2>{tr(S.programsTitle, lang)}</h2>
       {programStatuses(rules, today).map((p) => (
