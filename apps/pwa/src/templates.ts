@@ -20,6 +20,31 @@ export interface MessageData {
   /** Programme de l'employeur s'il est désigné (PICR / PICRF). */
   designatedProgram?: 'RCIP' | 'FCIP';
   community?: string;
+  /** Historique public d'EIMT de l'employeur (listes d'EDSC) : nombre de trimestres et dernier trimestre. */
+  lmiaHistory?: { quarters: number; last: string };
+  /** Expérience dans un métier proche (passerelle officielle CNP). */
+  transfer?: { job: string; skills: string };
+  /** Le métier exige un permis provincial (ex. agent de sécurité). */
+  licence?: boolean;
+}
+
+/** « 2026Q1 » → « 2026 T1 » / « 2026 Q1 ». */
+function quarterLabel(q: string, lang: Lang): string {
+  const m = /^(\d{4})Q([1-4])$/.exec(q);
+  return m ? `${m[1]} ${lang === 'fr' ? 'T' : 'Q'}${m[2]}` : q;
+}
+
+function historySentence(d: MessageData, lang: Lang): string | null {
+  const h = d.lmiaHistory;
+  if (!h) return null;
+  return lang === 'fr'
+    ? `J’ai vu dans les listes publiques d’Emploi et Développement social Canada que votre entreprise a obtenu des EIMT ${h.quarters > 1 ? `pendant ${h.quarters} trimestres` : 'récemment'} (dernière : ${quarterLabel(h.last, 'fr')}). Même si aucune offre n’est affichée en ce moment, je me permets de vous écrire.`
+    : `I saw in Employment and Social Development Canada’s public lists that your company obtained LMIAs ${h.quarters > 1 ? `in ${h.quarters} quarters` : 'recently'} (latest: ${quarterLabel(h.last, 'en')}). Even if no job is posted right now, I am taking the liberty of writing to you.`;
+}
+
+/** « de » élidé devant une voyelle ou un h : « poste d’agent·e », « poste de cuisinier ». */
+function de(word: string): string {
+  return /^[aeiouyhàâéèêëîïôöûü]/i.test(word) ? `d’${word}` : `de ${word}`;
 }
 
 function years(months: number | undefined, lang: Lang): string {
@@ -48,6 +73,11 @@ function routeParagraph(d: MessageData, lang: Lang): string {
         ? 'Je sais que vous avez déjà recruté des travailleurs étrangers. Je suis disponible pour un emploi dans le cadre du volet agricole du Programme des travailleurs étrangers temporaires.'
         : 'I know you have hired foreign workers before. I am available for a job under the Agricultural Stream of the Temporary Foreign Worker Program.';
     default:
+      if (d.lmiaHistory) {
+        return lang === 'fr'
+          ? 'Je suis disponible pour un emploi dans le cadre du Programme des travailleurs étrangers temporaires si vous recrutez à nouveau.'
+          : 'I am available for a job under the Temporary Foreign Worker Program if you are hiring again.';
+      }
       return lang === 'fr'
         ? 'Je sais que vous avez déjà recruté des travailleurs étrangers dans le cadre du Programme des travailleurs étrangers temporaires. Je suis disponible si vous recrutez à nouveau.'
         : 'I know you have hired foreign workers under the Temporary Foreign Worker Program. I am available if you are hiring again.';
@@ -69,9 +99,13 @@ export function buildMessage(d: MessageData, lang: Lang): { subject: string; bod
       body: [
         'Bonjour,',
         '',
-        `Je m’appelle ${name} et j’habite au ${country}. Je vous écris pour proposer ma candidature au poste de ${d.jobTitle} chez ${d.employer}.`,
-        exp ? `J’ai ${exp} d’expérience dans ce métier.` : 'Je suis motivé·e, fiable et prêt·e à apprendre.',
-        langs.length ? `Je parle ${langs.join(' et ')}.` : '',
+        `Je m’appelle ${name} et j’habite au ${country}. Je vous écris pour proposer ma candidature au poste ${de(d.jobTitle)} chez ${d.employer}.`,
+        d.transfer
+          ? `J’ai ${exp ? `${exp} d’expérience` : 'de l’expérience'} comme ${d.transfer.job} : ${d.transfer.skills}. Ces tâches correspondent à celles d’un poste ${de(d.jobTitle)}.`
+          : exp ? `J’ai ${exp} d’expérience dans ce métier.` : 'Je suis motivé·e, fiable et prêt·e à apprendre.',
+        d.licence ? 'Je suis prêt·e à suivre la formation et à obtenir le permis provincial exigé pour ce métier.' : null,
+        langs.length ? `Je parle ${langs.join(' et ')}.` : null,
+        historySentence(d, 'fr'),
         '',
         routeParagraph(d, 'fr'),
         '',
@@ -79,7 +113,7 @@ export function buildMessage(d: MessageData, lang: Lang): { subject: string; bod
         '',
         'Merci pour votre attention.',
         name,
-      ].filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n'),
+      ].filter((l): l is string => l !== null).filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n'),
     };
   }
   return {
@@ -88,8 +122,12 @@ export function buildMessage(d: MessageData, lang: Lang): { subject: string; bod
       'Hello,',
       '',
       `My name is ${name} and I live in ${country}. I am writing to apply for the position of ${d.jobTitle} at ${d.employer}.`,
-      exp ? `I have ${exp} of experience in this job.` : 'I am motivated, reliable and eager to learn.',
-      langs.length ? `I speak ${langs.join(' and ')}.` : '',
+      d.transfer
+        ? `I have ${exp ? `${exp} of experience` : 'experience'} as a ${d.transfer.job}: ${d.transfer.skills}. These duties match those of a ${d.jobTitle}.`
+        : exp ? `I have ${exp} of experience in this job.` : 'I am motivated, reliable and eager to learn.',
+      d.licence ? 'I am ready to complete the training and obtain the provincial licence required for this job.' : null,
+      langs.length ? `I speak ${langs.join(' and ')}.` : null,
+      historySentence(d, 'en'),
       '',
       routeParagraph(d, 'en'),
       '',
@@ -97,6 +135,6 @@ export function buildMessage(d: MessageData, lang: Lang): { subject: string; bod
       '',
       'Thank you for your time.',
       name,
-    ].filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n'),
+    ].filter((l): l is string => l !== null).filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n'),
   };
 }

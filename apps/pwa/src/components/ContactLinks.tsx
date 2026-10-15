@@ -1,7 +1,7 @@
 /**
  * Comment joindre un employeur, sans jamais deviner d'adresse e-mail :
  * - ses offres actuelles sur le Guichet-Emplois (chaque offre indique la façon officielle de postuler) ;
- * - son site officiel (recherche) ;
+ * - sa page Carrières et son site officiel (recherche) ;
  * - sa ville et son code postal publiés par EDSC, sur une carte.
  */
 import { employerSearchName, jobBankLink } from '@verijob/core';
@@ -14,12 +14,18 @@ export function websiteSearchUrl(name: string, city: string): string {
   return `https://duckduckgo.com/?q=${encodeURIComponent(`${employerSearchName(name)} ${city} Canada`)}`;
 }
 
+/** Recherche de la page Carrières officielle (seuls le nom de l'employeur et sa ville sont envoyés au moteur). */
+export function careersSearchUrl(name: string, city: string): string {
+  return `https://duckduckgo.com/?q=${encodeURIComponent(`${employerSearchName(name)} ${city} carrières OR careers OR emplois OR jobs`)}`;
+}
+
 export function ContactLinks({ name, city, province, postal, lang }: { name: string; city: string; province?: string; postal?: string; lang: Lang }) {
   const jb = jobBankLink(rules, { keyword: employerSearchName(name) });
   const place = [city, province, postal, 'Canada'].filter(Boolean).join(', ');
   return (
     <div class="row">
       <a class="button" href={jb.url} {...ext}>{tr(S.employerJobs, lang)} ↗</a>
+      <a class="button" href={careersSearchUrl(name, city)} {...ext}>{tr(S.careersPage, lang)} ↗</a>
       <a class="button" href={websiteSearchUrl(name, city)} {...ext}>{tr(S.findWebsite, lang)} ↗</a>
       {city && <a class="button" href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(place)}`} {...ext}>{tr(S.seeOnMap, lang)} ↗</a>}
     </div>

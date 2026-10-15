@@ -253,6 +253,60 @@
       "pageModified": "2025-12-12",
       "verifiedAt": "2026-10-14",
       "nextReview": "2027-01-14"
+    },
+    "statcan-noc-elements": {
+      "titleFr": "Statistique Canada — CNP 2021 v1.0, éléments (fonctions principales, conditions d'accès)",
+      "titleEn": "Statistics Canada — NOC 2021 v1.0, elements (main duties, employment requirements)",
+      "urlFr": "https://www.statcan.gc.ca/fr/sujets/norme/cnp/2021/indexV1/cnp-2021-v1.0-elements.csv",
+      "urlEn": "https://www.statcan.gc.ca/en/subjects/standard/noc/2021/indexV1/noc-2021-v1.0-elements.csv",
+      "pageModified": null,
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-10-15"
+    },
+    "licence-securite-qc": {
+      "titleFr": "Bureau de la sécurité privée (Québec) — permis d'agent",
+      "titleEn": "Bureau de la sécurité privée (Quebec) — agent licence",
+      "urlFr": "https://www.bspquebec.ca/fr",
+      "urlEn": "https://www.bspquebec.ca/fr",
+      "pageModified": null,
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-04-15"
+    },
+    "licence-securite-on": {
+      "titleFr": "Ontario — Services de sécurité privés et d'enquête (permis)",
+      "titleEn": "Ontario — Private security and investigative services (licence)",
+      "urlFr": "https://www.ontario.ca/fr/page/services-prives-de-securite-et-denquete",
+      "urlEn": "https://www.ontario.ca/page/private-security-and-investigative-services",
+      "pageModified": null,
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-04-15"
+    },
+    "licence-securite-bc": {
+      "titleFr": "Colombie-Britannique — Security services (permis, en anglais)",
+      "titleEn": "British Columbia — Security services (licence)",
+      "urlFr": "https://www2.gov.bc.ca/gov/content/employment-business/business/security-services",
+      "urlEn": "https://www2.gov.bc.ca/gov/content/employment-business/business/security-services",
+      "pageModified": null,
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-04-15"
+    },
+    "licence-securite-ab": {
+      "titleFr": "Alberta — Security service worker licence (en anglais)",
+      "titleEn": "Alberta — Security service worker licence",
+      "urlFr": "https://www.alberta.ca/security-service-worker-licence",
+      "urlEn": "https://www.alberta.ca/security-service-worker-licence",
+      "pageModified": null,
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-04-15"
+    },
+    "licence-securite-mb": {
+      "titleFr": "Manitoba — Private Investigators and Security Guards Program (en anglais)",
+      "titleEn": "Manitoba — Private Investigators and Security Guards Program",
+      "urlFr": "https://www.manitoba.ca/justice/commsafe/private/",
+      "urlEn": "https://www.manitoba.ca/justice/commsafe/private/",
+      "pageModified": null,
+      "verifiedAt": "2026-10-15",
+      "nextReview": "2027-04-15"
     }
   },
   "lmiaLowWage": {
@@ -1173,6 +1227,56 @@
     "maxItems": 8,
     "include": ["immigration", "immigrant", "travailleur", "worker", "permis de travail", "work permit", "entree express", "express entry", "residence permanente", "permanent residen", "francophone", "main-d'oeuvre", "workforce", "labour", "pilote", "pilot", "consultant", "fraude", "fraud", "emploi", "employer", "employeur", "recrutement", "recruit"],
     "exclude": ["passeport", "passport", "allocation canadienne pour enfants", "child benefit", "taxe d'accise", "excise tax", "megadeduction", "mega deduction", "sport", "regles de citoyennete", "semaine de la citoyennete", "nouveaux canadiens", "citizenship rules", "citizenship week", "new canadians", "asile", "asylum", "refugie", "refugee"]
+  },
+  "occupationTransfers": [
+    {
+      "source": "statcan-noc-elements",
+      "$comment": "Métier d'origine difficile d'accès depuis l'étranger → métier proche, d'après les fonctions principales OFFICIELLES des deux groupes (CNP 2021). Chaque paire cite les deux textes de Statistique Canada. 43201 : 0 EIMT dans les listes d'EDSC (emplois publics).",
+      "from": "43201",
+      "fromTitleFr": "Agents/agentes de services correctionnels (gardien·ne de prison)",
+      "fromTitleEn": "Correctional service officers (prison guard)",
+      "fromJobFr": "agent·e de services correctionnels (gardien·ne de prison)",
+      "fromJobEn": "correctional service officer (prison guard)",
+      "skillsFr": "rondes et contrôle des accès, vérification des visiteurs et fouilles, maintien de l'ordre et gestion des conflits, rédaction de rapports",
+      "skillsEn": "patrols and access control, visitor checks and searches, maintaining order and resolving conflicts, report writing",
+      "to": "64410",
+      "shared": [
+        {
+          "fromFr": "faire des rondes dans les secteurs qui leur sont dévolus et signaler les problèmes à leur supérieur",
+          "fromEn": "Patrol assigned area and report any problems to supervisor",
+          "toFr": "contrôler l'accès aux établissements, actionner l'équipement dans les postes de garde, faire des rondes dans des zones désignées",
+          "toEn": "Control access to establishments, operate security control-room equipment and patrol assigned areas"
+        },
+        {
+          "fromFr": "effectuer des contrôles de sécurité ainsi que des vérifications de sécurité concernant les visiteurs, les détenus et leurs cellules",
+          "fromEn": "Conduct security checks and scanning of visitors, inmates and their cells",
+          "toFr": "délivrer des laissez-passer et diriger les visiteurs vers les endroits appropriés ; effectuer les fouilles à l'aide d'outils ou à la main",
+          "toEn": "Issue passes and direct visitors to appropriate areas; perform searches with tools or by hand"
+        },
+        {
+          "fromFr": "surveiller la conduite et le comportement des contrevenants et des détenus afin de prévenir les émeutes et les évasions",
+          "fromEn": "Observe conduct and behaviour of offenders and detainees to prevent disturbances and escapes",
+          "toFr": "faire respecter les règlements d'un établissement pour maintenir l'ordre et résoudre les conflits",
+          "toEn": "Enforce regulations to maintain order and resolve conflicts"
+        },
+        {
+          "fromFr": "observer le comportement des contrevenants et préparer des rapports",
+          "fromEn": "Observe behaviour of offenders and prepare reports",
+          "toFr": "veiller à ce que les procédures de sécurité et d'urgence en vigueur dans l'établissement soient respectées",
+          "toEn": "Ensure safety and emergency procedures are followed"
+        }
+      ],
+      "requirementsFr": "Conditions d'accès (agents de sécurité) : diplôme d'études secondaires habituellement exigé ; permis provincial (au Québec, permis du Bureau de la sécurité privée). Aucune expérience canadienne n'est exigée par la CNP.",
+      "requirementsEn": "Employment requirements (security guards): secondary school usually required; provincial licence (in Quebec, a permit from the Bureau de la sécurité privée). The NOC requires no Canadian experience."
+    }
+  ],
+  "securityLicences": {
+    "$comment": "Pages officielles du permis d'agent de sécurité, vérifiées une à une (les autres provinces : non encore vérifiées, rien n'est affiché).",
+    "QC": "licence-securite-qc",
+    "ON": "licence-securite-on",
+    "BC": "licence-securite-bc",
+    "AB": "licence-securite-ab",
+    "MB": "licence-securite-mb"
   },
   "changes": [
     {

@@ -14,7 +14,7 @@ export const rules = rulesJson as unknown as Rules;
 export const nocData = nocJson as unknown as NocData;
 
 interface DataFile<T> {
-  source: { name: string; publisher: string; url: string; licence: string; files?: string[] };
+  source: { name: string; publisher: string; url: string; licence: string; files?: string[]; window?: string[] };
   fetchedAt: string;
   recordCount: number;
   data: T;

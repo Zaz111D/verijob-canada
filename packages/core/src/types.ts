@@ -158,7 +158,28 @@ export interface Rules {
     include: string[];
     exclude: string[];
   };
+  occupationTransfers: OccupationTransfer[];
+  /** Province → identifiant de source de la page officielle du permis d'agent de sécurité. */
+  securityLicences: Partial<Record<ProvinceCode, string>>;
   changes: RuleChange[];
+}
+
+/** Métier d'origine → métier proche, justifié par les fonctions officielles des deux groupes (CNP 2021). */
+export interface OccupationTransfer {
+  source: string;
+  from: string;
+  fromTitleFr: string;
+  fromTitleEn: string;
+  /** Intitulé court pour les messages. */
+  fromJobFr: string;
+  fromJobEn: string;
+  /** Résumé des tâches communes, pour la candidature. */
+  skillsFr: string;
+  skillsEn: string;
+  to: string;
+  shared: Array<{ fromFr: string; fromEn: string; toFr: string; toEn: string }>;
+  requirementsFr: string;
+  requirementsEn: string;
 }
 
 /** Site d'offres d'emploi (mode liens : l'appli construit l'adresse, l'utilisateur l'ouvre). */
@@ -284,4 +305,6 @@ export interface Profile {
   experienceMonths?: number;
   targetNocs?: string[];
   provinces?: ProvinceCode[];
+  /** Métier actuel ou passé, s'il n'est pas dans la liste des métiers suivis (ex. « 43201 »). */
+  currentNoc?: string;
 }

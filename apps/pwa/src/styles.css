@@ -171,3 +171,13 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 /* Mention obligatoire « Adzuna » sur chaque annonce (conditions de l'API : au moins 116 × 23 px, lien vers adzuna.ca). */
 .adzuna { display: inline-flex; align-items: center; justify-content: center; min-width: 116px; min-height: 23px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 4px; font-weight: 700; text-decoration: none; }
 .quote { border-left: 3px solid var(--ok); padding-left: 8px; margin: 6px 0; font-style: italic; }
+
+/* Comparaison de deux métiers (fonctions officielles CNP) : deux colonnes, empilées sur téléphone. */
+.compare { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 8px 0; }
+.compare th, .compare td { text-align: left; vertical-align: top; padding: 6px; border-bottom: 1px solid var(--line); }
+@media (max-width: 520px) {
+  .compare thead { display: none; }
+  .compare tr { display: block; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .compare td { display: block; border: 0; padding: 2px 0; }
+  .compare td::before { content: attr(data-label) ' '; font-weight: 700; }
+}

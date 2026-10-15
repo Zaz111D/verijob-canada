@@ -183,6 +183,17 @@ export const STRINGS = {
   writing: { fr: 'Écrire', en: 'Writing' },
   dontKnow: { fr: 'Je ne sais pas', en: 'I don’t know' },
   targetJobs: { fr: 'Métiers visés', en: 'Target jobs' },
+  currentJob: { fr: 'Votre métier actuel, s’il n’est pas dans la liste', en: 'Your current job, if it is not in the list' },
+  currentJobNone: { fr: 'Aucun / dans la liste', en: 'None / in the list' },
+  transferTitle: { fr: 'Métier proche conseillé', en: 'Suggested related job' },
+  transferIntro: {
+    fr: 'Vos tâches se retrouvent dans ce métier. Comparaison des fonctions officielles (CNP 2021, Statistique Canada) :',
+    en: 'Your duties are found in this job. Comparison of the official duties (NOC 2021, Statistics Canada):',
+  },
+  transferYourJob: { fr: 'Votre métier', en: 'Your job' },
+  transferRelated: { fr: 'Métier proche', en: 'Related job' },
+  transferAdd: { fr: 'Ajouter ce métier à mes métiers visés', en: 'Add this job to my target jobs' },
+  transferAdded: { fr: 'Déjà dans vos métiers visés', en: 'Already in your target jobs' },
   provincesWanted: { fr: 'Provinces préférées', en: 'Preferred provinces' },
   experience: { fr: 'Expérience dans ce métier (mois)', en: 'Experience in this job (months)' },
   education: { fr: 'Niveau d’études', en: 'Education' },
@@ -289,6 +300,7 @@ export const STRINGS = {
   // Joindre un employeur (sans deviner d'e-mail)
   employerJobs: { fr: 'Ses offres sur le Guichet-Emplois', en: 'Its jobs on Job Bank' },
   seeOnMap: { fr: 'Voir sur la carte', en: 'See on the map' },
+  careersPage: { fr: 'Trouver sa page Carrières', en: 'Find its careers page' },
   howToApply: {
     fr: 'Postulez uniquement par le moyen indiqué dans une offre du Guichet-Emplois (rubrique « Comment postuler ») ou sur le site officiel de l’employeur. Les listes officielles ne donnent que la ville et le code postal : VériJob ne devine jamais d’adresse e-mail.',
     en: 'Apply only through the method shown in a Job Bank posting (“How to apply” section) or on the employer’s official website. Official lists only give the city and postal code: VériJob never guesses an e-mail address.',
@@ -450,8 +462,8 @@ export const STRINGS = {
 
   prospectsTitle: { fr: 'Employeurs à contacter', en: 'Employers to contact' },
   prospectsIntro: {
-    fr: 'Ces employeurs ont obtenu des EIMT pour vos métiers sur plusieurs trimestres : ils recrutent régulièrement à l’étranger. Écrivez-leur directement, sans intermédiaire.',
-    en: 'These employers got LMIAs for your jobs over several quarters: they regularly hire abroad. Write to them directly, without a middleman.',
+    fr: 'Ces employeurs ont obtenu des EIMT pour vos métiers sur plusieurs trimestres (ils recrutent régulièrement à l’étranger), ou viennent d’en obtenir une première. Écrivez-leur directement, sans intermédiaire.',
+    en: 'These employers got LMIAs for your jobs over several quarters (they regularly hire abroad), or have just obtained their first one. Write to them directly, without a middleman.',
   },
   prospectsWarning: {
     fr: 'Une EIMT passée ne veut pas dire qu’un poste est ouvert aujourd’hui. Ne payez jamais pour être mis en relation avec un employeur.',
@@ -460,6 +472,22 @@ export const STRINGS = {
   filters: { fr: 'Filtres', en: 'Filters' },
   allJobs: { fr: 'Mes métiers (profil)', en: 'My jobs (profile)' },
   noTargetJobs: { fr: 'Aucun métier choisi dans votre profil : tous les métiers sont affichés.', en: 'No job chosen in your profile: all jobs are shown.' },
+  onlyNew: { fr: 'Seulement les nouveaux recruteurs', en: 'New recruiters only' },
+  directContact: {
+    fr: 'Mise en relation directe, en 3 étapes : 1) « Trouver sa page Carrières » et vérifiez comment postuler ; 2) « Préparer un message » (il cite les EIMT publiques de l’employeur) ; 3) « Suivre » : la relance est notée dans l’onglet Suivi. Beaucoup d’employeurs qui ont un besoin régulier ne publient pas d’offre à chaque fois : une candidature spontanée a du sens.',
+    en: 'Direct contact, in 3 steps: 1) “Find its careers page” and check how to apply; 2) “Prepare a message” (it cites the employer’s public LMIAs); 3) “Track”: the follow-up is noted in the Tracking tab. Many employers with a regular need do not post a job every time: an unsolicited application makes sense.',
+  },
+  recurringNeed: { fr: 'Besoin récurrent', en: 'Recurring need' },
+  recurringNeedText: {
+    fr: 'EIMT obtenues dans {q} trimestres différents : cet employeur a régulièrement besoin de travailleurs étrangers, même quand aucune offre n’est affichée.',
+    en: 'LMIAs obtained in {q} different quarters: this employer regularly needs foreign workers, even when no job is posted.',
+  },
+  newRecruiter: { fr: 'Nouveau recruteur', en: 'New recruiter' },
+  newRecruiterText: {
+    fr: 'Première EIMT au {f}, aucune depuis {start} : cet employeur vient de commencer à recruter à l’étranger. Vérifiez bien qu’il existe (site, adresse) avant d’écrire.',
+    en: 'First LMIA in {f}, none since {start}: this employer has just started hiring abroad. Check that it exists (website, address) before writing.',
+  },
+  licenceLink: { fr: 'Permis d’agent de sécurité', en: 'Security guard licence' },
   hideAgriOnly: { fr: 'Masquer les employeurs seulement en agriculture primaire (souvent via le PTAS)', en: 'Hide employers only in primary agriculture (often through SAWP)' },
   resultsCount: { fr: 'employeurs trouvés', en: 'employers found' },
   showMore: { fr: 'Afficher plus', en: 'Show more' },
@@ -467,6 +495,7 @@ export const STRINGS = {
   quartersSeen: { fr: 'trimestres avec EIMT', en: 'quarters with LMIAs' },
   lastQuarter: { fr: 'dernier', en: 'latest' },
   refused: { fr: 'postes refusés', en: 'refused positions' },
+  refusedOne: { fr: 'poste refusé', en: 'refused position' },
   bestRoute: { fr: 'Voie estimée pour vous', en: 'Estimated route for you' },
   findWebsite: { fr: 'Trouver le site de l’employeur', en: 'Find the employer’s website' },
   writeMessage: { fr: 'Préparer un message', en: 'Prepare a message' },

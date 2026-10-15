@@ -187,13 +187,18 @@ export async function fetchLmia(rules: Rules, nocData: NocData, lookup: CmaLooku
     datasets: { positive: `https://open.canada.ca/data/fr/dataset/${POSITIVE_ID}`, negative: `https://open.canada.ca/data/fr/dataset/${NEGATIVE_ID}` },
   }));
 
-  // Liste de démarchage : recruteurs récurrents (≥ 2 trimestres) pour les métiers ciblés.
+  // Liste de démarchage : recruteurs récurrents (≥ 2 trimestres) pour les métiers ciblés,
+  // + NOUVEAUX recruteurs : première EIMT positive (tous métiers) dans les 2 derniers trimestres publiés,
+  // aucune dans les trimestres précédents de la fenêtre.
   const targets = new Set(nocData.nocs.map((n) => n.code));
+  const newSince = quarters.at(-2) ?? '';
   const prospects: Prospect[] = [];
   for (const r of records.values()) {
     const target = r.p.filter((e) => targets.has(e[2]));
     const qs = [...new Set(target.map((e) => e[0]))].sort();
-    if (qs.length < 2) continue;
+    const first = r.p.map((e) => e[0]).sort()[0] ?? '';
+    const isNew = quarters.length >= 4 && !!first && first >= newSince;
+    if (!qs.length || (qs.length < 2 && !isNew)) continue;
     const byNoc = new Map<string, number>();
     for (const e of target) byNoc.set(e[2], (byNoc.get(e[2]) ?? 0) + e[4]);
     prospects.push({
@@ -201,10 +206,12 @@ export async function fetchLmia(rules: Rules, nocData: NocData, lookup: CmaLooku
       s: [...new Set(target.map((e) => e[1]))],
       j: [...byNoc.entries()].sort((a, b) => b[1] - a[1]),
       neg: r.x.filter((e) => targets.has(e[2])).reduce((s, e) => s + e[4], 0),
+      f: first,
+      ...(isNew ? { nw: 1 as const } : {}),
     });
   }
   prospects.sort((a, b) => b.q - a.q || a.k.localeCompare(b.k));
-  files.push(writeDataFile('prospects.json', { ...source, name: `${source.name} — recruteurs récurrents (≥ 2 trimestres, métiers ciblés)` }, prospects.length, prospects));
+  files.push(writeDataFile('prospects.json', { ...source, name: `${source.name} — recruteurs récurrents (≥ 2 trimestres) et nouveaux recruteurs, métiers ciblés`, window: quarters }, prospects.length, prospects));
 
   return { ...computeStats(records, nocTitles, nocData), quarters: qStats, streamPositions, repairedAddresses, files, missingQuarters };
 }

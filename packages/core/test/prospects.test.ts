@@ -9,6 +9,7 @@ const LIST: Prospect[] = [
   { ...base, n: 'Entrepôt C', k: 'entrepot c', p: 'ON', c: 'Toronto', g: 'Toronto', q: 3, lq: '2026Q1', s: ['LW'], j: [['75101', 10]] },
   { ...base, n: 'Ferme D', k: 'ferme d', p: 'QC', c: 'Saint-Rémi', g: '-', q: 8, lq: '2026Q1', s: ['PA', 'LW'], j: [['85101', 900], ['85121', 5]] },
   { ...base, n: 'Ponctuel E', k: 'ponctuel e', p: 'ON', c: 'London', g: 'London', q: 1, lq: '2026Q1', s: ['LW'], j: [['75101', 3]] },
+  { ...base, n: 'Sécurité F', k: 'securite f', p: 'QC', c: 'Rouyn-Noranda', g: '-', q: 1, lq: '2026Q1', s: ['LW'], j: [['64410', 4]], f: '2026Q1', nw: 1 },
 ];
 
 describe('filterProspects', () => {
@@ -19,8 +20,14 @@ describe('filterProspects', () => {
   it('exclut les employeurs uniquement en agriculture primaire si demandé', () => {
     expect(filterProspects(LIST, { nocs: ['85101'], excludeAgricultureOnly: true }).map((x) => x.n)).toEqual(['Ferme D']);
   });
-  it('ignore les employeurs vus sur un seul trimestre', () => {
-    expect(filterProspects(LIST, {}).some((x) => x.n === 'Ponctuel E')).toBe(false);
+  it('ignore les employeurs vus sur un seul trimestre, sauf les nouveaux recruteurs', () => {
+    const names = filterProspects(LIST, {}).map((x) => x.n);
+    expect(names).not.toContain('Ponctuel E');
+    expect(names.at(-1)).toBe('Sécurité F'); // après les recruteurs réguliers
+  });
+  it('filtre « nouveaux recruteurs seulement »', () => {
+    expect(filterProspects(LIST, { onlyNew: true }).map((x) => x.n)).toEqual(['Sécurité F']);
+    expect(filterProspects(LIST, { onlyNew: true, nocs: ['85101'] })).toEqual([]);
   });
 });
 

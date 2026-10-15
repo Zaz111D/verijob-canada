@@ -3,7 +3,7 @@
  * Une règle sans source officielle datée ne doit jamais passer.
  */
 import { describe, expect, it } from 'vitest';
-import { staleSources, teerOf } from '../src';
+import { findTransfer, staleSources, teerOf } from '../src';
 import { nocData, rules, TODAY } from './helpers';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -31,7 +31,7 @@ describe('data/rules.json', () => {
     for (const [id, s] of Object.entries(rules.sources)) {
       // Gouvernements du Canada et du Québec, registre du CICC, Centre antifraude, et organismes partenaires
       // financés par IRCC (FCFA, CDEM) pour les salons et réseaux francophones.
-      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca|www\.jobbank\.gc\.ca|antifraudcentre-centreantifraude\.ca|www\.quebec\.ca|immigrationfrancophone\.ca|www\.cdem\.com|open\.canada\.ca|www\.who\.int)\//);
+      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca|www\.jobbank\.gc\.ca|antifraudcentre-centreantifraude\.ca|www\.quebec\.ca|immigrationfrancophone\.ca|www\.cdem\.com|open\.canada\.ca|www\.who\.int|www\.statcan\.gc\.ca|www\.bspquebec\.ca|www\.ontario\.ca|www2\.gov\.bc\.ca|www\.alberta\.ca|www\.manitoba\.ca)\//);
       if (s.urlFr) expect(s.urlFr, id).toMatch(/^https:\/\//);
       expect(s.verifiedAt, id).toMatch(DATE);
       expect(s.nextReview, id).toMatch(DATE);
@@ -63,6 +63,26 @@ describe('data/rules.json', () => {
 
   it('18 communautés FCIP/RCIP', () => {
     expect(rules.communityPilots.communities).toHaveLength(18);
+  });
+});
+
+describe('passerelles de métier et permis', () => {
+  it('chaque passerelle cite une source connue et vise un métier suivi', () => {
+    for (const t of rules.occupationTransfers) {
+      expect(rules.sources[t.source]).toBeDefined();
+      expect(t.from).toMatch(/^\d{5}$/);
+      expect(findTransfer(rules, t.from, t.to)).toBe(t);
+      expect(nocData.nocs.some((n) => n.code === t.to)).toBe(true);
+      expect(nocData.nocs.some((n) => n.code === t.from)).toBe(false); // sinon il suffit de le cocher
+      expect(t.shared.length).toBeGreaterThanOrEqual(3);
+    }
+    expect(findTransfer(rules, '43201')?.to).toBe('64410');
+    expect(findTransfer(rules, undefined)).toBeUndefined();
+  });
+  it('chaque page de permis provincial est une source connue', () => {
+    for (const id of Object.values(rules.securityLicences)) {
+      if (typeof id === 'string' && id.startsWith('licence-')) expect(rules.sources[id]).toBeDefined();
+    }
   });
 });
 

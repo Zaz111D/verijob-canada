@@ -1,7 +1,7 @@
 /**
  * Outils sur les codes CNP (NOC) 2021.
  */
-import type { NocData, NocEntry, Rules } from './types';
+import type { NocData, NocEntry, OccupationTransfer, Rules } from './types';
 import { normalize } from './text';
 
 /** TEER d'un code CNP 2021 = 2e chiffre (ex. 85101 → 5, 44101 → 4). */
@@ -68,4 +68,10 @@ export function probableRmrExemption(
 
 export function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** Passerelle officielle d'un métier d'origine vers un métier proche (voir rules.occupationTransfers). */
+export function findTransfer(rules: Rules, from: string | undefined, to?: string): OccupationTransfer | undefined {
+  if (!from) return undefined;
+  return rules.occupationTransfers.find((t) => t.from === from && (!to || t.to === to));
 }

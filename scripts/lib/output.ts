@@ -13,6 +13,8 @@ export interface DataSource {
   licence: string;
   /** Fichiers d'origine précis (URL de téléchargement). */
   files?: string[];
+  /** Trimestres couverts (listes d'EIMT), du plus ancien au plus récent. */
+  window?: string[];
 }
 
 export interface DataFile<T> {

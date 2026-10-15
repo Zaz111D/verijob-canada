@@ -4,7 +4,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
-  addDays, DEFAULT_FOLLOW_UP_DAYS, filterProspects, findNoc, newId, PROVINCE_NAMES, prospectPathway, prospectsToCsv, totalPositions,
+  addDays, DEFAULT_FOLLOW_UP_DAYS, filterProspects, findNoc, findTransfer, newId, PROVINCE_NAMES, prospectPathway, prospectsToCsv, RECURRING_QUARTERS, sourceRef, todayIso, totalPositions,
   type PathwayId, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge } from '../components/common';
@@ -16,6 +16,21 @@ import { upsertApplication, useApplications, useProfile, type StoredProfile } fr
 import { buildMessage } from '../templates';
 
 const PAGE = 40;
+
+/** Métier pour lequel un permis provincial est exigé (pages officielles dans rules.securityLicences). */
+const SECURITY_NOC = '64410';
+
+/** « 2026Q1 » → « 2026 T1 ». */
+function quarterLabel(q: string, lang: Lang): string {
+  const m = /^(\d{4})Q([1-4])$/.exec(q);
+  return m ? `${m[1]} ${lang === 'fr' ? 'T' : 'Q'}${m[2]}` : q;
+}
+
+/** Page officielle du permis d'agent de sécurité de la province, si elle a été vérifiée. */
+function licenceUrl(province: string, lang: Lang): string | undefined {
+  const id = rules.securityLicences[province as ProvinceCode];
+  return id ? sourceRef(rules, id, todayIso()).url[lang] : undefined;
+}
 
 function provinceLabel(code: string, lang: Lang): string {
   if (code === 'XX') return lang === 'fr' ? 'Siège hors Canada' : 'Head office abroad';
@@ -49,7 +64,11 @@ function minAll(l?: { speaking?: number; listening?: number; reading?: number; w
   return v.every((x) => x !== undefined) ? Math.min(...(v as number[])) : undefined;
 }
 
-interface Target { employer: string; city: string; noc: string; pathway?: PathwayId; designated?: { program: 'RCIP' | 'FCIP'; community: string } }
+interface Target {
+  employer: string; city: string; noc: string; pathway?: PathwayId;
+  designated?: { program: 'RCIP' | 'FCIP'; community: string };
+  lmiaHistory?: { quarters: number; last: string };
+}
 
 function MessagePanel({ target, profile, onClose }: { target: Target; profile: StoredProfile; onClose: () => void }) {
   const uiLang = useLang();
@@ -62,11 +81,15 @@ function MessagePanel({ target, profile, onClose }: { target: Target; profile: S
   });
   const [copied, setCopied] = useState(false);
   const fr = profile.french;
+  const transfer = findTransfer(rules, profile.currentNoc, target.noc);
   const frenchOral = fr?.speaking !== undefined && fr?.listening !== undefined ? Math.min(fr.speaking, fr.listening) : undefined;
   const m = buildMessage({
     employer: target.employer, jobTitle: jobName(target.noc, lang), nocCode: target.noc, name, country,
     experienceMonths: profile.experienceMonths, frenchOral, englishMin: minAll(profile.english),
     pathway: target.pathway, designatedProgram: target.designated?.program, community: target.designated?.community,
+    lmiaHistory: target.lmiaHistory,
+    transfer: transfer && { job: lang === 'fr' ? transfer.fromJobFr : transfer.fromJobEn, skills: lang === 'fr' ? transfer.skillsFr : transfer.skillsEn },
+    licence: target.noc === SECURITY_NOC,
   }, lang);
   const copy = async () => {
     try { await navigator.clipboard.writeText(`${m.subject}\n\n${m.body}`); setCopied(true); } catch { setCopied(false); }
@@ -105,6 +128,8 @@ export function Prospects() {
   const [error, setError] = useState(false);
   const [province, setProvince] = useState('');
   const [hideAgri, setHideAgri] = useState(false);
+  const [onlyNew, setOnlyNew] = useState(false);
+  const [windowStart, setWindowStart] = useState('');
   const [shown, setShown] = useState(PAGE);
   const [target, setTarget] = useState<Target>();
   const apps = useApplications();
@@ -118,7 +143,7 @@ export function Prospects() {
   };
 
   useEffect(() => {
-    loadProspects().then((f) => setAll(f.data)).catch(() => setError(true));
+    loadProspects().then((f) => { setAll(f.data); setWindowStart(f.source.window?.[0] ?? ''); }).catch(() => setError(true));
     loadDesignated().then((f) => setDesignated(f.data)).catch(() => undefined);
     loadPriorities().then((f) => setPriorities(f.data)).catch(() => undefined);
   }, []);
@@ -126,8 +151,8 @@ export function Prospects() {
   const nocs = profile.targetNocs ?? [];
   const provinces = province ? [province] : profile.provinces ?? [];
   const list = useMemo(
-    () => (all ? filterProspects(all, { nocs, provinces, excludeAgricultureOnly: hideAgri }) : []),
-    [all, nocs.join(), provinces.join(), hideAgri],
+    () => (all ? filterProspects(all, { nocs, provinces, excludeAgricultureOnly: hideAgri, onlyNew }) : []),
+    [all, nocs.join(), provinces.join(), hideAgri, onlyNew],
   );
   const desList = useMemo(() => {
     const prio = (community: string, program: string) => priorities.some((p) => p.community === community && p.program === program && nocs.includes(p.noc));
@@ -143,8 +168,8 @@ export function Prospects() {
     const rows = list.map((x): Row => {
       const r = prospectPathway(x, profile, { rules, nocData, nocs });
       return lang === 'fr'
-        ? { Employeur: x.n, Ville: x.c, 'Code postal': x.pc, Province: provinceLabel(x.p, lang), RMR: cmaText(x.g, lang).text, 'Trimestres avec EIMT': x.q, 'Dernier trimestre': x.lq, Métiers: x.j.filter(([n]) => !nocSet || nocSet.has(n)).map(([n, c]) => `${n} ${nocName(n, lang)} (${c})`).join(' | '), Volets: x.s.join(', '), 'Postes refusés': x.neg, 'Voie estimée': `${r.best.nom.fr} : ${tr(S.status[r.best.statut], 'fr')}` }
-        : { Employer: x.n, City: x.c, 'Postal code': x.pc, Province: provinceLabel(x.p, lang), CMA: cmaText(x.g, lang).text, 'Quarters with LMIAs': x.q, 'Latest quarter': x.lq, Jobs: x.j.filter(([n]) => !nocSet || nocSet.has(n)).map(([n, c]) => `${n} ${nocName(n, lang)} (${c})`).join(' | '), Streams: x.s.join(', '), 'Refused positions': x.neg, 'Estimated route': `${r.best.nom.en}: ${tr(S.status[r.best.statut], 'en')}` };
+        ? { Employeur: x.n, Ville: x.c, 'Code postal': x.pc, Province: provinceLabel(x.p, lang), RMR: cmaText(x.g, lang).text, 'Trimestres avec EIMT': x.q, 'Dernier trimestre': x.lq, Métiers: x.j.filter(([n]) => !nocSet || nocSet.has(n)).map(([n, c]) => `${n} ${nocName(n, lang)} (${c})`).join(' | '), Volets: x.s.join(', '), 'Postes refusés': x.neg, 'Nouveau recruteur': x.nw ? 'oui' : '', 'Voie estimée': `${r.best.nom.fr} : ${tr(S.status[r.best.statut], 'fr')}` }
+        : { Employer: x.n, City: x.c, 'Postal code': x.pc, Province: provinceLabel(x.p, lang), CMA: cmaText(x.g, lang).text, 'Quarters with LMIAs': x.q, 'Latest quarter': x.lq, Jobs: x.j.filter(([n]) => !nocSet || nocSet.has(n)).map(([n, c]) => `${n} ${nocName(n, lang)} (${c})`).join(' | '), Streams: x.s.join(', '), 'Refused positions': x.neg, 'New recruiter': x.nw ? 'yes' : '', 'Estimated route': `${r.best.nom.en}: ${tr(S.status[r.best.statut], 'en')}` };
     });
     download(lang === 'fr' ? 'verijob-employeurs-a-contacter.csv' : 'verijob-employers-to-contact.csv', prospectsToCsv(rows));
   };
@@ -171,6 +196,7 @@ export function Prospects() {
           {Object.keys(PROVINCE_NAMES).sort((a, b) => provinceLabel(a, lang).localeCompare(provinceLabel(b, lang), lang)).map((p) => <option value={p}>{provinceLabel(p, lang)}</option>)}
         </select>
         <label class="check"><input type="checkbox" checked={hideAgri} onChange={() => { setHideAgri(!hideAgri); setShown(PAGE); }} />{tr(S.hideAgriOnly, lang)}</label>
+        <label class="check"><input type="checkbox" checked={onlyNew} onChange={() => { setOnlyNew(!onlyNew); setShown(PAGE); }} />{tr(S.onlyNew, lang)}</label>
       </fieldset>
 
       {!all && !error && <p role="status">{tr(S.loading, lang)}</p>}
@@ -183,6 +209,7 @@ export function Prospects() {
             <strong>{list.length} {tr(S.resultsCount, lang)}</strong>
             {list.length > 0 && <button type="button" onClick={exportProspects}>{tr(S.exportCsv, lang)}</button>}
           </div>
+          <p class="callout">{tr(S.directContact, lang)}</p>
           <HowToApply lang={lang} />
           {list.slice(0, shown).map((x) => {
             const r = prospectPathway(x, profile, { rules, nocData, nocs });
@@ -191,17 +218,22 @@ export function Prospects() {
               <article class="card-result">
                 <h3>{x.n}</h3>
                 <AfricaBadge name={x.n} lang={lang} />
+                {x.q >= RECURRING_QUARTERS && <p><Badge kind="ok">{tr(S.recurringNeed, lang)}</Badge> <span class="muted">{tr(S.recurringNeedText, lang).replace('{q}', String(x.q))}</span></p>}
+                {x.nw && <p><Badge kind="info">{tr(S.newRecruiter, lang)}</Badge> <span class="muted">{tr(S.newRecruiterText, lang).replace('{f}', quarterLabel(x.f ?? x.lq, lang)).replace('{start}', quarterLabel(windowStart || '?', lang))}</span></p>}
                 <p>{x.c}, {provinceLabel(x.p, lang)} <Badge kind={cma.kind}>{cma.text}</Badge></p>
                 <p>{x.q} {tr(S.quartersSeen, lang)} ({tr(S.lastQuarter, lang)} : {x.lq}) — {totalPositions(x, nocSet)} {tr(totalPositions(x, nocSet) > 1 ? S.positions : S.position, lang)}</p>
                 <p class="muted">{x.j.filter(([n]) => !nocSet || nocSet.has(n)).map(([n, c]) => `${nocName(n, lang)} (${c})`).join(' ; ')}</p>
-                {x.neg > 0 && <p class="warn">{x.neg} {tr(S.refused, lang)}</p>}
+                {x.neg > 0 && <p class="warn">{x.neg} {tr(x.neg > 1 ? S.refused : S.refusedOne, lang)}</p>}
                 {x.s.length === 1 && x.s[0] === 'PA' && <p class="muted">{tr(S.paWarning, lang)}</p>}
                 <p>{tr(S.bestRoute, lang)} : <strong>{r.best.nom[lang]}</strong> <Badge kind={r.best.statut}>{tr(S.status[r.best.statut], lang)}</Badge></p>
                 <div class="row">
-                  <button type="button" class="primary" onClick={() => { setTarget({ employer: x.n, city: x.c, noc: r.noc, pathway: r.best.voie }); }}>{tr(S.writeMessage, lang)}</button>
+                  <button type="button" class="primary" onClick={() => { setTarget({ employer: x.n, city: x.c, noc: r.noc, pathway: r.best.voie, lmiaHistory: { quarters: x.q, last: x.lq } }); }}>{tr(S.writeMessage, lang)}</button>
                   <button type="button" disabled={isTracked(x.n)} onClick={() => track(x.n, r.noc, { lmiaFound: true })}>{isTracked(x.n) ? `✓ ${tr(S.tracked, lang)}` : tr(S.track, lang)}</button>
                 </div>
                 <ContactLinks name={x.n} city={x.c} province={x.p} postal={x.pc} lang={lang} />
+                {r.noc === SECURITY_NOC && licenceUrl(x.p, lang) && (
+                  <p><a href={licenceUrl(x.p, lang)} target="_blank" rel="noopener noreferrer">{tr(S.licenceLink, lang)} — {provinceLabel(x.p, lang)} ↗</a></p>
+                )}
               </article>
             );
           })}

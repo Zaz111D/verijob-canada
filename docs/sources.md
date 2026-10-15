@@ -288,3 +288,17 @@ Portail officiel réservé au recrutement international ajouté en lien : **Trav
 
 Diagnostic du 15 oct. 2026 (4 itérations sur les vraies données) : l'API ne renvoie que le début des annonces ; les mots généraux (visa, international) et « visa sponsorship » donnaient surtout des refus (« without visa sponsorship ») ; « temporary foreign worker » est au Québec la mention légale des agences (« Recruitment Agency Permit Number AR-… », vérifié sur des annonces Aerotek). Méthode finale : expressions EIMT/LMIA exactes + preuve visible dans l'extrait OU employeur présent dans les listes officielles d'EIMT positives. Résultat : 12 offres gardées (6 avec preuve visible, 6 recoupées EDSC) sur 400 annonces lues.
 
+
+## 18. Mise en relation, nouveaux recruteurs, profil sécurité (15 oct. 2026)
+
+Demandes de Jessica : mise en relation avec des employeurs qui ont des besoins sans publier d'offres, nouveaux employeurs, agents de sécurité pour un profil de gardien·ne de prison.
+
+- **Mise en relation directe** (VériJob n'est pas un intermédiaire : plusieurs provinces exigent un permis pour recruter des travailleurs étrangers) : badge « Besoin récurrent » (EIMT positives pour les métiers suivis dans au moins 3 trimestres), recherche de la page Carrières, message qui cite l'historique public d'EIMT, suivi et relance.
+- **Nouveaux recruteurs** : première EIMT positive (tous métiers) dans les 2 derniers trimestres publiés, aucune dans les 6 précédents (fenêtre 2024 T2 – 2026 T1 au 15 oct. 2026 : 849 employeurs sur 7 355 de la liste).
+- **Agent de sécurité (CNP 64410)** ajouté aux métiers suivis. Passerelle 43201 → 64410 vérifiée dans le fichier « éléments » de la CNP 2021 (Statistique Canada, lu le 15 oct. 2026) : rondes, contrôle des visiteurs et fouilles, maintien de l'ordre, procédures de sécurité. Conditions d'accès 64410 : secondaire habituellement ; permis provincial. Listes d'EIMT (8 trimestres) : 42 employeurs et 119 postes pour 64410, **aucun** pour 43201 (emplois publics).
+- **Pages officielles du permis** vérifiées une à une : Québec (BSP), Ontario, Colombie-Britannique, Alberta, Manitoba. Saskatchewan, Nouvelle-Écosse, Nouveau-Brunswick : adresse non confirmée (404 ou protection anti-robots), rien n'est affiché.
+
+**Registres d'entreprises — étudiés, non intégrés** :
+- Registre des entreprises du Québec (Données Québec, fichier du 1er oct. 2026, 990 Mo décompressés) : il contient l'activité (code CAE 7791 « Services de sécurité et d'enquêtes ») et le nombre d'employés. Sur les 137 entreprises de sécurité immatriculées entre oct. 2025 et oct. 2026, 83 déclarent **aucun employé** et 47 **de 1 à 5** ; seules 7 en ont 6 ou plus. Beaucoup installent des alarmes ou sont des consultants, et une partie sont des **personnes physiques** (données personnelles). Une jeune entreprise sans employés n'a presque aucune chance d'obtenir une EIMT. Conclusion : pas un bon signal de besoin pour un candidat à l'étranger.
+- Registre fédéral (Corporations Canada, open.canada.ca) : nom et adresse seulement, **aucun secteur d'activité ni effectif** ; souvent une adresse résidentielle. Non utilisable.
+- Signal retenu à la place : les **nouveaux recruteurs** des listes d'EIMT (l'employeur a déjà prouvé à EDSC qu'il est réel et qu'il a un besoin).

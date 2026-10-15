@@ -3,7 +3,7 @@
  */
 import { useEffect, useState } from 'preact/hooks';
 import {
-  AFRICAN_COUNTRIES, evaluatePathways, PROVINCE_NAMES, teerOf,
+  AFRICAN_COUNTRIES, evaluatePathways, findNoc, findTransfer, PROVINCE_NAMES, sourceRef, teerOf, todayIso,
   type LanguageLevels, type PathwayResult, type ProvinceCode,
 } from '@verijob/core';
 import { PathwayCards } from '../components/common';
@@ -45,6 +45,36 @@ function LevelGrid({ label, value, onChange }: { label: string; value?: Language
         ))}
       </div>
     </fieldset>
+  );
+}
+
+/** Passerelle vers un métier proche : comparaison des fonctions officielles (CNP 2021), source cliquable. */
+function TransferCard({ profile, onAdd }: { profile: StoredProfile; onAdd: (noc: string) => void }) {
+  const lang = useLang();
+  const t = findTransfer(rules, profile.currentNoc);
+  if (!t) return null;
+  const to = findNoc(nocData, t.to);
+  const src = sourceRef(rules, t.source, todayIso());
+  const added = profile.targetNocs?.includes(t.to);
+  return (
+    <div class="panel">
+      <h3>{tr(S.transferTitle, lang)} : {to ? (lang === 'fr' ? to.titleFr : to.titleEn) : t.to} <span class="muted">({t.to})</span></h3>
+      <p>{tr(S.transferIntro, lang)}</p>
+      <table class="compare">
+        <thead><tr><th>{tr(S.transferYourJob, lang)} ({t.from})</th><th>{tr(S.transferRelated, lang)} ({t.to})</th></tr></thead>
+        <tbody>
+          {t.shared.map((d) => (
+            <tr>
+              <td data-label={`${tr(S.transferYourJob, lang)} :`}>{lang === 'fr' ? d.fromFr : d.fromEn}</td>
+              <td data-label={`${tr(S.transferRelated, lang)} :`}>{lang === 'fr' ? d.toFr : d.toEn}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="muted">{lang === 'fr' ? t.requirementsFr : t.requirementsEn}</p>
+      <p class="muted"><a href={src.url[lang]} target="_blank" rel="noopener noreferrer">{src.title[lang]} ↗</a> — {src.verifiedAt}</p>
+      <button type="button" disabled={added} onClick={() => onAdd(t.to)}>{added ? `✓ ${tr(S.transferAdded, lang)}` : tr(S.transferAdd, lang)}</button>
+    </div>
   );
 }
 
@@ -111,6 +141,12 @@ export function Profile() {
               ))}
             </div>
           ))}
+          <label for="current">{tr(S.currentJob, lang)}</label>
+          <select id="current" value={p.currentNoc ?? ''} onChange={(e) => setP({ ...p, currentNoc: (e.target as HTMLSelectElement).value || undefined })}>
+            <option value="">{tr(S.currentJobNone, lang)}</option>
+            {rules.occupationTransfers.map((t) => <option value={t.from}>{lang === 'fr' ? t.fromTitleFr : t.fromTitleEn} ({t.from})</option>)}
+          </select>
+          <TransferCard profile={p} onAdd={(noc) => setP({ ...p, targetNocs: [...(p.targetNocs ?? []), noc] })} />
         </fieldset>
 
         <fieldset>

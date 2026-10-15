@@ -47,6 +47,8 @@
     { "code": "65310", "jobFr": "agent·e d’entretien ménager", "jobEn": "cleaner", "group": "services", "titleFr": "Préposés à l'entretien ménager et au nettoyage – travaux légers", "titleEn": "Light duty cleaners", "probableNaics": null,
       "keywords": ["agent d'entretien", "agente d'entretien", "femme de menage", "nettoyage", "menage", "light duty cleaner", "housekeeper", "cleaner", "janitor"] },
     { "code": "65201", "jobFr": "aide de cuisine", "jobEn": "kitchen helper", "group": "services", "titleFr": "Serveurs au comptoir, aides de cuisine et personnel de soutien assimilé", "titleEn": "Food counter attendants, kitchen helpers and related support occupations", "probableNaics": "722",
-      "keywords": ["aide de cuisine", "plongeur", "serveur au comptoir", "kitchen helper", "dishwasher", "food counter attendant"] }
+      "keywords": ["aide de cuisine", "plongeur", "serveur au comptoir", "kitchen helper", "dishwasher", "food counter attendant"] },
+    { "code": "64410", "jobFr": "agent·e de sécurité", "jobEn": "security guard", "group": "securite", "titleFr": "Agents/agentes de sécurité et personnel assimilé des services de sécurité", "titleEn": "Security guards and related security service occupations", "probableNaics": "5616",
+      "keywords": ["agent de securite", "agente de securite", "gardien de securite", "gardienne de securite", "agent de surveillance", "gardien de nuit", "agent de prevention des vols", "security guard", "security officer", "loss prevention officer", "night watchman", "patrol officer"] }
   ]
 }

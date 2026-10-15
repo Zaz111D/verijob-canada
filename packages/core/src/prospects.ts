@@ -30,7 +30,14 @@ export interface Prospect {
   j: Array<[string, number]>;
   /** Postes refusés (EIMT négatives) pour les métiers ciblés. */
   neg: number;
+  /** Premier trimestre avec une EIMT positive (tous métiers) dans la fenêtre publiée. */
+  f?: string;
+  /** Nouveau recruteur : première EIMT positive dans les 2 derniers trimestres publiés, aucune avant. */
+  nw?: 1;
 }
+
+/** Seuil du badge « besoin récurrent » : EIMT obtenues dans au moins 3 trimestres différents. */
+export const RECURRING_QUARTERS = 3;
 
 export interface ProspectFilter {
   nocs?: string[];
@@ -38,6 +45,8 @@ export interface ProspectFilter {
   /** Exclure les employeurs seulement présents en agriculture primaire (souvent PTAS). */
   excludeAgricultureOnly?: boolean;
   minQuarters?: number;
+  /** Seulement les nouveaux recruteurs. */
+  onlyNew?: boolean;
 }
 
 /** Filtre et trie : régularité d'abord, puis nombre de postes, puis récence. */
@@ -49,7 +58,8 @@ export function filterProspects(list: Prospect[], f: ProspectFilter): Prospect[]
       (!nocs || x.j.some(([noc]) => nocs.has(noc))) &&
       (!provs || provs.has(x.p)) &&
       (!f.excludeAgricultureOnly || x.s.some((s) => s !== 'PA')) &&
-      x.q >= (f.minQuarters ?? 2))
+      (f.onlyNew ? !!x.nw : x.q >= (f.minQuarters ?? 2) || !!x.nw))
+    // Nouveaux recruteurs (un seul trimestre) après les recruteurs réguliers, sauf si on ne demande qu'eux.
     .sort((a, b) => b.q - a.q || totalPositions(b, nocs) - totalPositions(a, nocs) || b.lq.localeCompare(a.lq));
 }
 
