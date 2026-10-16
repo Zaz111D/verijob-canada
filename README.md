@@ -147,6 +147,7 @@ Ajoutez une ligne dans `data/manual/recrutement-afrique.csv` seulement après av
 
 ### Offres actuelles et liens pour postuler
 - **Offres actuelles** (`current-offers.json`) : une requête Adzuna par métier suivi, annonces des 21 derniers jours, gardées seulement si le **titre** correspond au métier.
+- **Quota gratuit d'Adzuna** (250 appels par jour, 1 000 par semaine ; environ 46 appels par mise à jour) : l'API n'est appelée que le **lundi** (ou lors d'un lancement manuel du workflow). À chaque envoi de code, et si l'API échoue, les offres déjà publiées sont reprises de la release « site-latest » avec leur vraie date (`scripts/lib/previous.ts`).
 - **Vu de l'étranger, Adzuna bloque son bouton « Postuler »** (« not available in your region », constaté le 16 oct. 2026 depuis le Cameroun). Chaque offre propose donc : « Trouver et postuler sur le Guichet-Emplois » (titre + employeur + province, sans le filtre « candidats étrangers » pour ne pas cacher l'annonce), « Site de l'employeur » (page Carrières) et « Lire l'annonce (Adzuna) ».
 - Les données ouvertes mensuelles du Guichet-Emplois n'ont **ni lien ni numéro d'offre** : elles ne servent plus qu'aux **statistiques** du marché, avec un bouton par province vers la recherche officielle « ouvert aux candidats étrangers » (`fprov` + `fglo=1`, vérifiés à la main).
 

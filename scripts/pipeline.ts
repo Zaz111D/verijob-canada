@@ -22,6 +22,7 @@ import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
 import { fetchWages, type WagesStats } from './fetch-wages';
 import { DOCS_DIR, ROOT } from './lib/paths';
+import { reusePrevious } from './lib/previous';
 import type { WrittenFile } from './lib/output';
 
 // Sur Cloudflare (Workers Builds : WORKERS_CI, Pages : CF_PAGES), les serveurs de construction sont bloqués
@@ -54,17 +55,26 @@ try { permits = await fetchPermits(); } catch (e) {
   permits = { error: e instanceof Error ? e.message : String(e) };
   console.warn(`  ⚠ Permis par pays non mis à jour : ${permits.error}`);
 }
-let intl: InternationalStats | { error: string };
-try { intl = await fetchInternational(rules, nocData); } catch (e) {
-  intl = { error: e instanceof Error ? e.message : String(e) };
-  console.warn(`  ⚠ Offres internationales non mises à jour : ${intl.error}`);
+// Quota gratuit d'Adzuna (250 appels par jour, 1000 par semaine) : l'API n'est appelée que lors de la mise à jour
+// hebdomadaire (ADZUNA_REFRESH=true) ou si aucune version n'est encore publiée. Sinon, et en cas d'échec, on garde
+// les offres déjà publiées (avec leur vraie date).
+type Reused = { reused: string; records: number; error?: string };
+const refreshAdzuna = process.env.ADZUNA_REFRESH === 'true';
+async function adzunaStep<T>(file: string, label: string, run: () => Promise<T>): Promise<T | Reused | { error: string }> {
+  if (!refreshAdzuna) {
+    const prev = await reusePrevious(file);
+    if (prev) { console.log(`▶ ${label} : version publiée reprise (données du ${prev.fetchedAt}, ${prev.records} offres) — API appelée seulement le lundi`); return { reused: prev.fetchedAt, records: prev.records }; }
+  }
+  try { return await run(); } catch (e) {
+    const error = e instanceof Error ? e.message : String(e);
+    const prev = await reusePrevious(file);
+    console.warn(`  ⚠ ${label} non mises à jour : ${error}${prev ? ` — version du ${prev.fetchedAt} gardée` : ''}`);
+    return prev ? { reused: prev.fetchedAt, records: prev.records, error } : { error };
+  }
 }
+const intl = await adzunaStep('international-offers.json', 'Offres ouvertes aux candidats de l’étranger', () => fetchInternational(rules, nocData));
 // Après les offres internationales (pour marquer celles qui y figurent).
-let current: CurrentOffersStats | { error: string };
-try { current = await fetchCurrentOffers(rules, nocData); } catch (e) {
-  current = { error: e instanceof Error ? e.message : String(e) };
-  console.warn(`  ⚠ Offres actuelles non mises à jour : ${current.error}`);
-}
+const current = await adzunaStep('current-offers.json', 'Offres actuelles', () => fetchCurrentOffers(rules, nocData));
 // Offres du mois (données ouvertes) : une erreur ne bloque pas le reste, l'appli fonctionne sans.
 let postings: PostingsStats | { error: string };
 try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
@@ -87,8 +97,8 @@ function pct(a: number, total: number): string {
   return total ? `${Math.round((100 * a) / total)} %` : '–';
 }
 
-function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | { error: string }, pr: ProposalsStats, cu: CurrentOffersStats | { error: string }): string {
-  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file] : []), ...(pr.file ? [pr.file] : []), ...('file' in cu && cu.file ? [cu.file] : [])];
+function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | Reused | { error: string }, pr: ProposalsStats, cu: CurrentOffersStats | Reused | { error: string }): string {
+  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file as WrittenFile] : []), ...(pr.file ? [pr.file] : []), ...('file' in cu && cu.file ? [cu.file as WrittenFile] : [])];
   const totalPos = l.geo.positionsCma + l.geo.positionsOutside + l.geo.positionsUnknown;
   const totalRec = l.geo.cma + l.geo.outside + l.geo.unknown;
   const recurringTargets = l.recurring.slice(0, 20);
@@ -171,11 +181,11 @@ ${'error' in p ? `⚠ Non mises à jour : ${p.error}` : `- Mois ${p.month} : ${n
 
 ## 9. Offres ouvertes aux candidats de l'étranger (API Adzuna, tri VériJob)
 
-${'error' in it ? `⚠ Non mises à jour : ${it.error}` : it.skipped ? `Étape sautée : ${it.skipped}.` : `- ${it.queries} requêtes, ${n(it.seen)} annonces lues, **${n(it.kept)} ouvertes à l'international**, ${n(it.closed)} écartées (Canada exigé).`}
+${'reused' in it ? `Version publiée gardée (données du ${it.reused}, ${n(it.records)} offres)${it.error ? ` — ⚠ échec de l'API : ${it.error}` : ''}.` : 'error' in it ? `⚠ Non mises à jour : ${it.error}` : it.skipped ? `Étape sautée : ${it.skipped}.` : `- ${it.queries} requêtes, ${n(it.seen)} annonces lues, **${n(it.kept)} ouvertes à l'international**, ${n(it.closed)} écartées (Canada exigé).`}
 
 ## 10. Offres actuelles avec lien direct (API Adzuna)
 
-${'error' in cu ? `⚠ Non mises à jour : ${cu.error}` : cu.skipped ? `Étape sautée : ${cu.skipped}.` : `- ${cu.queries} requêtes, ${n(cu.seen)} annonces lues, **${n(cu.kept)} gardées** (titre conforme au métier).`}
+${'reused' in cu ? `Version publiée gardée (données du ${cu.reused}, ${n(cu.records)} offres)${cu.error ? ` — ⚠ échec de l'API : ${cu.error}` : ''}.` : 'error' in cu ? `⚠ Non mises à jour : ${cu.error}` : cu.skipped ? `Étape sautée : ${cu.skipped}.` : `- ${cu.queries} requêtes, ${n(cu.seen)} annonces lues, **${n(cu.kept)} gardées** (titre conforme au métier).`}
 
 ## 11. Règles en préparation
 
