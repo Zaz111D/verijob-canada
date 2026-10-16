@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { NocData, Rules } from '../../packages/core/src';
-import { toCurrentOffer } from '../fetch-current-offers';
+import { queryKeys, toCurrentOffer } from '../fetch-current-offers';
 import { ROOT } from '../lib/paths';
 
 const rules = JSON.parse(readFileSync(join(ROOT, 'data', 'rules.json'), 'utf8')) as Rules;
@@ -35,5 +35,19 @@ describe('offres actuelles (Adzuna) : annonce → offre publiée', () => {
     const o = toCurrentOffer(job({ title: 'Security Guard', description: 'mot '.repeat(100) }), '64410', ctx)!;
     expect(o.snippet.length).toBeLessThanOrEqual(220);
     expect(o.snippet.endsWith('mot…')).toBe(true);
+  });
+});
+
+describe('requêtes des offres actuelles', () => {
+  it('un terme anglais par métier, plus un terme français quand il existe', () => {
+    const keys = queryKeys(nocData);
+    expect(keys).toContain('64200');
+    expect(keys).toContain('64200:fr');
+    expect(keys.filter((k) => !k.includes(':')).length).toBe(nocData.nocs.length);
+  });
+  it('une annonce québécoise en français est gardée sous le bon métier', () => {
+    const o = toCurrentOffer(job({ title: 'Couturière', description: 'Retouches de vêtements.', location: { display_name: 'Québec, Québec', area: ['Canada', 'Québec'] } }), '64200', ctx)!;
+    expect(o.noc).toBe('64200');
+    expect(o.province).toBe('QC');
   });
 });

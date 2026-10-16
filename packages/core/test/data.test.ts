@@ -3,7 +3,7 @@
  * Une règle sans source officielle datée ne doit jamais passer.
  */
 import { describe, expect, it } from 'vitest';
-import { findTransfer, staleSources, teerOf } from '../src';
+import { detectNocInText, findTransfer, normalize, staleSources, teerOf } from '../src';
 import { nocData, rules, TODAY } from './helpers';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -76,6 +76,12 @@ describe('règles Québec et couple', () => {
     expect(rules.sources[rules.family.source]).toBeDefined();
     expect(rules.sources[rules.family.quebecSource]).toBeDefined();
     expect(rules.family.openPermitTeers).toEqual([0, 1]);
+  });
+  it('chaque terme de recherche français (annonces du Québec) est reconnu comme son propre métier', () => {
+    for (const n of nocData.nocs.filter((x) => x.searchFr)) {
+      expect(detectNocInText(nocData, normalize(n.searchFr!))?.code, n.searchFr).toBe(n.code);
+    }
+    expect(nocData.nocs.find((n) => n.code === '64200')?.searchFr).toBe('couturière');
   });
   it('les deux métiers de la couture sont suivis, avec leurs fonctions officielles', () => {
     for (const c of ['64200', '94132']) expect(nocData.nocs.some((n) => n.code === c), c).toBe(true);

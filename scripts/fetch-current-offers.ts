@@ -3,7 +3,8 @@
  * Remplace la liste tirée des données ouvertes du Guichet-Emplois, qui n'ont ni lien ni numéro d'offre
  * (vérifié le 16 oct. 2026) et portent sur le mois précédent ; celles-ci restent affichées comme statistiques.
  *
- * Une requête par métier (≈ 21 par semaine), annonces des 21 derniers jours. On ne garde que les annonces
+ * Deux requêtes par métier (≈ 45 par semaine) : le terme anglais, puis le terme français (searchFr) pour les annonces
+ * du Québec, rédigées en français ; annonces des 21 derniers jours. On ne garde que les annonces
  * dont le TITRE correspond bien au métier (Adzuna trouve le mot n'importe où dans l'annonce).
  * Contrôle anti-arnaque sur chaque annonce ; marque celles déjà reconnues « ouvertes à l'étranger ».
  *
@@ -37,13 +38,18 @@ export function toCurrentOffer(j: AdzunaJob, noc: string, ctx: { rules: Rules; n
   };
 }
 
+/** Requêtes d'un métier : « 64200 » (terme anglais) et « 64200:fr » (terme français), si un terme français existe. */
+export function queryKeys(nocData: NocData): string[] {
+  return nocData.nocs.flatMap((n) => (n.searchFr ? [n.code, `${n.code}:fr`] : [n.code]));
+}
+
 /**
- * @param opts.onlyNocs  n'interroger que ces métiers (ex. métiers ajoutés depuis la dernière mise à jour) ;
+ * @param opts.onlyKeys  n'exécuter que ces requêtes (ex. métiers ou termes ajoutés depuis la dernière mise à jour) ;
  * @param opts.base      offres déjà publiées à garder (complétées par les nouveaux métiers).
  */
 export async function fetchCurrentOffers(
   rules: Rules, nocData: NocData,
-  opts: { onlyNocs?: string[]; base?: { offers: CurrentOffer[]; nocs: string[] } } = {},
+  opts: { onlyKeys?: string[]; base?: { offers: CurrentOffer[]; nocs: string[] } } = {},
 ): Promise<CurrentOffersStats> {
   console.log('▶ Offres actuelles des métiers suivis, avec lien direct (API Adzuna)');
   const keys = adzunaKeys();
@@ -56,9 +62,13 @@ export async function fetchCurrentOffers(
   const api = adzunaClient(keys);
   const offers = new Map<string, CurrentOffer>((opts.base?.offers ?? []).map((o) => [o.id, o]));
   let seen = 0;
-  const wanted = opts.onlyNocs ? nocData.nocs.filter((n) => opts.onlyNocs!.includes(n.code)) : nocData.nocs;
-  for (const n of wanted) {
-    const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim(); // Adzuna exige tous les mots de « what »
+  const wanted = opts.onlyKeys ?? queryKeys(nocData);
+  for (const key of wanted) {
+    const [code, fr] = key.split(':');
+    const n = nocData.nocs.find((x) => x.code === code);
+    if (!n) continue;
+    // Adzuna exige tous les mots de « what » : terme court, sans parenthèses ni barre oblique.
+    const what = fr ? n.searchFr! : (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim();
     const { results } = await api.search({ what, max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE) });
     seen += results.length;
     for (const j of results) {
@@ -73,7 +83,7 @@ export async function fetchCurrentOffers(
     url: 'https://www.adzuna.ca/',
     licence: 'Conditions de l’API Adzuna : affichage avec la mention « Adzuna » liée à adzuna.ca',
     // Métiers déjà interrogés : un métier ajouté plus tard sera interrogé dès l'envoi de code suivant.
-    nocs: [...new Set([...(opts.base?.nocs ?? []), ...wanted.map((n) => n.code)])].sort(),
+    nocs: [...new Set([...(opts.base?.nocs ?? []), ...wanted])].sort(),
   }, list.length, list);
   console.log(`  ${api.count} requêtes, ${seen} annonces lues, ${list.length} gardées (titre conforme au métier)`);
   return { queries: api.count, seen, kept: list.length, file };

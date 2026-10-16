@@ -300,6 +300,8 @@ export interface NocEntry {
   /** Intitulé de poste court, au singulier (pour les messages). */
   jobFr?: string;
   jobEn?: string;
+  /** Terme de recherche français (annonces du Québec) ; figure aussi dans les mots-clés du métier. */
+  searchFr?: string;
   probableNaics: string | null;
   keywords: string[];
 }
