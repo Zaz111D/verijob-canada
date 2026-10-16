@@ -124,19 +124,19 @@ export function Profile() {
       <p class="callout">{tr(S.profilePrivacy, lang)}</p>
       <ProfileSwitcher />
       {(profiles?.list.length ?? 0) > 1 && <FamilyCard lang={lang} />}
-      <form onSubmit={(e) => { e.preventDefault(); void saveProfile(p).then(() => setMsg('saved')); }}>
+      <form key={profiles?.active} onSubmit={(e) => { e.preventDefault(); void saveProfile(p).then(() => setMsg('saved')); }}>
         <label for="country">{tr(S.citizenship, lang)}</label>
-        <select id="country" value={p.citizenship ?? ''} onChange={(e) => setP({ ...p, citizenship: (e.target as HTMLSelectElement).value || undefined })}>
+        <select id="country" value={p.citizenship ?? ''} onChange={(e) => { const v = (e.target as HTMLSelectElement).value; setP((q) => ({ ...q, citizenship: v || undefined })); }}>
           <option value="">{tr(S.choose, lang)}</option>
           {countries.map(({ c, name }) => <option value={c}>{name}</option>)}
           <option value={OTHER}>{tr(S.other, lang)}</option>
         </select>
 
         <p class="muted">{tr(S.levelHelp, lang)}</p>
-        <LevelGrid label={tr(S.frenchLevel, lang)} value={p.french} onChange={(v) => setP({ ...p, french: v })} />
-        <label class="check"><input type="checkbox" checked={!!p.frenchStudies} onChange={() => setP({ ...p, frenchStudies: !p.frenchStudies || undefined })} />{tr(S.frenchStudies, lang)}</label>
+        <LevelGrid label={tr(S.frenchLevel, lang)} value={p.french} onChange={(v) => setP((q) => ({ ...q, french: v }))} />
+        <label class="check"><input type="checkbox" checked={!!p.frenchStudies} onChange={() => setP((q) => ({ ...q, frenchStudies: !q.frenchStudies || undefined }))} />{tr(S.frenchStudies, lang)}</label>
         <p class="muted">{tr(S.frenchStudiesHelp, lang)}</p>
-        <LevelGrid label={tr(S.englishLevel, lang)} value={p.english} onChange={(v) => setP({ ...p, english: v })} />
+        <LevelGrid label={tr(S.englishLevel, lang)} value={p.english} onChange={(v) => setP((q) => ({ ...q, english: v }))} />
 
         <fieldset>
           <legend>{tr(S.targetJobs, lang)}</legend>
@@ -144,18 +144,18 @@ export function Profile() {
             <div class="checks">
               {nocData.nocs.filter((n) => n.group === g).map((n) => (
                 <label class="check">
-                  <input type="checkbox" checked={p.targetNocs?.includes(n.code)} onChange={() => setP({ ...p, targetNocs: toggle(p.targetNocs, n.code) })} />
+                  <input type="checkbox" checked={!!p.targetNocs?.includes(n.code)} onChange={() => setP((q) => ({ ...q, targetNocs: toggle(q.targetNocs, n.code) }))} />
                   {lang === 'fr' ? n.titleFr : n.titleEn} <span class="muted">({n.code})</span>
                 </label>
               ))}
             </div>
           ))}
           <label for="current">{tr(S.currentJob, lang)}</label>
-          <select id="current" value={p.currentNoc ?? ''} onChange={(e) => setP({ ...p, currentNoc: (e.target as HTMLSelectElement).value || undefined })}>
+          <select id="current" value={p.currentNoc ?? ''} onChange={(e) => { const v = (e.target as HTMLSelectElement).value; setP((q) => ({ ...q, currentNoc: v || undefined })); }}>
             <option value="">{tr(S.currentJobNone, lang)}</option>
             {rules.occupationTransfers.map((t) => <option value={t.from}>{lang === 'fr' ? t.fromTitleFr : t.fromTitleEn} ({t.from})</option>)}
           </select>
-          <TransferCard profile={p} onAdd={(noc) => setP({ ...p, targetNocs: [...(p.targetNocs ?? []), noc] })} />
+          <TransferCard profile={p} onAdd={(noc) => setP((q) => ({ ...q, targetNocs: [...(q.targetNocs ?? []), noc] }))} />
         </fieldset>
 
         <fieldset>
@@ -163,7 +163,7 @@ export function Profile() {
           <div class="checks grid2">
             {PROVINCES.map((code) => (
               <label class="check">
-                <input type="checkbox" checked={p.provinces?.includes(code)} onChange={() => setP({ ...p, provinces: toggle(p.provinces, code) })} />
+                <input type="checkbox" checked={!!p.provinces?.includes(code)} onChange={() => setP((q) => ({ ...q, provinces: toggle(q.provinces, code) }))} />
                 {PROVINCE_NAMES[code][lang]}
               </label>
             ))}
@@ -172,10 +172,10 @@ export function Profile() {
 
         <label for="exp">{tr(S.experience, lang)}</label>
         <input id="exp" type="number" min={0} max={600} inputMode="numeric" value={p.experienceMonths ?? ''}
-          onInput={(e) => { const v = (e.target as HTMLInputElement).value; setP({ ...p, experienceMonths: v === '' ? undefined : Number(v) }); }} />
+          onInput={(e) => { const v = (e.target as HTMLInputElement).value; setP((q) => ({ ...q, experienceMonths: v === '' ? undefined : Number(v) })); }} />
 
         <label for="edu">{tr(S.education, lang)}</label>
-        <select id="edu" value={p.education ?? ''} onChange={(e) => setP({ ...p, education: ((e.target as HTMLSelectElement).value || undefined) as StoredProfile['education'] })}>
+        <select id="edu" value={p.education ?? ''} onChange={(e) => { const v = (e.target as HTMLSelectElement).value; setP((q) => ({ ...q, education: (v || undefined) as StoredProfile['education'] })); }}>
           <option value="">{tr(S.choose, lang)}</option>
           {(Object.keys(S.educationLevels) as Array<keyof typeof S.educationLevels>).map((k) => <option value={k}>{tr(S.educationLevels[k], lang)}</option>)}
         </select>
