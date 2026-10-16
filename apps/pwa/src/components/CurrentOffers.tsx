@@ -27,7 +27,12 @@ function Card({ o, g, lang }: { o: CurrentOffer; g: Grouped; lang: Lang }) {
       {o.intl && <p><Badge kind="ok">✓ {tr(S.currentIntl, lang)}</Badge></p>}
       {o.snippet && <p class="muted">{o.snippet}</p>}
       <TestLine g={g} lang={lang} />
-      {o.scam.length > 0 && <p class="alert">{o.scam.length} {tr(S.intlScam, lang)}</p>}
+      {o.scam.length > 0 && (
+        <div class="alert">
+          <p>{o.scam.length} {tr(S.intlScam, lang)}</p>
+          {(o.scamWhy ?? []).filter(Boolean).map((w) => <p class="quote">« {w} »</p>)}
+        </div>
+      )}
       <OfferLinks o={o} lang={lang} />
       <div class="row">
         <button type="button" onClick={() => openOfferCheck(`${o.title}\n${o.company}\n${o.location}\n${o.snippet}`)}>{tr(S.intlAnalyze, lang)}</button>

@@ -23,6 +23,15 @@ describe('offres actuelles (Adzuna) : annonce → offre publiée', () => {
   it('écarte une annonce dont le titre est un autre métier (le mot n’était que dans le texte)', () => {
     expect(toCurrentOffer(job({ title: 'Store Manager', description: 'Work with our security guard team.' }), '64410', ctx)).toBeNull();
   });
+  it('écarte un poste d’un autre niveau qui contient le mot-clé du métier', () => {
+    expect(toCurrentOffer(job({ title: 'Architecte paysagiste', description: 'Classe 7' }), '85121', ctx)).toBeNull();
+    expect(toCurrentOffer(job({ title: 'Security Manager', description: 'Lead the team.' }), '64410', ctx)).toBeNull();
+  });
+  it('garde la phrase qui déclenche une alerte d’arnaque', () => {
+    const o = toCurrentOffer(job({ id: '7', title: 'Security Guard', description: 'Pay a $300 processing fee by Western Union to get the job.' }), '64410', ctx)!;
+    expect(o.scamWhy?.length).toBe(o.scam.length);
+    expect(o.scamWhy?.join(' ')).toMatch(/processing fee/i);
+  });
   it('écarte une annonce sans lien', () => {
     expect(toCurrentOffer(job({ title: 'Security Guard', redirect_url: undefined }), '64410', ctx)).toBeNull();
   });

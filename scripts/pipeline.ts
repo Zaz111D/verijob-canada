@@ -8,7 +8,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { CurrentOffer, NocData, Rules } from '../packages/core/src';
+import { normalize, type CurrentOffer, type NocData, type Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildDesignated, type DesignatedStats } from './build-designated';
@@ -16,7 +16,7 @@ import { fetchPermits, type PermitsStats } from './fetch-permits';
 import { fetchInternational, type InternationalStats } from './fetch-international';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
 import { fetchProposals, type ProposalsStats } from './fetch-proposals';
-import { fetchCurrentOffers, queryKeys, type CurrentOffersStats } from './fetch-current-offers';
+import { fetchCurrentOffers, OTHER_LEVEL, queryKeys, type CurrentOffersStats } from './fetch-current-offers';
 import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
@@ -79,7 +79,16 @@ const current = await currentOffersStep();
 async function currentOffersStep() {
   const r = await adzunaStep('current-offers.json', 'Offres actuelles', () => fetchCurrentOffers(rules, nocData));
   if (!('reused' in r) || r.error) return r;
-  const prev = JSON.parse(readFileSync(join(OUT_DIR, 'current-offers.json'), 'utf8')) as { source: { nocs?: string[] }; data: CurrentOffer[] };
+  const prevPath = join(OUT_DIR, 'current-offers.json');
+  const prev = JSON.parse(readFileSync(prevPath, 'utf8')) as { source: { nocs?: string[] }; data: CurrentOffer[]; recordCount: number };
+  // Règles de tri ajoutées depuis : appliquées aussi aux offres reprises (sans attendre le lundi).
+  const kept = prev.data.filter((o) => !OTHER_LEVEL.test(normalize(o.title)));
+  if (kept.length !== prev.data.length) {
+    console.log(`  ${prev.data.length - kept.length} offre(s) d'un autre niveau retirée(s) de la version reprise`);
+    prev.data = kept;
+    prev.recordCount = kept.length;
+    writeFileSync(prevPath, JSON.stringify(prev));
+  }
   const known = new Set(prev.source.nocs ?? prev.data.map((o) => o.noc));
   const missing = queryKeys(nocData).filter((k) => !known.has(k));
   if (!missing.length) return r;

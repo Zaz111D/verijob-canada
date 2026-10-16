@@ -20,6 +20,11 @@ import { writeDataFile, type WrittenFile } from './lib/output';
 const MAX_DAYS_OLD = 21;
 const PER_PAGE = 50;
 const SNIPPET = 220;
+/**
+ * Postes d'un autre niveau que le métier suivi, même si le titre contient son mot-clé
+ * (« Architecte paysagiste » n'est pas un manœuvre en aménagement paysager, vu le 16 oct. 2026).
+ */
+export const OTHER_LEVEL = /\b(architecte?s?|ingenieure?s?|engineers?|directeurs?|directrices?|directors?|gestionnaires?|managers?|coordonnat(eur|rice)s?|coordinators?)\b/;
 
 export interface CurrentOffersStats { queries: number; seen: number; kept: number; skipped?: string; file?: WrittenFile }
 
@@ -27,13 +32,15 @@ export interface CurrentOffersStats { queries: number; seen: number; kept: numbe
 export function toCurrentOffer(j: AdzunaJob, noc: string, ctx: { rules: Rules; nocData: NocData; intlIds: Set<string> }): CurrentOffer | null {
   if (!j.id || !j.redirect_url) return null;
   const title = clean(j.title);
-  if (detectNocInText(ctx.nocData, normalize(title))?.code !== noc) return null;
+  if (detectNocInText(ctx.nocData, normalize(title))?.code !== noc || OTHER_LEVEL.test(normalize(title))) return null;
   const snippet = clean(j.description);
+  const signals = analyzeOffer(`${title}.\n${snippet}`, { rules: ctx.rules, nocData: ctx.nocData }).signals;
   return {
     ...baseOffer(j),
     noc,
     snippet: snippet.length > SNIPPET ? `${snippet.slice(0, SNIPPET - 1).replace(/\s+\S*$/, '')}…` : snippet,
-    scam: analyzeOffer(`${title}.\n${snippet}`, { rules: ctx.rules, nocData: ctx.nocData }).signals.map((s) => s.id),
+    scam: signals.map((s) => s.id),
+    ...(signals.length ? { scamWhy: signals.map((s) => (s.evidence[0] ?? '').slice(0, 160)) } : {}),
     ...(ctx.intlIds.has(j.id) ? { intl: true as const } : {}),
   };
 }

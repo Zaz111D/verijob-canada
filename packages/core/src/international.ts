@@ -134,6 +134,8 @@ export interface CurrentOffer {
   snippet: string;
   /** Identifiants des signaux d'arnaque repérés. */
   scam: string[];
+  /** Pour chaque signal, la phrase de l'annonce qui l'a déclenché (transparence : l'utilisateur juge lui-même). */
+  scamWhy?: string[];
   /** L'annonce figure aussi dans les offres reconnues « ouvertes aux candidats de l'étranger ». */
   intl?: true;
 }
