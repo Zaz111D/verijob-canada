@@ -4,7 +4,7 @@
   "id": "statcan-noc-elements",
   "urlFr": "https://www.statcan.gc.ca/fr/sujets/norme/cnp/2021/indexV1/cnp-2021-v1.0-elements.csv",
   "urlEn": "https://www.statcan.gc.ca/en/subjects/standard/noc/2021/indexV1/noc-2021-v1.0-elements.csv",
-  "verifiedAt": "2026-10-15"
+  "verifiedAt": "2026-10-16"
  },
  "nocs": [
   {
@@ -363,6 +363,95 @@
     "personal aide - home support",
     "personal care attendant - home care",
     "respite worker - home support"
+   ]
+  },
+  {
+   "code": "64200",
+   "duties": [
+    {
+     "headingFr": "Tailleurs, couturiers et retoucheurs",
+     "headingEn": "Tailors, dressmakers and alterationists",
+     "items": [
+      {
+       "fr": "confectionner des vêtements sur mesure tels que des complets et des manteaux selon les spécifications des clients et des fabricants de vêtements",
+       "en": "Make made-to-measure garments, such as dresses, suits and coats according to customers' and clothing manufacturers' specifications and fit"
+      },
+      {
+       "fr": "dessiner, choisir et/ou modifier des patrons commerciaux en fonction des indications des clients et des manufacturiers",
+       "en": "Design, select and/or modify commercial patterns to customers' and clothing manufacturers' specifications"
+      },
+      {
+       "fr": "marquer, tailler et coudre le tissu",
+       "en": "Fit, mark, cut and sew fabric"
+      },
+      {
+       "fr": "ajuster, transformer et réparer des vêtements à la main ou à la machine à coudre, selon les demandes des clients",
+       "en": "Fit, alter and repair garments according to customers' requests by hand or using sewing machines"
+      }
+     ]
+    },
+    {
+     "headingFr": "Fourreurs",
+     "headingEn": "Furriers",
+     "items": [
+      {
+       "fr": "confectionner, transformer, rajeunir et réparer des vêtements et des accessoires en fourrure naturelle",
+       "en": "Make, alter, restyle and repair natural fur garments and accessories"
+      }
+     ]
+    },
+    {
+     "headingFr": "Modistes",
+     "headingEn": "Milliners",
+     "items": [
+      {
+       "fr": "dessiner, étendre, couper, coudre et presser du tissu, du cuir et d'autre matériel pour en faire des chapeaux et des accessoires connexes",
+       "en": "Design, lay out, cut, sew and press fabric, leather and other materials into hats and related accessories"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires peut être exigé.",
+     "en": "Completion of secondary school may be required."
+    },
+    {
+     "fr": "Une habileté démontrée à coudre, à créer et à ajuster des vêtements pour hommes ou femmes est exigée des tailleurs et des couturiers; des cours en techniques du vêtement ou en couture, de niveau collégial ou autre, peuvent être exigés.",
+     "en": "Tailors and dressmakers require demonstrated ability to sew, style and fit men's or women's garments and may require completion of college or other courses in tailoring or dressmaking."
+    },
+    {
+     "fr": "Plusieurs années d'expérience dans la sélection des cuirs et dans la confection, l'ajustage, la création et la transformation des vêtements et des accessoires en fourrure sont exigées des fourreurs.",
+     "en": "Furriers require several years of experience in selecting pelts and making, fitting, styling and altering fur garments and accessories."
+    },
+    {
+     "fr": "Une habileté démontrée dans la confection, la création et l'ajustage des chapeaux et des casquettes est exigée des modistes.",
+     "en": "Milliners require demonstrated ability to sew, style and fit hats and caps."
+    },
+    {
+     "fr": "Une habileté démontrée à coudre, à transformer et à réparer des vêtements est exigée des retoucheurs.",
+     "en": "Alterationists require demonstrated ability to sew, alter and repair garments."
+    }
+   ],
+   "examplesFr": [
+    "couturier/couturière",
+    "couturier-retoucheur/couturière-retoucheuse",
+    "fourreur/fourreuse",
+    "fourreur/fourreuse sur mesure",
+    "modiste",
+    "retoucheur/retoucheuse de vêtements",
+    "tailleur/tailleuse",
+    "tailleur/tailleuse sur mesure"
+   ],
+   "examplesEn": [
+    "alterations dressmaker",
+    "custom furrier",
+    "custom tailor",
+    "furrier",
+    "garment alterationist",
+    "milliner",
+    "seamstress",
+    "tailor"
    ]
   },
   {
@@ -1589,6 +1678,83 @@
     "park maintenance worker",
     "sod layer",
     "transplanter - landscape maintenance"
+   ]
+  },
+  {
+   "code": "94132",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "assembler des pièces de vêtements en associant des patrons et des lots de teinture",
+       "en": "Assemble pieces of garments by matching patterns and dye lots"
+      },
+      {
+       "fr": "utiliser des surjeteuses à une, deux ou plusieurs aiguilles, des piqueuses à plateau, des élastiqueuses ou d'autres machines à coudre pour assembler des sections de vêtements ou d'autres articles pour en faire des produits finis, selon un système de production à la pièce ou en série",
+       "en": "Operate single, double or multi-needle serging, flat bed felling, banding and other sewing machines, to join sections of garments or other articles into finished products on a piece-work or production basis"
+      },
+      {
+       "fr": "joindre, à l'aide de machines à coudre la fourrure, des bandes de fourrure en une peau ayant les dimensions et la forme voulues, et réunir les peaux pour former des parties ou l'esquisse de vêtements",
+       "en": "Operate fur sewing machines to join fur pelt strips to required size and shape and join pelts into garment sections or shells"
+      },
+      {
+       "fr": "assembler, à l'aide de machines à coudre, des sections et des pièces en cuir pour fabriquer des vêtements, des sacs à main, des chaussures et d'autres articles en cuir",
+       "en": "Operate stitching machines to sew leather parts together for leather garments, handbags, shoes and other leather articles"
+      },
+      {
+       "fr": "coudre ensemble des lisières de matériel, à l'aide de machines à surfiler et à surjeter",
+       "en": "Operate serging machines to sew and overcast edges of material simultaneously"
+      },
+      {
+       "fr": "exécuter diverses opérations dans la fabrication de vêtements et d'autres articles, à l'aide de machines à faufiler, à fixer les poches, à faire les boutonnières, à coudre par soudure à thermofusion, à ourler ou d'autres machines",
+       "en": "Operate tackers, pocketsetters, buttonhole makers and fusing, hemmer and other machines to perform various operations in the fabrication of garments and other articles"
+      },
+      {
+       "fr": "examiner des vêtements et d'autres articles et les réparer à l'aide de machines à coudre, de machines à surjeter et d'autres machines, au cours du processus de confection",
+       "en": "Examine garments and operate sewing machines, sergers and other machines to repair garments and other articles during the manufacturing process"
+      },
+      {
+       "fr": "remplir des rapports de production",
+       "en": "Complete production reports"
+      },
+      {
+       "fr": "effectuer, s'il y a lieu, des travaux d'entretien et des réparations mineures sur les machines à coudre",
+       "en": "May perform minor maintenance and repairs on sewing machine"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires sont habituellement exigées.",
+     "en": "Some secondary school education is usually required."
+    },
+    {
+     "fr": "De l'expérience comme opérateur de machine à coudre est habituellement exigée.",
+     "en": "Experience operating a sewing machine is usually required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est offerte au besoin.",
+     "en": "On-the-job training may be provided."
+    }
+   ],
+   "examplesFr": [
+    "couseur/couseuse de chaussures",
+    "couseur/couseuse d'échantillons",
+    "opérateur/opératrice de machine à coudre",
+    "opérateur/opératrice de machine à coudre la fourrure",
+    "opérateur/opératrice de machine à coudre les articles en cuir",
+    "opérateur/opératrice de surjeteuse",
+    "piqueur/piqueuse de doublures"
+   ],
+   "examplesEn": [
+    "fur sewing machine operator",
+    "leather products sewing machine operator",
+    "lining stitcher",
+    "sample sewer",
+    "serging machine operator",
+    "sewing machine operator",
+    "shoe sewer"
    ]
   },
   {

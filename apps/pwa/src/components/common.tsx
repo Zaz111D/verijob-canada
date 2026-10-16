@@ -5,6 +5,7 @@ import type { ComponentChildren } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import { DISCLAIMER, staleSources, type PathwayResult, type SourceRef } from '@verijob/core';
 import { rules } from '../data';
+import { ActiveProfileChip } from './Profiles';
 import { setLang, STRINGS as S, tr, useLang } from '../i18n';
 
 export type Route = 'accueil' | 'offre' | 'employeur' | 'emplois' | 'demarcher' | 'suivi' | 'consultant' | 'profil' | 'veille' | 'cv' | 'cv-exemple';
@@ -53,6 +54,7 @@ export function Layout({ route, children }: { route: Route; children: ComponentC
     <div class="app">
       <header class="top">
         <a class="brand" href="#/accueil">{tr(S.appName, lang)}</a>
+        <ActiveProfileChip />
         <button class="lang" type="button" aria-label={tr(S.switchLangLabel, lang)} onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}>
           {tr(S.switchLang, lang)}
         </button>

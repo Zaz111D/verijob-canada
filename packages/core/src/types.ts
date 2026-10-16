@@ -167,6 +167,20 @@ export interface Rules {
   };
   /** Règles en préparation (pas encore en vigueur), suivies par l'appli. */
   proposals: RuleProposal[];
+  family: {
+    source: string;
+    quebecSource: string;
+    openPermitTeers: number[];
+    minPermitMonths: number;
+    summaryFr: string; summaryEn: string;
+    exceptionsFr: string; exceptionsEn: string;
+  };
+  quebec: {
+    steps: Array<{ source: string; fr: string; en: string }>;
+    noFrancophoneMobilityFr: string;
+    noFrancophoneMobilityEn: string;
+    arrimaUrl: string;
+  };
   occupationTransfers: OccupationTransfer[];
   /** Province → identifiant de source de la page officielle du permis d'agent de sécurité. */
   securityLicences: Partial<Record<ProvinceCode, string>>;

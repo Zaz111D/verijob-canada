@@ -12,6 +12,7 @@ import { Opportunities } from '../components/Opportunities';
 import { RecentPostings } from '../components/Postings';
 import { InternationalOffers } from '../components/InternationalOffers';
 import { CurrentOffers } from '../components/CurrentOffers';
+import { QuebecGuide } from '../components/QuebecFamily';
 import { loadCmaLookup, loadDesignated, loadEmployers, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
@@ -124,6 +125,7 @@ export function Jobs() {
           })}
         </>
       )}
+      {(!provinces.length || provinces.includes('QC')) && <QuebecGuide lang={lang} />}
       {provinces.length > 0 && <WhereToLook provinces={provinces} nocs={nocs} lang={lang} />}
       {!nocs.length && <p class="muted">{tr(S.routesEmpty, lang)} <a href="#/profil">{tr(S.navProfile, lang)}</a></p>}
       <RecentPostings nocs={nocs} provinces={provinces} lang={lang} />

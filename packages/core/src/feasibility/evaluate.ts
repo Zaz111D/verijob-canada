@@ -144,9 +144,10 @@ function lowWage(ctx: Ctx): PathwayResult {
   }
   if (job.province === 'QC') {
     raisons.push({
-      fr: 'Au Québec, des règles provinciales s’ajoutent (CAQ, listes propres au Québec). Module Québec à venir.',
-      en: 'In Quebec, provincial rules also apply (CAQ, Quebec-specific lists). Quebec module coming later.',
+      fr: 'Au Québec, il faut aussi un Certificat d’acceptation du Québec (CAQ) : l’employeur obtient une autorisation conjointe du Québec et du Canada, puis vous demandez le CAQ et le permis de travail. Voir le guide Québec (onglet Emplois).',
+      en: 'In Quebec you also need a Quebec Acceptance Certificate (CAQ): the employer gets a joint Quebec–Canada authorization, then you apply for the CAQ and the work permit. See the Quebec guide (Jobs tab).',
     });
+    ids.push('qc-ptet-apercu');
   }
 
   const exemption = probableRmrExemption(rules, ctx.nocData, job.noc, { privateHousehold: job.privateHousehold });

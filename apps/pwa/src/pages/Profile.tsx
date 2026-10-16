@@ -9,8 +9,10 @@ import {
 import { PathwayCards } from '../components/common';
 import { nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
-import { eraseProfile, saveProfile, useProfile, type StoredProfile } from '../store';
+import { eraseProfile, saveProfile, useProfile, useProfiles, type StoredProfile } from '../store';
 import { openSampleCv } from './SampleCv';
+import { ProfileSwitcher } from '../components/Profiles';
+import { FamilyCard } from '../components/QuebecFamily';
 
 const SKILLS = ['speaking', 'listening', 'reading', 'writing'] as const;
 const LEVELS = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -105,6 +107,7 @@ function Routes({ profile }: { profile: StoredProfile }) {
 export function Profile() {
   const lang = useLang();
   const stored = useProfile();
+  const profiles = useProfiles();
   const [p, setP] = useState<StoredProfile>(stored);
   const [msg, setMsg] = useState<'saved' | 'erased' | ''>('');
   useEffect(() => setP(stored), [stored]);
@@ -119,6 +122,8 @@ export function Profile() {
     <section>
       <h1>{tr(S.profileTitle, lang)}</h1>
       <p class="callout">{tr(S.profilePrivacy, lang)}</p>
+      <ProfileSwitcher />
+      {(profiles?.list.length ?? 0) > 1 && <FamilyCard lang={lang} />}
       <form onSubmit={(e) => { e.preventDefault(); void saveProfile(p).then(() => setMsg('saved')); }}>
         <label for="country">{tr(S.citizenship, lang)}</label>
         <select id="country" value={p.citizenship ?? ''} onChange={(e) => setP({ ...p, citizenship: (e.target as HTMLSelectElement).value || undefined })}>

@@ -66,6 +66,22 @@ describe('data/rules.json', () => {
   });
 });
 
+describe('règles Québec et couple', () => {
+  it('chaque étape du guide Québec et la règle « couple » citent une source connue', () => {
+    for (const s of rules.quebec.steps) {
+      expect(rules.sources[s.source], s.source).toBeDefined();
+      expect(s.fr.length).toBeGreaterThan(30);
+      expect(s.en.length).toBeGreaterThan(30);
+    }
+    expect(rules.sources[rules.family.source]).toBeDefined();
+    expect(rules.sources[rules.family.quebecSource]).toBeDefined();
+    expect(rules.family.openPermitTeers).toEqual([0, 1]);
+  });
+  it('les deux métiers de la couture sont suivis, avec leurs fonctions officielles', () => {
+    for (const c of ['64200', '94132']) expect(nocData.nocs.some((n) => n.code === c), c).toBe(true);
+  });
+});
+
 describe('passerelles de métier et permis', () => {
   it('chaque passerelle cite une source connue et vise un métier suivi', () => {
     for (const t of rules.occupationTransfers) {

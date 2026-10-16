@@ -203,3 +203,11 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 .seg button.on { background: var(--brand); color: var(--brand-fg); border-color: var(--brand); }
 .test-line summary { cursor: pointer; }
 .test-line ul { margin: 6px 0 0 18px; font-size: 0.9rem; }
+
+/* Profils multiples : puce du profil actif dans l'en-tête. */
+.profile-chip { margin-left: auto; margin-right: 8px; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; text-decoration: none; color: inherit; max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profiles .row { margin-top: 8px; }
+
+/* Guide Québec : étapes numérotées. */
+.steps { margin: 8px 0 8px 20px; padding: 0; }
+.steps li { margin-bottom: 6px; }

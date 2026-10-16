@@ -15,6 +15,7 @@ import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { upsertApplication, useApplications, useProfile, type StoredProfile } from '../store';
 import { buildMessage } from '../templates';
 import { openSampleCv } from './SampleCv';
+import { QuebecGuide } from '../components/QuebecFamily';
 import { countGroups, inTab, makeGrouper, TestLine, TestTabs, type TestTab } from '../components/TestGroups';
 
 const PAGE = 40;
@@ -199,6 +200,7 @@ export function Prospects() {
       <p>{tr(S.prospectsIntro, lang)}</p>
       <p class="callout">{tr(S.prospectsWarning, lang)}</p>
       <AfricaSection citizenship={profile.citizenship} provinces={profile.provinces ?? []} lang={lang} />
+      {(provinces as string[]).includes('QC') && <QuebecGuide lang={lang} />}
 
       <fieldset>
         <legend>{tr(S.filters, lang)}</legend>

@@ -82,6 +82,7 @@ const EMPLOYER_TYPE: Record<string, { fr: string; en: string }> = {
   transformation: { fr: 'Usine de transformation alimentaire', en: 'Food processing plant' },
   services: { fr: 'Entreprise de services', en: 'Service company' },
   securite: { fr: 'Entreprise de sécurité privée', en: 'Private security company' },
+  couture: { fr: 'Atelier de couture ou usine de confection', en: 'Tailoring workshop or garment factory' },
   '43201': { fr: 'Établissement pénitentiaire public', en: 'Public correctional facility' },
 };
 

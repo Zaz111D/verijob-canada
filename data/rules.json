@@ -254,6 +254,69 @@
       "verifiedAt": "2026-10-14",
       "nextReview": "2027-01-14"
     },
+    "ircc-family-owp": {
+      "titleFr": "IRCC — Permis de travail ouverts pour les membres de la famille des travailleurs étrangers : qui peut présenter une demande",
+      "titleEn": "IRCC — Open work permits for family members of foreign workers: who can apply",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/instructions-speciales/epoux-enfant-charge/admissibilite.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/special-instructions/spouses-dependent-children/eligibility.html",
+      "pageModified": "2026-06-12",
+      "verifiedAt": "2026-10-16",
+      "nextReview": "2027-01-16"
+    },
+    "qc-ptet": {
+      "titleFr": "Québec (MIFI) — Programme des travailleurs étrangers temporaires",
+      "titleEn": "Quebec (MIFI) — Temporary Foreign Worker Program (French only)",
+      "urlFr": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires",
+      "urlEn": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires",
+      "pageModified": "2025-12-17",
+      "verifiedAt": "2026-10-16",
+      "nextReview": "2027-01-16"
+    },
+    "qc-ptet-apercu": {
+      "titleFr": "Québec (MIFI) — Aperçu du PTET : autorisations et conditions du CAQ",
+      "titleEn": "Quebec (MIFI) — TFWP overview: authorizations and CAQ conditions (French only)",
+      "urlFr": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/apercu",
+      "urlEn": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/apercu",
+      "pageModified": null,
+      "verifiedAt": "2026-10-16",
+      "nextReview": "2027-01-16"
+    },
+    "qc-ptet-conjoint": {
+      "titleFr": "Québec (MIFI) — Se faire accompagner de sa conjointe ou de son conjoint et de ses enfants",
+      "titleEn": "Quebec (MIFI) — Bringing your spouse and children (French only)",
+      "urlFr": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/conjoint-et-enfants",
+      "urlEn": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/conjoint-et-enfants",
+      "pageModified": "2026-09-16",
+      "verifiedAt": "2026-10-16",
+      "nextReview": "2027-01-16"
+    },
+    "qc-ptet-emploi": {
+      "titleFr": "Québec (MIFI) — Obtenir une offre d'emploi d'un employeur québécois",
+      "titleEn": "Quebec (MIFI) — Getting a job offer from a Quebec employer (French only)",
+      "urlFr": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/obtenir-emploi",
+      "urlEn": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/obtenir-emploi",
+      "pageModified": "2026-06-30",
+      "verifiedAt": "2026-10-16",
+      "nextReview": "2027-01-16"
+    },
+    "qc-ptet-permanent": {
+      "titleFr": "Québec (MIFI) — Demeurer au Québec de façon permanente",
+      "titleEn": "Quebec (MIFI) — Staying in Quebec permanently (French only)",
+      "urlFr": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/demeurer-de-facon-permanente",
+      "urlEn": "https://www.quebec.ca/immigration/travailler-quebec/travailleurs-temporaires/programme-travailleurs-etrangers-temporaires/demeurer-de-facon-permanente",
+      "pageModified": "2026-06-17",
+      "verifiedAt": "2026-10-16",
+      "nextReview": "2027-01-16"
+    },
+    "qc-arrima": {
+      "titleFr": "Québec (MIFI) — Arrima : services en ligne d'immigration (déclaration d'intérêt, Portail employeurs)",
+      "titleEn": "Quebec (MIFI) — Arrima online immigration services (French only)",
+      "urlFr": "https://www.quebec.ca/immigration/services-en-ligne",
+      "urlEn": "https://www.quebec.ca/immigration/services-en-ligne",
+      "pageModified": "2026-10-12",
+      "verifiedAt": "2026-10-16",
+      "nextReview": "2027-01-16"
+    },
     "irpr-r200": {
       "titleFr": "Règlement sur l'immigration et la protection des réfugiés — article 200 (délivrance du permis de travail)",
       "titleEn": "Immigration and Refugee Protection Regulations — section 200 (work permit issuance)",
@@ -1296,6 +1359,58 @@
       "checkedAt": "2026-10-15"
     }
   ],
+  "family": {
+    "source": "ircc-family-owp",
+    "quebecSource": "qc-ptet-conjoint",
+    "$comment": "Permis de travail ouvert pour l'époux ou le conjoint d'un travailleur étranger : depuis le 21 janvier 2025, réservé (hors voie vers la résidence permanente) aux conjoints des travailleurs en FEER 0 ou 1, ou dans certaines professions FEER 2 ou 3, avec un permis valide d'au moins 16 mois.",
+    "openPermitTeers": [
+      0,
+      1
+    ],
+    "minPermitMonths": 16,
+    "summaryFr": "Si l'un de vous obtient un emploi de catégorie FEER 4 ou 5 (agent·e de sécurité, couturier·ère, ouvrier·ère…), l'autre n'a PAS droit au permis de travail ouvert pour conjoint : chacun doit trouver son propre employeur et obtenir son propre permis (ou venir comme étudiant·e). Ce permis est réservé aux conjoints des travailleurs en FEER 0 ou 1, ou dans certaines professions FEER 2 ou 3, avec un permis valide d'au moins 16 mois.",
+    "summaryEn": "If one of you gets a TEER 4 or 5 job (security guard, seamstress, labourer…), the other is NOT eligible for the spousal open work permit: each must find their own employer and get their own permit (or come as a student). This permit is reserved for spouses of workers in TEER 0 or 1, or in certain TEER 2 or 3 occupations, with a valid permit of at least 16 months.",
+    "exceptionsFr": "Exceptions : le conjoint peut obtenir un permis ouvert si le travailleur a présenté une demande de résidence permanente dans un programme économique, ou s'il est en FEER 4 ou 5 sur une voie vers la résidence permanente (Programme des candidats des provinces, CSQ du Québec, Programme d'immigration au Canada atlantique…). Pour les pilotes PICR et PICRF, le conjoint a un permis ouvert distinct prévu par ces pilotes.",
+    "exceptionsEn": "Exceptions: the spouse may get an open permit if the worker has applied for permanent residence under an economic program, or is in TEER 4 or 5 on a pathway to permanent residence (Provincial Nominee Program, Quebec CSQ, Atlantic Immigration Program…). For the RCIP and FCIP pilots, the spouse has a separate open permit under those pilots."
+  },
+  "quebec": {
+    "$comment": "Règles propres au Québec (MIFI, quebec.ca), lues le 16 oct. 2026. Pages en français seulement.",
+    "steps": [
+      {
+        "source": "qc-ptet-emploi",
+        "fr": "Trouver un employeur établi au Québec qui veut vous embaucher. Les sites d'offres québécois ne sont pas destinés aux travailleurs étrangers : servez-vous-en pour repérer des employeurs et leur écrire (candidature spontanée), ou participez aux Journées Québec.",
+        "en": "Find an employer established in Quebec willing to hire you. Quebec job sites are not meant for foreign workers: use them to identify employers and write to them (unsolicited application), or take part in Journées Québec."
+      },
+      {
+        "source": "qc-arrima",
+        "fr": "Remplir une déclaration d'intérêt dans Arrima et accepter de venir occuper un emploi temporaire : votre profil peut alors apparaître dans les recherches des employeurs du Québec (Portail employeurs).",
+        "en": "Fill in an expression of interest in Arrima and agree to come for a temporary job: your profile can then appear in Quebec employers' searches (Employer Portal)."
+      },
+      {
+        "source": "qc-ptet-apercu",
+        "fr": "L'employeur demande une EIMT et obtient une autorisation conjointe du Québec et du Canada. Vous signez un contrat de travail écrit.",
+        "en": "The employer applies for an LMIA and gets a joint authorization from Quebec and Canada. You sign a written employment contract."
+      },
+      {
+        "source": "qc-ptet-apercu",
+        "fr": "Vous obtenez un Certificat d'acceptation du Québec (CAQ), délivré par le Québec, puis un permis de travail, délivré par le Canada. Il faut répondre aux conditions d'accès de la CNP pour le métier.",
+        "en": "You get a Quebec Acceptance Certificate (CAQ) from Quebec, then a work permit from Canada. You must meet the NOC employment requirements for the job."
+      },
+      {
+        "source": "qc-ptet",
+        "fr": "Français : pour renouveler le CAQ après 3 ans de travail au Québec, le niveau 4 à l'oral (échelle québécoise) sera exigé pour les demandes transmises à partir du 17 décembre 2028 (travailleurs agricoles exemptés). Commencez à pratiquer tôt.",
+        "en": "French: to renew the CAQ after 3 years of work in Quebec, oral level 4 (Quebec scale) will be required for applications sent from December 17, 2028 (agricultural workers exempt). Start practising early."
+      },
+      {
+        "source": "qc-ptet-permanent",
+        "fr": "Pour rester de façon permanente : Programme de sélection des travailleurs qualifiés (PSTQ) ou Programme de l'expérience québécoise (PEQ), puis la résidence permanente auprès du Canada.",
+        "en": "To stay permanently: Skilled Worker Selection Program (PSTQ) or Quebec Experience Program (PEQ), then permanent residence with Canada."
+      }
+    ],
+    "noFrancophoneMobilityFr": "La Mobilité francophone ne s'applique pas aux emplois au Québec : la voie habituelle est l'EIMT avec le CAQ.",
+    "noFrancophoneMobilityEn": "Francophone Mobility does not apply to jobs in Quebec: the usual route is an LMIA with a CAQ.",
+    "arrimaUrl": "https://www.quebec.ca/immigration/services-en-ligne"
+  },
   "occupationTransfers": [
     {
       "source": "statcan-noc-elements",

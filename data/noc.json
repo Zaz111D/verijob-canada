@@ -49,6 +49,10 @@
     { "code": "65201", "jobFr": "aide de cuisine", "jobEn": "kitchen helper", "group": "services", "titleFr": "Serveurs au comptoir, aides de cuisine et personnel de soutien assimilé", "titleEn": "Food counter attendants, kitchen helpers and related support occupations", "probableNaics": "722",
       "keywords": ["aide de cuisine", "plongeur", "serveur au comptoir", "kitchen helper", "dishwasher", "food counter attendant"] },
     { "code": "64410", "jobFr": "agent·e de sécurité", "jobEn": "security guard", "group": "securite", "titleFr": "Agents/agentes de sécurité et personnel assimilé des services de sécurité", "titleEn": "Security guards and related security service occupations", "probableNaics": "5616",
-      "keywords": ["agent de securite", "agente de securite", "gardien de securite", "gardienne de securite", "agent de surveillance", "gardien de nuit", "agent de prevention des vols", "security guard", "security officer", "loss prevention officer", "night watchman", "patrol officer"] }
+      "keywords": ["agent de securite", "agente de securite", "gardien de securite", "gardienne de securite", "agent de surveillance", "gardien de nuit", "agent de prevention des vols", "security guard", "security officer", "loss prevention officer", "night watchman", "patrol officer"] },
+    { "code": "64200", "jobFr": "couturier·ère", "jobEn": "seamstress / tailor", "group": "couture", "titleFr": "Tailleurs/tailleuses, couturiers/couturières, fourreurs/fourreuses et modistes", "titleEn": "Tailors, dressmakers, furriers and milliners", "probableNaics": "8114",
+      "keywords": ["couturier", "couturiere", "couturiere-retoucheuse", "couturier-retoucheur", "retoucheuse", "retoucheur de vetements", "tailleur", "tailleuse", "modiste", "seamstress", "dressmaker", "tailor", "alterations", "garment alterationist", "milliner"] },
+    { "code": "94132", "jobFr": "opérateur·rice de machine à coudre industrielle", "jobEn": "sewing machine operator", "group": "couture", "titleFr": "Opérateurs/opératrices de machines à coudre industrielles", "titleEn": "Industrial sewing machine operators", "probableNaics": "31-33",
+      "keywords": ["operatrice de machine a coudre", "operateur de machine a coudre", "couseuse", "couseur", "piqueuse", "sewing machine operator", "industrial sewer", "stitcher", "serger operator"] }
   ]
 }
