@@ -3,8 +3,8 @@
  * Divisées selon le test de langue (voies du profil). Conditions Adzuna : mention « Adzuna » liée à adzuna.ca.
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import { findNoc, formatDate, type CurrentOffer, type ProvinceCode } from '@verijob/core';
-import { loadCurrentOffers, nocData } from '../data';
+import { findNoc, formatDate, jobBankLink, PROVINCE_NAMES, type CurrentOffer, type ProvinceCode } from '@verijob/core';
+import { loadCurrentOffers, nocData, rules } from '../data';
 import { STRINGS as S, tr, type Lang } from '../i18n';
 import { openOfferCheck } from '../pages/CheckOffer';
 import { openSampleCv } from '../pages/SampleCv';
@@ -54,6 +54,8 @@ export function CurrentOffers({ nocs, provinces, lang }: { nocs: string[]; provi
   if (!data) return null; // pas encore de fichier (clés Adzuna absentes) : section masquée
   const counts = countGroups(grouped.map((e) => e.g));
   // Sans signal d'arnaque d'abord, puis « ouverte à l'étranger », puis les plus récentes.
+  // Métiers du profil sans aucune offre actuelle (ex. métier ajouté avant la prochaine mise à jour) : lien de secours.
+  const emptyNocs = nocs.filter((c) => !grouped.some((e) => e.o.noc === c));
   const visible = grouped.filter((e) => inTab(e.g, tab))
     .sort(({ o: a }, { o: b }) => a.scam.length - b.scam.length || Number(!!b.intl) - Number(!!a.intl) || b.date.localeCompare(a.date));
   return (
@@ -65,6 +67,22 @@ export function CurrentOffers({ nocs, provinces, lang }: { nocs: string[]; provi
       {grouped.length > 0 && <TestTabs counts={counts} value={tab} onChange={(t) => { setTab(t); setShown(PAGE); }} lang={lang} />}
       {visible.length ? visible.slice(0, shown).map(({ o, g }) => <Card o={o} g={g} lang={lang} />) : <p class="muted">{tr(S.currentNone, lang)}</p>}
       {shown < visible.length && <button type="button" onClick={() => setShown(shown + PAGE)}>{tr(S.showMore, lang)}</button>}
+      {emptyNocs.map((code) => {
+        const n = findNoc(nocData, code);
+        return (
+          <article class="card-result">
+            <h3>{lang === 'fr' ? n?.titleFr : n?.titleEn}</h3>
+            <p class="muted">{tr(S.currentEmptyJob, lang)}</p>
+            <div class="row">
+              {(provinces.length ? provinces : [undefined]).map((p) => (
+                <a class="button" href={jobBankLink(rules, { keyword: n?.jobEn?.split(/[(/]/)[0]!.trim() ?? code, province: p }).url} {...ext}>
+                  {tr(S.jobBankProvince, lang)}{p ? ` (${PROVINCE_NAMES[p][lang]})` : ''} ↗
+                </a>
+              ))}
+            </div>
+          </article>
+        );
+      })}
       <p class="muted">{tr(S.intlPoweredBy, lang)} <a class="adzuna" href={ADZUNA} {...ext}>Adzuna</a></p>
     </>
   );

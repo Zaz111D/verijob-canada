@@ -370,6 +370,10 @@ export const STRINGS = {
     fr: 'Annonces des 3 dernières semaines, mises à jour chaque semaine. Une annonce ne dit pas toujours si l’employeur accepte les candidats de l’étranger : lisez-la en entier, et préférez celles marquées « ouverte à l’étranger ».',
     en: 'Ads from the last 3 weeks, updated weekly. An ad does not always say whether the employer accepts candidates from abroad: read it fully, and prefer those marked “open to applicants abroad”.',
   },
+  currentEmptyJob: {
+    fr: 'Pas encore d’offre actuelle pour ce métier dans la liste (mise à jour chaque semaine). En attendant, voici les offres ouvertes aux candidats étrangers sur le Guichet-Emplois :',
+    en: 'No current offer for this job in the list yet (updated weekly). Meanwhile, here are the offers open to foreign candidates on Job Bank:',
+  },
   currentIntl: { fr: 'Ouverte à l’étranger (preuve trouvée)', en: 'Open to applicants abroad (proof found)' },
   currentNone: { fr: 'Aucune offre récente pour vos métiers et provinces dans cet onglet.', en: 'No recent offer for your jobs and provinces in this tab.' },
   offerOnJobBank: { fr: 'Trouver et postuler sur le Guichet-Emplois', en: 'Find and apply on Job Bank' },

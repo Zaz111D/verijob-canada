@@ -8,7 +8,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { NocData, Rules } from '../packages/core/src';
+import type { CurrentOffer, NocData, Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildDesignated, type DesignatedStats } from './build-designated';
@@ -21,7 +21,7 @@ import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
 import { fetchWages, type WagesStats } from './fetch-wages';
-import { DOCS_DIR, ROOT } from './lib/paths';
+import { DOCS_DIR, OUT_DIR, ROOT } from './lib/paths';
 import { reusePrevious } from './lib/previous';
 import type { WrittenFile } from './lib/output';
 
@@ -74,7 +74,23 @@ async function adzunaStep<T>(file: string, label: string, run: () => Promise<T>)
 }
 const intl = await adzunaStep('international-offers.json', 'Offres ouvertes aux candidats de l’étranger', () => fetchInternational(rules, nocData));
 // Après les offres internationales (pour marquer celles qui y figurent).
-const current = await adzunaStep('current-offers.json', 'Offres actuelles', () => fetchCurrentOffers(rules, nocData));
+const current = await currentOffersStep();
+/** Offres actuelles : version publiée reprise, mais les métiers AJOUTÉS depuis sont interrogés tout de suite (pas d'attente du lundi). */
+async function currentOffersStep() {
+  const r = await adzunaStep('current-offers.json', 'Offres actuelles', () => fetchCurrentOffers(rules, nocData));
+  if (!('reused' in r) || r.error) return r;
+  const prev = JSON.parse(readFileSync(join(OUT_DIR, 'current-offers.json'), 'utf8')) as { source: { nocs?: string[] }; data: CurrentOffer[] };
+  const known = new Set(prev.source.nocs ?? prev.data.map((o) => o.noc));
+  const missing = nocData.nocs.map((n) => n.code).filter((c) => !known.has(c));
+  if (!missing.length) return r;
+  console.log(`  métiers ajoutés depuis la dernière mise à jour : ${missing.join(', ')} — interrogés maintenant`);
+  try {
+    return await fetchCurrentOffers(rules, nocData, { onlyNocs: missing, base: { offers: prev.data, nocs: [...known] } });
+  } catch (e) {
+    console.warn(`  ⚠ Nouveaux métiers non interrogés : ${e instanceof Error ? e.message : String(e)} — version publiée gardée`);
+    return r;
+  }
+}
 // Offres du mois (données ouvertes) : une erreur ne bloque pas le reste, l'appli fonctionne sans.
 let postings: PostingsStats | { error: string };
 try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {

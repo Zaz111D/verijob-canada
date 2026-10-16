@@ -37,7 +37,14 @@ export function toCurrentOffer(j: AdzunaJob, noc: string, ctx: { rules: Rules; n
   };
 }
 
-export async function fetchCurrentOffers(rules: Rules, nocData: NocData): Promise<CurrentOffersStats> {
+/**
+ * @param opts.onlyNocs  n'interroger que ces métiers (ex. métiers ajoutés depuis la dernière mise à jour) ;
+ * @param opts.base      offres déjà publiées à garder (complétées par les nouveaux métiers).
+ */
+export async function fetchCurrentOffers(
+  rules: Rules, nocData: NocData,
+  opts: { onlyNocs?: string[]; base?: { offers: CurrentOffer[]; nocs: string[] } } = {},
+): Promise<CurrentOffersStats> {
   console.log('▶ Offres actuelles des métiers suivis, avec lien direct (API Adzuna)');
   const keys = adzunaKeys();
   if (!keys) {
@@ -47,9 +54,10 @@ export async function fetchCurrentOffers(rules: Rules, nocData: NocData): Promis
   const intlPath = join(OUT_DIR, 'international-offers.json');
   const intlIds = new Set<string>(existsSync(intlPath) ? (JSON.parse(readFileSync(intlPath, 'utf8')).data as Array<{ id: string }>).map((o) => o.id) : []);
   const api = adzunaClient(keys);
-  const offers = new Map<string, CurrentOffer>();
+  const offers = new Map<string, CurrentOffer>((opts.base?.offers ?? []).map((o) => [o.id, o]));
   let seen = 0;
-  for (const n of nocData.nocs) {
+  const wanted = opts.onlyNocs ? nocData.nocs.filter((n) => opts.onlyNocs!.includes(n.code)) : nocData.nocs;
+  for (const n of wanted) {
     const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim(); // Adzuna exige tous les mots de « what »
     const { results } = await api.search({ what, max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE) });
     seen += results.length;
@@ -64,6 +72,8 @@ export async function fetchCurrentOffers(rules: Rules, nocData: NocData): Promis
     publisher: 'Adzuna (annonces) — tri par métier et contrôle anti-arnaque par VériJob',
     url: 'https://www.adzuna.ca/',
     licence: 'Conditions de l’API Adzuna : affichage avec la mention « Adzuna » liée à adzuna.ca',
+    // Métiers déjà interrogés : un métier ajouté plus tard sera interrogé dès l'envoi de code suivant.
+    nocs: [...new Set([...(opts.base?.nocs ?? []), ...wanted.map((n) => n.code)])].sort(),
   }, list.length, list);
   console.log(`  ${api.count} requêtes, ${seen} annonces lues, ${list.length} gardées (titre conforme au métier)`);
   return { queries: api.count, seen, kept: list.length, file };

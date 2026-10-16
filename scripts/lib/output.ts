@@ -15,6 +15,8 @@ export interface DataSource {
   files?: string[];
   /** Trimestres couverts (listes d'EIMT), du plus ancien au plus récent. */
   window?: string[];
+  /** Métiers interrogés (offres actuelles). */
+  nocs?: string[];
 }
 
 export interface DataFile<T> {
