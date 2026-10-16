@@ -90,6 +90,14 @@ const ORG_CLAIM = /\b(inc|ltd|ltee|limited|limitee|corp|corporation|farm|farms|f
 
 const AGENT = /\b(agent|agente|agents|agence|agences|cabinet|consultant|consultante|consultants|consultancy|consulting|conseiller en immigration|conseillere en immigration|agency|intermediaire|facilitateur|facilitator|demarcheur)\b(?! d'entretien| de securite| de nettoyage| de bord| d'accueil)/;
 const CICC_NUMBER = /\br ?\d{6}\b/;
+/**
+ * Formules NORMALES des annonces canadiennes, retirées avant les règles « frais » et « agent » (vues le 16 oct. 2026
+ * sur de vraies annonces du Guichet-Emplois reprises par Adzuna) : le lieu de travail ou l'employeur lui-même
+ * (« Private security agency », « United Way Anchor Agency »), et la mention « Relocation costs not covered by employer ».
+ */
+const BENIGN = /\b(private security agenc(y|ies)|security agenc(y|ies)|agences? de securite( privee)?|(anchor|community|social services?|non-profit|not-for-profit|partner|government|public|home care|health care|healthcare|nursing) agenc(y|ies)|agency (staff|policies|procedures|programs?)|relocation costs? (are )?(not )?(covered|paid|reimbursed)( by (the )?employer)?|frais de (reinstallation|demenagement)( non)? (couverts|rembourses|payes)( par l'employeur)?|(meat|food|fish|seafood|poultry|beverage) processing)\b/g;
+/** Contexte d'immigration : sans lui, « agent » ou « agence » désigne un employeur ou un métier, pas un intermédiaire. */
+const IMMIGRATION_CONTEXT = /\b(visas?|permis de travail|work permits?|immigration|immigrer|immigrate|eimt|lmia|residence permanente|permanent residen\w*|ircc|ambassade|embassy|consulat|consulate)\b/;
 const LAWYER = /\b(avocat|avocate|barreau|law society|lawyer|notaire|chambre des notaires|notary|parajuriste|paralegal)\b/;
 
 const SAWP = /\b(sawp|ptas|seasonal agricultural workers? program(me)?|programme (des|de) travailleurs agricoles saisonniers|travailleurs agricoles saisonniers|programme agricole saisonnier|seasonal agricultural program)\b/;
@@ -125,6 +133,7 @@ export const SCAM_RULES: ScamRule[] = [
     detect: (ctx) =>
       hitIfAny(
         matchingSegments(ctx, (s) => {
+          s = s.replace(BENIGN, ' ');
           if (FEE_NEGATION.test(s) || NOT_A_FEE.test(s)) return false;
           const wage = hasWageRate(s);
           const pays = FEE_STRONG.test(s) || ((FEE_WEAK.test(s) || SEND_MONEY.test(s) || MONEY.test(s)) && !wage);
@@ -231,8 +240,9 @@ export const SCAM_RULES: ScamRule[] = [
     sourceIds: (r) => [r.authorizedRepresentatives.source, r.authorizedRepresentatives.registerSource],
     detect: (ctx) => {
       if (CICC_NUMBER.test(ctx.norm) || LAWYER.test(ctx.norm)) return undefined;
+      if (!IMMIGRATION_CONTEXT.test(ctx.norm)) return undefined;
       // « Agent financier » est une autre arnaque (règle « cheque-ou-mule »), pas un agent d'immigration.
-      return hitIfAny(matchingSegments(ctx, (s) => AGENT.test(s.replace(/\b(financial agent|agente? financiere?)\b/g, ''))));
+      return hitIfAny(matchingSegments(ctx, (s) => AGENT.test(s.replace(BENIGN, ' ').replace(/\b(financial agent|agente? financiere?)\b/g, ''))));
     },
   },
   {
