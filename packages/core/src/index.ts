@@ -6,7 +6,7 @@ export * from './types';
 export * from './messages';
 export { normalize, prepareText, formatDate, formatAmount } from './text';
 export { sourceRef, staleSources, todayIso } from './sources';
-export { teerOf, findNoc, isPrimaryAgriculture, detectNocInText, probableRmrExemption, nocLabel, findTransfer } from './noc';
+export { teerOf, findNoc, isPrimaryAgriculture, detectNocInText, probableRmrExemption, nocLabel, findTransfer, sectorCategory, nocCategory } from './noc';
 export {
   detectProvince,
   findCma,

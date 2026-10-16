@@ -211,3 +211,11 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 /* Guide Québec : étapes numérotées. */
 .steps { margin: 8px 0 8px 20px; padding: 0; }
 .steps li { margin-bottom: 6px; }
+
+/* Bandeau « Résultats pour : … » et outils repliés de l'onglet Emplois. */
+.banner { background: var(--info-bg); color: var(--fg, inherit); border-left: 4px solid var(--brand); padding: 8px 12px; border-radius: var(--radius); margin: 8px 0 16px; }
+.banner-empty { background: var(--warn-bg); border-left-color: var(--warn); }
+.more-tools { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 12px; }
+.more-tools > summary { cursor: pointer; padding: 8px 0; }
+
+.explain > summary { cursor: pointer; font-size: 0.9rem; color: var(--brand); margin: 6px 0; }

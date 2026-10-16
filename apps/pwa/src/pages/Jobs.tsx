@@ -2,18 +2,18 @@
  * Radar d'offres en MODE LIENS : Job Bank n'est jamais lu automatiquement (conditions d'utilisation).
  * L'utilisateur ouvre le site officiel, et peut ensuite faire évaluer un poste trouvé.
  */
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import {
-  evaluatePathways, findNoc, formatDate, jobBankLink, sourceRef, PROVINCE_NAMES, probableRmrExemption, searchEmployers,
-  type CmaLookup, type PathwayResult, type ProvinceCode,
+  evaluatePathways, filterProspects, findNoc, formatDate, jobBankLink, sourceRef, PROVINCE_NAMES, probableRmrExemption, searchEmployers,
+  type CmaLookup, type PathwayResult, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge, PathwayCards, Sources } from '../components/common';
 import { Opportunities } from '../components/Opportunities';
 import { RecentPostings } from '../components/Postings';
-import { InternationalOffers } from '../components/InternationalOffers';
-import { CurrentOffers } from '../components/CurrentOffers';
+import { ApplyNow } from '../components/CurrentOffers';
+import { ProfileBanner } from '../components/ProfileBanner';
 import { QuebecGuide } from '../components/QuebecFamily';
-import { loadCmaLookup, loadDesignated, loadEmployers, nocData, rules } from '../data';
+import { loadCmaLookup, loadDesignated, loadEmployers, loadProspects, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
 
@@ -72,7 +72,15 @@ export function Jobs() {
   const [lookup, setLookup] = useState<CmaLookup>();
   const [result, setResult] = useState<{ pathways: PathwayResult[]; lmia?: string[]; designated?: string[] }>();
 
-  useEffect(() => { loadCmaLookup().then((f) => setLookup(f.data)).catch(() => undefined); }, []);
+  const [prospects, setProspects] = useState<Prospect[]>();
+  useEffect(() => {
+    loadCmaLookup().then((f) => setLookup(f.data)).catch(() => undefined);
+    loadProspects().then((f) => setProspects(f.data)).catch(() => undefined);
+  }, []);
+  const employerCount = useMemo(
+    () => (prospects && nocs.length ? filterProspects(prospects, { nocs, provinces }).length : undefined),
+    [prospects, nocs.join(), provinces.join()],
+  );
   useEffect(() => {
     if (!noc && nocs[0]) setNoc(nocs[0]);
     if (!province && provinces[0]) setProvince(provinces[0]);
@@ -101,12 +109,24 @@ export function Jobs() {
   return (
     <section>
       <h1>{tr(S.jobsTitle, lang)}</h1>
+      <ProfileBanner lang={lang} />
+
+      <ApplyNow nocs={nocs} provinces={provinces} lang={lang} />
+
+      {employerCount !== undefined && (
+        <>
+          <h2>{tr(S.employersTitle, lang)}</h2>
+          <p>{tr(S.employersText, lang).replace('{n}', String(employerCount))}</p>
+          <p><a class="button primary" href="#/demarcher">{tr(S.employersButton, lang)} →</a></p>
+        </>
+      )}
+
+      <details class="more-tools">
+      <summary><strong>{tr(S.moreTools, lang)}</strong></summary>
       <p>{tr(S.jobsIntro, lang)}</p>
-      <p><a class="button primary" href={main.url} target="_blank" rel="noopener noreferrer">{tr(S.jobsOpen, lang)} ↗</a></p>
+      <p><a class="button" href={main.url} target="_blank" rel="noopener noreferrer">{tr(S.jobsOpen, lang)} ↗</a></p>
       <p class="muted">{tr(S.jobsLinkNote, lang)}</p>
       <p class="callout">{tr(S.jobsIcon, lang)}</p>
-      <InternationalOffers nocs={nocs} provinces={provinces} lang={lang} />
-      <CurrentOffers nocs={nocs} provinces={provinces} lang={lang} />
 
       {nocs.length > 0 && (
         <>
@@ -127,7 +147,6 @@ export function Jobs() {
       )}
       {(!provinces.length || provinces.includes('QC')) && <QuebecGuide lang={lang} />}
       {provinces.length > 0 && <WhereToLook provinces={provinces} nocs={nocs} lang={lang} />}
-      {!nocs.length && <p class="muted">{tr(S.routesEmpty, lang)} <a href="#/profil">{tr(S.navProfile, lang)}</a></p>}
       <RecentPostings nocs={nocs} provinces={provinces} lang={lang} />
       <Opportunities nocs={nocs} provinces={provinces} citizenship={profile.citizenship} lang={lang} />
 
@@ -173,6 +192,7 @@ export function Jobs() {
           <p class="callout">{tr(S.evalPasteText, lang)} <a href="#/offre">{tr(S.cardOfferTitle, lang)}</a></p>
         </div>
       )}
+      </details>
     </section>
   );
 }

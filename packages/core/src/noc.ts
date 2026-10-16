@@ -75,3 +75,27 @@ export function findTransfer(rules: Rules, from: string | undefined, to?: string
   if (!from) return undefined;
   return rules.occupationTransfers.find((t) => t.from === from && (!to || t.to === to));
 }
+
+/**
+ * Grande catégorie professionnelle de la CNP 2021 (1er chiffre du code : 1 affaires, 2 sciences, 3 santé,
+ * 4 enseignement-droit-services sociaux, 5 arts, 6 ventes et services, 7 métiers et transport,
+ * 8 ressources naturelles et agriculture, 9 fabrication) d'après le SECTEUR publié par une communauté
+ * pour ses employeurs désignés (libellés variables : « Sales & Service », « Health Sector »…). undefined si inconnu.
+ */
+export function sectorCategory(sector: string): number | undefined {
+  const s = normalize(sector);
+  if (!s.trim()) return undefined;
+  if (/manufactur|utilit|fabrication/.test(s)) return 9;
+  if (/natural resource|agricult|ressources naturelles/.test(s)) return 8;
+  if (/trades|transport|equipment|metiers/.test(s)) return 7;
+  if (/sales|service(s)? sector|^sales|vente/.test(s) || /sales & service|sales and service/.test(s)) return 6;
+  if (/arts|culture|recreation|sport/.test(s)) return 5;
+  if (/education|law|social|community|government|enseignement/.test(s)) return 4;
+  if (/health|sante/.test(s)) return 3;
+  if (/natural and applied|applied science|sciences/.test(s)) return 2;
+  if (/business|finance|administration|affaires/.test(s)) return 1;
+  return undefined;
+}
+
+/** Grande catégorie d'un code CNP (1er chiffre ; 0 = gestion). */
+export const nocCategory = (code: string): number => Number(code[0]);

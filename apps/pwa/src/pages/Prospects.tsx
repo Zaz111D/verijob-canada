@@ -4,7 +4,7 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
-  addDays, DEFAULT_FOLLOW_UP_DAYS, filterProspects, findNoc, findTransfer, newId, PROVINCE_NAMES, prospectPathway, prospectsToCsv, RECURRING_QUARTERS, sourceRef, todayIso, totalPositions,
+  addDays, DEFAULT_FOLLOW_UP_DAYS, filterProspects, findNoc, findTransfer, nocCategory, sectorCategory, newId, PROVINCE_NAMES, prospectPathway, prospectsToCsv, RECURRING_QUARTERS, sourceRef, todayIso, totalPositions,
   type PathwayId, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge } from '../components/common';
@@ -16,6 +16,7 @@ import { upsertApplication, useApplications, useProfile, type StoredProfile } fr
 import { buildMessage } from '../templates';
 import { openSampleCv } from './SampleCv';
 import { QuebecGuide } from '../components/QuebecFamily';
+import { ProfileBanner } from '../components/ProfileBanner';
 import { countGroups, inTab, makeGrouper, TestLine, TestTabs, type TestTab } from '../components/TestGroups';
 
 const PAGE = 40;
@@ -133,6 +134,7 @@ export function Prospects() {
   const [hideAgri, setHideAgri] = useState(false);
   const [onlyNew, setOnlyNew] = useState(false);
   const [testTab, setTestTab] = useState<TestTab>('sans-test');
+  const [allDesignated, setAllDesignated] = useState(false);
   const [windowStart, setWindowStart] = useState('');
   const [shown, setShown] = useState(PAGE);
   const [target, setTarget] = useState<Target>();
@@ -168,13 +170,18 @@ export function Prospects() {
   }, [list, profile]);
   const counts = useMemo(() => countGroups(evaluated.map((e) => e.g)), [evaluated]);
   const visible = evaluated.filter((e) => inTab(e.g, testTab));
-  const desList = useMemo(() => {
+  // Employeurs désignés : seulement ceux du SECTEUR des métiers du profil (grande catégorie CNP = 1er chiffre du code),
+  // les autres (autre secteur ou secteur non précisé par la communauté) restent accessibles derrière un bouton.
+  const { desList, desOthers } = useMemo(() => {
     const prio = (community: string, program: string) => priorities.some((p) => p.community === community && p.program === program && nocs.includes(p.noc));
-    return designated
+    const cats = new Set(nocs.map(nocCategory));
+    const all = designated
       .filter((d) => (d.hiring === 'recrute' || d.hiring === 'inconnu') && (!provinces.length || provinces.includes(d.province)))
-      .map((d) => ({ d, star: prio(d.community, d.program) }))
+      .map((d) => ({ d, star: prio(d.community, d.program), match: !nocs.length || cats.has(sectorCategory(d.sector) ?? -1) }))
       .sort((a, b) => Number(b.star) - Number(a.star) || Number(b.d.hiring === 'recrute') - Number(a.d.hiring === 'recrute') || a.d.community.localeCompare(b.d.community));
-  }, [designated, priorities, nocs.join(), provinces.join()]);
+    const mine = all.filter((x) => x.match || x.star);
+    return { desList: allDesignated ? all : mine, desOthers: all.length - mine.length };
+  }, [designated, priorities, nocs.join(), provinces.join(), allDesignated]);
 
   const nocSet = nocs.length ? new Set(nocs) : undefined;
   const exportProspects = () => {
@@ -197,6 +204,7 @@ export function Prospects() {
   return (
     <section>
       <h1>{tr(S.prospectsTitle, lang)}</h1>
+      <ProfileBanner lang={lang} />
       <p>{tr(S.prospectsIntro, lang)}</p>
       <p class="callout">{tr(S.prospectsWarning, lang)}</p>
       <AfricaSection citizenship={profile.citizenship} provinces={profile.provinces ?? []} lang={lang} />
@@ -258,8 +266,9 @@ export function Prospects() {
         </>
       )}
 
-      <h2>{tr(S.designatedTitle, lang)}</h2>
+      <h2>{tr(S.designatedTitle, lang)} <Badge kind="moyen">{tr(S.testTab.test, lang)}</Badge></h2>
       <p class="muted">{tr(S.designatedIntro, lang)}</p>
+      {nocs.length > 0 && <p class="muted">{tr(S.designatedSectorNote, lang)}</p>}
       <div class="row">
         <strong>{desList.length} {tr(S.resultsCount, lang)}</strong>
         {desList.length > 0 && <button type="button" onClick={exportDesignated}>{tr(S.exportCsv, lang)}</button>}
@@ -280,6 +289,12 @@ export function Prospects() {
           <p class="muted">{tr(S.recordedOn, lang)} {d.recordedAt}</p>
         </article>
       ))}
+      {shown < desList.length && <button type="button" onClick={() => setShown(shown + PAGE)}>{tr(S.showMore, lang)}</button>}
+      {nocs.length > 0 && desOthers > 0 && (
+        <button type="button" onClick={() => setAllDesignated(!allDesignated)}>
+          {allDesignated ? tr(S.designatedMineOnly, lang) : tr(S.designatedShowOthers, lang).replace('{n}', String(desOthers))}
+        </button>
+      )}
     </section>
   );
 }

@@ -42,9 +42,12 @@ export function TestTabs({ counts, value, onChange, lang }: { counts: Record<Tes
           </button>
         ))}
       </div>
-      <p class="muted">{tr(value === 'test' ? S.testExplainTest : S.testExplainFree, lang)} {lang === 'fr' ? rules.languageTest.permanentResidenceNoteFr : rules.languageTest.permanentResidenceNoteEn}</p>
-      {proposal && value !== 'test' && <p class="warn">⚠ {lang === 'fr' ? proposal.titleFr : proposal.titleEn} — {lang === 'fr' ? proposal.expectedFr : proposal.expectedEn}. <a href="#/veille">{tr(S.testProposalMore, lang)}</a></p>}
-      <Sources sources={[...new Set(Object.values(rules.languageTest.byPathway).map((v) => v.source))].map((id) => sourceRef(rules, id, today))} />
+      <details class="explain">
+        <summary>{tr(S.testExplainSummary, lang)}</summary>
+        <p class="muted">{tr(value === 'test' ? S.testExplainTest : S.testExplainFree, lang)} {lang === 'fr' ? rules.languageTest.permanentResidenceNoteFr : rules.languageTest.permanentResidenceNoteEn}</p>
+        {proposal && <p class="warn">⚠ {lang === 'fr' ? proposal.titleFr : proposal.titleEn} — {lang === 'fr' ? proposal.expectedFr : proposal.expectedEn}. <a href="#/veille">{tr(S.testProposalMore, lang)}</a></p>}
+        <Sources sources={[...new Set(Object.values(rules.languageTest.byPathway).map((v) => v.source))].map((id) => sourceRef(rules, id, today))} />
+      </details>
     </div>
   );
 }
