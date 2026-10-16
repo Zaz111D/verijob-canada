@@ -7,7 +7,7 @@ import rulesJson from '../../../data/rules.json';
 import nocJson from '../../../data/noc.json';
 import {
   filterNews, makeWageLookup, parseExpressEntryRounds,
-  type CmaLookup, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
+  type CmaLookup, type CurrentOffer, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
 } from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
@@ -70,6 +70,7 @@ export const loadAfricanRecruiters = () => load<AfricanRecruiter[]>('african-rec
 export const loadPermits = () => load<PermitsData>('permits-africa.json');
 export interface ProposalStatus { id: string; pageModified: string | null; changed: boolean; checkedAt: string }
 export const loadProposalsStatus = () => load<ProposalStatus[]>('proposals-status.json');
+export const loadCurrentOffers = () => load<CurrentOffer[]>('current-offers.json');
 export const loadInternationalOffers = () => load<InternationalOffer[]>('international-offers.json');
 
 // ---------------------------------------------------------------------------

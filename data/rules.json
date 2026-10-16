@@ -1078,7 +1078,8 @@
   },
   "jobBank": {
     "source": "jobbank-foreign",
-    "$comment": "MODE LIENS UNIQUEMENT : les conditions d'utilisation de Job Bank interdisent tout accès automatisé. Modèle relevé à la main le 14 oct. 2026 dans un navigateur : searchstring (mot-clé) et fglo=1 (offres ouvertes aux candidats internationaux) fonctionnent ; le lieu (locationstring) n'est PAS pris en compte par l'adresse, d'où l'absence de {province}.",
+    "$comment": "MODE LIENS UNIQUEMENT : les conditions d'utilisation de Job Bank interdisent tout accès automatisé. Modèle relevé à la main le 14 oct. 2026 dans un navigateur : searchstring (mot-clé) et fglo=1 (offres ouvertes aux candidats internationaux) fonctionnent ; le lieu (locationstring) n'est PAS pris en compte par l'adresse. Le 16 oct. 2026, vérifié à la main : fprov=<code province> filtre bien par province, y compris avec fglo=1 (provinceParam).",
+    "provinceParam": "&fprov={province}",
     "foreignJobsUrl": "https://www.jobbank.gc.ca/jobsearch/jobsearch?fglo=1&sort=D",
     "searchTemplate": "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring={keyword}&fglo=1&sort=D"
   },

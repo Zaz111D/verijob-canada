@@ -121,6 +121,8 @@ export interface Rules {
     foreignJobsUrl: string;
     /** Modèle d'URL relevé à la main ({keyword}, {province}) ; null tant qu'il n'est pas vérifié. */
     searchTemplate: string | null;
+    /** Filtre province vérifié à la main, ajouté à la fin de l'adresse (ex. « &fprov={province} »). */
+    provinceParam?: string;
   };
   opportunities: {
     searchSites: SearchSite[];

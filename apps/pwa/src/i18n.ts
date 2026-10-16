@@ -320,7 +320,6 @@ export const STRINGS = {
   intlCaution: { fr: 'L’annonce mentionne aussi « autorisé à travailler au Canada » : vérifiez avec l’employeur que le permis sera bien parrainé.', en: 'The ad also says “authorized to work in Canada”: check with the employer that the permit will be sponsored.' },
   intlScam: { fr: 'signal(s) d’arnaque dans l’annonce : analysez-la avant tout contact', en: 'scam sign(s) in the ad: check it before any contact' },
   intlAnalyze: { fr: 'Analyser l’annonce', en: 'Check the ad' },
-  intlOpen: { fr: 'Voir l’offre et postuler', en: 'View the offer and apply' },
   intlEstimated: { fr: 'salaire estimé par Adzuna', en: 'salary estimated by Adzuna' },
   intlAllJobs: { fr: 'Afficher tous les métiers', en: 'Show all jobs' },
   intlNone: { fr: 'Aucune offre ouverte à l’international trouvée cette semaine pour vos métiers et provinces.', en: 'No offer open to international candidates found this week for your jobs and provinces.' },
@@ -360,13 +359,27 @@ export const STRINGS = {
   },
 
   // Offres récentes (données ouvertes du Guichet-Emplois)
-  postingsTitle: { fr: 'Offres récentes pour vos métiers', en: 'Recent offers for your jobs' },
+  postingsTitle: { fr: 'Le marché de vos métiers (statistiques officielles)', en: 'Your jobs’ market (official statistics)' },
   postingsIntro: {
-    fr: 'D’après les données ouvertes officielles du Guichet-Emplois, publiées chaque mois. Elles donnent la date, la ville, le salaire et les attentes, mais pas le nom de l’employeur ni le lien : utilisez « Retrouver sur le Guichet-Emplois », puis postulez seulement si l’offre porte l’icône « ouvert aux candidats étrangers ».',
-    en: 'From Job Bank’s official open data, published monthly. It gives the date, city, salary and requirements, but not the employer’s name or the link: use “Find it on Job Bank”, then apply only if the posting shows the “open to foreign candidates” icon.',
+    fr: 'Chiffres des données ouvertes du Guichet-Emplois (mois précédent) : nombre d’offres, salaire médian, part sans diplôme ou sans expérience. Ce ne sont pas des offres à cliquer (ces données n’ont pas de lien) : pour postuler, utilisez les offres actuelles plus haut ou le bouton Guichet-Emplois de chaque province.',
+    en: 'Figures from Job Bank open data (previous month): number of offers, median wage, share without degree or experience. These are not offers to click (this data has no link): to apply, use the current offers above or each province’s Job Bank button.',
+  },
+  jobBankProvince: { fr: 'Offres actuelles ouvertes aux étrangers — Guichet-Emplois', en: 'Current offers open to foreign candidates — Job Bank' },
+  currentTitle: { fr: 'Offres actuelles de vos métiers (lien direct)', en: 'Current offers for your jobs (direct link)' },
+  currentIntro: {
+    fr: 'Annonces des 3 dernières semaines, mises à jour chaque semaine. Une annonce ne dit pas toujours si l’employeur accepte les candidats de l’étranger : lisez-la en entier, et préférez celles marquées « ouverte à l’étranger ».',
+    en: 'Ads from the last 3 weeks, updated weekly. An ad does not always say whether the employer accepts candidates from abroad: read it fully, and prefer those marked “open to applicants abroad”.',
+  },
+  currentIntl: { fr: 'Ouverte à l’étranger (preuve trouvée)', en: 'Open to applicants abroad (proof found)' },
+  currentNone: { fr: 'Aucune offre récente pour vos métiers et provinces dans cet onglet.', en: 'No recent offer for your jobs and provinces in this tab.' },
+  offerOnJobBank: { fr: 'Trouver et postuler sur le Guichet-Emplois', en: 'Find and apply on Job Bank' },
+  offerEmployerSite: { fr: 'Site de l’employeur', en: 'Employer’s website' },
+  offerReadAdzuna: { fr: 'Lire l’annonce (Adzuna)', en: 'Read the ad (Adzuna)' },
+  offerAbroadNote: {
+    fr: 'Depuis l’étranger, Adzuna montre le texte de l’annonce mais bloque son bouton « Postuler ». Pour postuler : « Trouver et postuler sur le Guichet-Emplois » (même titre, même employeur, même province) ou le site de l’employeur.',
+    en: 'From abroad, Adzuna shows the ad text but blocks its “Apply” button. To apply: “Find and apply on Job Bank” (same title, employer and province) or the employer’s website.',
   },
   postingsMonth: { fr: 'Offres publiées en', en: 'Offers posted in' },
-  postingsNone: { fr: 'Aucune offre ce mois-là pour ce métier dans vos provinces.', en: 'No offer that month for this job in your provinces.' },
   postingsNeedProfile: { fr: 'Choisissez vos métiers et vos provinces dans « Mon profil » pour voir les offres récentes.', en: 'Choose your jobs and provinces in “My profile” to see recent offers.' },
   statOffers: { fr: 'offres', en: 'offers' },
   statPositions: { fr: 'postes', en: 'positions' },
@@ -375,8 +388,6 @@ export const STRINGS = {
   statNoExp: { fr: 'sans expérience exigée', en: 'no experience required' },
   statSeasonal: { fr: 'saisonnières', en: 'seasonal' },
   postedOn: { fr: 'Publiée le', en: 'Posted on' },
-  findOnJobBank: { fr: 'Retrouver sur le Guichet-Emplois', en: 'Find it on Job Bank' },
-  positionsShort: { fr: 'poste(s)', en: 'position(s)' },
 
   // Vérificateur de CV
   navCv: { fr: 'Vérifier mon CV', en: 'Check my resume' },

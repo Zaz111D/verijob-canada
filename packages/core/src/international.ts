@@ -113,3 +113,27 @@ export interface InternationalOffer {
   /** Identifiants des signaux d'arnaque repérés dans le titre + l'extrait. */
   scam: string[];
 }
+
+/** Offre actuelle d'un métier suivi (annonce Adzuna avec lien direct), publiée par le pipeline. */
+export interface CurrentOffer {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  province?: ProvinceCode;
+  /** Date de publication AAAA-MM-JJ. */
+  date: string;
+  salaryMin: number | null;
+  salaryMax: number | null;
+  /** Salaire estimé par Adzuna (et non indiqué par l'employeur). */
+  salaryPredicted: boolean;
+  /** Lien direct vers l'annonce (via Adzuna). */
+  url: string;
+  noc: string;
+  /** Début de l'annonce (Adzuna ne donne pas le texte complet). */
+  snippet: string;
+  /** Identifiants des signaux d'arnaque repérés. */
+  scam: string[];
+  /** L'annonce figure aussi dans les offres reconnues « ouvertes aux candidats de l'étranger ». */
+  intl?: true;
+}

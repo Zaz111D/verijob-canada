@@ -15,16 +15,15 @@
  * Produit : apps/pwa/public/data/international-offers.json (+ international-diagnostic.json)
  */
 import {
-  analyzeOffer, classifyInternational, detectNocInText, employerKey, normalize, PROVINCE_NAMES,
-  type InternationalOffer, type NocData, type ProvinceCode, type Rules,
+  analyzeOffer, classifyInternational, detectNocInText, employerKey, normalize,
+  type InternationalOffer, type NocData, type Rules,
 } from '../packages/core/src';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { USER_AGENT } from './lib/http';
+import { adzunaClient, adzunaKeys, baseOffer, clean } from './lib/adzuna';
 import { OUT_DIR } from './lib/paths';
 import { writeDataFile, type WrittenFile } from './lib/output';
 
-const API = 'https://api.adzuna.com/v1/api/jobs/ca/search/';
 /** Expressions exactes du recrutement international (cherchées par Adzuna dans l'annonce complète). */
 // Écartés après diagnostic (15 oct. 2026) :
 // - « visa sponsorship », « international applicants » : surtout « without visa sponsorship » (souvent pour les États-Unis) ;
@@ -37,49 +36,27 @@ const OFF_TOPIC_TITLE = /\b(immigration|lawyer|avocate?|paralegal|parajuriste|co
 const NOC_WORDS = 'lmia eimt';
 const MAX_DAYS_OLD = 45;
 const PER_PAGE = 50;
-const PAUSE_MS = 3000; // 25 requêtes par minute au plus : on reste très en dessous
-
-interface AdzunaJob {
-  id?: string; title?: string; description?: string; created?: string; redirect_url?: string;
-  salary_min?: number; salary_max?: number; salary_is_predicted?: string | number;
-  company?: { display_name?: string }; location?: { display_name?: string; area?: string[] };
-}
-
-const provinceByName = new Map<string, ProvinceCode>(
-  (Object.entries(PROVINCE_NAMES) as Array<[ProvinceCode, { fr: string; en: string }]>).flatMap(([c, p]) => [[normalize(p.en), c], [normalize(p.fr), c]]),
-);
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-/** L'API renvoie parfois des balises <strong> autour des mots trouvés. */
-const clean = (s = '') => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
 export interface InternationalStats { queries: number; seen: number; kept: number; closed: number; skipped?: string; file?: WrittenFile }
 
 export async function fetchInternational(rules: Rules, nocData: NocData): Promise<InternationalStats> {
   console.log('▶ Offres ouvertes aux candidats de l’étranger (API Adzuna)');
-  const id = process.env.ADZUNA_APP_ID?.trim();
-  const key = process.env.ADZUNA_APP_KEY?.trim();
-  if (!id || !key) {
+  const keys = adzunaKeys();
+  if (!keys) {
     console.log('  (clés ADZUNA_APP_ID / ADZUNA_APP_KEY absentes : étape sautée)');
     return { queries: 0, seen: 0, kept: 0, closed: 0, skipped: 'clés absentes' };
   }
   const offers = new Map<string, InternationalOffer>();
   const rejected = new Set<string>();
   const diag: Array<{ query: string; total: number; results: number; kept: number; closed: number }> = [];
-  let queries = 0, seen = 0, closed = 0;
+  const api = adzunaClient(keys);
+  let seen = 0, closed = 0;
 
   const search = async (label: string, params: Record<string, string>, matched: string) => {
-    const q = new URLSearchParams({
-      app_id: id, app_key: key, max_days_old: String(MAX_DAYS_OLD), sort_by: 'date',
-      results_per_page: String(PER_PAGE), 'content-type': 'application/json', ...params,
-    });
-    if (queries) await sleep(PAUSE_MS);
-    queries++;
-    const res = await fetch(`${API}1?${q}`, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
-    if (!res.ok) throw new Error(`Adzuna : HTTP ${res.status} pour « ${label} »`);
-    const body = (await res.json()) as { results?: AdzunaJob[]; count?: number };
-    const stat = { query: label, total: body.count ?? 0, results: body.results?.length ?? 0, kept: 0, closed: 0 };
+    const body = await api.search({ max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE), ...params });
+    const stat = { query: label, total: body.total, results: body.results.length, kept: 0, closed: 0 };
     diag.push(stat);
-    for (const j of body.results ?? []) {
+    for (const j of body.results) {
       seen++;
       if (!j.id || !j.redirect_url || rejected.has(j.id)) continue;
       const title = clean(j.title), snippet = clean(j.description);
@@ -89,18 +66,9 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
       if (verdict.status === 'ferme') { closed++; stat.closed++; rejected.add(j.id); offers.delete(j.id); continue; }
       const existing = offers.get(j.id);
       if (existing) { if (!existing.matched.includes(matched)) existing.matched.push(matched); continue; }
-      const area = j.location?.area ?? [];
       offers.set(j.id, {
-        id: j.id,
+        ...baseOffer(j),
         title,
-        company: clean(j.company?.display_name),
-        location: clean(j.location?.display_name),
-        province: area.map((a) => provinceByName.get(normalize(a))).find(Boolean),
-        date: (j.created ?? '').slice(0, 10),
-        salaryMin: typeof j.salary_min === 'number' ? j.salary_min : null,
-        salaryMax: typeof j.salary_max === 'number' ? j.salary_max : null,
-        salaryPredicted: String(j.salary_is_predicted) === '1',
-        url: j.redirect_url,
         // Métier déduit du TITRE seulement : Adzuna trouve le mot-clé n'importe où dans l'annonce.
         noc: detectNocInText(nocData, normalize(title))?.code ?? '',
         snippet,
@@ -171,6 +139,6 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     diag.length,
     diag,
   );
-  console.log(`  ${queries} requêtes, ${seen} annonces lues, ${list.length} gardées, ${closed} écartées (Canada exigé)`);
-  return { queries, seen, kept: list.length, closed, file };
+  console.log(`  ${api.count} requêtes, ${seen} annonces lues, ${list.length} gardées, ${closed} écartées (Canada exigé)`);
+  return { queries: api.count, seen, kept: list.length, closed, file };
 }

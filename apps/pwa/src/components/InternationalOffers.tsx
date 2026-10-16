@@ -4,8 +4,9 @@
  * Conditions de l'API Adzuna : chaque annonce affichée porte la mention « Adzuna » liée à adzuna.ca.
  */
 import { useEffect, useState } from 'preact/hooks';
-import { findNoc, formatAmount, formatDate, PROVINCE_NAMES, type InternationalOffer, type ProvinceCode } from '@verijob/core';
-import { loadInternationalOffers, nocData } from '../data';
+import { employerSearchName, findNoc, jobBankLink, formatAmount, formatDate, PROVINCE_NAMES, type InternationalOffer, type ProvinceCode } from '@verijob/core';
+import { loadInternationalOffers, nocData, rules } from '../data';
+import { careersSearchUrl } from './ContactLinks';
 import { STRINGS as S, tr, type Lang } from '../i18n';
 import { openOfferCheck } from '../pages/CheckOffer';
 import { openSampleCv } from '../pages/SampleCv';
@@ -14,10 +15,10 @@ import { countGroups, inTab, makeGrouper, TestLine, TestTabs, type Grouped, type
 import { useProfile } from '../store';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer nofollow' } as const;
-const ADZUNA = 'https://www.adzuna.ca/';
+export const ADZUNA = 'https://www.adzuna.ca/';
 const LIMIT = 15;
 
-function salary(o: InternationalOffer, lang: Lang): string | null {
+export function salary(o: { salaryMin: number | null; salaryMax: number | null; salaryPredicted: boolean }, lang: Lang): string | null {
   if (o.salaryMin === null) return null;
   // Adzuna ne précise pas l'unité : un montant de moins de 200 $ est un taux horaire, sinon un salaire annuel.
   const hourly = o.salaryMin < 200;
@@ -26,6 +27,28 @@ function salary(o: InternationalOffer, lang: Lang): string | null {
   const unit = hourly ? '/h' : lang === 'fr' ? '/an' : '/year';
   const range = `${o.salaryMax && o.salaryMax > o.salaryMin ? `${f(o.salaryMin)} – ${f(o.salaryMax)}` : f(o.salaryMin)}${unit}`;
   return o.salaryPredicted ? `${range} (${tr(S.intlEstimated, lang)})` : range;
+}
+
+/** Titre sans précisions de quart ou de contrat (« Cook - Night Shift (Full time) » → « Cook »), pour une recherche. */
+export function coreTitle(title: string): string {
+  return title.split(/\s[-–|]\s|\s\(|\(/)[0]!.trim() || title;
+}
+
+/**
+ * Comment atteindre l'annonce d'origine. Vu de l'étranger, Adzuna affiche le texte mais BLOQUE le bouton
+ * « Postuler » (« not available in your region », constaté le 16 oct. 2026 depuis le Cameroun) :
+ * on propose donc la recherche Guichet-Emplois (titre + employeur + province) et la page Carrières de l'employeur.
+ */
+export function OfferLinks({ o, lang }: { o: { title: string; company: string; location: string; province?: ProvinceCode; url: string }; lang: Lang }) {
+  const jb = jobBankLink(rules, { keyword: [coreTitle(o.title), o.company && employerSearchName(o.company)].filter(Boolean).join(' '), province: o.province, anyCandidate: true });
+  const city = o.location.split(',')[0] ?? '';
+  return (
+    <div class="row">
+      <a class="button primary" href={jb.url} {...ext}>{tr(S.offerOnJobBank, lang)} ↗</a>
+      {o.company && <a class="button" href={careersSearchUrl(o.company, city)} {...ext}>{tr(S.offerEmployerSite, lang)} ↗</a>}
+      <a class="button" href={o.url} {...ext}>{tr(S.offerReadAdzuna, lang)} ↗</a>
+    </div>
+  );
 }
 
 function OfferCard({ o, g, lang }: { o: InternationalOffer; g: Grouped; lang: Lang }) {
@@ -54,8 +77,8 @@ function OfferCard({ o, g, lang }: { o: InternationalOffer; g: Grouped; lang: La
       <TestLine g={g} lang={lang} />
       {o.caution.length > 0 && <p class="warn">{tr(S.intlCaution, lang)}</p>}
       {o.scam.length > 0 && <p class="alert">{o.scam.length} {tr(S.intlScam, lang)}</p>}
+      <OfferLinks o={o} lang={lang} />
       <div class="row">
-        <a class="button primary" href={o.url} {...ext}>{tr(S.intlOpen, lang)} ↗</a>
         <button type="button" onClick={() => openOfferCheck(`${o.title}\n${o.company}\n${o.location}\n${o.snippet}`)}>{tr(S.intlAnalyze, lang)}</button>
         <button type="button" onClick={() => openSampleCv({ noc: o.noc || undefined, title: o.title, text: o.snippet, province: o.province })}>{tr(S.sampleOpen, lang)}</button>
         <a class="adzuna" href={ADZUNA} {...ext} title={tr(S.intlPoweredBy, lang)}>Adzuna</a>
@@ -83,6 +106,7 @@ export function InternationalOffers({ nocs, provinces, lang }: { nocs: string[];
     <>
       <h2>{tr(S.intlTitle, lang)}</h2>
       <p class="muted">{tr(S.intlIntro, lang)}</p>
+      <p class="callout">{tr(S.offerAbroadNote, lang)}</p>
       <p class="muted">
         {tr(S.intlUpdated, lang)} {formatDate(data.at, lang)} — {mine.length} / {data.list.length}
         {provinces.length > 0 && <> · {provinces.map((p) => PROVINCE_NAMES[p][lang]).join(', ')}</>}

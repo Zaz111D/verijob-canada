@@ -41,6 +41,12 @@ describe('liens Job Bank (mode liens)', () => {
   it('modèle relevé à la main (rules.json) : mot-clé encodé, filtre international', () => {
     expect(jobBankLink(rules, { keyword: 'personal support worker' }).url).toBe('https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=personal%20support%20worker&fglo=1&sort=D');
   });
+  it('filtre province vérifié à la main (fprov), combiné au filtre international', () => {
+    expect(jobBankLink(rules, { keyword: 'security guard', province: 'NB' }).url).toBe('https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=security%20guard&fglo=1&sort=D&fprov=NB');
+  });
+  it('retrouver une annonce précise : sans le filtre « candidats étrangers »', () => {
+    expect(jobBankLink(rules, { keyword: 'Cook Tim Hortons', province: 'BC', anyCandidate: true }).url).toBe('https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=Cook%20Tim%20Hortons&sort=D&fprov=BC');
+  });
   it('avec un modèle relevé à la main : mots-clés encodés', () => {
     const r = { ...rules, jobBank: { ...rules.jobBank, searchTemplate: 'https://example.test/s?q={keyword}&p={province}&fglo=1' } } as Rules;
     expect(jobBankLink(r, { keyword: 'aide familial', province: 'NB' })).toEqual({ url: 'https://example.test/s?q=aide%20familial&p=NB&fglo=1', filtered: true });

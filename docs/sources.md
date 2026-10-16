@@ -326,3 +326,13 @@ Demande de Jessica : explorer la voie sans test de langue, et diviser les offres
 **Règle en préparation** : le Plan prospectif de la réglementation d'IRCC (page du 7 avril 2026) annonce un règlement permettant d'**exiger un test de langue désigné** pour certains volets du Programme de mobilité internationale (pré-publication visée au printemps ou à l'été 2026). Au 15 oct. 2026, aucune publication officielle trouvée (seulement des articles de presse, non retenus). Suivi automatique hebdomadaire de la date de la page officielle ; revérification humaine mensuelle (`nextReview` 2026-11-15).
 
 Profil : nouvelle case « études faites en français ». Sans niveau de test mais avec cette case, la Mobilité francophone passe de « à préciser » à « possible », avec la mise en garde que l'agent peut juger la preuve insuffisante.
+
+## 21. Liens vers les offres (16 oct. 2026)
+
+Signalement de Jessica : les propositions d'emploi ne renvoient pas directement aux offres.
+
+Constats (vérifiés à la main dans un navigateur, quelques pages seulement — mode liens) :
+- **Données ouvertes du Guichet-Emplois** : la colonne « WIC Job Location Snapshot ID » (≈ 15,8 millions) n'est **pas** le numéro de l'offre (les adresses `jobposting/<n°>` sont ≈ 50,4 millions) ; ces données n'ont aucun lien et portent sur le mois précédent. → Présentées désormais comme **statistiques** seulement.
+- **Filtres de recherche du Guichet-Emplois** : `fprov=<province>` fonctionne, seul ou avec `fglo=1` (ex. « cook » + `fglo=1` + `fprov=BC` : uniquement des offres de C.-B.). Ajouté à `rules.jobBank.provinceParam`.
+- **Adzuna** : l'API renvoie des liens `adzuna.ca/details/<id>`. Depuis le Cameroun, la page affiche « Sorry, this job is not available in your region » : texte lisible, **bouton Postuler bloqué**. → Chaque offre propose une recherche Guichet-Emplois « titre + employeur + province ». Essais : « Food Counter Attendant Tim Hortons » (C.-B.) retrouve les offres Tim Hortons ; « Cuisinier/cuisinière Alimentation America » (Qc) retrouve l'annonce exacte du 13 oct. 2026 à McMasterville.
+- **Offres actuelles** : nouvelle étape `fetch-current-offers.ts` (≈ 21 requêtes Adzuna par semaine, dans les limites gratuites).

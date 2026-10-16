@@ -154,11 +154,16 @@ export function changeLog(rules: Rules, today: string): ChangeEntry[] {
  * Lien Job Bank pour une recherche. Sans modèle vérifié (searchTemplate = null), renvoie le lien
  * confirmé « offres ouvertes aux candidats étrangers » et filtered = false : l'utilisateur filtre sur le site.
  */
-export function jobBankLink(rules: Rules, opts: { keyword?: string; province?: string } = {}): { url: string; filtered: boolean } {
+export function jobBankLink(rules: Rules, opts: { keyword?: string; province?: string; anyCandidate?: boolean } = {}): { url: string; filtered: boolean } {
   const t = rules.jobBank.searchTemplate;
   if (!t || !opts.keyword) return { url: rules.jobBank.foreignJobsUrl, filtered: false };
-  const url = t
+  let url = t
     .replace('{keyword}', encodeURIComponent(opts.keyword))
     .replace('{province}', encodeURIComponent(opts.province ?? ''));
+  // Filtre province vérifié à la main (fprov) : ajouté seulement si le modèle n'a pas déjà {province}.
+  const p = rules.jobBank.provinceParam;
+  if (opts.province && p && !t.includes('{province}')) url += p.replace('{province}', encodeURIComponent(opts.province));
+  // Retrouver UNE annonce précise : sans le filtre « candidats étrangers », qui la cacherait si l'employeur ne l'a pas coché.
+  if (opts.anyCandidate) url = url.replace(/([?&])fglo=1&?/, '$1').replace(/[?&]$/, '');
   return { url, filtered: true };
 }

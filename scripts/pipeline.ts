@@ -16,6 +16,7 @@ import { fetchPermits, type PermitsStats } from './fetch-permits';
 import { fetchInternational, type InternationalStats } from './fetch-international';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
 import { fetchProposals, type ProposalsStats } from './fetch-proposals';
+import { fetchCurrentOffers, type CurrentOffersStats } from './fetch-current-offers';
 import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
@@ -58,6 +59,12 @@ try { intl = await fetchInternational(rules, nocData); } catch (e) {
   intl = { error: e instanceof Error ? e.message : String(e) };
   console.warn(`  ⚠ Offres internationales non mises à jour : ${intl.error}`);
 }
+// Après les offres internationales (pour marquer celles qui y figurent).
+let current: CurrentOffersStats | { error: string };
+try { current = await fetchCurrentOffers(rules, nocData); } catch (e) {
+  current = { error: e instanceof Error ? e.message : String(e) };
+  console.warn(`  ⚠ Offres actuelles non mises à jour : ${current.error}`);
+}
 // Offres du mois (données ouvertes) : une erreur ne bloque pas le reste, l'appli fonctionne sans.
 let postings: PostingsStats | { error: string };
 try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
@@ -65,7 +72,7 @@ try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
   console.warn(`  ⚠ Offres du Guichet-Emplois non mises à jour : ${postings.error}`);
 }
 
-writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl, proposals));
+writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl, proposals, current));
 console.log('✔ Terminé. Rapport : docs/data-report.md');
 
 // ---------------------------------------------------------------------------
@@ -80,8 +87,8 @@ function pct(a: number, total: number): string {
   return total ? `${Math.round((100 * a) / total)} %` : '–';
 }
 
-function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | { error: string }, pr: ProposalsStats): string {
-  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file] : []), ...(pr.file ? [pr.file] : [])];
+function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | { error: string }, pr: ProposalsStats, cu: CurrentOffersStats | { error: string }): string {
+  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file] : []), ...(pr.file ? [pr.file] : []), ...('file' in cu && cu.file ? [cu.file] : [])];
   const totalPos = l.geo.positionsCma + l.geo.positionsOutside + l.geo.positionsUnknown;
   const totalRec = l.geo.cma + l.geo.outside + l.geo.unknown;
   const recurringTargets = l.recurring.slice(0, 20);
@@ -166,7 +173,11 @@ ${'error' in p ? `⚠ Non mises à jour : ${p.error}` : `- Mois ${p.month} : ${n
 
 ${'error' in it ? `⚠ Non mises à jour : ${it.error}` : it.skipped ? `Étape sautée : ${it.skipped}.` : `- ${it.queries} requêtes, ${n(it.seen)} annonces lues, **${n(it.kept)} ouvertes à l'international**, ${n(it.closed)} écartées (Canada exigé).`}
 
-## 10. Règles en préparation
+## 10. Offres actuelles avec lien direct (API Adzuna)
+
+${'error' in cu ? `⚠ Non mises à jour : ${cu.error}` : cu.skipped ? `Étape sautée : ${cu.skipped}.` : `- ${cu.queries} requêtes, ${n(cu.seen)} annonces lues, **${n(cu.kept)} gardées** (titre conforme au métier).`}
+
+## 11. Règles en préparation
 
 ${pr.error ? `⚠ Non vérifiées : ${pr.error}` : `- ${pr.checked} page(s) vérifiée(s). ${pr.changed.length ? `**⚠ Page modifiée depuis la dernière vérification : ${pr.changed.join(', ')} — relire et mettre à jour rules.json (proposals).**` : 'Aucune page modifiée.'}`}
 `;

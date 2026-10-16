@@ -11,6 +11,7 @@ import { Badge, PathwayCards, Sources } from '../components/common';
 import { Opportunities } from '../components/Opportunities';
 import { RecentPostings } from '../components/Postings';
 import { InternationalOffers } from '../components/InternationalOffers';
+import { CurrentOffers } from '../components/CurrentOffers';
 import { loadCmaLookup, loadDesignated, loadEmployers, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
@@ -104,6 +105,7 @@ export function Jobs() {
       <p class="muted">{tr(S.jobsLinkNote, lang)}</p>
       <p class="callout">{tr(S.jobsIcon, lang)}</p>
       <InternationalOffers nocs={nocs} provinces={provinces} lang={lang} />
+      <CurrentOffers nocs={nocs} provinces={provinces} lang={lang} />
 
       {nocs.length > 0 && (
         <>
