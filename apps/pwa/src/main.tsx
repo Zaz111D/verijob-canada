@@ -4,6 +4,7 @@ import { Layout, useRoute } from './components/common';
 import { CheckConsultant } from './pages/CheckConsultant';
 import { CheckCv } from './pages/CheckCv';
 import { SampleCvPage } from './pages/SampleCv';
+import { Apply } from './pages/Apply';
 import { CheckEmployer } from './pages/CheckEmployer';
 import { CheckOffer } from './pages/CheckOffer';
 import { Home } from './pages/Home';
@@ -30,6 +31,7 @@ function App() {
         : route === 'profil' ? <Profile />
         : route === 'cv' ? <CheckCv />
         : route === 'cv-exemple' ? <SampleCvPage />
+        : route === 'postuler' ? <Apply />
         : <Home />}
     </Layout>
   );
