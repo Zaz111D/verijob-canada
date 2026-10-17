@@ -38,4 +38,16 @@ function App() {
 initLang();
 render(<App />, document.getElementById('app')!);
 // Service worker : installation et fonctionnement hors ligne (mise à jour automatique).
-registerSW({ immediate: true });
+// Sur un téléphone, l'appli reste ouverte longtemps ou est rouverte depuis l'écran d'accueil : sans vérification,
+// l'ancienne version s'affichait jusqu'à la DEUXIÈME ouverture. On vérifie donc à chaque retour dans l'appli et
+// toutes les heures ; la nouvelle version prend la main et la page se recharge d'elle-même (registerType autoUpdate).
+const UPDATE_EVERY_MS = 60 * 60 * 1000;
+registerSW({
+  immediate: true,
+  onRegisteredSW(_url, registration) {
+    if (!registration) return;
+    const check = () => { if (navigator.onLine) void registration.update().catch(() => undefined); };
+    setInterval(check, UPDATE_EVERY_MS);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+  },
+});

@@ -412,6 +412,7 @@ export const STRINGS = {
   quebecTitle: { fr: 'Travailler au Québec : les étapes (règles du Québec)', en: 'Working in Quebec: the steps (Quebec rules)' },
   quebecArrima: { fr: 'Arrima : déclaration d’intérêt et Portail employeurs', en: 'Arrima: expression of interest and Employer Portal' },
   familyTitle: { fr: 'Venir en couple ou en famille', en: 'Coming as a couple or family' },
+  versionLabel: { fr: 'Version', en: 'Version' },
   profilesTitle: { fr: 'Profils sur ce téléphone', en: 'Profiles on this phone' },
   profilesIntro: {
     fr: 'Créez un profil par personne (vous, votre conjoint·e, un proche) : chacun garde ses métiers, ses langues, ses provinces et son suivi de candidatures. Tout reste sur ce téléphone, sans compte.',

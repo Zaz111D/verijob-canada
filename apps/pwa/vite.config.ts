@@ -3,8 +3,15 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 // Chemins relatifs + routage par « # » : le site fonctionne tel quel sur GitHub Pages ou Cloudflare Pages.
+// Version affichée en bas de l'écran (commit construit par GitHub Actions ; « dev » en local).
+const BUILD = (process.env.GITHUB_SHA ?? '').slice(0, 7) || 'dev';
+
 export default defineConfig({
   base: './',
+  define: {
+    __BUILD__: JSON.stringify(BUILD),
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
+  },
   plugins: [
     preact(),
     VitePWA({

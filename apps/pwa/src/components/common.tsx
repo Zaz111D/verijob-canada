@@ -65,6 +65,7 @@ export function Layout({ route, children }: { route: Route; children: ComponentC
       <footer class="disclaimer">
         <p>{tr(DISCLAIMER, lang)}</p>
         <p><a href="#/veille">{tr(S.navWatch, lang)}</a> · <a href="#/consultant">{tr(S.cardConsultantTitle, lang)}</a></p>
+        <p class="muted version">{tr(S.versionLabel, lang)} {__BUILD__} · {__BUILD_DATE__}</p>
       </footer>
       <nav class="tabs" aria-label="Navigation">
         {NAV.map((n) => (
