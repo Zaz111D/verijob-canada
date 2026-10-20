@@ -4,12 +4,12 @@
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import {
-  buildSampleCv, detectNocInText, normalize, sampleCvToText, sourceRef, todayIso,
+  buildSampleCv, findNoc, detectNocInText, normalize, sampleCvToText, sourceRef, todayIso,
   type NocElementsData, type SampleCv,
 } from '@verijob/core';
 import { Sources } from '../components/common';
 import { sampleCvToDocx } from '../cvdocx';
-import { loadNocElements, nocData, rules } from '../data';
+import { curatedNocData, isCurated, loadNocElements, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
 import { openCvCheck } from './CheckCv';
@@ -84,7 +84,7 @@ function Preview({ cv, lang }: { cv: SampleCv; lang: Lang }) {
 export function SampleCvPage() {
   const lang = useLang();
   const profile = useProfile();
-  const [elements, setElements] = useState<NocElementsData>();
+  const [elements, setElements] = useState<NocElementsData | null>();
   const [noc, setNoc] = useState('');
   const [cvLang, setCvLang] = useState<Lang>(lang);
   const [title, setTitle] = useState('');
@@ -92,7 +92,6 @@ export function SampleCvPage() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    void loadNocElements().then(setElements);
     let h: Handoff = {};
     try { h = JSON.parse(sessionStorage.getItem(HANDOFF_KEY) ?? '{}') as Handoff; sessionStorage.removeItem(HANDOFF_KEY); } catch { /* rien */ }
     setTitle(h.title ?? '');
@@ -106,6 +105,17 @@ export function SampleCvPage() {
 
   // Le profil est lu de façon asynchrone : on reprend son 1er métier dès qu'il arrive, si aucun n'est choisi.
   useEffect(() => { if (!noc && profile.targetNocs?.[0]) setNoc(profile.targetNocs[0]); }, [profile.targetNocs?.join()]);
+  // Fonctions officielles du métier choisi (incluses pour les métiers suivis, sinon téléchargées) ; null = indisponibles.
+  useEffect(() => {
+    if (!noc) return;
+    setElements(undefined);
+    void loadNocElements(noc).then((e) => setElements(e ?? null));
+  }, [noc]);
+  // Liste du choix : métiers suivis, puis ceux du profil (et celui de l'offre) s'ils viennent du catalogue complet.
+  const jobOptions = useMemo(() => {
+    const extra = [...(profile.targetNocs ?? []), noc].filter((c) => c && !isCurated(c));
+    return [...curatedNocData.nocs, ...[...new Set(extra)].map((c) => findNoc(nocData, c)).filter((n) => !!n)];
+  }, [profile.targetNocs?.join(), noc]);
 
   const cv = useMemo(() => {
     if (!elements || !noc) return undefined;
@@ -137,7 +147,7 @@ export function SampleCvPage() {
         <label>{tr(S.sampleJob, lang)}
           <select value={noc} onChange={(e) => setNoc((e.target as HTMLSelectElement).value)}>
             <option value="">{tr(S.sampleChooseJob, lang)}</option>
-            {nocData.nocs.map((n) => <option value={n.code}>{lang === 'fr' ? n.titleFr : n.titleEn} ({n.code})</option>)}
+            {jobOptions.map((n) => <option value={n!.code}>{lang === 'fr' ? n!.titleFr : n!.titleEn} ({n!.code})</option>)}
           </select>
         </label>
         <label>{tr(S.sampleLang, lang)}
@@ -150,7 +160,8 @@ export function SampleCvPage() {
       <label for="sample-offer">{tr(S.sampleOfferText, lang)}</label>
       <textarea id="sample-offer" rows={4} value={text} onInput={(e) => setText((e.target as HTMLTextAreaElement).value)} />
 
-      {!elements && <p role="status">{tr(S.loading, lang)}</p>}
+      {noc && elements === undefined && <p role="status">{tr(S.loading, lang)}</p>}
+      {elements === null && <p class="warn">{tr(S.sampleNoElements, lang)}</p>}
       {cv && (
         <>
           {cv.transferFrom && <p class="ok">{tr(S.sampleTransfer, lang)}</p>}

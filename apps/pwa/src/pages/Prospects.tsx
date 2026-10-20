@@ -10,7 +10,7 @@ import {
 import { Badge } from '../components/common';
 import { AfricaBadge, AfricaSection } from '../components/Africa';
 import { ContactLinks, HowToApply, websiteSearchUrl } from '../components/ContactLinks';
-import { loadDesignated, loadPriorities, loadProspects, nocData, rules, type CommunityPriority, type DesignatedEmployer } from '../data';
+import { loadDesignated, loadPriorities, loadProspectsFor, nocData, rules, type CommunityPriority, type DesignatedEmployer } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { upsertApplication, useApplications, useProfile, type StoredProfile } from '../store';
 import { buildMessage } from '../templates';
@@ -149,7 +149,10 @@ export function Prospects() {
   };
 
   useEffect(() => {
-    loadProspects().then((f) => { setAll(f.data); setWindowStart(f.source.window?.[0] ?? ''); }).catch(() => setError(true));
+    setAll(undefined);
+    loadProspectsFor(profile.targetNocs ?? []).then((f) => { setAll(f.data); setWindowStart(f.window?.[0] ?? ''); }).catch(() => setError(true));
+  }, [(profile.targetNocs ?? []).join()]);
+  useEffect(() => {
     loadDesignated().then((f) => setDesignated(f.data)).catch(() => undefined);
     loadPriorities().then((f) => setPriorities(f.data)).catch(() => undefined);
   }, []);

@@ -13,7 +13,7 @@ import { RecentPostings } from '../components/Postings';
 import { ApplyNow } from '../components/CurrentOffers';
 import { ProfileBanner } from '../components/ProfileBanner';
 import { QuebecGuide } from '../components/QuebecFamily';
-import { loadCmaLookup, loadDesignated, loadEmployers, loadProspects, nocData, rules } from '../data';
+import { curatedNocData, isCurated, loadCmaLookup, loadDesignated, loadEmployers, loadProspectsFor, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
 
@@ -75,8 +75,8 @@ export function Jobs() {
   const [prospects, setProspects] = useState<Prospect[]>();
   useEffect(() => {
     loadCmaLookup().then((f) => setLookup(f.data)).catch(() => undefined);
-    loadProspects().then((f) => setProspects(f.data)).catch(() => undefined);
   }, []);
+  useEffect(() => { if (nocs.length) loadProspectsFor(nocs).then((f) => setProspects(f.data)).catch(() => undefined); }, [nocs.join()]);
   const employerCount = useMemo(
     () => (prospects && nocs.length ? filterProspects(prospects, { nocs, provinces }).length : undefined),
     [prospects, nocs.join(), provinces.join()],
@@ -156,7 +156,7 @@ export function Jobs() {
         <label for="enoc">{tr(S.evalJob, lang)}</label>
         <select id="enoc" value={noc} onChange={(e) => setNoc((e.target as HTMLSelectElement).value)}>
           <option value="">{tr(S.choose, lang)}</option>
-          {nocData.nocs.map((n) => <option value={n.code}>{n.code} – {lang === 'fr' ? n.titleFr : n.titleEn}</option>)}
+          {[...curatedNocData.nocs, ...nocs.filter((c) => !isCurated(c)).map((c) => findNoc(nocData, c)!).filter(Boolean)].map((n) => <option value={n.code}>{n.code} – {lang === 'fr' ? n.titleFr : n.titleEn}</option>)}
         </select>
         <div class="grid2">
           <label>{tr(S.province, lang)}

@@ -304,6 +304,8 @@ export interface NocEntry {
   searchFr?: string;
   probableNaics: string | null;
   keywords: string[];
+  /** Mots qui désignent un métier voisin : si le texte les contient, ce n'est pas ce métier. */
+  notKeywords?: string[];
 }
 
 export interface NocData {

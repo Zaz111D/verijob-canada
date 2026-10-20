@@ -7,12 +7,13 @@ import {
   type LanguageLevels, type PathwayResult, type ProvinceCode,
 } from '@verijob/core';
 import { PathwayCards } from '../components/common';
-import { nocData, rules } from '../data';
+import { curatedNocData, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { eraseProfile, saveProfile, useProfile, useProfiles, type StoredProfile } from '../store';
 import { openSampleCv } from './SampleCv';
 import { ProfileSwitcher } from '../components/Profiles';
 import { FamilyCard } from '../components/QuebecFamily';
+import { JobSearch } from '../components/JobSearch';
 
 const SKILLS = ['speaking', 'listening', 'reading', 'writing'] as const;
 const LEVELS = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -95,6 +96,7 @@ function Routes({ profile }: { profile: StoredProfile }) {
         return (
           <div class="route-group">
             <h3>{code} – {n ? (lang === 'fr' ? n.titleFr : n.titleEn) : ''} <span class="muted">(TEER {teerOf(code)})</span></h3>
+            {teerOf(code) <= 3 && <p class="callout">{tr(S.expressEntryNote, lang).replace('{teer}', String(teerOf(code)))} <a href={sourceRef(rules, rules.expressEntry.source, todayIso()).url[lang]} target="_blank" rel="noopener noreferrer">{tr(S.officialPage, lang)} ↗</a></p>}
             <PathwayCards results={res} />
             <button type="button" onClick={() => openSampleCv({ noc: code, province })}>{tr(S.sampleTitle, lang)}</button>
           </div>
@@ -116,7 +118,8 @@ export function Profile() {
     list?.includes(v) ? list.filter((x) => x !== v) : [...(list ?? []), v];
 
   const countries = [...AFRICAN_COUNTRIES].map((c) => ({ c, name: countryName(c, lang) })).sort((a, b) => a.name.localeCompare(b.name, lang));
-  const groups = [...new Set(nocData.nocs.map((n) => n.group))];
+  // Cases à cocher : les métiers suivis ; les autres métiers se cherchent dans le catalogue complet (JobSearch).
+  const groups = [...new Set(curatedNocData.nocs.map((n) => n.group))];
 
   return (
     <section>
@@ -142,7 +145,7 @@ export function Profile() {
           <legend>{tr(S.targetJobs, lang)}</legend>
           {groups.map((g) => (
             <div class="checks">
-              {nocData.nocs.filter((n) => n.group === g).map((n) => (
+              {curatedNocData.nocs.filter((n) => n.group === g).map((n) => (
                 <label class="check">
                   <input type="checkbox" checked={!!p.targetNocs?.includes(n.code)} onChange={() => setP((q) => ({ ...q, targetNocs: toggle(q.targetNocs, n.code) }))} />
                   {lang === 'fr' ? n.titleFr : n.titleEn} <span class="muted">({n.code})</span>
@@ -150,6 +153,9 @@ export function Profile() {
               ))}
             </div>
           ))}
+          <JobSearch lang={lang} selected={p.targetNocs ?? []}
+            onAdd={(code) => setP((q) => ({ ...q, targetNocs: [...new Set([...(q.targetNocs ?? []), code])] }))}
+            onRemove={(code) => setP((q) => ({ ...q, targetNocs: (q.targetNocs ?? []).filter((c) => c !== code) }))} />
           <label for="current">{tr(S.currentJob, lang)}</label>
           <select id="current" value={p.currentNoc ?? ''} onChange={(e) => { const v = (e.target as HTMLSelectElement).value; setP((q) => ({ ...q, currentNoc: v || undefined })); }}>
             <option value="">{tr(S.currentJobNone, lang)}</option>

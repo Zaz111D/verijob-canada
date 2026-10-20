@@ -158,6 +158,11 @@ Ajoutez une ligne dans `data/manual/recrutement-afrique.csv` seulement après av
 ### Règles en préparation
 `rules.json › proposals` liste les règles annoncées mais pas en vigueur (ex. test de langue obligatoire pour certains permis du Programme de mobilité internationale). Chaque semaine, le pipeline relit la date de modification de la page officielle (`proposals-status.json`) : si elle a changé, l'appli et `docs/data-report.md` (§ 11) le signalent. Relisez alors la page et mettez à jour `status`, `detailFr/En` et `checkedAt`.
 
+### Tous les métiers
+- **33 métiers suivis** (`data/noc.json`) : données complètes (mots-clés, terme de recherche français, offres actuelles Adzuna, exemptions estimées). Les 10 derniers (cuisinier, superviseur de services alimentaires, camionneur, adjoint administratif, superviseur des ventes au détail, charpentier, soudeur, mécanicien automobile, éducateur de la petite enfance, infirmier autorisé) ont été choisis d'après le nombre de postes EIMT.
+- **Les 516 métiers de la CNP 2021** (`data/noc-catalog.json`, `data/noc-search.json`, produits par `npx tsx scripts/build-noc-elements.ts`) : n'importe quel métier se cherche dans Mon profil (titres et exemples officiels). Pour ces métiers : employeurs par métier (`prospects/<CNP>.json`), fonctions officielles pour le CV d'exemple (`noc/<CNP>.json`), liens Guichet-Emplois ; pas d'offres Adzuna (quota).
+- Métiers qualifiés (FEER 0 à 3) : note renvoyant à Entrée express, non évaluée en détail.
+
 ### Québec et couple
 `rules.json › quebec` : étapes officielles du MIFI (offre d'emploi, déclaration d'intérêt Arrima et Portail employeurs, EIMT avec autorisation conjointe, CAQ puis permis de travail, français niveau 4 à l'oral pour renouveler le CAQ après 3 ans à partir du 17 déc. 2028, PSTQ/PEQ pour rester). Affiché dans **Emplois** et **Démarcher** quand le Québec est visé. `rules.json › family` : permis de travail ouvert du conjoint (IRCC, et page du MIFI), avec ses exceptions. Pages à revérifier à chaque révision.
 

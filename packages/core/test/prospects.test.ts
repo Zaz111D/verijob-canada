@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { filterProspects, prospectPathway, prospectsToCsv, type Prospect } from '../src';
+import { filterProspects, mergeProspects, prospectPathway, prospectsToCsv, type Prospect } from '../src';
 import { nocData, rules, TODAY } from './helpers';
 
 const base = { k: '', pc: '', neg: 0 };
@@ -56,5 +56,22 @@ describe('prospectsToCsv', () => {
     expect(csv.charCodeAt(0)).toBe(0xfeff);
     expect(csv).toContain('Employeur;Postes\r\n');
     expect(csv).toContain('"Ferme ""Les Pins""; Inc";12');
+  });
+});
+
+describe('mergeProspects (un fichier par métier)', () => {
+  it('un même employeur n’apparaît qu’une fois, avec les postes de chaque métier', () => {
+    const a: Prospect = { ...base, n: 'Atelier X', k: 'atelier x', p: 'QC', c: 'Laval', pc: 'H7A 1A1', g: '-', q: 3, lq: '2025Q4', s: ['LW'], j: [['64200', 4]] };
+    const b: Prospect = { ...a, q: 5, lq: '2026Q1', s: ['HW'], j: [['94132', 9]], neg: 1, nw: 1 };
+    const other: Prospect = { ...a, k: 'autre', n: 'Autre', j: [['94132', 1]] };
+    const m = mergeProspects([[a], [b, other]]);
+    expect(m).toHaveLength(2);
+    const x = m.find((p) => p.k === 'atelier x')!;
+    expect(x.j).toEqual([['94132', 9], ['64200', 4]]);
+    expect(x.q).toBe(5);
+    expect(x.lq).toBe('2026Q1');
+    expect(x.s.sort()).toEqual(['HW', 'LW']);
+    expect(x.neg).toBe(1);
+    expect(x.nw).toBe(1);
   });
 });

@@ -26,7 +26,7 @@ export {
   type Application, type ApplicationOrigin, type ApplicationStatus, type TrackingExport, type Verification,
 } from './tracking';
 export { programStatuses, upcomingDates, changeLog, jobBankLink, type ProgramStatus, type ProgramState, type UpcomingDate, type ChangeEntry } from './watch';
-export { filterProspects, prospectPathway, prospectsToCsv, totalPositions, RECURRING_QUARTERS, type Prospect, type ProspectFilter } from './prospects';
+export { filterProspects, mergeProspects, prospectPathway, prospectsToCsv, totalPositions, RECURRING_QUARTERS, type Prospect, type ProspectFilter } from './prospects';
 export {
   searchLinks, recruitmentEvents, networks, riskyChannels,
   type SearchLink, type EventInfo, type NetworkInfo,

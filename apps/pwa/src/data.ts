@@ -5,13 +5,30 @@
  */
 import rulesJson from '../../../data/rules.json';
 import nocJson from '../../../data/noc.json';
+import catalogJson from '../../../data/noc-catalog.json';
 import {
-  filterNews, makeWageLookup, parseExpressEntryRounds,
+  filterNews, makeWageLookup, mergeProspects, parseExpressEntryRounds,
   type CmaLookup, type CurrentOffer, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
 } from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
-export const nocData = nocJson as unknown as NocData;
+/** Métiers SUIVIS (données complètes : mots-clés, recherche d'offres Adzuna, voies estimées). */
+export const curatedNocData = nocJson as unknown as NocData;
+const curatedCodes = new Set(curatedNocData.nocs.map((n) => n.code));
+export const isCurated = (code: string) => curatedCodes.has(code);
+/**
+ * Tous les métiers de la CNP 2021 : les métiers suivis, puis les 516 groupes du catalogue officiel (titre et nom court),
+ * pour qu'une personne de n'importe quel métier puisse l'indiquer dans son profil. Groupe « autre », sans mots-clés.
+ */
+export const nocData: NocData = {
+  ...curatedNocData,
+  nocs: [
+    ...curatedNocData.nocs,
+    ...(catalogJson as { nocs: Array<{ c: string; tf: string; te: string; jf: string; je: string }> }).nocs
+      .filter((n) => !curatedCodes.has(n.c))
+      .map((n) => ({ code: n.c, titleFr: n.tf, titleEn: n.te, jobFr: n.jf, jobEn: n.je, group: 'autre', probableNaics: null, keywords: [] })),
+  ],
+};
 
 interface DataFile<T> {
   source: { name: string; publisher: string; url: string; licence: string; files?: string[]; window?: string[] };
@@ -59,8 +76,27 @@ export const loadEmployersIndex = () => load<EmployersIndex>('employers-index.js
 export const loadDesignated = () => load<DesignatedEmployer[]>('designated-employers.json');
 export const loadCmaLookup = () => load<CmaLookup>('cma-lookup.json');
 /** Fonctions officielles des métiers (CNP 2021) : chargées seulement par la page « CV d'exemple ». */
-export const loadNocElements = () => import('../../../data/noc-elements.json').then((m) => m.default as unknown as NocElementsData);
+const loadCuratedElements = () => import('../../../data/noc-elements.json').then((m) => m.default as unknown as NocElementsData);
+/** Fonctions officielles d'un métier : incluses pour les métiers suivis, sinon fichier noc/<CNP>.json (pipeline). */
+export async function loadNocElements(code: string): Promise<NocElementsData | undefined> {
+  const curated = await loadCuratedElements();
+  if (curated.nocs.some((n) => n.code === code)) return curated;
+  try {
+    const r = await fetch(`./data/noc/${code}.json`);
+    return r.ok ? ((await r.json()) as NocElementsData) : undefined;
+  } catch { return undefined; }
+}
 export const loadProspects = () => load<Prospect[]>('prospects.json');
+/**
+ * Employeurs (recruteurs réguliers ou nouveaux) des métiers donnés : un fichier par métier, fusionnés.
+ * Sans métier : la liste des métiers suivis. Un métier sans employeur n'a pas de fichier (ignoré).
+ */
+export async function loadProspectsFor(nocs: string[]): Promise<{ data: Prospect[]; window?: string[] }> {
+  if (!nocs.length) { const f = await loadProspects(); return { data: f.data, window: f.source.window }; }
+  const files = await Promise.all(nocs.map((c) => load<Prospect[]>(`prospects/${c}.json`).catch(() => undefined)));
+  const ok = files.filter((f): f is DataFile<Prospect[]> => !!f);
+  return { data: mergeProspects(ok.map((f) => f.data)), window: ok[0]?.source.window };
+}
 export interface CommunityPriority { community: string; program: 'RCIP' | 'FCIP'; noc: string; title: string; year: string; sourceUrl: string; recordedAt: string; notes?: string }
 export const loadPriorities = () => load<CommunityPriority[]>('community-priorities.json');
 

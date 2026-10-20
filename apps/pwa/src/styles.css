@@ -221,3 +221,8 @@ label.check input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; f
 .explain > summary { cursor: pointer; font-size: 0.9rem; color: var(--brand); margin: 6px 0; }
 
 .version { font-size: 0.75rem; }
+
+/* Recherche parmi tous les métiers. */
+.job-search { margin-top: 12px; }
+.job-results { list-style: none; padding: 0; margin: 6px 0; }
+.job-results li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); }

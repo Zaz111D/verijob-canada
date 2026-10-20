@@ -353,3 +353,12 @@ Demande : intégrer le profil de l'épouse (CAP en industrie de l'habillement, c
 - **Recherche en français** (`data/noc.json › searchFr`, 20 métiers) : offres actuelles passées de 184 à 435, dont 229 au Québec ; couture 34 offres (20 au Québec), machines à coudre 25 (16 au Québec).
 - **Postes d'un autre niveau** retirés même si leur titre contient le mot-clé du métier (« Architecte paysagiste » pour 85121 : 5 offres le 16 oct. 2026) ; filtre aussi appliqué aux offres reprises entre deux lundis.
 - **Alerte non reproduite** : « frais demandés » sur « Couturier/couturière – Auvents W Lecours », alors que le texte complet lu sur Adzuna ne mentionne aucun frais (salaire 18 à 20 $/h). Le texte fourni par l'API diffère sans doute de la page. Désormais, chaque alerte garde la phrase qui l'a déclenchée (`scamWhy`), affichée sur la fiche : l'utilisateur juge lui-même, et les fausses alertes deviennent faciles à corriger. Visible à la prochaine mise à jour des offres (lundi).
+
+## 24. Tous les métiers (17 oct. 2026)
+
+Demande : « fais-le pour tout type de profil ». Les listes d'EIMT couvrent 478 métiers ; l'appli n'en suivait que 23.
+
+- **10 métiers ajoutés aux métiers suivis** (postes EIMT sur 8 trimestres) : cuisiniers 63200 (14 708), superviseurs des services alimentaires 62020 (15 129), camionneurs 73300 (11 320), adjoints administratifs 13110 (4 707), superviseurs des ventes au détail 62010 (4 056), charpentiers 72310 (3 390), soudeurs 72106 (3 365), mécaniciens automobiles 72410 (2 684), éducateurs de la petite enfance 42202 (2 060), infirmiers autorisés 31301 (1 488, ajouté car très visé par les candidats d'Afrique). Mots-clés vérifiés contre les conflits (« aide-cuisinier » reste 65201 ; « infirmière auxiliaire » exclue de 31301 par `notKeywords`).
+- **Catalogue des 516 groupes de base** (fichier « éléments » de la CNP 2021) : titre officiel et nom court (exemple illustratif qui commence comme le titre, sans « apprenti », « chef »…). Recherche dans Mon profil sur les titres et les exemples officiels.
+- **Données par métier** (pipeline) : employeurs récurrents ou nouveaux pour chacun des 401 métiers qui en ont (4,2 Mo au total, le plus gros : cuisiniers, 300 Ko) ; fonctions officielles de 515 métiers sur 516 pour le CV d'exemple (1 sans appariement FR/EN fiable). Chargés seulement pour les métiers du profil.
+- **Limite** : Entrée express (voie principale des métiers FEER 0 à 3) n'est pas évaluée en détail ; une note renvoie à la page officielle.

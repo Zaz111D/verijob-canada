@@ -23,6 +23,7 @@ import { fetchLmia, type LmiaStats } from './fetch-lmia';
 import { fetchWages, type WagesStats } from './fetch-wages';
 import { DOCS_DIR, OUT_DIR, ROOT } from './lib/paths';
 import { reusePrevious } from './lib/previous';
+import { writeAllNocElements } from './build-noc-elements';
 import type { WrittenFile } from './lib/output';
 
 // Sur Cloudflare (Workers Builds : WORKERS_CI, Pages : CF_PAGES), les serveurs de construction sont bloqués
@@ -44,6 +45,8 @@ const african = buildAfricanRecruiters(today);
 const geo = await fetchGeo(rules);
 const lmia = await fetchLmia(rules, nocData, geo.lookup, quarters);
 const wages = await fetchWages(nocData);
+// CV d'exemple pour tous les métiers : fonctions officielles de chaque métier (CNP 2021). Non bloquant.
+try { await writeAllNocElements(); } catch (e) { console.warn(`  ⚠ Fonctions officielles par métier non écrites : ${e instanceof Error ? e.message : String(e)}`); }
 const ee = await fetchExpressEntry(rules);
 let proposals: ProposalsStats;
 try { proposals = await fetchProposals(rules, today); } catch (e) {

@@ -41,17 +41,19 @@ export default defineConfig({
         ],
         // pdf.js (lecture des CV en PDF, environ 1,7 Mo) n'est pas préchargé : il est téléchargé
         // la première fois qu'on vérifie un CV PDF, puis gardé en cache (règle plus bas).
-        globIgnores: ['**/assets/pdf-*.js', '**/assets/pdf.worker*'],
+        // pdf.js et l'index de recherche des 516 métiers : chargés seulement quand on en a besoin (pas à l'installation).
+        globIgnores: ['**/assets/pdf-*.js', '**/assets/pdf.worker*', '**/assets/noc-search-*.js'],
         navigateFallback: 'index.html',
         // Les listes d'employeurs par province (plus lourdes) sont gardées en cache après la 1re consultation.
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => /\/data\/(employers-[A-Z]{2}|prospects)\.json$/.test(url.pathname),
+            // Employeurs par province, par métier (prospects/<CNP>.json) et fonctions officielles par métier (noc/<CNP>.json).
+            urlPattern: ({ url }) => /\/data\/(employers-[A-Z]{2}|prospects|prospects\/\d{5}|noc\/\d{5})\.json$/.test(url.pathname),
             handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'verijob-employeurs', expiration: { maxEntries: 20 } },
+            options: { cacheName: 'verijob-employeurs', expiration: { maxEntries: 60 } },
           },
           {
-            urlPattern: ({ url }) => /\/assets\/pdf(\.worker[^/]*|-[^/]*)\.m?js$/.test(url.pathname),
+            urlPattern: ({ url }) => /\/assets\/(pdf(\.worker[^/]*|-[^/]*)|noc-search-[^/]*)\.m?js$/.test(url.pathname),
             handler: 'CacheFirst',
             options: { cacheName: 'verijob-pdfjs', expiration: { maxEntries: 6 } },
           },

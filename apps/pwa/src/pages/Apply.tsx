@@ -13,7 +13,7 @@ import {
 import { Badge } from '../components/common';
 import { ContactLinks } from '../components/ContactLinks';
 import { ProfileBanner } from '../components/ProfileBanner';
-import { loadCurrentOffers, loadInternationalOffers, loadProspects, nocData, rules } from '../data';
+import { loadCurrentOffers, loadInternationalOffers, loadProspectsFor, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { upsertApplication, useApplications, useProfile } from '../store';
 import { openSampleCv } from './SampleCv';
@@ -160,8 +160,8 @@ function Employers({ nocs, provinces, lang }: { nocs: string[]; provinces: Provi
   useEffect(() => {
     loadCurrentOffers().then((f) => setCurrent(f.data)).catch(() => undefined);
     loadInternationalOffers().then((f) => setIntl(f.data)).catch(() => undefined);
-    loadProspects().then((f) => setProspects(f.data)).catch(() => undefined);
   }, []);
+  useEffect(() => { loadProspectsFor(nocs).then((f) => setProspects(f.data)).catch(() => undefined); }, [nocs.join()]);
   const list = useMemo(() => {
     if (!nocs.length) return [];
     const mine = (o: { noc: string; province?: ProvinceCode }) => nocs.includes(o.noc) && (!provinces.length || !o.province || provinces.includes(o.province));

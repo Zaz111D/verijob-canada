@@ -190,28 +190,39 @@ export async function fetchLmia(rules: Rules, nocData: NocData, lookup: CmaLooku
   // Liste de démarchage : recruteurs récurrents (≥ 2 trimestres) pour les métiers ciblés,
   // + NOUVEAUX recruteurs : première EIMT positive (tous métiers) dans les 2 derniers trimestres publiés,
   // aucune dans les trimestres précédents de la fenêtre.
-  const targets = new Set(nocData.nocs.map((n) => n.code));
   const newSince = quarters.at(-2) ?? '';
-  const prospects: Prospect[] = [];
-  for (const r of records.values()) {
-    const target = r.p.filter((e) => targets.has(e[2]));
-    const qs = [...new Set(target.map((e) => e[0]))].sort();
-    const first = r.p.map((e) => e[0]).sort()[0] ?? '';
-    const isNew = quarters.length >= 4 && !!first && first >= newSince;
-    if (!qs.length || (qs.length < 2 && !isNew)) continue;
-    const byNoc = new Map<string, number>();
-    for (const e of target) byNoc.set(e[2], (byNoc.get(e[2]) ?? 0) + e[4]);
-    prospects.push({
-      n: r.n, k: r.k, p: r.province, c: r.c, pc: r.pc, g: r.g, q: qs.length, lq: qs.at(-1)!,
-      s: [...new Set(target.map((e) => e[1]))],
-      j: [...byNoc.entries()].sort((a, b) => b[1] - a[1]),
-      neg: r.x.filter((e) => targets.has(e[2])).reduce((s, e) => s + e[4], 0),
-      f: first,
-      ...(isNew ? { nw: 1 as const } : {}),
-    });
-  }
-  prospects.sort((a, b) => b.q - a.q || a.k.localeCompare(b.k));
+  const prospectsFor = (targets: Set<string>): Prospect[] => {
+    const out: Prospect[] = [];
+    for (const r of records.values()) {
+      const target = r.p.filter((e) => targets.has(e[2]));
+      const qs = [...new Set(target.map((e) => e[0]))].sort();
+      const first = r.p.map((e) => e[0]).sort()[0] ?? '';
+      const isNew = quarters.length >= 4 && !!first && first >= newSince;
+      if (!qs.length || (qs.length < 2 && !isNew)) continue;
+      const byNoc = new Map<string, number>();
+      for (const e of target) byNoc.set(e[2], (byNoc.get(e[2]) ?? 0) + e[4]);
+      out.push({
+        n: r.n, k: r.k, p: r.province, c: r.c, pc: r.pc, g: r.g, q: qs.length, lq: qs.at(-1)!,
+        s: [...new Set(target.map((e) => e[1]))],
+        j: [...byNoc.entries()].sort((a, b) => b[1] - a[1]),
+        neg: r.x.filter((e) => targets.has(e[2])).reduce((s, e) => s + e[4], 0),
+        f: first,
+        ...(isNew ? { nw: 1 as const } : {}),
+      });
+    }
+    return out.sort((a, b) => b.q - a.q || a.k.localeCompare(b.k));
+  };
+  const prospects = prospectsFor(new Set(nocData.nocs.map((n) => n.code)));
   files.push(writeDataFile('prospects.json', { ...source, name: `${source.name} — recruteurs récurrents (≥ 2 trimestres) et nouveaux recruteurs, métiers ciblés`, window: quarters }, prospects.length, prospects));
+  // Tous les métiers : un petit fichier par métier (prospects/<CNP>.json), chargé seulement pour les métiers du profil.
+  let perNocFiles = 0, perNocBytes = 0;
+  for (const noc of [...nocTitles.keys()].sort()) {
+    const list = prospectsFor(new Set([noc]));
+    if (!list.length) continue;
+    const w = writeDataFile(`prospects/${noc}.json`, { ...source, name: `${source.name} — CNP ${noc}`, window: quarters }, list.length, list);
+    perNocFiles++; perNocBytes += w.bytes;
+  }
+  console.log(`  employeurs par métier : ${perNocFiles} fichiers (${Math.round(perNocBytes / 1024)} Ko au total)`);
 
   return { ...computeStats(records, nocTitles, nocData), quarters: qStats, streamPositions, repairedAddresses, files, missingQuarters };
 }

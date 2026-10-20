@@ -66,6 +66,19 @@ describe('data/rules.json', () => {
   });
 });
 
+describe('catalogue de tous les métiers (CNP 2021)', () => {
+  it('516 groupes de base, chacun avec titres et nom court FR/EN ; chaque métier suivi y figure', async () => {
+    const cat = (await import('../../../data/noc-catalog.json')).default as { nocs: Array<{ c: string; tf: string; te: string; jf: string; je: string }> };
+    expect(cat.nocs).toHaveLength(516);
+    for (const n of cat.nocs) {
+      expect(n.c).toMatch(/^\d{5}$/);
+      for (const v of [n.tf, n.te, n.jf, n.je]) expect(v.trim().length, n.c).toBeGreaterThan(1);
+    }
+    const codes = new Set(cat.nocs.map((n) => n.c));
+    for (const n of nocData.nocs) expect(codes.has(n.code), n.code).toBe(true);
+  });
+});
+
 describe('règles Québec et couple', () => {
   it('chaque étape du guide Québec et la règle « couple » citent une source connue', () => {
     for (const s of rules.quebec.steps) {

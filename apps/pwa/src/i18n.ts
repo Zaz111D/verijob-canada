@@ -446,6 +446,15 @@ export const STRINGS = {
   applyFoundOn: { fr: 'Trouvé sur', en: 'Found on' },
   applyNoSource: { fr: 'Page d’origine non notée : vérifiez ce contact sur le site officiel avant d’envoyer vos documents.', en: 'Source page not noted: check this contact on the official website before sending your documents.' },
   versionLabel: { fr: 'Version', en: 'Version' },
+  jobSearchLabel: { fr: 'Votre métier n’est pas dans la liste ? Cherchez parmi tous les métiers officiels', en: 'Your job is not in the list? Search all official jobs' },
+  jobSearchPlaceholder: { fr: 'ex. soudeur, camionneur, comptable, développeur…', en: 'e.g. welder, truck driver, accountant, developer…' },
+  jobSearchNone: { fr: 'Aucun métier trouvé : essayez un autre mot (au singulier, sans abréviation).', en: 'No job found: try another word (singular, no abbreviation).' },
+  jobSearchAdd: { fr: 'Ajouter', en: 'Add' },
+  jobSearchRemove: { fr: 'Retirer ce métier', en: 'Remove this job' },
+  expressEntryNote: {
+    fr: 'Métier qualifié (FEER {teer}) : la voie la plus forte est souvent Entrée express (résidence permanente, test de langue obligatoire). VériJob ne l’évalue pas encore en détail : vérifiez les critères sur la page officielle.',
+    en: 'Skilled job (TEER {teer}): the strongest route is often Express Entry (permanent residence, language test required). VériJob does not assess it in detail yet: check the criteria on the official page.',
+  },
   profilesTitle: { fr: 'Profils sur ce téléphone', en: 'Profiles on this phone' },
   profilesIntro: {
     fr: 'Créez un profil par personne (vous, votre conjoint·e, un proche) : chacun garde ses métiers, ses langues, ses provinces et son suivi de candidatures. Tout reste sur ce téléphone, sans compte.',
@@ -501,6 +510,7 @@ export const STRINGS = {
     en: 'Never copy a task or a number that is not true: an employer can check, and Job Bank reminds that lying on a resume can cost you the job.',
   },
   sampleJob: { fr: 'Métier', en: 'Job' },
+  sampleNoElements: { fr: 'Les fonctions officielles de ce métier ne sont pas disponibles : pas de CV d’exemple pour lui.', en: 'The official duties for this job are not available: no sample resume for it.' },
   sampleChooseJob: { fr: '— Choisir un métier —', en: '— Choose a job —' },
   sampleLang: { fr: 'Langue du CV', en: 'Resume language' },
   sampleOfferTitle: { fr: 'Intitulé du poste (facultatif)', en: 'Job title (optional)' },

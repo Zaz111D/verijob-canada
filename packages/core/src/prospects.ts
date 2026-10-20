@@ -102,3 +102,26 @@ export function prospectsToCsv(rows: Array<Record<string, string | number>>): st
   const headers = Object.keys(rows[0]!);
   return '\ufeff' + [headers.map(cell).join(';'), ...rows.map((r) => headers.map((h) => cell(r[h] ?? '')).join(';'))].join('\r\n') + '\r\n';
 }
+
+/**
+ * Fusionne les listes d'employeurs de plusieurs métiers (fichiers prospects/<CNP>.json) : un même employeur
+ * (province + nom + code postal) n'apparaît qu'une fois, avec les postes de chaque métier.
+ * Le nombre de trimestres est le plus élevé des métiers (les trimestres exacts ne sont pas dans les fichiers).
+ */
+export function mergeProspects(lists: Prospect[][]): Prospect[] {
+  const byKey = new Map<string, Prospect>();
+  for (const list of lists) {
+    for (const p of list) {
+      const key = `${p.p}|${p.k}|${p.pc || p.c.toLowerCase()}`;
+      const cur = byKey.get(key);
+      if (!cur) { byKey.set(key, { ...p, j: [...p.j], s: [...p.s] }); continue; }
+      cur.q = Math.max(cur.q, p.q);
+      cur.lq = cur.lq > p.lq ? cur.lq : p.lq;
+      cur.s = [...new Set([...cur.s, ...p.s])];
+      cur.j = [...cur.j, ...p.j.filter(([n]) => !cur.j.some(([m]) => m === n))].sort((a, b) => b[1] - a[1]);
+      cur.neg += p.neg;
+      if (p.nw) cur.nw = 1;
+    }
+  }
+  return [...byKey.values()].sort((a, b) => b.q - a.q || a.k.localeCompare(b.k));
+}

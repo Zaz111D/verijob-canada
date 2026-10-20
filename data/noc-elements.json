@@ -4,9 +4,261 @@
   "id": "statcan-noc-elements",
   "urlFr": "https://www.statcan.gc.ca/fr/sujets/norme/cnp/2021/indexV1/cnp-2021-v1.0-elements.csv",
   "urlEn": "https://www.statcan.gc.ca/en/subjects/standard/noc/2021/indexV1/noc-2021-v1.0-elements.csv",
-  "verifiedAt": "2026-10-16"
+  "verifiedAt": "2026-10-17"
  },
  "nocs": [
+  {
+   "code": "13110",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "préparer, saisir à l'ordinateur, réviser et relire de la correspondance, des factures, des présentations, des brochures, des publications, des rapports et d'autres documents connexes à partir de notes dictées ou manuscrites",
+       "en": "Prepare, key in, edit and proofread correspondence, invoices, presentations, brochures, publications, reports and related material from machine dictation and handwritten copy"
+      },
+      {
+       "fr": "ouvrir et distribuer le courrier postal et électronique et les autres documents reçus et coordonner la circulation des renseignements à l'interne et avec d'autres services et organismes",
+       "en": "Open and distribute incoming regular and electronic mail and other material and coordinate the flow of information internally and with other departments and organizations"
+      },
+      {
+       "fr": "fixer et confirmer les rendez-vous et les réunions de l'employeur",
+       "en": "Schedule and confirm appointments and meetings of employer"
+      },
+      {
+       "fr": "commander les fournitures de bureau et en tenir l'inventaire",
+       "en": "Order office supplies and maintain inventory"
+      },
+      {
+       "fr": "répondre aux demandes de renseignements reçues par téléphone et par courrier électronique et transmettre les appels téléphoniques et les messages",
+       "en": "Answer telephone and electronic enquiries and relay telephone calls and messages"
+      },
+      {
+       "fr": "établir et tenir des systèmes manuels et informatisés de classement des dossiers d'information",
+       "en": "Set up and maintain manual and computerized information filing systems"
+      },
+      {
+       "fr": "formuler et mettre en oeuvre les modes de fonctionnement du bureau",
+       "en": "Determine and establish office procedures"
+      },
+      {
+       "fr": "accueillir les visiteurs, déterminer le but de leur visite et les diriger vers l'employeur ou la personne compétente",
+       "en": "Greet visitors, ascertain nature of business and direct visitors to employer or appropriate person"
+      },
+      {
+       "fr": "consigner et préparer les procès-verbaux des réunions",
+       "en": "Record and prepare minutes of meetings"
+      },
+      {
+       "fr": "organiser les voyages et faire les réservations nécessaires",
+       "en": "Arrange travel schedules and make reservations"
+      },
+      {
+       "fr": "compiler, s'il y a lieu, des données, des statistiques et d'autres renseignements, afin d'appuyer les activités de recherche",
+       "en": "May compile data, statistics and other information to support research activities"
+      },
+      {
+       "fr": "superviser et former, s'il y a lieu, les employés de bureau en ce qui a trait aux méthodes de travail et à l'utilisation de logiciels courants",
+       "en": "May supervise and train office staff in procedures and in use of current software"
+      },
+      {
+       "fr": "organiser, s'il y a lieu, des conférences",
+       "en": "May organize conferences"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Un programme collégial d'un ou de deux ans en techniques de bureau ou de l'expérience dans le travail de bureau est exigé.",
+     "en": "Completion of a one- or two-year college or other program for administrative assistants or secretaries or Previous clerical experience is required."
+    }
+   ],
+   "examplesFr": [
+    "adjoint administratif/adjointe administrative",
+    "adjoint administratif/adjointe administrative de bureau",
+    "secrétaire (sauf domaines juridique et médical)",
+    "secrétaire exécutif/secrétaire exécutive (sauf domaines juridique et médical)",
+    "secrétaire particulier/secrétaire particulière",
+    "secrétaire technique"
+   ],
+   "examplesEn": [
+    "administrative assistant",
+    "executive secretary (except legal and medical)",
+    "office administrative assistant",
+    "private secretary",
+    "secretary (except legal and medical)",
+    "technical secretary"
+   ]
+  },
+  {
+   "code": "31301",
+   "duties": [
+    {
+     "headingFr": "Les infirmiers autorisés en soins généraux",
+     "headingEn": "General duty registered nurses",
+     "items": [
+      {
+       "fr": "évaluer les patients afin d'identifier les soins infirmiers appropriés",
+       "en": "Assess patients to identify appropriate nursing interventions"
+      },
+      {
+       "fr": "collaborer avec les autres membres des équipes interdisciplinaires de soins de santé afin de planifier, d'implanter, de coordonner et d'évaluer les soins aux patients en consultation avec les patients et leurs familles",
+       "en": "Collaborate with members of an interdisciplinary health team to plan, implement, coordinate and evaluate patient care in consultation with patients and their families"
+      },
+      {
+       "fr": "administrer les médicaments et les traitements prescrits par un médecin ou selon les politiques et les protocoles en vigueur",
+       "en": "Administer medications and treatments as prescribed by a physician or according to established policies and protocols"
+      },
+      {
+       "fr": "surveiller, évaluer, documenter et consigner les symptômes et les changements dans l'état des patients, et prendre des mesures nécessaires",
+       "en": "Monitor, assess, address, document and report symptoms and changes in patients' conditions"
+      },
+      {
+       "fr": "utiliser du matériel ou des appareils médicaux ou en surveiller l'utilisation",
+       "en": "Operate or monitor medical apparatus or equipment"
+      },
+      {
+       "fr": "assister les médecins dans les interventions chirurgicales et les autres procédures médicales",
+       "en": "Assist in surgery and other medical procedures"
+      },
+      {
+       "fr": "superviser, s'il y a lieu, les infirmiers auxiliaires autorisés et les autres membres du personnel infirmier",
+       "en": "May supervise licensed practical nurses and other nursing staff"
+      },
+      {
+       "fr": "élaborer et mettre à exécution, s'il y a lieu, la démarche de planification de renvoi des patients lorsque ceux-ci sont admis en établissement",
+       "en": "May develop and implement discharge planning process on admission of patients"
+      },
+      {
+       "fr": "informer et conseiller, au besoin, les patients et leurs familles sur certains aspects de la santé, en collaboration avec d'autres travailleurs dans le domaine de la santé",
+       "en": "May teach and counsel patients and their families on health-related issues in collaboration with other health care providers"
+      },
+      {
+       "fr": "Les infirmiers autorisés peuvent se spécialiser dans des domaines tels que la chirurgie, les soins obstétriques, les soins psychiatriques, les soins de phase aiguë, la pédiatrie, la gériatrie, la santé communautaire, la médecine du travail, les soins d'urgence, la réadaptation ou l'oncologie",
+       "en": "Registered nurses may specialize in areas such as surgery, obstetrics care, psychiatric care, critical care, pediatrics, geriatrics, community health, occupational health, emergency care, rehabilitation or oncology"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les infirmiers en santé du travail",
+     "headingEn": "Occupational health nurses",
+     "items": [
+      {
+       "fr": "élaborent et mettent en oeuvre des programmes d'éducation sur la santé pour les employés et dispensent des soins d'infirmiers autorisés dans des entreprises et industries privées",
+       "en": "Develop and implement employee health education programs and provide registered nursing care in private businesses and industry"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les infirmiers en santé communautaire",
+     "headingEn": "Community health nurses",
+     "items": [
+      {
+       "fr": "donnent des renseignements sur la santé et des soins d'infirmiers autorisés dans des unités de santé publique et à domicile, ils gèrent les cas complexes de soins à domicile, prennent part à des évaluations des besoins de la collectivité et à l'élaboration de programmes, effectuent des tests de dépistage de maladies et assurent la prestation de programmes d'immunisation",
+       "en": "Provide health education and registered nursing care in public health units and through home visits, manage complex home care cases, participate in community needs assessment and program development, conduct disease screening and deliver immunization programs"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les infirmiers autorisés en psychiatrie",
+     "headingEn": "Registered psychiatric nurses",
+     "items": [
+      {
+       "fr": "dispensent des soins infirmiers et des services de counseling et donnent des cours de dynamique de la vie aux patients dans les hôpitaux psychiatriques, les cliniques de santé mentale, les établissements de soins de longue durée ainsi qu'au sein de la collectivité",
+       "en": "Provide nursing care, supportive counselling and life skills programming to patients in psychiatric hospitals, mental health clinics, long-term care facilities and community-based settings"
+      },
+      {
+       "fr": "Les chercheurs et les consultants en soins infirmiers",
+       "en": "Nursing researchers and consultants"
+      },
+      {
+       "fr": "effectuent des travaux de recherche liés aux sciences infirmières, en tant que travailleurs autonomes ou employés de centres hospitaliers, d'organismes privés et publics et du gouvernement",
+       "en": "Engaged in research activities related to nursing, as self-employed or as employed by hospitals, public and private organizations and governments"
+      },
+      {
+       "fr": "fournissent des services consultatifs à des établissements, à des associations et à des organisations de soins de santé sur les questions et les préoccupations relatives à la profession d'infirmier et à l'exercice en sciences infirmières",
+       "en": "Provide consultative services to institutes, associations and health care organizations regarding issues and concerns relevant to the nursing profession and nursing practice"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les infirmiers cliniciens",
+     "headingEn": "Clinical nurses",
+     "items": [
+      {
+       "fr": "fournissent leadership, conseils et orientation en ce qui concerne la prestation de soins basés sur la recherche à des groupes précis de patients dont le soin relève d'organisations de soins de santé particulières",
+       "en": "Provide leadership, advice and counsel on the provision of research-based care for specific patient groups within the care of particular health care organizations"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Infirmiers autorisés",
+     "en": "Registered nurses"
+    },
+    {
+     "fr": "Un diplôme d'études universitaires ou collégiales, ou la réussite d'un autre programme reconnu en sciences infirmières est exigé.",
+     "en": "Completion of a university, college or other approved registered nursing program is required."
+    },
+    {
+     "fr": "De l'expérience ou une formation supplémentaire est exigée pour pouvoir se spécialiser dans un domaine particulier des sciences infirmières.",
+     "en": "Additional academic training or experience is required to specialize in a specific area of nursing."
+    },
+    {
+     "fr": "Une maîtrise ou un doctorat en sciences infirmières est habituellement exigé des infirmiers cliniciens spécialisés, des infirmiers cliniciens, des consultants en soins infirmiers et des chercheurs en sciences infirmières.",
+     "en": "A master's or doctoral degree in nursing is usually required for clinical nurse specialists, clinical nurses, nursing consultants and nursing researchers."
+    },
+    {
+     "fr": "Un permis d'exercice d'un organisme de réglementation provincial ou territorial est exigé dans toutes les provinces et tous les territoires.",
+     "en": "Registration with a regulatory body is required in all provinces and territories."
+    },
+    {
+     "fr": "Infirmiers psychiatriques autorisés",
+     "en": "Registered psychiatric nurses"
+    },
+    {
+     "fr": "Un programme de niveau collégial ou universitaire d'infirmier psychiatrique autorisé est exigé.",
+     "en": "Completion of a university or college registered psychiatric nursing program is required."
+    },
+    {
+     "fr": "Un permis d'exercice est exigé au Manitoba, en Saskatchewan, en Alberta, en Colombie-Britannique et au Yukon.",
+     "en": "Registration with a regulatory body is required in Manitoba, Saskatchewan, Alberta, British Columbia and the Yukon."
+    }
+   ],
+   "examplesFr": [
+    "consultant/consultante en soins infirmiers",
+    "infirmier autorisé/infirmière autorisée",
+    "infirmier chercheur/infirmière chercheuse",
+    "infirmier clinicien/infirmière clinicienne",
+    "infirmier psychiatrique autorisé/infirmière psychiatrique autorisée",
+    "infirmier/infirmière en santé communautaire",
+    "infirmier/infirmière en santé du travail",
+    "infirmier/infirmière en santé publique",
+    "infirmier/infirmière en soins critiques",
+    "infirmier/infirmière en soins d'urgence",
+    "infirmier/infirmière en soins intensifs",
+    "infirmier/infirmière en soins privés"
+   ],
+   "examplesEn": [
+    "clinical nurse",
+    "community health nurse",
+    "critical care nurse",
+    "emergency care nurse",
+    "intensive care nurse",
+    "nurse researcher",
+    "nursing consultant",
+    "occupational health nurse",
+    "private duty nurse",
+    "public health nurse",
+    "registered nurse (R.N.)",
+    "registered psychiatric nurse (R.P.N.)"
+   ]
+  },
   {
    "code": "33102",
    "duties": [
@@ -90,6 +342,155 @@
     "personal care attendant - medical",
     "psychiatric aide",
     "resident care aide - medical"
+   ]
+  },
+  {
+   "code": "42202",
+   "duties": [
+    {
+     "headingFr": "Éducateurs de la petite enfance",
+     "headingEn": "Early childhood educators",
+     "items": [
+      {
+       "fr": "préparer et mettre à exécution des programmes d'éducation de la petite enfance qui favorisent le développement physique, cognitif, affectif et social des enfants",
+       "en": "Develop and implement child-care programs that support and promote the physical, cognitive, emotional and social development of children"
+      },
+      {
+       "fr": "diriger les activités des enfants en leur racontant des histoires, en leur enseignant des chansons, en les amenant à des endroits d'intérêt dans la région et en leur donnant l'occasion d'exprimer leur créativité par l'art, les jeux de rôles, la musique et l'activité physique",
+       "en": "Lead activities by telling or reading stories, teaching songs, taking children to local points of interest and providing opportunities to express creativity through the media of art, dramatic play, music and physical activity"
+      },
+      {
+       "fr": "planifier et maintenir un environnement qui protège la santé, la sécurité et le bien-être des enfants",
+       "en": "Plan and maintain an environment that protects the health, security and well-being of children"
+      },
+      {
+       "fr": "évaluer les capacités, les habiletés, les intérêts et les besoins des enfants, et discuter des progrès ou des problèmes des enfants avec leurs parents et d'autres membres du personnel",
+       "en": "Assess the abilities, interests and needs of children and discuss progress or problems with parents and other staff members"
+      },
+      {
+       "fr": "observer les enfants de façon à déceler les difficultés d'apprentissage ou les troubles comportementaux, et préparer des rapports pour les parents, les tuteurs ou le superviseur",
+       "en": "Observe children for signs of potential learning or behavioural problems and prepare reports for parents, guardians or supervisor"
+      },
+      {
+       "fr": "guider et aider les enfants de façon à ce qu'ils prennent de bonnes habitudes pour les repas, la toilette et l'habillage",
+       "en": "Guide and assist children in the development of proper eating, dressing and toilet habits"
+      },
+      {
+       "fr": "établir des relations avec les collègues et d'autres fournisseurs de services communautaires aux enfants et collaborer avec ceux-ci",
+       "en": "Establish and maintain collaborative relationships with co-workers and community service providers working with children"
+      },
+      {
+       "fr": "planifier et organiser, au besoin, des activités pour les enfants d'âge scolaire qui participent aux programmes de garde avant et après l'école",
+       "en": "May plan and organize activities for school-age children in child-care programs before and after regular school hours"
+      },
+      {
+       "fr": "superviser et coordonner, au besoin, les activités d'autres éducateurs et aides-éducateurs de la petite enfance",
+       "en": "May supervise and coordinate activities of other early childhood educators and early childhood educator assistants"
+      }
+     ]
+    },
+    {
+     "headingFr": "Aides-éducateurs de la petite enfance",
+     "headingEn": "Early childhood educator assistants",
+     "items": [
+      {
+       "fr": "appuyer les éducateurs de la petite enfance dans la réalisation de programmes qui promeuvent le développement physique, cognitif, affectif et social des enfants",
+       "en": "Support early childhood educators in carrying out programs that promote the physical, cognitive, emotional and social development of children"
+      },
+      {
+       "fr": "impliquer les enfants dans des activités en leur racontant des histoires, en leur enseignant des chansons et en préparant des bricolages",
+       "en": "Engage children in activities by telling stories, teaching songs and preparing crafts"
+      },
+      {
+       "fr": "préparer et servir les collations et disposer les salles ou le mobilier pour le dîner et les siestes",
+       "en": "Prepare snacks and arrange rooms or furniture for lunch and rest periods"
+      },
+      {
+       "fr": "aider les enfants à prendre de bonnes habitudes pour les repas, l'habillement et la toilette",
+       "en": "Assist with proper eating, dressing and toilet habits"
+      },
+      {
+       "fr": "fournir aux éducateurs de la petite enfance et aux superviseurs des observations écrites sur les enfants",
+       "en": "Submit written observations on children to early childhood educators or supervisors"
+      },
+      {
+       "fr": "assurer l'entretien de l'équipement de la garderie et participer aux tâches ménagères et à la cuisson",
+       "en": "Maintain daycare equipment and assist in housekeeping and cooking duties"
+      },
+      {
+       "fr": "assister aux réunions du personnel pour discuter des progrès et des difficultés des enfants",
+       "en": "Attend staff meetings to discuss progress and problems of children"
+      },
+      {
+       "fr": "aider, s'il y a lieu, les éducateurs de la petite enfance et les superviseurs à tenir les dossiers",
+       "en": "May assist early childhood educators or supervisors in keeping records"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Éducateurs de la petite enfance",
+     "en": "Early childhood educators"
+    },
+    {
+     "fr": "Un programme d'études collégiales de deux à quatre ans en éducation de la petite enfance ou un baccalauréat en développement de l'enfant est exigé.",
+     "en": "Completion of a two- to four-year college program in early childhood education or A bachelor's degree in child development is required."
+    },
+    {
+     "fr": "L'accréditation est exigée en Ontario et la reconnaissance professionnelle en Colombie-Britannique pour les éducateurs de la petite enfance. L'accréditation est habituellement exigée dans les autres provinces et territoires pour les éducateurs de la petite enfance.",
+     "en": "Licensing is required in Ontario and certification is required in British Columbia for early childhood educators. Licensing for early childhood educators is usually required in all other provinces and territories."
+    },
+    {
+     "fr": "Aides-éducateurs de la petite enfance",
+     "en": "Early childhood educator assistants"
+    },
+    {
+     "fr": "Un diplôme d'études secondaires est exigé.",
+     "en": "Completion of secondary school is required."
+    },
+    {
+     "fr": "De l'expérience avec les enfants est exigée.",
+     "en": "Experience in child care is required."
+    },
+    {
+     "fr": "Un programme menant à un certificat d'aide-éducateur de la petite enfance ou des cours au niveau postsecondaire en éducation de la petite enfance peuvent être exigés.",
+     "en": "Completion of an early childhood education assistant certificate program or post-secondary courses in early childhood education may be required."
+    },
+    {
+     "fr": "L'accréditation par une association provinciale ou territoriale en tant qu'éducateur de la petite enfance peut être exigée.",
+     "en": "Licensing by a provincial or territorial association as an early childhood educator may be required."
+    }
+   ],
+   "examplesFr": [
+    "aide au niveau préscolaire",
+    "aide de garderie",
+    "aide-éducateur/aide-éducatrice de garderie",
+    "assistant/assistante de la petite enfance",
+    "éducateur/éducatrice de la petite enfance",
+    "éducateur/éducatrice de la petite enfance au niveau préscolaire",
+    "préposé/préposée au programme d'éducation de la petite enfance",
+    "responsable d'éducateurs au niveau préscolaire",
+    "superviseur/superviseure des services de garderie",
+    "surveillant/surveillante en éducation de la petite enfance",
+    "travailleur/travailleuse des services de garderie",
+    "travailleur/travailleuse en éducation de la petite enfance",
+    "travailleur/travailleuse en garderie"
+   ],
+   "examplesEn": [
+    "child care worker assistant",
+    "daycare helper",
+    "daycare supervisor",
+    "daycare worker",
+    "early childhood assistant",
+    "early childhood education worker",
+    "early childhood educator - preschool",
+    "early childhood educator (ECE)",
+    "early childhood educator (ECE) assistant",
+    "early childhood program staff assistant",
+    "early childhood supervisor",
+    "preschool helper",
+    "preschool supervisor"
    ]
   },
   {
@@ -363,6 +764,245 @@
     "personal aide - home support",
     "personal care attendant - home care",
     "respite worker - home support"
+   ]
+  },
+  {
+   "code": "62010",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "superviser et coordonner les activités du personnel de vente et des caissiers",
+       "en": "Supervise and coordinate sales staff and cashiers"
+      },
+      {
+       "fr": "répartir les tâches et établir les horaires de travail",
+       "en": "Assign sales workers to duties and prepare work schedules"
+      },
+      {
+       "fr": "autoriser les paiements et le retour des marchandises",
+       "en": "Authorize payments and the return of merchandise"
+      },
+      {
+       "fr": "résoudre les problèmes qui peuvent survenir, par exemple ceux reliés aux plaintes des clients et aux pénuries de marchandises",
+       "en": "Resolve issues that may arise, including customer requests, complaints and supply shortages"
+      },
+      {
+       "fr": "tenir un inventaire prédéterminé et commander les marchandises",
+       "en": "Maintain specified inventory and order merchandise"
+      },
+      {
+       "fr": "préparer des rapports sur les chiffres de ventes, les techniques marchandes et les problèmes reliés au personnel",
+       "en": "Prepare reports regarding sales volumes, merchandising and personnel matters"
+      },
+      {
+       "fr": "embaucher et former ou voir à la formation du personnel des ventes; surveiller et rendre-compte de leur rendement",
+       "en": "Hire and train or arrange for the training of new sales staff and monitor and report on performance"
+      },
+      {
+       "fr": "assurer le maintien des critères visuels et de l'image du magasin, tels que les étalages, l'affichage et la propreté du magasin",
+       "en": "Ensure the visual standards and image of the store are maintained, such as store displays, signage and cleanliness"
+      },
+      {
+       "fr": "peut accomplir les mêmes tâches que les travailleurs supervisés",
+       "en": "May perform the same duties as workers supervised"
+      },
+      {
+       "fr": "peut accomplir des fonctions de direction, si nécessaire, telles que l'ouverture et la fermeture du magasin, la gestion des plaintes formulées, l'élaboration et la mise en oeuvre de stratégie de commercialisation et la réception des livraisons",
+       "en": "May perform key holding and managerial duties if required, such as opening and closing the store, managing escalated complaints, developing and implementing marketing strategies, and signing for deliveries"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "De l'expérience, dans la vente de détail, par exemple en tant que vendeur, commis-vendeur, caissier, télévendeur, vendeur de porte à porte ou agent de service de location, est habituellement exigée.",
+     "en": "Previous retail sales experience as a retail salesperson or sales clerk, cashier, telemarketer, door-to-door salesperson or rental agent is usually required."
+    }
+   ],
+   "examplesFr": [
+    "chef caissier/chef caissière",
+    "superviseur/superviseure de la section des fruits et légumes",
+    "superviseur/superviseure de magasin à rayons",
+    "surveillant/surveillante de circuits de livraison - commerce de détail",
+    "surveillant/surveillante de magasin d'alcools",
+    "surveillant/surveillante de service de location - commerce de détail",
+    "surveillant/surveillante de télémarketing"
+   ],
+   "examplesEn": [
+    "department store supervisor",
+    "head cashier",
+    "liquor store supervisor",
+    "produce department supervisor",
+    "rental service supervisor",
+    "retail sales route supervisor",
+    "telemarketing supervisor"
+   ]
+  },
+  {
+   "code": "62020",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "superviser, coordonner et établir l'horaire des activités du personnel qui prépare, répartit et sert les aliments",
+       "en": "Supervise, coordinate and schedule the activities of staff who prepare, portion and serve food"
+      },
+      {
+       "fr": "évaluer et commander les ingrédients et les fournitures nécessaires à la préparation des repas",
+       "en": "Estimate and order ingredients and supplies required for meal preparation"
+      },
+      {
+       "fr": "préparer des listes de provisions alimentaires pour le chef, selon les demandes des diététistes et des patients dans les centres hospitaliers ou des autres clients",
+       "en": "Prepare food order summaries for chef according to requests from dieticians, patients in hospitals or other customers"
+      },
+      {
+       "fr": "établir les horaires et les méthodes de travail",
+       "en": "Establish work schedules and procedures"
+      },
+      {
+       "fr": "tenir les registres des stocks, des réparations, des ventes et des pertes",
+       "en": "Maintain records of stock, repairs, sales and wastage"
+      },
+      {
+       "fr": "assurer la formation du personnel pour ce qui est de leurs tâches, de l'hygiène et des normes de sécurité",
+       "en": "Train staff in job duties, and sanitation and safety procedures"
+      },
+      {
+       "fr": "surveiller et vérifier la préparation des plateaux pour les régimes ordinaires et les diètes spéciales et l'acheminement des chariots aux clients dans les centres hospitaliers",
+       "en": "Supervise and check assembly of regular and special diet trays and delivery of food trolleys to hospital patients"
+      },
+      {
+       "fr": "assurer la qualité des aliments et du service, en conformité avec les normes établies",
+       "en": "Ensure that food and service meet quality control standards"
+      },
+      {
+       "fr": "participer, au besoin, à la sélection du personnel de service des aliments ainsi qu'à l'élaboration des politiques, des méthodes et des budgets",
+       "en": "May participate in the selection of food service staff and assist in the development of policies, procedures and budgets"
+      },
+      {
+       "fr": "planifier, s'il y a lieu, les menus des cafétérias et calculer les coûts de nourriture et de main-d'oeuvre",
+       "en": "May plan cafeteria menus and determine related food and labour costs"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Un diplôme d'études collégiales en gestion des services alimentaires, en gestion hôtelière ou de restaurant, ou dans une discipline connexe ou plusieurs années d'expérience dans la préparation ou le service des aliments sont exigés.",
+     "en": "Completion of a community college program in food service administration, hotel and restaurant management or related discipline or Several years of experience in food preparation or service are required."
+    }
+   ],
+   "examplesFr": [
+    "superviseur/superviseure de cafétéria",
+    "superviseur/superviseure de service de traiteur",
+    "surveillant/surveillante de cantine",
+    "surveillant/surveillante du service alimentaire"
+   ],
+   "examplesEn": [
+    "cafeteria supervisor",
+    "canteen supervisor",
+    "catering supervisor",
+    "food service supervisor"
+   ]
+  },
+  {
+   "code": "63200",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "préparer et faire cuire des plats ou des repas complets",
+       "en": "Prepare and cook complete meals or individual dishes and foods"
+      },
+      {
+       "fr": "préparer et faire cuire des repas spéciaux pour des patients, conformément aux directives du diététiste ou du chef cuisinier",
+       "en": "Prepare and cook special meals for patients as instructed by dietitian or chef"
+      },
+      {
+       "fr": "superviser les aides de cuisine et établir leurs horaires de travail",
+       "en": "Schedule and supervise kitchen helpers"
+      },
+      {
+       "fr": "superviser les opérations de la cuisine",
+       "en": "Oversee kitchen operations"
+      },
+      {
+       "fr": "tenir l'inventaire de la nourriture, des fournitures et du matériel",
+       "en": "Maintain inventory and records of food, supplies and equipment"
+      },
+      {
+       "fr": "voir, s'il y a lieu, à l'organisation et à la supervision des buffets",
+       "en": "May set up and oversee buffets"
+      },
+      {
+       "fr": "nettoyer, s'il y a lieu, la cuisine et les aires de travail",
+       "en": "May clean kitchen and work area"
+      },
+      {
+       "fr": "dresser, s'il y a lieu, des menus, déterminer les portions, évaluer les besoins en aliments et le coût des aliments et commander le matériel nécessaire",
+       "en": "May plan menus, determine size of food portions, estimate food requirements and costs, and monitor and order supplies"
+      },
+      {
+       "fr": "procéder, s'il y a lieu, à l'embauche et à la formation du personnel de cuisine",
+       "en": "May hire and train kitchen staff"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Un programme d'apprentissage de trois ans pour cuisiniers ou un cours de niveau collégial, ou autre, en cuisine ou en salubrité des aliments ou plusieurs années d'expérience comme cuisinier en restauration peuvent être exigés.",
+     "en": "Completion of a three-year apprenticeship program for cooks or completion of college or other program in cooking or food safety or several years of commercial cooking experience may be required."
+    },
+    {
+     "fr": "Un certificat de qualification est offert, bien que facultatif, dans toutes les provinces et tous les territoires.",
+     "en": "Trade certification is available, but voluntary, in all provinces and territories."
+    },
+    {
+     "fr": "Les cuisiniers qualifiés peuvent obtenir la mention Sceau rouge après la réussite de l'examen interprovincial Sceau rouge.",
+     "en": "Red Seal endorsement is also available to qualified cooks upon successful completion of the interprovincial Red Seal examination."
+    }
+   ],
+   "examplesFr": [
+    "apprenti cuisinier/apprentie cuisinière",
+    "compagnon cuisinier/compagne cuisinière",
+    "cuisinier diplômé/cuisinière diplômée",
+    "cuisinier/cuisinière",
+    "cuisinier/cuisinière à la chaîne",
+    "cuisinier/cuisinière de casse-croûte",
+    "cuisinier/cuisinière de centre hospitalier",
+    "cuisinier/cuisinière de repas diététiques",
+    "cuisinier/cuisinière d'institution",
+    "grilleur/grilleuse - services de restauration",
+    "premier cuisinier/première cuisinière",
+    "second cuisinier/seconde cuisinière"
+   ],
+   "examplesEn": [
+    "apprentice cook",
+    "cook",
+    "dietary cook",
+    "first cook",
+    "grill cook",
+    "hospital cook",
+    "institutional cook",
+    "journeyman/woman cook",
+    "licensed cook",
+    "line cook",
+    "second cook",
+    "short order cook"
    ]
   },
   {
@@ -869,6 +1509,538 @@
     "light duty cleaner",
     "office cleaner",
     "sweeper"
+   ]
+  },
+  {
+   "code": "72106",
+   "duties": [
+    {
+     "headingFr": "Les soudeurs",
+     "headingEn": "Welders",
+     "items": [
+      {
+       "fr": "lire et interpréter les plans ou les spécifications techniques de soudage",
+       "en": "Read and interpret blueprints or welding process specifications"
+      },
+      {
+       "fr": "utiliser des appareils manuels ou semi-automatiques, tels que des appareils de soudage à l'arc sous gaz avec électrode de tungstène (GTWA), de soudage à l'arc sous gaz avec fil solide (GMWA), de soudage à l'arc avec fil fourré (FCAW), de soudage à l'arc au plasma (PAW), de soudage à l'arc avec électrode enrobée (SMWA), de soudage par résistance, de soudage à l'arc submergé (SAW) et de soudage oxyacétylénique (OAW), pour souder des pièces de métal",
+       "en": "Operate manual or semi-automatic welding equipment to fuse metal segments using processes such as gas tungsten arc welding (GTAW), gas metal arc welding (GMAW), flux-cored arc welding (FCAW), plasma arc welding (PAW), shielded metal arc welding (SMAW), oxy-acetylene welding (OAW), resistance welding and submerged arc welding (SAW)"
+      },
+      {
+       "fr": "utiliser des appareils coupe-flamme manuels ou semi-automatiques",
+       "en": "Operate manual or semi-automatic flame-cutting equipment"
+      },
+      {
+       "fr": "utiliser de l'équipement à souder et à braser",
+       "en": "Operate brazing and soldering equipment"
+      },
+      {
+       "fr": "utiliser des machines à former les métaux, telles que des presses à plier et des cisailles, de même que d'autres machines à redresser et à cintrer les métaux",
+       "en": "Operate metal shaping machines such as brakes, shears and other metal straightening and bending machines"
+      },
+      {
+       "fr": "réparer les pièces usées de produits métalliques en y soudant des couches supplémentaires",
+       "en": "Repair worn parts of metal products by welding on extra layers"
+      },
+      {
+       "fr": "Les soudeurs peuvent se spécialiser dans un type de soudage dans les domaines suivants : fabrication sur mesure, construction et réparation de navires, contenants pressurisés, constructions de pipelines et de charpentes structurelles, réparation de machinerie et d'équipement et soudage de précision en aérospatiale",
+       "en": "Welders may specialize in certain types of welding such as custom fabrication, ship building and repair, aerospace precision welding, pressure vessel welding, pipeline construction welding, structural construction welding, or machinery and equipment repair welding"
+      },
+      {
+       "fr": "Les opérateurs de machines à souder et à braser",
+       "en": "Welding, brazing and soldering machine operators"
+      },
+      {
+       "fr": "utiliser des machines à souder à commandes réglables, comme des machines à souder par résistance par points, bout à bout et de lignes de suture, ou des machines de soudage à l'arc ou au gaz afin de fabriquer ou de réparer des éléments en métal",
+       "en": "Operate previously set up welding machines such as spot, butt and seam resistance or gas and arc welding machines to fabricate or repair metal parts"
+      },
+      {
+       "fr": "utiliser des machines à souder et à braser à commandes réglables afin de lier des éléments de métal avec de la soudure ou de remplir les trous, les dentelures et les joints d'articles de métal",
+       "en": "Operate previously set up brazing or soldering machines to bond metal parts or to fill holes, indentations and seams of metal articles with solder"
+      },
+      {
+       "fr": "démarrer, arrêter, ajuster et surveiller le matériel de soudure robotique de chaîne de production",
+       "en": "Start up, shut down, adjust and monitor robotic welding production line"
+      },
+      {
+       "fr": "participer à l'entretien et à la réparation des machines à souder et à braser",
+       "en": "Assist with the maintenance and repair of welding, brazing and soldering equipment"
+      },
+      {
+       "fr": "régler, s'il y a lieu, les têtes de soudage et les machines-outils en fonction des spécifications techniques",
+       "en": "May adjust welding heads and tooling according to work specifications"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Soudeurs",
+     "en": "Welders"
+    },
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Un programme d'apprentissage de trois ans ou plus de trois ans d'expérience dans le métier ainsi qu'une formation spécialisée en soudage, en milieu scolaire ou industriel, sont habituellement exigés pour être admissible au certificat de qualification.",
+     "en": "Completion of a three-year apprenticeship program or A combination of over three years of work experience in the trade and some college or industry courses in welding is usually required to be eligible for trade certification."
+    },
+    {
+     "fr": "Le certificat de qualification est obligatoire en Alberta, et est offert, bien que facultatif, dans toutes les autres provinces et les territoires.",
+     "en": "Trade certification is compulsory in Alberta and available, but voluntary, in all other provinces and the territories."
+    },
+    {
+     "fr": "Les soudeurs qualifiés peuvent obtenir la mention Sceau rouge après la réussite de l'examen interprovincial Sceau rouge.",
+     "en": "Red Seal endorsement is also available to qualified welders upon successful completion of the interprovincial Red Seal examination."
+    },
+    {
+     "fr": "Opérateurs de machines à souder et à braser",
+     "en": "Welding, brazing and soldering machine operators"
+    },
+    {
+     "fr": "Quelques années d'études secondaires sont exigées.",
+     "en": "Some secondary school education is required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi de plusieurs mois est habituellement fournie.",
+     "en": "Several months of on-the-job training are usually provided."
+    },
+    {
+     "fr": "De l'expérience comme apprenti-opérateur de machines peut être exigée.",
+     "en": "Experience as a machine operator helper may be required."
+    },
+    {
+     "fr": "Une expérience en robotique peut être exigée.",
+     "en": "Experience with robotics may be required."
+    }
+   ],
+   "examplesFr": [
+    "apprenti soudeur/apprentie soudeuse",
+    "compagnon soudeur/compagne soudeuse",
+    "opérateur/opératrice de machine à brasage tendre",
+    "opérateur/opératrice de machine à braser",
+    "opérateur/opératrice de machine à souder au laser",
+    "régleur/régleuse de machines à braser",
+    "soudeur/soudeuse",
+    "soudeur/soudeuse à l'arc électrique",
+    "soudeur/soudeuse à l'arc sous flux",
+    "soudeur/soudeuse au montage",
+    "soudeur/soudeuse de réservoirs pour fluides sous pression",
+    "soudeur/soudeuse par points",
+    "soudeur-monteur/soudeuse-monteuse",
+    "technicien/technicienne en soudures aéronautiques"
+   ],
+   "examplesEn": [
+    "aviation welding technician",
+    "brazing machine operator",
+    "brazing machine setter",
+    "electric arc welder",
+    "journeyman/woman welder",
+    "laser welding operator",
+    "pressure vessel welder",
+    "production welder",
+    "soldering machine operator",
+    "spot welder",
+    "submerged arc welder",
+    "welder",
+    "welder apprentice",
+    "welder-fitter"
+   ]
+  },
+  {
+   "code": "72310",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "étudier les plans, les dessins et les croquis pour déterminer les spécifications techniques et calculer les besoins en matériaux",
+       "en": "Read and interpret blueprints, drawings and sketches to determine specifications and calculate requirements"
+      },
+      {
+       "fr": "préparer les tracés, à l'aide d'outils à mesurer, en tenant compte des prescriptions des codes du bâtiment",
+       "en": "Prepare layouts in conformance to building codes, using measuring tools"
+      },
+      {
+       "fr": "mesurer, découper, façonner et assembler les éléments en bois, en aggloméré, en acier léger ou d'autres matériaux",
+       "en": "Measure, cut, shape, assemble and join materials made of wood, wood substitutes, lightweight steel and other materials"
+      },
+      {
+       "fr": "ériger des fondations, installer des poutres de plancher, poser le support de revêtement de sol, monter des éléments préassemblés de charpente et de toiture",
+       "en": "Build foundations, install floor beams, lay subflooring and erect walls and roof systems"
+      },
+      {
+       "fr": "ajuster et poser les éléments de menuiserie tels que des portes, des escaliers, des moulures et de la quincaillerie",
+       "en": "Fit and install trim items, such as doors, stairs, moulding and hardware"
+      },
+      {
+       "fr": "entretenir, réparer et rénover des habitations et des constructions en bois dans des usines, des mines, des hôpitaux, des installations industrielles et d'autres établissements",
+       "en": "Maintain, repair and renovate residences and wooden structures in mills, mines, hospitals, industrial plants and other establishments"
+      },
+      {
+       "fr": "superviser le travail des apprentis et des autres travailleurs de la construction",
+       "en": "Supervise apprentices and other construction workers"
+      },
+      {
+       "fr": "préparer, s'il y a lieu, des devis pour les clients",
+       "en": "May prepare cost estimates for clients"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Un programme d'apprentissage de trois à quatre années ou plus de quatre ans d'expérience dans le métier ainsi qu'une formation spécialisée en charpenterie, en milieu scolaire ou industriel, sont habituellement exigés pour être admissible au certificat de qualification.",
+     "en": "Completion of a three- to four-year apprenticeship program or A combination of over four years of work experience in the trade and some high school, college or industry courses in carpentry is usually required to be eligible for trade certification."
+    },
+    {
+     "fr": "Le certificat de qualification pour les charpentiers est obligatoire au Québec et est offert, bien que facultatif, dans les autres provinces et les territoires.",
+     "en": "Trade certification for carpenters is compulsory in Quebec and available, but voluntary, in all other provinces and the territories."
+    },
+    {
+     "fr": "Le certificat de qualification pour les monteurs de charpente est offert, bien que facultatif, en Saskatchewan.",
+     "en": "Trade certification for framers is available, but voluntary, in Saskatchewan."
+    },
+    {
+     "fr": "Les charpentiers qualifiés peuvent obtenir la mention Sceau rouge après la réussite de l'examen interprovincial Sceau rouge.",
+     "en": "Red Seal endorsement is also available to qualified carpenters upon successful completion of the interprovincial Red Seal examination."
+    }
+   ],
+   "examplesFr": [
+    "apprenti charpentier/apprentie charpentière",
+    "charpentier/charpentière",
+    "charpentier/charpentière de finition",
+    "charpentier/charpentière de gros oeuvre",
+    "charpentier/charpentière d'entretien",
+    "charpentier/charpentière en rénovation",
+    "charpentier-constructeur/charpentière-constructrice d'escaliers",
+    "charpentier-menuisier/charpentière-menuisière",
+    "compagnon charpentier/compagne charpentière",
+    "monteur/monteuse de charpentes en métal - charpenterie"
+   ],
+   "examplesEn": [
+    "apprentice carpenter",
+    "carpenter",
+    "carpenter-joiner",
+    "finish carpenter",
+    "journeyman/woman carpenter",
+    "maintenance carpenter",
+    "metal framer - carpentry",
+    "renovation carpenter",
+    "rough carpenter",
+    "stair builder-carpenter"
+   ]
+  },
+  {
+   "code": "72410",
+   "duties": [
+    {
+     "headingFr": "Les mécaniciens de véhicules automobiles",
+     "headingEn": "Automotive service technicians",
+     "items": [
+      {
+       "fr": "vérifier les commandes et discuter avec les surveillants des travaux à exécuter",
+       "en": "Review work orders and discuss work with supervisor"
+      },
+      {
+       "fr": "observer le fonctionnement des moteurs en marche, essayer les véhicules sur la route et vérifier les éléments et les circuits des véhicules à l'aide d'appareils de diagnostic informatisés et autres appareils, pour repérer et isoler les défectuosités",
+       "en": "Inspect motor in operation, road test motor vehicle, and test automotive systems and components using computerized diagnostic and other testing devices to diagnose and isolate faults"
+      },
+      {
+       "fr": "régler, réparer ou remplacer, au moyen d'outils manuels ou d'autres équipements spéciaux, les pièces ou éléments défectueux de divers systèmes du véhicule, comme les circuits d'alimentation en carburant, les dispositifs de freinage, les mécanismes de direction et de suspension, les moteurs et les groupes propulseurs, les systèmes d'échappement et les dispositifs antipollution, les systèmes de climatisation et de régulation de la température de l'habitacle et les systèmes électriques et électroniques",
+       "en": "Adjust, repair or replace parts and components of automotive systems including fuel system, brakes, steering and suspension, engine and drive train, emission control and exhaust, cooling and climate control, and electrical and electronic systems using hand tools and other specialized automotive repair equipment"
+      },
+      {
+       "fr": "essayer les systèmes réparés et les régler selon les spécifications de bon fonctionnement du manufacturier",
+       "en": "Test and adjust repaired systems to manufacturer's performance specifications"
+      },
+      {
+       "fr": "effectuer des opérations d'entretien périodique telles que la vidange d'huile, la lubrification et la mise au point",
+       "en": "Perform scheduled maintenance service, such as oil changes, lubrications and tune ups"
+      },
+      {
+       "fr": "discuter avec les clients des opérations effectuées, de l'état général des véhicules et des réparations qui devront être faites dans l'avenir",
+       "en": "Advise customers on work performed, general vehicle condition and future repair requirements"
+      }
+     ]
+    },
+    {
+     "headingFr": "Les réparateurs de véhicules automobiles",
+     "headingEn": "Mechanical repairers - motor vehicle manufacturing",
+     "items": [
+      {
+       "fr": "vérifier et mettre à l'essai des systèmes mécaniques, comme des moteurs, des transmissions, des essieux et des systèmes de freinage, afin de localiser les défectuosités et les imperfections",
+       "en": "Inspect and test mechanical units, such as engines, transmissions, axles and brake systems, to locate faults and malfunctions"
+      },
+      {
+       "fr": "identifier les causes des défectuosités ou du mauvais fonctionnement et vérifier les diagnostics avec les surveillants afin de déterminer si les pièces sont réparables ou si elles doivent être remplacées",
+       "en": "Diagnose faults or malfunctions and confirm findings with supervisor to determine whether to repair or replace unit"
+      },
+      {
+       "fr": "réparer ou remplacer les composantes ou les éléments défectueux à l'aide d'outils manuels ou mécaniques",
+       "en": "Repair or replace mechanical units or components using hand and power tools"
+      },
+      {
+       "fr": "mettre à l'essai et ajuster les éléments selon les spécifications pour en assurer le bon fonctionnement",
+       "en": "Test and adjust units to specifications for proper performance"
+      },
+      {
+       "fr": "remplir des rapports pour consigner les défectuosités et les travaux exécutés",
+       "en": "Complete reports to record problems and work performed"
+      },
+      {
+       "fr": "Les mécaniciens de camions et de remorques",
+       "en": "Truck and transport and truck-trailer mechanics"
+      },
+      {
+       "fr": "régler, réparer ou remplacer les pièces et les composantes des systèmes des camions de transport routier, y compris le châssis, le cadre, la cabine, la carrosserie, le moteur et le groupe propulseur, le système de carburant, les freins à air, la direction et les systèmes hydrauliques, électriques et électroniques",
+       "en": "Adjust, repair or replace parts and components of commercial transport truck systems including chassis, frame, cab, body, engine and drive train, air brakes, steering, and fuel, hydraulic, electrical and electronic systems"
+      },
+      {
+       "fr": "ajuster, réparer ou remplacer les pièces et les composantes des systèmes des camions lourds, y compris les systèmes structurels, électriques et les systèmes de freinage",
+       "en": "Adjust, repair or replace parts and components of truck-trailer systems including structural, brake and electrical systems"
+      },
+      {
+       "fr": "Les travailleurs inclus dans ce groupe de base peuvent se spécialiser dans les domaines suivants : moteur et alimentation en carburant, systèmes de transmission, systèmes de climatisation, de refroidissement et de chauffage, direction, alignement, freins, lignes de compression, suspension, systèmes électriques et électroniques, réparation de remorques routières ou services de diagnostic",
+       "en": "Workers in this unit group may specialize in the following areas: engine and fuel systems, transmission systems, air conditioning, cooling and heating systems, steering, alignment, brakes, drive lines, suspension, electrical and electronic systems, truck-trailer repair or diagnostic services"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Mécaniciens de véhicules automobiles",
+     "en": "Automotive service technicians"
+    },
+    {
+     "fr": "Un diplôme d'études secondaires et une formation ou un programme professionnel sont habituellement exigés.",
+     "en": "Completion of secondary school and training courses or a vocational program are usually required."
+    },
+    {
+     "fr": "Un apprentissage de quatre ans comme mécanicien de véhicules automobiles ou plus de quatre ans d'expérience de travail ainsi qu'une formation spécialisée en technique de l'automobile en milieu industriel, sont exigés pour l'obtention d'un certificat.",
+     "en": "Completion of a four-year automotive service technician apprenticeship program or A combination of over four years of work experience and industry courses in automotive technology is required to be eligible for trade certification."
+    },
+    {
+     "fr": "Un certificat de qualification de mécanicien de véhicules automobiles est obligatoire en Nouvelle-Écosse, à l'Île-du-Prince-Édouard, au Nouveau-Brunswick, en Ontario et en Alberta et est offert, bien que facultatif, à Terre-Neuve-et-Labrador, au Québec, au Manitoba, en Saskatchewan, en Colombie-Britannique, au Yukon, aux Territoires du Nord-Ouest et au Nunavut.",
+     "en": "Trade certification for automotive service technicians is compulsory in Nova Scotia, Prince Edward Island, New Brunswick, Ontario and Alberta and available, but voluntary, in Newfoundland and Labrador, Quebec, Manitoba, Saskatchewan, British Columbia, the Yukon, the Northwest Territories and Nunavut."
+    },
+    {
+     "fr": "Un certificat de qualification comme mécanicien de véhicules automobiles (transmissions) est obligatoire en Ontario.",
+     "en": "Automotive service technician (transmission) trade certification is compulsory in Ontario."
+    },
+    {
+     "fr": "Un certificat de qualification comme mécanicien de véhicules automobiles (systèmes de direction, de suspension et de freinage) est obligatoire au Nouveau-Brunswick et en Ontario.",
+     "en": "Automotive service technician (steering, suspension and brakes) trade certification is compulsory in New Brunswick and Ontario."
+    },
+    {
+     "fr": "Un certificat de qualification pour techniciens à l'entretien et à la réparation d'automobiles (mécanicien de station-service) est obligatoire en Nouvelle-Écosse et est offert, bien que facultatif, à l'Île-du-Prince-Édouard.",
+     "en": "Automotive service technician (service station mechanic) trade certification is compulsory in Nova Scotia and available, but voluntary, in Prince Edward Island."
+    },
+    {
+     "fr": "Les mécaniciens de véhicules automobiles qualifiés peuvent obtenir la mention Sceau rouge après la réussite de l'examen interprovincial Sceau rouge.",
+     "en": "Red Seal endorsement is also available to qualified automotive service technicians upon successful completion of the interprovincial Red Seal examination."
+    },
+    {
+     "fr": "Réparateurs de véhicules automobiles",
+     "en": "Mechanical repairers, motor vehicle manufacturing"
+    },
+    {
+     "fr": "Un diplôme d'études secondaires et une formation ou un programme professionnel sont habituellement exigés.",
+     "en": "Completion of secondary school and training courses or a vocational program are usually required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi de deux à trois ans est fournie par les employeurs.",
+     "en": "On-the-job training of two to three years is provided by employers."
+    },
+    {
+     "fr": "Mécaniciens de camions et de remorques de camions",
+     "en": "Truck and transport and truck-trailer mechanics"
+    },
+    {
+     "fr": "Un diplôme d'études secondaires et une formation ou un programme professionnel sont habituellement exigés.",
+     "en": "Completion of secondary school and training courses or a vocational program are usually required."
+    },
+    {
+     "fr": "Un programme d'apprentissage de quatre ans en mécanique de camions de transport ou de remorques de camions ou plus de quatre ans d'expérience de travail ainsi qu'une formation spécialisée en mécanique de camions de transport en milieu industriel, sont exigés pour obtenir le certificat de qualification.",
+     "en": "Completion of a four-year truck and transport mechanic or truck-trailer repair apprenticeship or A combination of over four years of work experience and industry courses in truck or heavy duty equipment mechanics is required to be eligible for trade certification."
+    },
+    {
+     "fr": "Un certificat de qualification de mécanicien de camions et de véhicules de transport est obligatoire en Nouvelle-Écosse, en Ontario et en Alberta et est offert, bien que facultatif, à Terre-Neuve-et-Labrador, à l'Île-du-Prince-Édouard, au Nouveau-Brunswick, au Québec, au Manitoba, en Saskatchewan, en Colombie-Britannique et au Yukon.",
+     "en": "Trade certification for truck and transport mechanics is compulsory in Nova Scotia, Ontario and Alberta and available, but voluntary, in Newfoundland and Labrador, Prince Edward Island, New Brunswick, Quebec, Manitoba, Saskatchewan, British Columbia and the Yukon."
+    },
+    {
+     "fr": "Un certificat de qualification comme technicien de remorques de camions est obligatoire en Ontario et est offert, bien que facultatif, à Terre-Neuve-et-Labrador, en Nouvelle-Écosse, à l'Île-du-Prince-Édouard, au Nouveau-Brunswick, au Manitoba, en Colombie-Britannique et au Yukon.",
+     "en": "Transport trailer technician trade certification is compulsory in Ontario and available, but voluntary, in Newfoundland and Labrador, Nova Scotia, Prince Edward Island, New Brunswick, Manitoba, British Columbia and the Yukon."
+    },
+    {
+     "fr": "Les réparateurs de remorques de camions et les mécaniciens de camions et de camions de transport qualifiés peuvent obtenir la mention Sceau rouge après la réussite de l'examen interprovincial Sceau rouge.",
+     "en": "Red Seal endorsement is also available to qualified truck-trailer repairers and truck and transport mechanics upon successful completion of the interprovincial Red Seal examination."
+    }
+   ],
+   "examplesFr": [
+    "apprenti mécanicien/apprentie mécanicienne de véhicules automobiles",
+    "mécanicien/mécanicienne d'autobus",
+    "mécanicien/mécanicienne d'automobiles",
+    "mécanicien/mécanicienne de boîtes de vitesses",
+    "mécanicien/mécanicienne de camions et de véhicules de transport",
+    "mécanicien/mécanicienne de systèmes de freinage",
+    "metteur/metteuse à niveau - construction de véhicules automobiles",
+    "réparateur/réparatrice de moteurs - construction de véhicules automobiles",
+    "réparateur/réparatrice de remorques de camions",
+    "spécialiste de la mise au point de véhicules automobiles",
+    "technicien/technicienne à l'entretien et à la réparation d'automobiles"
+   ],
+   "examplesEn": [
+    "apprentice motor vehicle mechanic",
+    "automobile mechanic",
+    "automotive service technician",
+    "brake systems mechanic",
+    "bus mechanic",
+    "mechanical upgrader - motor vehicle manufacturing",
+    "motor repairer - motor vehicle manufacturing",
+    "transmission mechanic",
+    "truck and transport mechanic",
+    "truck-trailer repairer",
+    "tune-up specialist - motor vehicle"
+   ]
+  },
+  {
+   "code": "73300",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "Les conducteurs de camions sur longue distance",
+       "en": "Long-haul transport truck drivers"
+      },
+      {
+       "fr": "conduire, principalement, des camions gros porteurs, des véhicules articulés allongés et des camions porteurs, de poids supérieur à 4 500 kg, afin de transporter des marchandises sur de longues distances",
+       "en": "Operate and drive primarily tractor-trailer, long-combination vehicle and straight-body trucks weighing over 4500 kg to transport goods and materials over long distances"
+      },
+      {
+       "fr": "planifier la logistique des voyages et obtenir la documentation requise pour transporter des biens",
+       "en": "Plan trip logistics and obtain required documentation to transport goods"
+      },
+      {
+       "fr": "inspecter les systèmes, les équipements et les accessoires des camions tels que les pneus, les phares et clignotants, les freins et les compartiments frigorifiques avant, pendant et après le voyage",
+       "en": "Perform pre-trip, en route and post-trip inspection of vehicle systems, equipment and accessories such as tires, lights and turning signals, brakes and cold storage"
+      },
+      {
+       "fr": "veiller à ce que la cargaison soit arrimée et assujettie correctement selon les règles de sécurité, et suivre les procédures de sécurité lors du transport de marchandise dangereuse",
+       "en": "Ensure cargo is secured properly in accordance with safety requirements and follow safety procedures for transporting dangerous goods"
+      },
+      {
+       "fr": "obtenir des licences spéciales et d'autres documents exigés pour transporter de la cargaison sur des routes internationales",
+       "en": "Obtain special permits and other documents required to transport cargo on international routes"
+      },
+      {
+       "fr": "noter l'information sur les cargaisons, les heures de service, les distances parcourues et la consommation d'essence",
+       "en": "Record cargo information, hours of service, distance travelled and fuel consumption"
+      },
+      {
+       "fr": "administrer des connaissements et tenir des carnets de route électroniquement ou manuellement",
+       "en": "Administer bills of lading and manually or electronically maintain log books"
+      },
+      {
+       "fr": "communiquer avec des répartiteurs, d'autres camionneurs et des clients au moyen d'appareils de communication et d'ordinateurs de bord",
+       "en": "Communicate with dispatcher, other drivers and customers using communication devices and on-board computers"
+      },
+      {
+       "fr": "effectuer, au besoin, des réparations d'urgence au bord de la route",
+       "en": "May perform emergency roadside repairs"
+      },
+      {
+       "fr": "faire partie d'une équipe de deux camionneurs ou d'un convoi, s'il y a lieu",
+       "en": "May drive as part of a two-person team or convoy"
+      },
+      {
+       "fr": "transporter, au besoin, des substances ou des marchandises dangereuses",
+       "en": "May transport hazardous products or dangerous goods"
+      },
+      {
+       "fr": "Les conducteurs routiers et les conducteurs de camions locaux",
+       "en": "Short-haul and local transport truck drivers"
+      },
+      {
+       "fr": "conduire, principalement, des camions porteurs pour transporter des marchandises et des biens essentiellement dans des villes et entre des villes, sur des distances courtes",
+       "en": "Operate and drive primarily straight trucks to transport goods and materials mainly on local routes and short interurban routes"
+      },
+      {
+       "fr": "inspecter les camions avant, pendant et après le voyage et surveiller tous les aspects des véhicules, comme l'état de l'équipement, ainsi que le chargement et le déchargement de la cargaison",
+       "en": "Perform pre-trip, en route and post-trip inspection and oversee all aspects of vehicle such as condition of equipment, and loading and unloading of cargo"
+      },
+      {
+       "fr": "conduire, au besoin, des camions à usage déterminé, comme des remorqueuses, des camions basculeurs, des camions hydrovac et des bétonnières",
+       "en": "May drive special purpose trucks such as tow trucks, dump trucks, hydrovac trucks or cement mixing trucks"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi est offerte.",
+     "en": "On-the-job-training is provided."
+    },
+    {
+     "fr": "La réussite d'un programme de formation accrédité pour camionneurs d'une durée de jusqu'à trois mois, offert par un collège ou une école de formation professionnelle, peut être exigée.",
+     "en": "Completion of an accredited driver training course of up to three months duration, through a vocational school or community college, may be required."
+    },
+    {
+     "fr": "Un permis de conduire de classe 3 ou D est exigé des conducteurs de camions porteurs.",
+     "en": "A Class 3 or D licence is required to drive straight-body trucks."
+    },
+    {
+     "fr": "Un permis de conduire de classe 1 ou A est exigé des conducteurs de camions articulés allongés.",
+     "en": "A Class 1 or A licence is required to drive long combination vehicles."
+    },
+    {
+     "fr": "La mention « freins pneumatiques » (Z) est exigée des conducteurs qui conduisent des véhicules équipés de freins pneumatiques.",
+     "en": "Air brake endorsement (Z) is required for drivers who operate vehicles equipped with air brakes."
+    },
+    {
+     "fr": "Les conducteurs qui transportent des substances ou des marchandises dangereuses doivent être détenteurs d'un certificat de transport de marchandises dangereuses.",
+     "en": "Transportation of dangerous goods (TDG) certification is required for drivers who transport hazardous products or dangerous goods."
+    },
+    {
+     "fr": "Une mention ou une certification additionnelle peut être exigée pour conduire des camions articulés.",
+     "en": "Additional licensing endorsement or certification may be required to drive articulated trucks."
+    }
+   ],
+   "examplesFr": [
+    "camionneur/camionneuse",
+    "camionneur-déménageur/camionneuse-déménageuse",
+    "conducteur/conductrice de camion à benne basculante",
+    "conducteur/conductrice de camion à plate-forme",
+    "conducteur/conductrice de camion à semi-remorque",
+    "conducteur/conductrice de camion de manoeuvre",
+    "conducteur/conductrice de camion de vrac",
+    "conducteur/conductrice de camion sur long parcours",
+    "conducteur/conductrice de dépanneuse",
+    "conducteur/conductrice de grumier",
+    "conducteur/conductrice de poids lourd",
+    "routier/routière"
+   ],
+   "examplesEn": [
+    "bulk goods truck driver",
+    "dump truck driver",
+    "flatbed truck driver",
+    "heavy truck driver",
+    "logging truck driver",
+    "long haul truck driver",
+    "moving van driver",
+    "shunt truck driver",
+    "tow truck driver",
+    "tractor-trailer truck driver",
+    "transport driver",
+    "truck driver"
    ]
   },
   {

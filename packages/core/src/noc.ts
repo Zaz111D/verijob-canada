@@ -33,6 +33,8 @@ export function nocLabel(nocData: NocData, code: string): { fr: string; en: stri
 export function detectNocInText(nocData: NocData, normText: string): NocEntry | undefined {
   let best: { entry: NocEntry; len: number } | undefined;
   for (const entry of nocData.nocs) {
+    // Titre d'un métier voisin (ex. « infirmière auxiliaire » n'est pas « infirmière autorisée »).
+    if (entry.notKeywords?.some((k) => normalize(k) && new RegExp(`(^|[^a-z])${escapeRegExp(normalize(k))}($|[^a-z])`).test(normText))) continue;
     for (const kw of entry.keywords) {
       const k = normalize(kw);
       const re = new RegExp(`(^|[^a-z])${escapeRegExp(k)}s?($|[^a-z])`);
