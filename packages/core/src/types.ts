@@ -81,6 +81,9 @@ export interface Rules {
     excludedProvinces: string[];
     minOralNclc: number;
     excludesPrimaryAgricultureTeer: number[];
+    /** Démarches de l'employeur (Portail des employeurs, code C16) et frais de conformité payés par l'employeur. */
+    employerSource: string;
+    employerComplianceFeeCad: number;
   };
   homeCareWorkerPilots: {
     source: string;

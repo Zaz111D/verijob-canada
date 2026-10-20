@@ -317,6 +317,24 @@
       "verifiedAt": "2026-10-16",
       "nextReview": "2027-01-16"
     },
+    "ircc-fm-employer": {
+      "titleFr": "IRCC — Comment embaucher un travailleur étranger francophone ou bilingue pour travailler au Canada hors Québec",
+      "titleEn": "IRCC — How to hire a French-speaking or bilingual foreign worker to work in Canada outside Quebec",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/embaucher-etranger-temporaires/travailleurs-francophones-bilingues-exterieur-quebec/embaucher.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/hire-temporary-foreign/french-speaking-bilingual-workers-outside-quebec/hire.html",
+      "pageModified": "2026-04-28",
+      "verifiedAt": "2026-10-20",
+      "nextReview": "2027-01-20"
+    },
+    "ircc-extend-permit": {
+      "titleFr": "IRCC — Prolongation du permis d'un travailleur temporaire (nouvelle EIMT pour un travailleur déjà au Canada)",
+      "titleEn": "IRCC — Extend a temporary worker's permit (new LMIA for a worker already in Canada)",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/embaucher-etranger-temporaires/prolongation-permis.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/hire-temporary-foreign/extend-permit.html",
+      "pageModified": "2026-10-14",
+      "verifiedAt": "2026-10-20",
+      "nextReview": "2027-01-20"
+    },
     "irpr-r200": {
       "titleFr": "Règlement sur l'immigration et la protection des réfugiés — article 200 (délivrance du permis de travail)",
       "titleEn": "Immigration and Refugee Protection Regulations — section 200 (work permit issuance)",
@@ -882,6 +900,8 @@
       "QC"
     ],
     "minOralNclc": 5,
+    "employerSource": "ircc-fm-employer",
+    "employerComplianceFeeCad": 230,
     "$comment": "NCLC 5 en expression orale ET compréhension orale. Exclut l'agriculture primaire de TEER 4 ou 5 (R315.2(4)).",
     "excludesPrimaryAgricultureTeer": [
       4,

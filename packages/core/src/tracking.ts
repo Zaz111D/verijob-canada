@@ -41,6 +41,8 @@ export interface Application {
   followUp?: string;
   notes?: string;
   contact?: string;
+  /** Téléphone de l'employeur relevé par la personne (même page source que le contact). */
+  phone?: string;
   /** Page officielle où le contact a été trouvé (offre du Guichet-Emplois, site de l'employeur). */
   contactSource?: string;
   verification?: Verification;
@@ -115,6 +117,7 @@ function isApplication(x: unknown): x is Application {
     && (a.followUp === undefined || (typeof a.followUp === 'string' && DATE.test(a.followUp)))
     && (a.notes === undefined || (typeof a.notes === 'string' && a.notes.length <= 5000))
     && (a.contact === undefined || (typeof a.contact === 'string' && a.contact.length <= 300))
+    && (a.phone === undefined || (typeof a.phone === 'string' && a.phone.length <= 40))
     && (a.contactSource === undefined || (typeof a.contactSource === 'string' && a.contactSource.length <= 2000 && HTTP_URL.test(a.contactSource)))
     && (a.origin === undefined || APPLICATION_ORIGINS.includes(a.origin as ApplicationOrigin))
     && (a.adUrl === undefined || (typeof a.adUrl === 'string' && a.adUrl.length <= 2000 && /^https?:\/\//i.test(a.adUrl)))
@@ -134,8 +137,8 @@ export function parseImport(text: string): { ok: true; applications: Application
     return { ok: false, error: 'format' };
   }
   const applications = d.applications.filter(isApplication).map((a) => {
-    const { id, employer, job, date, status, followUp, notes, contact, contactSource, verification, origin, adUrl, adText, updatedAt } = a;
-    return { id, employer, job, date, status, followUp, notes, contact, contactSource, verification, origin, adUrl, adText, updatedAt };
+    const { id, employer, job, date, status, followUp, notes, contact, phone, contactSource, verification, origin, adUrl, adText, updatedAt } = a;
+    return { id, employer, job, date, status, followUp, notes, contact, phone, contactSource, verification, origin, adUrl, adText, updatedAt };
   });
   return { ok: true, applications, rejected: d.applications.length - applications.length };
 }

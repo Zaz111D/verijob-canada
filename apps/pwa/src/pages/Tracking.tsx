@@ -69,6 +69,7 @@ function Editor({ initial, onDone }: { initial: Application; onDone: () => void 
       </label>
       <p class="muted">{tr(S.adTextHelp, lang)}</p>
       {a.adText?.trim() && <p><button type="button" class="link" onClick={() => void save().then(() => openOfferCheck(a.adText!))}>{tr(S.analyzeAd, lang)}</button></p>}
+      <label>{tr(S.applyPhoneLabel, lang)}<input type="tel" value={a.phone ?? ''} onInput={field('phone')} /></label>
       <label>{tr(S.fieldContact, lang)}<input value={a.contact ?? ''} onInput={field('contact')} /></label>
       <label>{tr(S.fieldContactSource, lang)}<input type="url" inputMode="url" placeholder="https://" value={a.contactSource ?? ''} onInput={field('contactSource')} /></label>
       <label>{tr(S.fieldNotes, lang)}<textarea rows={3} value={a.notes ?? ''} onInput={field('notes')} /></label>
@@ -152,9 +153,10 @@ export function Tracking() {
               </details>
             )}
             {a.adText && <p><button type="button" class="link" onClick={() => openCvCheck(a.adText!)}>{tr(S.checkCvForOffer, lang)}</button></p>}
+            {a.phone && <p><a href={`tel:${a.phone.replace(/[^\d+]/g, '')}`}>📞 {a.phone}</a></p>}
             {a.contact && <p class="muted">{a.contact}</p>}
             {a.contact && isFreeEmail(a.contact) && <p class="warn">{tr(S.contactFreeMail, lang)}</p>}
-            {a.contact && (a.contactSource
+            {(a.contact || a.phone) && (a.contactSource
               ? <p class="muted">{tr(S.contactVerified, lang)} <a href={a.contactSource} target="_blank" rel="noopener noreferrer nofollow">{a.contactSource.replace(/^https?:[/][/](www[.])?/, '').split('/')[0]} ↗</a></p>
               : <p class="warn">{tr(S.contactUnverified, lang)}</p>)}
             {a.notes && <p>{a.notes}</p>}

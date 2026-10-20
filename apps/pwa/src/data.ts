@@ -103,6 +103,15 @@ export const loadPriorities = () => load<CommunityPriority[]>('community-priorit
 export const loadExpressEntry = () => load<ExpressEntryData>('express-entry.json');
 export const loadPostings = () => load<PostingsData>('postings.json');
 export const loadAfricanRecruiters = () => load<AfricanRecruiter[]>('african-recruiters.json');
+/** Coordonnées relevées sur les sites officiels des employeurs (data/manual/coordonnees-employeurs.csv). */
+export interface EmployerContact {
+  k: string; p: string; n: string; c: string;
+  address?: string; phone?: string; phoneAlt?: string; email?: string;
+  scope: 'entreprise' | 'usine' | 'succursale' | 'siege';
+  status: 'verifie' | 'inaccessible';
+  source: string; recordedAt: string; notes?: string;
+}
+export const loadEmployerContacts = () => load<EmployerContact[]>('employer-contacts.json');
 export const loadPermits = () => load<PermitsData>('permits-africa.json');
 export interface ProposalStatus { id: string; pageModified: string | null; changed: boolean; checkedAt: string }
 export const loadProposalsStatus = () => load<ProposalStatus[]>('proposals-status.json');
