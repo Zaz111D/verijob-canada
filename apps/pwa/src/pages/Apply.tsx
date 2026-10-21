@@ -8,7 +8,7 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import {
   addDays, DEFAULT_FOLLOW_UP_DAYS, employerKey, filterProspects, findNoc, isFreeEmail, jobBankLink, networks, newId,
-  PROVINCE_NAMES, recruitmentEvents, todayIso, type AfricanRecruiter, type CurrentOffer, type InternationalOffer, type Prospect, type ProvinceCode,
+  PROVINCE_NAMES, recruitmentEvents, socialSearchLinks, todayIso, type AfricanRecruiter, type CurrentOffer, type InternationalOffer, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge } from '../components/common';
 import { ContactLinks } from '../components/ContactLinks';
@@ -105,6 +105,43 @@ function Platforms({ nocs, provinces, citizenship, lang }: { nocs: string[]; pro
           <a class="button" href={n.url[lang]} {...ext}>{tr(S.officialPage, lang)} ↗</a>
         </article>
       ))}
+    </>
+  );
+}
+
+/** Publications récentes sur les réseaux (LinkedIn, Facebook, X, Google) : recherches prêtes à ouvrir, puis vérification. */
+function SocialSearch({ nocs, lang }: { nocs: string[]; lang: Lang }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <h2>{tr(S.socialTitle, lang)}</h2>
+      <p class="muted">{tr(S.socialIntro, lang)}</p>
+      <p class="warn">{tr(S.socialWarning, lang)}</p>
+      <div class="row">
+        <a class="button primary" href="#/offre">{tr(S.socialCheck, lang)}</a>
+        <button type="button" onClick={() => setOpen(!open)}>{tr(open ? S.socialHide : S.socialShow, lang)}</button>
+      </div>
+      {open && nocs.map((code) => {
+        const n = findNoc(nocData, code);
+        const job = { fr: n?.searchFr ?? n?.jobFr?.split(/[(/]/)[0]!.trim() ?? '', en: n?.jobEn?.split(/[(/]/)[0]!.trim() ?? '' };
+        const links = socialSearchLinks(rules, job);
+        return (
+          <article class="card-result">
+            <h3>{jobName(code, lang)}</h3>
+            {(['fr', 'en'] as const).map((l) => (
+              <>
+                <p class="muted">{tr(l === 'fr' ? S.socialInFrench : S.socialInEnglish, lang)}</p>
+                <div class="row">
+                  {links.filter((x) => x.lang === l).map((x) => (
+                    <a class="button" href={x.url} title={x.note[lang]} {...ext}>{x.name}{x.account ? ' 🔒' : ''} ↗</a>
+                  ))}
+                </div>
+              </>
+            ))}
+          </article>
+        );
+      })}
+      {open && <p class="muted">{tr(S.socialLegend, lang)}</p>}
     </>
   );
 }
@@ -386,6 +423,7 @@ export function Apply() {
       <ProfileBanner lang={lang} />
       <p class="muted">{tr(S.applyPageIntro, lang)}</p>
       {nocs.length > 0 && <Platforms nocs={nocs} provinces={provinces} citizenship={profile.citizenship} lang={lang} />}
+      {nocs.length > 0 && <SocialSearch nocs={nocs} lang={lang} />}
       <Employers nocs={nocs} provinces={provinces} lang={lang} />
       <VerifiedContacts lang={lang} />
     </section>

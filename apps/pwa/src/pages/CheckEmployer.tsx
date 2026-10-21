@@ -15,6 +15,13 @@ import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
 
 const ALL = 'ALL';
+/** Nom d'entreprise transmis par une autre page (ex. « Vérifier cette publication »). */
+const HANDOFF_KEY = 'verijob-employeur-a-chercher';
+
+export function openEmployerCheck(name: string) {
+  try { sessionStorage.setItem(HANDOFF_KEY, name); } catch { /* stockage indisponible : la personne tapera le nom */ }
+  location.hash = '#/employeur';
+}
 
 function provinceLabel(code: string, lang: Lang): string {
   if (code === 'XX') return lang === 'fr' ? 'Siège social hors du Canada' : 'Head office outside Canada';
@@ -91,18 +98,24 @@ export function CheckEmployer() {
   useEffect(() => {
     if (!province) setProvince(profile.provinces?.[0] ?? ALL);
   }, [profile]);
+  useEffect(() => {
+    if (!index) return;
+    let handed: string | null = null;
+    try { handed = sessionStorage.getItem(HANDOFF_KEY); sessionStorage.removeItem(HANDOFF_KEY); } catch { /* voir openEmployerCheck */ }
+    if (handed) { setQuery(handed); setProvince(ALL); void run(undefined, handed, ALL); }
+  }, [index]);
 
-  const run = async (e?: Event) => {
+  const run = async (e?: Event, q = query, prov = province) => {
     e?.preventDefault();
-    if (!query.trim() || !index) return;
+    if (!q.trim() || !index) return;
     setBusy(true); setError(false);
     try {
-      const provs = province === ALL ? Object.keys(index.provinces) : [province];
+      const provs = prov === ALL ? Object.keys(index.provinces) : [prov];
       const records = (await Promise.all(provs.map(loadEmployers))).flat();
-      setLmia(searchEmployers(records, query, 15).map((h) => h.item));
+      setLmia(searchEmployers(records, q, 15).map((h) => h.item));
       const des = (await loadDesignated()).data;
       const groups = new Map<string, DesignatedEmployer[]>();
-      for (const h of searchEmployers(des, query, 30)) {
+      for (const h of searchEmployers(des, q, 30)) {
         const key = `${h.item.community}|${h.item.k}`;
         groups.set(key, [...(groups.get(key) ?? []), h.item]);
       }

@@ -2,10 +2,11 @@
  * Vérificateur d'offre : analyse locale d'un message collé (aucun envoi sur Internet).
  */
 import { useEffect, useState } from 'preact/hooks';
-import { analyzeOffer, PROVINCE_NAMES, SEVERITY_LABEL, type ScamAnalysis } from '@verijob/core';
+import { analyzeOffer, employerKey, publisherCheck, PROVINCE_NAMES, SEVERITY_LABEL, type PublisherCheck, type ScamAnalysis } from '@verijob/core';
 import { Badge, Sources } from '../components/common';
-import { getWageLookup, nocData, rules } from '../data';
-import { STRINGS as S, tr, useLang } from '../i18n';
+import { getWageLookup, loadEmployerContacts, nocData, rules, type EmployerContact } from '../data';
+import { openEmployerCheck } from './CheckEmployer';
+import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { useProfile } from '../store';
 
 const EXAMPLE = `URGENT !!! Recrutement pour fermes au Canada 🇨🇦
@@ -26,11 +27,25 @@ export function CheckOffer() {
   const profile = useProfile();
   const [text, setText] = useState('');
   const [result, setResult] = useState<ScamAnalysis | undefined>();
+  const [company, setCompany] = useState('');
+  const [individual, setIndividual] = useState(false);
+  const [who, setWho] = useState<{ check: PublisherCheck; official: EmployerContact[] } | undefined>();
 
   const run = async (t = text) => {
     if (!t.trim()) return;
     const wageLookup = await getWageLookup();
     setResult(analyzeOffer(t, { rules, nocData, profile, wageLookup }));
+    const check = publisherCheck(t, company);
+    let official: EmployerContact[] = [];
+    if (company.trim()) {
+      const all = await loadEmployerContacts().then((f) => f.data).catch(() => [] as EmployerContact[]);
+      official = all.filter((c) => c.k === employerKey(company));
+      // Domaine officiel relevé (site ou e-mail de l'entreprise) : la publication cite bien l'entreprise.
+      const host = (u: string) => u.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]!.toLowerCase();
+      const officialDomains = new Set(official.flatMap((c) => [host(c.source), ...(c.email ? [c.email.split('@')[1]!] : [])]));
+      if (check.link === 'autre' && check.domains.some((d) => officialDomains.has(d))) check.link = 'lie';
+    }
+    setWho({ check, official });
   };
 
   useEffect(() => {
@@ -46,6 +61,8 @@ export function CheckOffer() {
       <label class="sr-only" for="offer">{tr(S.offerTitle, lang)}</label>
       <textarea id="offer" rows={8} value={text} placeholder={tr(S.offerPlaceholder, lang)}
         onInput={(e) => setText((e.target as HTMLTextAreaElement).value)} />
+      <label>{tr(S.postCompany, lang)}<input value={company} placeholder={tr(S.postCompanyPlaceholder, lang)} onInput={(e) => setCompany((e.target as HTMLInputElement).value)} /></label>
+      <label class="check"><input type="checkbox" checked={individual} onChange={(e) => setIndividual((e.target as HTMLInputElement).checked)} /> {tr(S.postIndividual, lang)}</label>
       <div class="row">
         <button type="button" class="primary" onClick={() => void run()} disabled={!text.trim()}>{tr(S.offerButton, lang)}</button>
         <button type="button" onClick={() => { setText(''); setResult(undefined); }}>{tr(S.offerClear, lang)}</button>
@@ -72,11 +89,36 @@ export function CheckOffer() {
               <Sources sources={s.sources} />
             </article>
           ))}
+          {who && <Publisher who={who} company={company} individual={individual} lang={lang} />}
           {result.skipped.map((k) => <p class="muted">{tr(S.notEvaluated, lang)} : {k.reason[lang]}</p>)}
           {result.count > 0 && <p class="callout">{tr(S.afterSignals, lang)}</p>}
           <p><a href="#/employeur">{tr(S.cardEmployerTitle, lang)}</a> · <a href="#/consultant">{tr(S.cardConsultantTitle, lang)}</a></p>
         </div>
       )}
     </section>
+  );
+}
+
+/** « Qui publie ? » : publication d'un particulier, adresses citées comparées à l'entreprise, coordonnées officielles. */
+function Publisher({ who, company, individual, lang }: { who: { check: PublisherCheck; official: EmployerContact[] }; company: string; individual: boolean; lang: Lang }) {
+  const { check, official } = who;
+  return (
+    <article class="card-result">
+      <h3>{tr(S.postWhoTitle, lang)}</h3>
+      {individual && <p class="warn">{tr(S.postIndividualWarning, lang)}</p>}
+      {check.domains.length > 0 && <p class="muted">{tr(S.postDomains, lang)} {check.domains.join(', ')}</p>}
+      {check.link === 'lie' && <p>{tr(S.postLinkOwn, lang)}</p>}
+      {check.link === 'autre' && <p class="warn">{tr(S.postLinkOther, lang)}</p>}
+      {check.link === 'aucun' && <p class="warn">{tr(S.postLinkNone, lang)}</p>}
+      {check.link === undefined && <p class="muted">{tr(S.postNoCompany, lang)}</p>}
+      {check.foreignPhones.length > 0 && <p class="warn">{tr(S.postForeignPhone, lang).replace('{p}', check.foreignPhones.join(', '))}</p>}
+      {official.filter((c) => c.status === 'verifie').map((c) => (
+        <p>
+          {tr(S.postOfficial, lang)} {c.phone && <a href={`tel:+1${c.phone.replace(/^1-/, '').replace(/-/g, '')}`}>📞 {c.phone}</a>} {c.email && <a href={`mailto:${c.email}`}>✉ {c.email}</a>}{' '}
+          <span class="muted">(<a href={c.source} target="_blank" rel="noopener noreferrer nofollow">{c.source.replace(/^https?:\/\/(www\.)?/, '').split('/')[0]}</a>, {c.recordedAt})</span>
+        </p>
+      ))}
+      {company.trim() && <button type="button" onClick={() => openEmployerCheck(company.trim())}>{tr(S.postCheckEmployer, lang)}</button>}
+    </article>
   );
 }

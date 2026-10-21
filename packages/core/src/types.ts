@@ -131,6 +131,8 @@ export interface Rules {
     searchSites: SearchSite[];
     events: OpportunityEvent[];
     networks: OpportunityNetwork[];
+    /** Recherches de publications récentes sur les réseaux (mode liens). */
+    socialSearches: SocialSearchSite[];
     riskyChannels: Array<{ id: string; source: string; nameFr: string; nameEn: string; detailFr: string; detailEn: string }>;
   };
   cv: {
@@ -222,6 +224,9 @@ export interface OccupationTransfer {
   requirementsFr: string;
   requirementsEn: string;
 }
+
+export type { SocialSearchSite } from './social';
+import type { SocialSearchSite } from './social';
 
 /** Site d'offres d'emploi (mode liens : l'appli construit l'adresse, l'utilisateur l'ouvre). */
 export interface SearchSite {

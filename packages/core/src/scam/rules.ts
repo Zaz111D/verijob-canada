@@ -86,7 +86,7 @@ const PAYMENT_CHANNEL = /\b(western union|moneygram|money gram|mobile money|momo
 
 const LOTTERY = /\b(loterie|tirage au sort|lottery|lucky draw|visa lottery|selectionnee? au hasard|randomly selected)\b/;
 
-const ORG_CLAIM = /\b(inc|ltd|ltee|limited|limitee|corp|corporation|farm|farms|ferme|fermes|hospital|hopital|enterprise|enterprises|entreprise|entreprises|company|compagnie|foods|gouvernement|government|ircc|cic|edsc|esdc|service canada|immigration canada|ambassade|embassy|haut-commissariat|high commission|ministere|ministry|cabinet|agence|agency)\b/;
+const ORG_CLAIM = /\b(inc|ltd|ltee|limited|limitee|corp|corporation|farm|farms|ferme|fermes|hospital|hopital|enterprise|enterprises|entreprise|entreprises|company|compagnie|foods|gouvernement|government|ircc|cic|edsc|esdc|service canada|immigration canada|ambassade|embassy|haut-commissariat|high commission|ministere|ministry|cabinet|agence|agency|recrute|recrutent|recrutons|recrutement|embauche|embauchons|hiring|recruiting|recruitment)\b/;
 
 const AGENT = /\b(agent|agente|agents|agence|agences|cabinet|consultant|consultante|consultants|consultancy|consulting|conseiller en immigration|conseillere en immigration|agency|intermediaire|facilitateur|facilitator|demarcheur)\b(?! d'entretien| de securite| de nettoyage| de bord| d'accueil)/;
 const CICC_NUMBER = /\br ?\d{6}\b/;

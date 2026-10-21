@@ -280,4 +280,19 @@ You will receive payments into your bank account. Please provide your bank detai
 Attention : nous ne communiquons jamais par texto ou WhatsApp. Vérifiez toujours l'employeur.`,
     expected: [],
   },
+  {
+    name: 'Publication LinkedIn d’un particulier : « X recrute », CV vers Outlook et WhatsApp',
+    lang: 'fr',
+    kind: 'arnaque',
+    text: `Bonjour à tous ! Ateliers Exemple recrute 5 couturières à Québec, ouvert aux candidats de l'étranger.
+Envoyez votre CV à recrutement.exemple@outlook.com ou WhatsApp +237 600 00 00 00`,
+    expected: ['email-gratuit', 'messagerie-seule'],
+  },
+  {
+    name: 'Publication d’un employeur : « nous recrutons », adresse à son nom',
+    lang: 'fr',
+    kind: 'saine',
+    text: `Nous recrutons des couturières à Saint-Exemple. Postulez à emplois@ateliers-exemple.ca.`,
+    expected: [],
+  },
 ];

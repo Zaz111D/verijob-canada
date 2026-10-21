@@ -63,3 +63,4 @@ export {
   type AfricanRecruiter, type EvidenceType, type PermitsData, type PermitsByYear, type PermitSummary,
 } from './africa';
 export { classifyInternational, type InternationalOffer, type CurrentOffer, type InternationalStatus, type InternationalVerdict } from './international';
+export { socialSearchLinks, publisherCheck, type SocialLink, type PublisherCheck } from './social';

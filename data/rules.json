@@ -1270,6 +1270,58 @@
         "internal": "#/demarcher"
       }
     ],
+    "socialSearches": [
+      {
+        "id": "linkedin-posts",
+        "name": "LinkedIn — publications de la semaine",
+        "template": "https://www.linkedin.com/search/results/content/?keywords={query}&datePosted=%22past-week%22&sortBy=%22date_posted%22",
+        "boolean": true,
+        "account": true,
+        "noteFr": "Publications des 7 derniers jours, les plus récentes d'abord (recruteurs, employeurs, particuliers). Ouvrez avec votre compte LinkedIn.",
+        "noteEn": "Posts from the last 7 days, newest first (recruiters, employers, individuals). Open with your LinkedIn account.",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "id": "google-linkedin",
+        "name": "Google — publications LinkedIn de la semaine",
+        "template": "https://www.google.com/search?q=site%3Alinkedin.com%2Fposts+{query}&tbs=qdr:w",
+        "boolean": true,
+        "account": false,
+        "noteFr": "Publications LinkedIn publiques indexées par Google dans les 7 derniers jours, sans compte.",
+        "noteEn": "Public LinkedIn posts indexed by Google in the last 7 days, no account needed.",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "id": "facebook-posts",
+        "name": "Facebook — publications",
+        "template": "https://www.facebook.com/search/posts/?q={query}",
+        "boolean": false,
+        "account": true,
+        "noteFr": "Publications et groupes. Choisissez « Publications récentes » dans les filtres de Facebook. Prudence : groupes non contrôlés.",
+        "noteEn": "Posts and groups. Choose “Recent posts” in Facebook's filters. Caution: groups are not moderated.",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "id": "x-live",
+        "name": "X (Twitter) — en direct",
+        "template": "https://x.com/search?q={query}&f=live",
+        "boolean": true,
+        "account": true,
+        "noteFr": "Messages les plus récents d'abord. Compte X nécessaire.",
+        "noteEn": "Most recent posts first. X account needed.",
+        "verifiedAt": "2026-10-21"
+      },
+      {
+        "id": "google-week",
+        "name": "Google — tout le web, 7 derniers jours",
+        "template": "https://www.google.com/search?q={query}&tbs=qdr:w",
+        "boolean": true,
+        "account": false,
+        "noteFr": "Sites d'entreprises, petites annonces, blogs et réseaux publiés dans la semaine.",
+        "noteEn": "Company sites, classifieds, blogs and networks published in the last week.",
+        "verifiedAt": "2026-10-21"
+      }
+    ],
     "riskyChannels": [
       {
         "id": "groupes-messagerie",
