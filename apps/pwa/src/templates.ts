@@ -26,6 +26,8 @@ export interface MessageData {
   transfer?: { job: string; skills: string };
   /** Le métier exige un permis provincial (ex. agent de sécurité). */
   licence?: boolean;
+  /** La fiche « M'embaucher sans EIMT » (PDF) est jointe. */
+  attachSheet?: boolean;
 }
 
 /** « 2026Q1 » → « 2026 T1 » / « 2026 Q1 ». */
@@ -109,7 +111,9 @@ export function buildMessage(d: MessageData, lang: Lang): { subject: string; bod
         '',
         routeParagraph(d, 'fr'),
         '',
-        'Vous trouverez mon CV en pièce jointe. Je suis disponible pour un entretien en ligne à l’heure qui vous convient.',
+        d.attachSheet
+          ? 'Vous trouverez mon CV en pièce jointe, ainsi qu’une fiche d’une page qui explique les trois étapes pour m’embaucher sans EIMT. Je suis disponible pour un entretien en ligne à l’heure qui vous convient.'
+          : 'Vous trouverez mon CV en pièce jointe. Je suis disponible pour un entretien en ligne à l’heure qui vous convient.',
         '',
         'Merci pour votre attention.',
         name,
@@ -131,10 +135,81 @@ export function buildMessage(d: MessageData, lang: Lang): { subject: string; bod
       '',
       routeParagraph(d, 'en'),
       '',
-      'Please find my CV attached. I am available for an online interview at a time that suits you.',
+      d.attachSheet
+        ? 'Please find my CV attached, with a one-page sheet explaining the three steps to hire me without an LMIA. I am available for an online interview at a time that suits you.'
+        : 'Please find my CV attached. I am available for an online interview at a time that suits you.',
       '',
       'Thank you for your time.',
       name,
     ].filter((l): l is string => l !== null).filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n'),
   };
+}
+
+export interface CallData {
+  employer: string;
+  jobTitle: string;
+  name: string;
+  country: string;
+  experienceMonths?: number;
+  /** Annonce actuelle de l'employeur (titre). */
+  offerTitle?: string;
+  lmiaHistory?: { quarters: number; last: string };
+  /** Voie à défendre au téléphone : Mobilité francophone (hors Québec), EIMT au Québec, ou EIMT ailleurs. */
+  route: 'mobilite-francophone' | 'quebec' | 'eimt';
+  /** Frais (règles officielles, data/rules.json). */
+  fmFeeCad: number;
+  lmiaFeeCad: number;
+}
+
+export interface CallSection { title: string; lines: string[] }
+
+/** Script d'appel : présentation, réponses aux objections (immigration), envoi du CV, fin d'appel. */
+export function buildCallScript(d: CallData, lang: Lang): CallSection[] {
+  const name = d.name.trim() || (lang === 'fr' ? '[Votre nom]' : '[Your name]');
+  const country = d.country.trim() || (lang === 'fr' ? '[votre pays]' : '[your country]');
+  const exp = years(d.experienceMonths, lang);
+  const fr = lang === 'fr';
+  const hook = d.offerTitle
+    ? (fr ? `J’ai vu votre annonce « ${d.offerTitle} ».` : `I saw your job posting “${d.offerTitle}”.`)
+    : d.lmiaHistory
+      ? (fr ? 'J’ai vu dans les listes publiques du gouvernement que vous avez déjà embauché des travailleurs étrangers.' : 'I saw in the government’s public lists that you have hired foreign workers before.')
+      : (fr ? 'Je m’intéresse beaucoup à votre entreprise.' : 'I am very interested in your company.');
+  const intro = fr
+    ? [`« Bonjour, je m’appelle ${name}. J’appelle du ${country}. Je suis ${d.jobTitle}${exp ? ` avec ${exp} d’expérience` : ''}. ${hook} Est-ce que vous recrutez pour ce poste en ce moment ? Puis-je parler à la personne responsable de l’embauche ? »`]
+    : [`“Hello, my name is ${name}. I am calling from ${country}. I am a ${d.jobTitle}${exp ? ` with ${exp} of experience` : ''}. ${hook} Are you currently hiring for this position? May I speak with the person in charge of hiring?”`];
+  const objection: string[] = [];
+  if (d.route === 'mobilite-francophone') {
+    objection.push(fr
+      ? `« Je comprends. Je suis francophone : avec la Mobilité francophone, vous n’avez PAS besoin d’EIMT. Vous présentez l’offre dans le Portail des employeurs d’IRCC avec le code C16 et vous payez ${d.fmFeeCad} $ de frais de conformité. Je fais ensuite moi-même ma demande de permis de travail. Je peux vous envoyer une fiche d’une page qui explique les trois étapes. »`
+      : `“I understand. I speak French: with Francophone Mobility, you do NOT need an LMIA. You submit the offer in IRCC’s Employer Portal with code C16 and pay a $${d.fmFeeCad} compliance fee. I then apply for my work permit myself. I can send you a one-page sheet explaining the three steps.”`);
+  } else {
+    objection.push(fr
+      ? `« Je comprends. ${d.route === 'quebec' ? 'Au Québec, l’embauche passe par une EIMT et un certificat d’acceptation du Québec (CAQ). ' : 'L’embauche passe par une EIMT. '}Les frais de traitement de l’EIMT sont de ${d.lmiaFeeCad} $ par poste, payés par l’employeur.${d.lmiaHistory ? ' Votre entreprise l’a déjà fait, d’après les listes publiques.' : ''} De mon côté, je suis prêt·e à commencer dès que mon permis est délivré. »`
+      : `“I understand. ${d.route === 'quebec' ? 'In Quebec, hiring goes through an LMIA and a Quebec Acceptance Certificate (CAQ). ' : 'Hiring goes through an LMIA. '}The LMIA processing fee is $${d.lmiaFeeCad} per position, paid by the employer.${d.lmiaHistory ? ' According to the public lists, your company has done it before.' : ''} On my side, I am ready to start as soon as my permit is issued.”`);
+  }
+  objection.push(fr
+    ? '« Les délais dépendent d’Immigration Canada, mais je peux préparer tous mes documents dès maintenant. »'
+    : '“Processing times depend on Immigration Canada, but I can prepare all my documents right now.”');
+  return [
+    { title: fr ? '1. Se présenter (30 secondes)' : '1. Introduce yourself (30 seconds)', lines: intro },
+    { title: fr ? '2. Si on vous dit : « l’immigration, c’est compliqué » ou « on préfère des gens déjà au Canada »' : '2. If they say: “immigration is complicated” or “we prefer people already in Canada”', lines: objection },
+    {
+      title: fr ? '3. Si on vous dit : « envoyez votre CV »' : '3. If they say: “send your CV”',
+      lines: [fr
+        ? '« Avec plaisir. À quelle adresse e-mail, et à quel nom ? Je vous l’envoie aujourd’hui. » Notez l’adresse, le nom de la personne et la date dans le Suivi.'
+        : '“With pleasure. To which e-mail address, and to whose attention? I will send it today.” Write down the address, the person’s name and the date in Tracking.'],
+    },
+    {
+      title: fr ? '4. Finir l’appel' : '4. End the call',
+      lines: [fr
+        ? '« Merci beaucoup pour votre temps. Puis-je vous rappeler dans une semaine si je n’ai pas de nouvelles ? »'
+        : '“Thank you very much for your time. May I call you back in a week if I have not heard from you?”'],
+    },
+    {
+      title: fr ? '⚠ Toujours' : '⚠ Always',
+      lines: [fr
+        ? 'Un vrai employeur ne vous demande jamais d’argent. Si on vous demande de payer (dossier, EIMT, visa, formation) : remerciez et raccrochez.'
+        : 'A real employer never asks you for money. If you are asked to pay (file, LMIA, visa, training): say thank you and hang up.'],
+    },
+  ];
 }

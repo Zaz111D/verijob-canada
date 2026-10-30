@@ -32,8 +32,11 @@ import { writeDataFile, type WrittenFile } from './lib/output';
 const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt'];
 /** Postes dont le TRAVAIL porte sur l'immigration ou le recrutement (ils citent « LMIA » comme tâche). */
 const OFF_TOPIC_TITLE = /\b(immigration|lawyer|avocate?|paralegal|parajuriste|consultant|rcic|recruiter|recruteur|recruteuse|talent acquisition)\b/i;
-/** Pour chaque métier suivi : au moins un de ces mots en plus du métier. */
-const NOC_WORDS = 'lmia eimt';
+/**
+ * Pour chaque métier suivi : au moins un de ces mots en plus du métier. « sponsorship » et « parrainage »
+ * ramènent aussi des annonces « without sponsorship » : classifyInternational les écarte (motif CLOSED).
+ */
+const NOC_WORDS = 'lmia eimt sponsorship parrainage';
 const MAX_DAYS_OLD = 45;
 const PER_PAGE = 50;
 
@@ -84,7 +87,7 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
   for (const p of PHRASES) await search(`« ${p} »`, { what_phrase: p }, p);
   for (const n of nocData.nocs) {
     const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim(); // Adzuna exige tous les mots de « what »
-    await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt');
+    await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt / sponsorship');
   }
 
   // Recoupement avec les listes officielles d'EIMT positives (fichiers employers-XX.json produits plus tôt par le

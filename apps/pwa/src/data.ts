@@ -110,6 +110,8 @@ export interface EmployerContact {
   scope: 'entreprise' | 'usine' | 'succursale' | 'siege';
   status: 'verifie' | 'inaccessible';
   source: string; recordedAt: string; notes?: string;
+  /** Contrôle hebdomadaire de la page source : 'absent' = numéro ou e-mail introuvable (à revérifier). */
+  check?: { at: string; result: 'ok' | 'absent' | 'bloque' };
 }
 export const loadEmployerContacts = () => load<EmployerContact[]>('employer-contacts.json');
 export const loadPermits = () => load<PermitsData>('permits-africa.json');

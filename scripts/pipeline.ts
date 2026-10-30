@@ -11,7 +11,7 @@ import { join } from 'node:path';
 import { normalize, type CurrentOffer, type NocData, type Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
-import { buildEmployerContacts } from './build-employer-contacts';
+import { buildEmployerContacts, checkEmployerContactPages } from './build-employer-contacts';
 import { buildDesignated, type DesignatedStats } from './build-designated';
 import { fetchPermits, type PermitsStats } from './fetch-permits';
 import { fetchInternational, type InternationalStats } from './fetch-international';
@@ -44,6 +44,7 @@ const today = todayIso();
 const designated = buildDesignated(rules, today); // en premier : échoue vite si un fichier curé est invalide
 const african = buildAfricanRecruiters(today);
 const contacts = buildEmployerContacts(today); // échoue vite si le relevé manuel est invalide
+try { await checkEmployerContactPages(today); } catch (e) { console.warn(`  ⚠ Contrôle des pages de coordonnées non fait : ${e instanceof Error ? e.message : String(e)}`); }
 const geo = await fetchGeo(rules);
 const lmia = await fetchLmia(rules, nocData, geo.lookup, quarters);
 const wages = await fetchWages(nocData);

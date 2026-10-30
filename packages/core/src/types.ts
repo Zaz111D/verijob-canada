@@ -310,6 +310,8 @@ export interface NocEntry {
   jobEn?: string;
   /** Terme de recherche français (annonces du Québec) ; figure aussi dans les mots-clés du métier. */
   searchFr?: string;
+  /** Autres termes de recherche d'offres (ex. « warehouse worker » pour manutentionnaire). */
+  searchAlt?: string[];
   probableNaics: string | null;
   keywords: string[];
   /** Mots qui désignent un métier voisin : si le texte les contient, ce n'est pas ce métier. */

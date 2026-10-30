@@ -7,7 +7,7 @@
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import {
-  addDays, DEFAULT_FOLLOW_UP_DAYS, employerKey, filterProspects, findNoc, isFreeEmail, jobBankLink, networks, newId,
+  addDays, DEFAULT_FOLLOW_UP_DAYS, employerKey, evaluatePathways, internationalNumber, officeHoursLocal, filterProspects, findNoc, isFreeEmail, jobBankLink, networks, newId,
   PROVINCE_NAMES, recruitmentEvents, socialSearchLinks, todayIso, type AfricanRecruiter, type CurrentOffer, type InternationalOffer, type Prospect, type ProvinceCode,
 } from '@verijob/core';
 import { Badge } from '../components/common';
@@ -22,6 +22,7 @@ import { profileLabel } from '../components/Profiles';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { upsertApplication, useApplications, useProfile, useProfiles } from '../store';
 import { openSampleCv } from './SampleCv';
+import { buildCallScript, buildMessage } from '../templates';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer nofollow' } as const;
 const PAGE = 20;
@@ -47,6 +48,17 @@ interface Employer {
   proof?: string;
   /** Coordonnées relevées sur son site officiel (même province ; la même ville d'abord). */
   contacts: EmployerContact[];
+  /** Hors Québec et profil admissible à la Mobilité francophone : embauche possible sans EIMT. */
+  noLmia?: boolean;
+}
+
+/** Statut de la Mobilité francophone pour chaque métier du profil (évalué pour un poste hors Québec). */
+function useFmOk(nocs: string[]): Set<string> {
+  const profile = useProfile();
+  return useMemo(() => new Set(nocs.filter((noc) => {
+    const r = evaluatePathways(profile, { noc, province: 'ON' }, { rules, nocData }).find((x) => x.voie === 'mobilite-francophone');
+    return r?.statut === 'probable' || r?.statut === 'possible';
+  })), [profile, nocs.join()]);
 }
 
 function jobName(code: string, lang: Lang) {
@@ -181,11 +193,12 @@ function ContactForm({ employer, noc, lang, onDone }: { employer: string; noc: s
 
 function EmployerCard({ e, lang }: { e: Employer; lang: Lang }) {
   const [adding, setAdding] = useState(false);
+  const [calling, setCalling] = useState(false);
   return (
     <article class="card-result">
       <h3>{e.name}</h3>
       <p>{e.city}{e.province ? `, ${PROVINCE_NAMES[e.province][lang]}` : ''} · <span class="muted">{jobName(e.noc, lang)}</span></p>
-      <p><Badge kind={e.tier <= 2 ? 'ok' : 'info'}>{tr(S.applyTier[e.tier], lang)}</Badge></p>
+      <p><Badge kind={e.tier <= 2 ? 'ok' : 'info'}>{tr(S.applyTier[e.tier], lang)}</Badge>{e.noLmia && <> <Badge kind="ok">{tr(S.applyNoLmia, lang)}</Badge></>}</p>
       {e.proof && <p class="quote">« {e.proof} »</p>}
       <p class="muted">
         {e.offer && <>{tr(S.applyHasOffer, lang)} {formatShort(e.offer.date, lang)} : « {e.offer.title} ». </>}
@@ -196,8 +209,10 @@ function EmployerCard({ e, lang }: { e: Employer; lang: Lang }) {
       <div class="row">
         {e.offer && <a class="button" href={e.offer.url} {...ext}>{tr(S.offerReadAdzuna, lang)} ↗</a>}
         <button type="button" class="primary" onClick={() => openSampleCv({ noc: e.noc, title: e.offer?.title, text: e.offer?.snippet, province: e.province })}>{tr(S.applyPrepare, lang)}</button>
+        <button type="button" onClick={() => setCalling(!calling)}>{tr(S.callButton, lang)}</button>
         <button type="button" onClick={() => setAdding(!adding)}>{tr(S.applyAddContact, lang)}</button>
       </div>
+      {calling && <CallPanel e={e} uiLang={lang} onClose={() => setCalling(false)} />}
       {adding && <ContactForm employer={e.name} noc={e.noc} lang={lang} onDone={() => setAdding(false)} />}
     </article>
   );
@@ -214,6 +229,7 @@ function OfficialContacts({ contacts, lang }: { contacts: EmployerContact[]; lan
           <p>
             {c.phone && <><a href={`tel:+1${c.phone.replace(/^1-/, '').replace(/-/g, '')}`}>📞 {c.phone}</a>{c.phoneAlt ? ` / ${c.phoneAlt}` : ''}{' '}</>}
             {c.email && <><a href={`mailto:${c.email}`}>✉ {c.email}</a>{' '}</>}
+            {c.check?.result === 'absent' && <><br /><span class="warn">{tr(S.applyContactStale, lang).replace('{d}', c.check.at)}</span></>}
             <br /><span class="muted">{c.address ?? c.c} — {tr(S.applyOfficialSite, lang)} <a href={c.source} {...ext}>{tr(S.applySeenOn, lang).replace('{d}', c.recordedAt)}</a>{c.notes ? `. ${c.notes}` : ''}</span>
           </p>
         )))}
@@ -238,6 +254,7 @@ function contactsFor(all: EmployerContact[], key: string, province: ProvinceCode
  * (puis ceux dont le téléphone officiel est connu, puis les plus récents).
  */
 function useEmployers(nocs: string[], provinces: ProvinceCode[]) {
+  const fmOk = useFmOk(nocs);
   const [current, setCurrent] = useState<CurrentOffer[]>([]);
   const [intl, setIntl] = useState<InternationalOffer[]>([]);
   const [prospects, setProspects] = useState<Prospect[]>([]);
@@ -282,10 +299,12 @@ function useEmployers(nocs: string[], provinces: ProvinceCode[]) {
     for (const e of byKey.values()) {
       if (e.tier > 2 && african.has(`${e.key}|${e.province}`)) e.tier = 2;
       e.contacts = contactsFor(contacts, e.key, e.province, e.city);
+      e.noLmia = !!e.province && e.province !== 'QC' && fmOk.has(e.noc);
     }
     return [...byKey.values()].sort((a, b) =>
-      a.tier - b.tier || Number(hasPhone(b)) - Number(hasPhone(a)) || b.date.localeCompare(a.date) || (b.lmiaQuarters ?? 0) - (a.lmiaQuarters ?? 0));
-  }, [current, intl, prospects, africa, contacts, nocs.join(), provinces.join()]);
+      a.tier - b.tier || Number(!!b.noLmia) - Number(!!a.noLmia) || Number(hasPhone(b)) - Number(hasPhone(a))
+      || b.date.localeCompare(a.date) || (b.lmiaQuarters ?? 0) - (a.lmiaQuarters ?? 0));
+  }, [current, intl, prospects, africa, contacts, fmOk, nocs.join(), provinces.join()]);
   const dataDate = [dates.offers, dates.contacts].filter(Boolean).sort().at(-1) ?? todayIso();
   return { list, dataDate };
 }
@@ -321,7 +340,7 @@ function PdfButtons({ list, dataDate, nocs, provinces, lang }: { list: Employer[
         offer: e.offer ? `${e.offer.title} (${e.offer.date})` : undefined,
         phone: c?.phone, phoneAlt: c?.phoneAlt, email: c?.email, address: c?.address ?? (c ? c.c : undefined),
         source: c?.source, sourceDate: c?.recordedAt,
-        note: blocked?.notes,
+        note: blocked?.notes ?? (c?.check?.result === 'absent' ? tr(S.applyContactStale, lang).replace('{d}', c.check.at) : undefined),
         mine: a ? { contact: a.contact?.trim() ?? '', phone: a.phone?.trim(), source: a.contactSource } : undefined,
         links: [e.offer?.url].filter((x): x is string => !!x),
       };
@@ -366,8 +385,11 @@ function Employers({ nocs, provinces, lang }: { nocs: string[]; provinces: Provi
   const { list, dataDate } = useEmployers(nocs, provinces);
   const [q, setQ] = useState('');
   const [shown, setShown] = useState(PAGE);
+  const [only, setOnly] = useState<'tout' | 'etranger' | 'sans-eimt'>('tout');
   const needle = employerKey(q);
-  const visible = needle ? list.filter((e) => e.key.includes(needle)) : list;
+  const abroad = list.filter((e) => e.tier === 1);
+  const noLmia = list.filter((e) => e.noLmia);
+  const visible = (only === 'etranger' ? abroad : only === 'sans-eimt' ? noLmia : list).filter((e) => !needle || e.key.includes(needle));
   if (!nocs.length) return null;
   return (
     <>
@@ -376,11 +398,91 @@ function Employers({ nocs, provinces, lang }: { nocs: string[]; provinces: Provi
       <p class="callout">{tr(S.applyTierIntro, lang)}</p>
       <PdfButtons list={list} dataDate={dataDate} nocs={nocs} provinces={provinces} lang={lang} />
       <p class="callout">{tr(S.howToApply, lang)}</p>
+      <div class="row" role="group" aria-label={tr(S.applyFilter, lang)}>
+        <button type="button" class={only === 'tout' ? 'primary' : ''} onClick={() => { setOnly('tout'); setShown(PAGE); }}>{tr(S.applyFilterAll, lang)} ({list.length})</button>
+        <button type="button" class={only === 'etranger' ? 'primary' : ''} onClick={() => { setOnly('etranger'); setShown(PAGE); }}>⭐ {tr(S.applyFilterAbroad, lang)} ({abroad.length})</button>
+        {noLmia.length > 0 && <button type="button" class={only === 'sans-eimt' ? 'primary' : ''} onClick={() => { setOnly('sans-eimt'); setShown(PAGE); }}>{tr(S.applyNoLmia, lang)} ({noLmia.length})</button>}
+      </div>
+      {only === 'etranger' && <AbroadByJob list={abroad} lang={lang} />}
+      {only === 'sans-eimt' && <p class="muted">{tr(S.applyNoLmiaHelp, lang)}</p>}
       <label>{tr(S.applySearch, lang)}<input value={q} onInput={(e) => { setQ((e.target as HTMLInputElement).value); setShown(PAGE); }} /></label>
       {visible.slice(0, shown).map((e) => <EmployerCard e={e} lang={lang} />)}
       {shown < visible.length && <button type="button" onClick={() => setShown(shown + PAGE)}>{tr(S.showMore, lang)} ({visible.length - shown})</button>}
       <p><a href="#/employeur">{tr(S.cardEmployerTitle, lang)} →</a></p>
     </>
+  );
+}
+
+/** Résumé des annonces qui disent accepter l'étranger, par métier. */
+function AbroadByJob({ list, lang }: { list: Employer[]; lang: Lang }) {
+  const by = new Map<string, number>();
+  for (const e of list) by.set(e.noc, (by.get(e.noc) ?? 0) + 1);
+  if (!list.length) return <p class="muted">{tr(S.applyAbroadNone, lang)}</p>;
+  return <p class="muted">{tr(S.applyAbroadIntro, lang)} {[...by].map(([n, c]) => `${jobName(n, lang)} : ${c}`).join(' · ')}</p>;
+}
+
+/** Appeler ou écrire : heures d'appel, numéros, script (objections sur l'immigration) et e-mail prêt à copier. */
+function CallPanel({ e, uiLang, onClose }: { e: Employer; uiLang: Lang; onClose: () => void }) {
+  const profile = useProfile();
+  const idx = useProfiles();
+  const [lang, setLang] = useState<Lang>(e.province === 'QC' ? 'fr' : uiLang);
+  const [name, setName] = useState(() => idx?.list.find((x) => x.id === idx.active)?.name ?? '');
+  const [country, setCountry] = useState(() => countryName(profile.citizenship, uiLang));
+  const [copied, setCopied] = useState('');
+  const job = jobName(e.noc, lang);
+  const route = e.noLmia ? 'mobilite-francophone' : e.province === 'QC' ? 'quebec' : 'eimt';
+  const script = buildCallScript({
+    employer: e.name, jobTitle: job, name, country, experienceMonths: profile.experienceMonths, offerTitle: e.offer?.title,
+    lmiaHistory: e.lmiaQuarters ? { quarters: e.lmiaQuarters, last: '' } : undefined, route,
+    fmFeeCad: rules.francophoneMobility.employerComplianceFeeCad, lmiaFeeCad: rules.fees.lmiaProcessingFeeCad,
+  }, lang);
+  const fr = profile.french;
+  const frenchOral = fr?.speaking !== undefined && fr?.listening !== undefined ? Math.min(fr.speaking, fr.listening) : undefined;
+  const mail = buildMessage({
+    employer: e.name, jobTitle: job, nocCode: e.noc, name, country, experienceMonths: profile.experienceMonths, frenchOral,
+    pathway: e.noLmia ? 'mobilite-francophone' : undefined, attachSheet: e.noLmia,
+  }, lang);
+  const hours = e.province ? officeHoursLocal(e.province, -new Date().getTimezoneOffset()) : undefined;
+  const phones = e.contacts.filter((c) => c.status === 'verifie').flatMap((c) => [c.phone, c.phoneAlt]).filter((x): x is string => !!x);
+  const emails = e.contacts.map((c) => c.email).filter((x): x is string => !!x);
+  const copy = async (what: string, text: string) => { try { await navigator.clipboard.writeText(text); setCopied(what); } catch { setCopied(''); } };
+  const scriptText = script.map((s) => `${s.title}\n${s.lines.join('\n')}`).join('\n\n');
+  return (
+    <div class="panel" role="dialog" aria-label={tr(S.callTitle, uiLang)}>
+      <h3>{tr(S.callTitle, uiLang)} — {e.name}</h3>
+      <div class="grid2">
+        <label>{tr(S.yourName, uiLang)}<input value={name} onInput={(ev) => setName((ev.target as HTMLInputElement).value)} /></label>
+        <label>{tr(S.yourCountry, uiLang)}<input value={country} onInput={(ev) => setCountry((ev.target as HTMLInputElement).value)} /></label>
+      </div>
+      <label>{tr(S.messageLang, uiLang)}
+        <select value={lang} onChange={(ev) => setLang((ev.target as HTMLSelectElement).value as Lang)}>
+          <option value="fr">Français</option><option value="en">English</option>
+        </select>
+      </label>
+      {hours && e.province && <p>🕘 {tr(S.callHours, uiLang).replace('{prov}', PROVINCE_NAMES[e.province][uiLang]).replace('{from}', hours.from).replace('{to}', hours.to)}</p>}
+      {phones.length > 0
+        ? <p>{phones.map((p) => <><a class="button" href={`tel:${internationalNumber(p).replace(/ /g, '')}`}>📞 {internationalNumber(p)}</a>{' '}</>)}</p>
+        : <p class="muted">{tr(S.callNoPhone, uiLang)}</p>}
+      {script.map((s) => (
+        <div>
+          <h4>{s.title}</h4>
+          {s.lines.map((l) => <p>{l}</p>)}
+        </div>
+      ))}
+      <div class="row">
+        <button type="button" onClick={() => void copy('script', scriptText)}>{tr(S.callCopyScript, uiLang)}</button>
+      </div>
+      <h4>{tr(S.callEmailTitle, uiLang)}{emails.length ? ` — ${emails.join(', ')}` : ''}</h4>
+      <p><strong>{tr(S.subject, uiLang)} :</strong> {mail.subject}</p>
+      <textarea rows={12} readOnly value={mail.body} />
+      {e.noLmia && <p class="muted">{tr(S.callAttachSheet, uiLang)}</p>}
+      <div class="row">
+        <button type="button" class="primary" onClick={() => void copy('mail', `${mail.subject}\n\n${mail.body}`)}>{tr(S.copy, uiLang)}</button>
+        {emails[0] && <a class="button" href={`mailto:${emails[0]}?subject=${encodeURIComponent(mail.subject)}&body=${encodeURIComponent(mail.body)}`}>✉ {tr(S.callOpenMail, uiLang)}</a>}
+        <button type="button" onClick={onClose}>{tr(S.close, uiLang)}</button>
+      </div>
+      {copied && <p class="ok" role="status">{tr(S.copied, uiLang)}</p>}
+    </div>
   );
 }
 

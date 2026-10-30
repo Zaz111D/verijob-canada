@@ -4,7 +4,7 @@
   "id": "statcan-noc-elements",
   "urlFr": "https://www.statcan.gc.ca/fr/sujets/norme/cnp/2021/indexV1/cnp-2021-v1.0-elements.csv",
   "urlEn": "https://www.statcan.gc.ca/en/subjects/standard/noc/2021/indexV1/noc-2021-v1.0-elements.csv",
-  "verifiedAt": "2026-10-17"
+  "verifiedAt": "2026-10-29"
  },
  "nocs": [
   {
@@ -92,6 +92,172 @@
     "private secretary",
     "secretary (except legal and medical)",
     "technical secretary"
+   ]
+  },
+  {
+   "code": "14400",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "déterminer le mode d'expédition et prendre les arrangements nécessaires; établir, à la main ou à l'ordinateur, les notes de chargement, les documents de douanes, les factures et les autres documents d'expédition",
+       "en": "Determine method of shipment and arrange shipping; prepare bills of lading, customs forms, invoices and other shipping documents manually or by computer"
+      },
+      {
+       "fr": "assembler des contenants et des caisses de marchandises, en consigner le contenu à la main ou à l'ordinateur, emballer les articles à expédier et y apposer des étiquettes d'identification et des instructions d'expédition",
+       "en": "Assemble containers and crates, record contents manually or by computer, pack goods to be shipped and affix identifying information and shipping instructions"
+      },
+      {
+       "fr": "surveiller le chargement et le déchargement des articles dans des camions ou d'autres véhicules",
+       "en": "Oversee loading and unloading of goods from trucks or other conveyances"
+      },
+      {
+       "fr": "examiner et vérifier les articles en les comparant avec les factures ou d'autres documents, noter les articles manquants et retourner les articles endommagés",
+       "en": "Inspect and verify incoming goods against invoices or other documents, record shortages and reject damaged goods"
+      },
+      {
+       "fr": "déballer, coder et distribuer les articles aux endroits d'entreposage appropriés",
+       "en": "Unpack, code and route goods to appropriate storage areas"
+      },
+      {
+       "fr": "gérer les systèmes internes, manuels ou informatisés de conservation des dossiers",
+       "en": "Maintain internal, manual or computerized record-keeping systems"
+      },
+      {
+       "fr": "conduire, au besoin, un chariot élévateur, un chariot manuel ou tout autre équipement pour charger ou décharger, transporter ou stocker des articles",
+       "en": "May operate forklift, hand truck or other equipment to load, unload, transport and store goods"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "De l'expérience dans un travail de bureau ou d'entrepôt connexe peut être exigée.",
+     "en": "Experience in a related clerical occupation or as a warehouse worker may be required."
+    },
+    {
+     "fr": "Un certificat de conducteur de chariot élévateur à fourches peut être exigé.",
+     "en": "A forklift certificate may be required."
+    },
+    {
+     "fr": "Un permis de conduire peut être exigé.",
+     "en": "A driver's licence may be required."
+    }
+   ],
+   "examplesFr": [
+    "adjoint/adjointe de chaîne d'approvisionnement",
+    "agent expéditeur/agente expéditrice",
+    "commis à l'expédition et à la réception",
+    "commis aux marchandises d'importation",
+    "expéditeur/expéditrice",
+    "expéditeur/expéditrice de marchandises",
+    "expéditeur-réceptionnaire/expéditrice-réceptionnaire",
+    "réceptionnaire",
+    "réceptionnaire du fret"
+   ],
+   "examplesEn": [
+    "freight receiver",
+    "freight shipper",
+    "import freight clerk",
+    "receiver",
+    "shipper",
+    "shipper-receiver",
+    "shipping agent",
+    "shipping and receiving clerk",
+    "supply chain assistant"
+   ]
+  },
+  {
+   "code": "14401",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "recevoir et trier les pièces et les fournitures",
+       "en": "Receive and sort incoming parts and supplies"
+      },
+      {
+       "fr": "stocker les articles d'une façon ordonnée et de manière à ce qu'ils soient facilement accessibles, dans un entrepôt, un dépôt d'outils, ou de fournitures ou ailleurs",
+       "en": "Store items in an orderly and accessible manner in a warehouse, tool room, supply room or other area"
+      },
+      {
+       "fr": "traiter les demandes reçues et acheminer ou distribuer les pièces et les fournitures à l'intérieur de l'établissement",
+       "en": "Process incoming requisitions and issue or distribute parts and supplies for internal usage"
+      },
+      {
+       "fr": "tenir à jour des registres sur les commandes et le nombre, le genre des pièces et des fournitures disponibles et l'endroit où elles sont rangées à l'aide d'un système manuel ou informatisé",
+       "en": "Maintain records of orders and the amount, kind and location of parts and supplies on hand using manual or computerized inventory system"
+      },
+      {
+       "fr": "préparer les commandes pour réapprovisionner les réserves de pièces et de fournitures",
+       "en": "Prepare requisition orders to replenish parts and supplies"
+      },
+      {
+       "fr": "vendre des pièces détachées et de rechange pour les véhicules automobiles, la machinerie ou l'équipement, dans le commerce de détail",
+       "en": "Sell spare and replacement parts for motor vehicles, machinery and equipment in a retail setting"
+      },
+      {
+       "fr": "donner des conseils aux clients d'un magasin de détail, ou aux utilisateurs de l'établissement, sur la pertinence des pièces, les fournitures et les matériaux demandés",
+       "en": "Advise retail customers or internal users on appropriateness of parts, supplies or materials requested"
+      },
+      {
+       "fr": "Les commis aux pièces peuvent se spécialiser dans une catégorie de pièces en particulier, telles que les pièces pour automobiles, véhicules récréatifs, embarcations, machinerie lourde et agricole et les pièces des systèmes de chauffage, de ventilation et de climatisation ou de réfrigération",
+       "en": "Partspersons may specialize in a particular line of parts such as automotive parts, recreational vehicle parts, marine parts, heavy equipment parts, agricultural machinery parts, heating, ventilating and air conditioning parts or refrigeration parts"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Un diplôme d'études secondaires est habituellement exigé.",
+     "en": "Completion of secondary school is usually required."
+    },
+    {
+     "fr": "Un programme d'apprentissage de trois ans ou une formation scolaire spécialisée au secondaire et un programme d'études collégiales d'un an peuvent être exigés des commis aux pièces.",
+     "en": "Completion of a three-year apprenticeship program or completion of specialized training in high school and a one-year college program for partspersons may be required."
+    },
+    {
+     "fr": "Le certificat de qualification de préposé aux pièces est offert, bien que facultatif, dans toutes les provinces et tous les territoires.",
+     "en": "Trade certification for partspersons is available, but voluntary, in all provinces and territories."
+    },
+    {
+     "fr": "De l'expérience dans un travail de bureau ou d'entrepôt connexe peut être exigée des commis aux pièces.",
+     "en": "Experience in a related clerical occupation, or as a warehouse worker, may be required for partspersons."
+    },
+    {
+     "fr": "Les préposés aux pièces qualifiés peuvent obtenir la mention Sceau rouge après la réussite de l'examen interprovincial Sceau rouge.",
+     "en": "Red Seal endorsement is also available to qualified partspersons upon successful completion of the interprovincial Red Seal examination."
+    }
+   ],
+   "examplesFr": [
+    "commis aux fournitures médicales",
+    "commis aux pièces",
+    "commis aux pièces de véhicules automobiles",
+    "fournisseur/fournisseuse de pièces",
+    "magasinier/magasinière",
+    "magasinier/magasinière au dépôt d'outils",
+    "magasinier/magasinière de matériel",
+    "magasinier/magasinière de munitions",
+    "magasinier/magasinière de navire",
+    "préposé/préposée aux pièces",
+    "préposé/préposée aux pièces de véhicules automobiles - commerce de détail"
+   ],
+   "examplesEn": [
+    "ammunition storekeeper",
+    "automotive partsperson - retail",
+    "material keeper",
+    "medical supply clerk",
+    "motor vehicle parts clerk",
+    "parts clerk",
+    "parts supplier",
+    "partsperson",
+    "ship storeman/woman",
+    "storekeeper",
+    "tool room attendant"
    ]
   },
   {
@@ -2350,6 +2516,103 @@
     "refrigeration mechanic helper",
     "splicer helper - telecommunications",
     "surveyor helper"
+   ]
+  },
+  {
+   "code": "75201",
+   "duties": [
+    {
+     "items": [
+      {
+       "fr": "conduire des automobiles, fourgonnettes et camions légers afin de ramasser et de livrer divers produits, tels que repas-minute, journaux, revues, pâtisseries et produits laitiers ainsi que des marchandises, comme des vêtements nettoyés à sec",
+       "en": "Operate and drive automobiles, vans and light trucks to pick up and deliver various products, such as food, newspapers, magazines, bakery and dairy products, and items such as dry cleaning"
+      },
+      {
+       "fr": "livrer journaux, prospectus et autres articles semblables à des résidences ou à des entreprises",
+       "en": "Deliver newspapers, flyers, handbills, telephone directories and similar items to residences and businesses"
+      },
+      {
+       "fr": "inspecter le véhicule avant et après le voyage",
+       "en": "Perform pre-trip and post-trip inspection of vehicle"
+      },
+      {
+       "fr": "planifier les horaires de livraison et les voies normales",
+       "en": "Plan delivery travel schedules and service routes"
+      },
+      {
+       "fr": "charger et décharger la cargaison, les biens ou les marchandises",
+       "en": "Load and unload cargo, goods or merchandise"
+      },
+      {
+       "fr": "fournir du service à la clientèle en vendant des produits, en livrant les produits suivant un itinéraire établi, et en payant ou se faisant payer pour les produits",
+       "en": "Provide customer service by selling products, delivering over established routes and accepting or making payments for goods"
+      },
+      {
+       "fr": "noter l'information concernant les cueillettes et les livraisons, le kilométrage du véhicule et le coût de l'essence, et signaler tout incident ou problème rencontré",
+       "en": "Record information on pick-ups and deliveries, vehicle mileage and fuel costs and report any incidents or problems encountered"
+      },
+      {
+       "fr": "effectuer, s'il y a lieu, le dépouillement et le tri des marchandises et de la cargaison en vue de la livraison",
+       "en": "May scan and sort freight or cargo for delivery"
+      },
+      {
+       "fr": "assembler; installer ou monter, s'il y a lieu, les biens ou les marchandises livrées",
+       "en": "May assemble, install or set-up delivered goods or merchandise"
+      },
+      {
+       "fr": "communiquer, au besoin, avec le répartiteur central au moyen d'équipement de communication sans fil",
+       "en": "May communicate with central dispatch using mobile communications equipment"
+      }
+     ]
+    }
+   ],
+   "requirements": [
+    {
+     "fr": "Quelques années d'études secondaires sont habituellement exigées.",
+     "en": "Some secondary school is usually required."
+    },
+    {
+     "fr": "Un permis de conduire correspondant à la classe du véhicule conduit est exigé.",
+     "en": "A driver's licence appropriate to the class of vehicle being driven is required."
+    },
+    {
+     "fr": "Un an d'expérience de conduite sécuritaire est habituellement exigé.",
+     "en": "One year of safe driving experience is usually required."
+    },
+    {
+     "fr": "Une formation en cours d'emploi peut être offerte.",
+     "en": "On-the-job training may be provided."
+    },
+    {
+     "fr": "Les chauffeurs-livreurs et les chauffeurs de services de messagerie peuvent devoir être admissibles au cautionnement et obtenir un certificat de transport de marchandises dangereuses (TMD).",
+     "en": "Eligibility for bonding and transportation of dangerous goods (TGD) certification may be required for delivery and courier drivers."
+    }
+   ],
+   "examplesFr": [
+    "chauffeur/chauffeuse de cantine mobile",
+    "chauffeur-fournisseur/chauffeuse-fournisseuse de distributeurs automatiques",
+    "chauffeur-livreur/chauffeuse-livreuse",
+    "chauffeur-livreur/chauffeuse-livreuse de journaux",
+    "chauffeur-livreur/chauffeuse-livreuse de pizzas",
+    "chauffeur-livreur/chauffeuse-livreuse d'entreprise de nettoyage à sec",
+    "chauffeur-vendeur/chauffeuse-vendeuse",
+    "distributeur porte-à-porte/distributrice porte-à-porte",
+    "livreur/livreuse de journaux",
+    "livreur/livreuse de pain",
+    "livreur/livreuse de prospectus"
+   ],
+   "examplesEn": [
+    "bread deliverer",
+    "canteen driver",
+    "delivery driver",
+    "door-to-door distributor",
+    "driver salesperson",
+    "dry cleaning driver",
+    "flyer distributor",
+    "newspaper carrier",
+    "newspaper delivery driver",
+    "pizza delivery driver",
+    "vending machine driver-supplier"
    ]
   },
   {

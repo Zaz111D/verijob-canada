@@ -47,7 +47,12 @@ export function toCurrentOffer(j: AdzunaJob, noc: string, ctx: { rules: Rules; n
 
 /** Requêtes d'un métier : « 64200 » (terme anglais) et « 64200:fr » (terme français), si un terme français existe. */
 export function queryKeys(nocData: NocData): string[] {
-  return nocData.nocs.flatMap((n) => (n.searchFr ? [n.code, `${n.code}:fr`] : [n.code]));
+  return nocData.nocs.flatMap((n) => [
+    n.code,
+    ...(n.searchFr ? [`${n.code}:fr`] : []),
+    // Termes supplémentaires : « 75101:+warehouse worker ».
+    ...(n.searchAlt ?? []).map((t) => `${n.code}:+${t}`),
+  ]);
 }
 
 /**
@@ -71,11 +76,11 @@ export async function fetchCurrentOffers(
   let seen = 0;
   const wanted = opts.onlyKeys ?? queryKeys(nocData);
   for (const key of wanted) {
-    const [code, fr] = key.split(':');
+    const [code, variant] = [key.slice(0, 5), key.slice(6)];
     const n = nocData.nocs.find((x) => x.code === code);
     if (!n) continue;
     // Adzuna exige tous les mots de « what » : terme court, sans parenthèses ni barre oblique.
-    const what = fr ? n.searchFr! : (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim();
+    const what = variant === 'fr' ? n.searchFr! : variant.startsWith('+') ? variant.slice(1) : (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim();
     const { results } = await api.search({ what, max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE) });
     seen += results.length;
     for (const j of results) {

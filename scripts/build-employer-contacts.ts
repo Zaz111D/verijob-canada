@@ -6,11 +6,11 @@
  *
  * Produit : apps/pwa/public/data/employer-contacts.json
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { employerKey, isFreeEmail } from '../packages/core/src';
-import { MANUAL_DIR } from './lib/paths';
+import { MANUAL_DIR, OUT_DIR } from './lib/paths';
 import { writeDataFile, type WrittenFile } from './lib/output';
 import { parseCsv, toRecords } from './lib/tabular';
 
@@ -21,6 +21,12 @@ export interface EmployerContact {
   scope: 'entreprise' | 'usine' | 'succursale' | 'siege';
   status: 'verifie' | 'inaccessible';
   source: string; recordedAt: string; notes?: string;
+  /**
+   * Contrôle automatique de la page source (pipeline) : 'ok' = le numéro ou l'e-mail y figure toujours ;
+   * 'absent' = la page s'ouvre mais ne les montre plus (à revérifier) ; 'bloque' = page inaccessible au robot
+   * (erreur, anti-robot) : rien n'est conclu.
+   */
+  check?: { at: string; result: 'ok' | 'absent' | 'bloque' };
 }
 
 const PROVINCES = new Set(['NL', 'PE', 'NS', 'NB', 'QC', 'ON', 'MB', 'SK', 'AB', 'BC', 'YT', 'NT', 'NU']);
@@ -77,5 +83,55 @@ export function buildEmployerContacts(today: string): EmployerContactsStats {
   return { rows: out.length, verified, inaccessible: out.length - verified, file };
 }
 
+const CHALLENGE = /(just a moment|one moment, please|un instant, s'il vous pla|attention required|access (denied|restricted)|enable javascript and cookies|verifying you are human|request is being verified)/i;
+const digits = (s: string) => s.replace(/\D/g, '');
+
+/** La page montre-t-elle toujours ce numéro ou cet e-mail ? (texte brut de la page, sans les balises) */
+export function pageStillShows(html: string, c: Pick<EmployerContact, 'phone' | 'phoneAlt' | 'email'>): 'ok' | 'absent' | 'bloque' {
+  const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ');
+  const visible = text.replace(/\s+/g, ' ').trim();
+  // Page anti-robot, ou page vide sans JavaScript (site affiché par script) : rien à conclure.
+  if (CHALLENGE.test(visible.slice(0, 600)) || visible.length < 400) return 'bloque';
+  const all = digits(html);
+  const phones = [c.phone, c.phoneAlt].filter((x): x is string => !!x).map((p) => digits(p).replace(/^1(?=\d{10}$)/, ''));
+  if (phones.some((p) => all.includes(p))) return 'ok';
+  if (c.email && html.toLowerCase().includes(c.email.toLowerCase())) return 'ok';
+  return 'absent';
+}
+
+/**
+ * Relit chaque page source des coordonnées « verifie » et note le résultat (champ check).
+ * Lancé par le pipeline après buildEmployerContacts ; une page bloquée n'invalide rien.
+ */
+export async function checkEmployerContactPages(today: string): Promise<{ ok: number; absent: number; bloque: number }> {
+  console.log('▶ Contrôle des pages de coordonnées des employeurs');
+  const path = join(OUT_DIR, 'employer-contacts.json');
+  if (!existsSync(path)) return { ok: 0, absent: 0, bloque: 0 };
+  const file = JSON.parse(readFileSync(path, 'utf8')) as { source: Parameters<typeof writeDataFile>[1]; data: EmployerContact[] };
+  const pages = new Map<string, string | undefined>();
+  const count = { ok: 0, absent: 0, bloque: 0 };
+  for (const c of file.data) {
+    if (c.status !== 'verifie') continue;
+    if (!pages.has(c.source)) {
+      try {
+        const r = await fetch(c.source, { headers: { 'User-Agent': 'Mozilla/5.0 (VeriJob; weekly check of public business contact pages)', 'Accept-Language': 'fr-CA,fr;q=0.9,en;q=0.8' }, signal: AbortSignal.timeout(20000) });
+        pages.set(c.source, r.ok ? await r.text() : undefined);
+      } catch { pages.set(c.source, undefined); }
+    }
+    const html = pages.get(c.source);
+    const result = html === undefined ? 'bloque' : pageStillShows(html, c);
+    c.check = { at: today, result };
+    count[result]++;
+    if (result === 'absent') console.warn(`  ⚠ ${c.n} (${c.c}) : coordonnées introuvables sur ${c.source} — à revérifier`);
+  }
+  writeDataFile('employer-contacts.json', file.source, file.data.length, file.data);
+  console.log(`  ${count.ok} toujours affichées, ${count.absent} à revérifier, ${count.bloque} pages non lisibles par le robot`);
+  return count;
+}
+
 // Exécution directe : contrôle le relevé et régénère le fichier sans lancer tout le pipeline.
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) buildEmployerContacts(new Date().toISOString().slice(0, 10));
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  const day = new Date().toISOString().slice(0, 10);
+  buildEmployerContacts(day);
+  if (process.argv.includes('--check')) await checkEmployerContactPages(day);
+}
