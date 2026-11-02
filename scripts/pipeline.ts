@@ -12,7 +12,7 @@ import { normalize, type CurrentOffer, type NocData, type RegionOffer, type Rule
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildEmployerContacts, checkEmployerContactPages } from './build-employer-contacts';
-import { buildDesignated, type DesignatedStats } from './build-designated';
+import { buildAipEmployers, buildDesignated, type DesignatedStats } from './build-designated';
 import { fetchPermits, type PermitsStats } from './fetch-permits';
 import { fetchInternational, type InternationalStats } from './fetch-international';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
@@ -20,6 +20,7 @@ import { fetchProposals, type ProposalsStats } from './fetch-proposals';
 import { fetchCurrentOffers, OTHER_LEVEL, queryKeys, type CurrentOffersStats } from './fetch-current-offers';
 import { fetchRegionOffers, regionQueryKeys, type RegionOffersStats } from './fetch-region-offers';
 import { checkRegionSources, type RegionsStatusStats } from './check-region-lists';
+import { checkEvents, type EventsStats } from './check-events';
 import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
@@ -44,6 +45,7 @@ const quarters = Number(/--quarters=(\d+)/.exec(process.argv.join(' '))?.[1] ?? 
 const today = todayIso();
 
 const designated = buildDesignated(rules, today); // en premier : échoue vite si un fichier curé est invalide
+const aip = buildAipEmployers(today);
 const african = buildAfricanRecruiters(today);
 const contacts = buildEmployerContacts(today); // échoue vite si le relevé manuel est invalide
 try { await checkEmployerContactPages(today); } catch (e) { console.warn(`  ⚠ Contrôle des pages de coordonnées non fait : ${e instanceof Error ? e.message : String(e)}`); }
@@ -63,6 +65,12 @@ let proposals: ProposalsStats;
 try { proposals = await fetchProposals(rules, today); } catch (e) {
   proposals = { checked: 0, changed: [], error: e instanceof Error ? e.message : String(e) };
   console.warn(`  ⚠ Règles en préparation non vérifiées : ${proposals.error}`);
+}
+// Salons de recrutement : inscriptions ouvertes ? Non bloquant.
+let events: EventsStats | { error: string };
+try { events = await checkEvents(rules, today); } catch (e) {
+  events = { error: e instanceof Error ? e.message : String(e) };
+  console.warn(`  ⚠ Salons non vérifiés : ${events.error}`);
 }
 let permits: PermitsStats | { error: string };
 try { permits = await fetchPermits(); } catch (e) {
@@ -138,7 +146,7 @@ try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
   console.warn(`  ⚠ Offres du Guichet-Emplois non mises à jour : ${postings.error}`);
 }
 
-writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl, proposals, current, regionOffers, regionsStatus));
+writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl, proposals, current, regionOffers, regionsStatus, events));
 console.log('✔ Terminé. Rapport : docs/data-report.md');
 
 // ---------------------------------------------------------------------------
@@ -153,8 +161,8 @@ function pct(a: number, total: number): string {
   return total ? `${Math.round((100 * a) / total)} %` : '–';
 }
 
-function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | Reused | { error: string }, pr: ProposalsStats, cu: CurrentOffersStats | Reused | { error: string }, ro: RegionOffersStats | Reused | { error: string }, rs: RegionsStatusStats | { error: string }): string {
-  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file as WrittenFile] : []), ...(pr.file ? [pr.file] : []), ...('file' in cu && cu.file ? [cu.file as WrittenFile] : []), ...('file' in ro && ro.file ? [ro.file as WrittenFile] : []), ...('file' in rs ? [rs.file] : [])];
+function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | Reused | { error: string }, pr: ProposalsStats, cu: CurrentOffersStats | Reused | { error: string }, ro: RegionOffersStats | Reused | { error: string }, rs: RegionsStatusStats | { error: string }, ev: EventsStats | { error: string }): string {
+  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, aip.file, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file as WrittenFile] : []), ...(pr.file ? [pr.file] : []), ...('file' in cu && cu.file ? [cu.file as WrittenFile] : []), ...('file' in ro && ro.file ? [ro.file as WrittenFile] : []), ...('file' in rs ? [rs.file] : []), ...('file' in ev ? [ev.file] : [])];
   const totalPos = l.geo.positionsCma + l.geo.positionsOutside + l.geo.positionsUnknown;
   const totalRec = l.geo.cma + l.geo.outside + l.geo.unknown;
   const recurringTargets = l.recurring.slice(0, 20);
@@ -219,6 +227,7 @@ ${w.missing.length ? `- ⚠ Métiers sans données salariales : ${w.missing.join
 |---|---|---:|---:|---:|---|
 ${d.byCommunity.map((c) => `| ${c.community} | ${c.program} | ${n(c.employers)} | ${c.notHiring} | ${c.withdrawn} | ${c.recordedAt} |`).join('\n')}
 
+- Programme d'immigration au Canada atlantique : ${n(aip.employers)} employeurs désignés (relevé du ${aip.recordedAt})${aip.stale ? ' — ⚠ relevé de plus de 90 jours à refaire' : ''}
 - Métiers prioritaires relevés : ${d.priorities}
 - Communautés sans relevé pour l'instant (${d.communitiesWithoutData.length}) : ${d.communitiesWithoutData.join(', ') || 'aucune'}
 ${d.stale.length ? `- ⚠ Relevés de plus de 90 jours à refaire : ${d.stale.join(', ')}\n` : ''}
@@ -251,5 +260,9 @@ ${pr.error ? `⚠ Non vérifiées : ${pr.error}` : `- ${pr.checked} page(s) vér
 
 - Offres des villes en région (API Adzuna) : ${'reused' in ro ? `version publiée gardée (données du ${ro.reused}, ${n(ro.records)} offres)${ro.error ? ` — ⚠ échec de l'API : ${ro.error}` : ''}` : 'error' in ro ? `⚠ non mises à jour : ${ro.error}` : ro.skipped ? `étape sautée : ${ro.skipped}` : `${ro.queries} requêtes, ${n(ro.seen)} annonces lues, **${n(ro.kept)} gardées**`}.
 - Sources contrôlées : ${'error' in rs ? `⚠ non fait : ${rs.error}` : `${rs.checked}. ${rs.changed.length ? `**⚠ Liste ou page changée : ${rs.changed.join(', ')} — relever la nouvelle liste (data/manual/designated-employers.csv) ou relire la page, puis mettre à jour rules.json.**` : 'Aucun changement repéré.'}`}
+
+## 13. Salons de recrutement
+
+${'error' in ev ? `⚠ Non vérifiés : ${ev.error}` : `- ${ev.checked} salon(s) vérifié(s). Inscriptions ouvertes : ${ev.open.join(', ') || 'aucun'}.${ev.toCheck.length ? ` **⚠ Page changée, à relire : ${ev.toCheck.join(', ')} (mettre à jour rules.json › opportunities.events).**` : ''}`}
 `;
 }

@@ -470,8 +470,8 @@ export const STRINGS = {
   cardRegionsText: { fr: 'Kenora, Thunder Bay, Abitibi… : villes qui peinent à recruter, avec un programme vers la résidence permanente.', en: 'Kenora, Thunder Bay, Abitibi…: towns that struggle to hire, with a route to permanent residence.' },
   regionsTitle: { fr: 'Villes en région', en: 'Regional towns' },
   regionsIntro: {
-    fr: 'Ces villes et régions ont du mal à recruter sur place : climat, éloignement, peu de candidats. Des programmes officiels y ouvrent une voie vers la résidence permanente, ou y favorisent les nouveaux arrivants. Les offres de toutes les professions sont mises à jour chaque lundi ; vos métiers passent en premier.',
-    en: 'These towns and regions struggle to hire locally: climate, distance, few candidates. Official programs there open a route to permanent residence, or favour newcomers. Offers in all occupations are updated every Monday; your occupations come first.',
+    fr: 'Ces villes et régions ont du mal à recruter sur place : climat, éloignement, peu de candidats (Ontario du Nord, Prairies, Alberta rurale, Canada atlantique, Grand Nord, régions du Québec). Des programmes officiels y ouvrent une voie vers la résidence permanente, ou y favorisent les nouveaux arrivants. Les offres de toutes les professions sont mises à jour chaque lundi ; vos métiers passent en premier.',
+    en: 'These towns and regions struggle to hire locally: climate, distance, few candidates (Northern Ontario, the Prairies, rural Alberta, Atlantic Canada, the Far North, Quebec regions). Official programs there open a route to permanent residence, or favour newcomers. Offers in all occupations are updated every Monday; your occupations come first.',
   },
   regionsWarning: {
     fr: 'Avant de choisir : hivers très longs (souvent −30 °C), villes isolées, voiture souvent indispensable, moins de services. Pour la résidence permanente par ces programmes, il faut vraiment vouloir vivre dans la communauté. Et comme partout : ne payez jamais pour obtenir une offre.',
@@ -522,6 +522,35 @@ export const STRINGS = {
   regionsChecked: { fr: 'listes vérifiées le', en: 'lists checked on' },
   regionsSearchEmployer: { fr: 'Chercher un employeur', en: 'Search an employer' },
   regionsNone: { fr: 'Aucune ville ne correspond à ces filtres.', en: 'No town matches these filters.' },
+  regionsAip: {
+    fr: 'Canada atlantique (PICA, fédéral) : offre d’un employeur « désigné » par la province (Terre-Neuve-et-Labrador, Nouveau-Brunswick, Nouvelle-Écosse, Île-du-Prince-Édouard), puis recommandation de la province. Vous pouvez être à l’étranger.',
+    en: 'Atlantic Canada (AIP, federal): an offer from an employer “designated” by the province (Newfoundland and Labrador, New Brunswick, Nova Scotia, Prince Edward Island), then the province’s endorsement. You can be abroad.',
+  },
+  regionsNorth: {
+    fr: 'Grand Nord (Yukon, Territoires du Nord-Ouest) : c’est l’employeur qui demande la candidature. Pour les emplois peu spécialisés, il faut d’abord travailler chez lui avec un permis de travail (6 mois au Yukon, 12 mois aux TNO). Le Yukon donne la priorité aux francophones et aux employeurs hors de Whitehorse. Climat et coût de la vie les plus durs du pays.',
+    en: 'Far North (Yukon, Northwest Territories): the employer applies. For entry-level jobs, you must first work for them on a work permit (6 months in Yukon, 12 months in the NWT). Yukon prioritizes French speakers and employers outside Whitehorse. The country’s harshest climate and cost of living.',
+  },
+  regionsAaip: {
+    fr: 'Alberta rurale (volet de renouvellement rural) : 31 communautés désignées par la province choisissent et recommandent elles-mêmes les candidats pour des emplois permanents à temps plein. Ne demandez rien à la province sans lettre de recommandation d’une communauté.',
+    en: 'Rural Alberta (Rural Renewal Stream): 31 communities designated by the province choose and endorse candidates themselves for full-time permanent jobs. Do not apply to the province without an endorsement letter from a community.',
+  },
+  regionsAipEmployers: { fr: 'employeurs désignés (Canada atlantique)', en: 'designated employers (Atlantic Canada)' },
+  regionsFmOk: { fr: 'Mobilité francophone possible', en: 'Francophone Mobility possible' },
+  regionsFmHelp: {
+    fr: 'Partout hors Québec, la Mobilité francophone permet à l’employeur de vous embaucher sans EIMT si vous avez le niveau NCLC 5 à l’oral en français : c’est souvent la façon la plus simple de venir travailler, avant de demander la résidence permanente par le programme de la région.',
+    en: 'Everywhere outside Quebec, Francophone Mobility lets the employer hire you without an LMIA if you have NCLC 5 oral French: it is often the simplest way to come and work, before applying for permanent residence through the region’s program.',
+  },
+  regionsAipHelp: {
+    fr: 'Liste officielle de la province, filtrée sur cette région. Être désigné ne veut pas dire recruter en ce moment : regardez leurs offres, puis écrivez-leur.',
+    en: 'The province’s official list, filtered to this region. Being designated does not mean hiring right now: check their offers, then write to them.',
+  },
+  regionsAipNoList: { fr: 'La province ne publie pas de liste lisible pour cette région : voir sa page officielle.', en: 'The province does not publish a readable list for this region: see its official page.' },
+  eventOpen: { fr: 'Inscriptions des candidats ouvertes', en: 'Candidate registration open' },
+  eventCheckedOn: { fr: 'vérifié le', en: 'checked on' },
+  eventRegister: { fr: 'S’inscrire', en: 'Register' },
+  eventFree: { fr: 'Gratuit et sur invitation. Ne payez jamais personne qui vous promet une invitation, une entrevue ou un permis.', en: 'Free and by invitation. Never pay anyone who promises you an invitation, an interview or a permit.' },
+  eventMaybeNew: { fr: '⚠ La page officielle a changé : de nouvelles activités sont peut-être annoncées. Vérifiez.', en: '⚠ The official page has changed: new activities may have been announced. Check.' },
+  watchEventsTitle: { fr: 'Salons de recrutement : inscriptions ouvertes', en: 'Recruitment fairs: registration open' },
   applyAllProvinces: { fr: 'Toutes les provinces', en: 'All provinces' },
   applyPdfTitle: { fr: 'Documents PDF de ce profil', en: 'PDF documents for this profile' },
   applyPdfDirectory: { fr: 'Télécharger l’annuaire (PDF)', en: 'Download the directory (PDF)' },

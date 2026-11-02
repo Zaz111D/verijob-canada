@@ -122,6 +122,10 @@ export const loadInternationalOffers = () => load<InternationalOffer[]>('interna
 export const loadRegionOffers = () => load<RegionOffer[]>('region-offers.json');
 export interface RegionSourceStatus { id: string; kind: 'liste' | 'page'; url: string; result: 'meme' | 'changee' | 'inconnu'; newUrl?: string; found?: number; checkedAt: string }
 export const loadRegionsStatus = () => load<RegionSourceStatus[]>('regions-status.json');
+export interface AipEmployer { province: string; employer: string; k: string; locations: string; nocs: string[]; designatedAt: string; sourceUrl: string; recordedAt: string }
+export const loadAipEmployers = () => load<AipEmployer[]>('aip-employers.json');
+export interface EventStatus { id: string; url: string; state: 'ouvert' | 'ferme' | 'a-verifier' | 'inconnu'; links: Array<{ label: string; url: string }>; checkedAt: string }
+export const loadEventsStatus = () => load<EventStatus[]>('events-status.json');
 
 // ---------------------------------------------------------------------------
 // Lecture EN DIRECT des fichiers officiels (canada.ca autorise la lecture depuis un navigateur).

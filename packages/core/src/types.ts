@@ -43,8 +43,12 @@ export interface Community {
   listPage?: string;
 }
 
-/** RCIP / FCIP : pilotes fédéraux ; REDI : programme régional de l'Ontario ; QC : régions du Québec hors Montréal et Laval. */
-export type RegionProgram = 'RCIP' | 'FCIP' | 'REDI' | 'QC';
+/**
+ * RCIP / FCIP : pilotes fédéraux ; REDI : programme régional de l'Ontario ; QC : régions du Québec hors Montréal et Laval ;
+ * AIP : Programme d'immigration au Canada atlantique ; YNP / NTNP : programmes du Yukon et des TNO ;
+ * AAIP : volet de renouvellement rural de l'Alberta (communautés désignées).
+ */
+export type RegionProgram = 'RCIP' | 'FCIP' | 'REDI' | 'QC' | 'AIP' | 'YNP' | 'NTNP' | 'AAIP';
 
 export interface RegionPlace {
   id: string;
@@ -292,6 +296,11 @@ export interface OpportunityEvent {
   statusEn: string;
   /** Fin de la dernière édition connue (AAAA-MM-JJ) ; null si inconnue. */
   lastEditionEnd: string | null;
+  /**
+   * Contrôle hebdomadaire de la page officielle : inscriptions ouvertes ou non (texte de la page, sans rien deviner).
+   * section : début et fin du passage à lire ; open / closed : phrases officielles ; links : liens d'inscription à relever.
+   */
+  check?: { url: string; section?: [string, string]; open?: string; closed?: string; links?: string };
 }
 
 /** Réseau ou organisme utile pour trouver un employeur. */

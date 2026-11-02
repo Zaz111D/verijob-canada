@@ -21,7 +21,8 @@ describe('offres des régions (Adzuna) : annonce → offre publiée', () => {
     expect(keys).toContain('kenora:Dryden');
     expect(keys).toContain("abitibi:Val-d'Or");
     // Quota Adzuna : ≈ 120 requêtes déjà chaque lundi, 250 par jour au plus.
-    expect(keys.length).toBeLessThanOrEqual(60);
+    expect(keys.length).toBeLessThanOrEqual(100);
+    expect(keys).toContain('ab-fort-mcmurray:Fort McMurray');
   });
   it('garde tous les métiers, rattache la région et reconnaît un métier suivi', () => {
     const o = toRegionOffer(job({}), ctx)!;

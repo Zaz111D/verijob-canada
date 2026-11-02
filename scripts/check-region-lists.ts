@@ -12,7 +12,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { normalize, type Rules } from '../packages/core/src';
-import type { DesignatedEmployer } from './build-designated';
+import type { AipEmployer, DesignatedEmployer } from './build-designated';
 import { USER_AGENT } from './lib/http';
 import { OUT_DIR } from './lib/paths';
 import { writeDataFile, type WrittenFile } from './lib/output';
@@ -113,6 +113,19 @@ export async function checkRegionSources(rules: Rules, today: string): Promise<R
     }
     out.push(status);
     console.log(`  ${community} : ${status.result}${status.newUrl ? ` → ${status.newUrl}` : ''}${status.found !== undefined ? ` (${Math.round(status.found * 100)} % retrouvés)` : ''}`);
+  }
+
+  // Programme d'immigration au Canada atlantique : listes provinciales (page web).
+  const aip = JSON.parse(readFileSync(join(OUT_DIR, 'aip-employers.json'), 'utf8')).data as AipEmployer[];
+  for (const url of [...new Set(aip.map((e) => e.sourceUrl))]) {
+    const rows = aip.filter((e) => e.sourceUrl === url);
+    const id = `AIP-${rows[0]!.province}`;
+    const page = await get(url);
+    const found = page && page.status < 400 ? htmlListFound(page.body, rows.map((r) => r.employer)) : undefined;
+    const status: RegionSourceStatus = { id, kind: 'liste', url, result: found === undefined ? 'inconnu' : found >= MIN_FOUND ? 'meme' : 'changee', checkedAt: today };
+    if (found !== undefined) status.found = Math.round(found * 100) / 100;
+    out.push(status);
+    console.log(`  ${id} : ${status.result}${found !== undefined ? ` (${Math.round(found * 100)} % retrouvés)` : ''}`);
   }
 
   for (const id of [rules.regions.redi.source, rules.regions.redi.streamSource]) {

@@ -12,6 +12,7 @@ import {
 } from '@verijob/core';
 import { Badge } from '../components/common';
 import { ContactLinks } from '../components/ContactLinks';
+import { EventOpen, useEventsStatus } from '../components/EventsStatus';
 import { ProfileBanner } from '../components/ProfileBanner';
 import {
   loadAfricanRecruiters, loadCurrentOffers, loadEmployerContacts, loadInternationalOffers, loadProspectsFor, nocData, rules,
@@ -73,6 +74,7 @@ function Platforms({ nocs, provinces, citizenship, lang }: { nocs: string[]; pro
   const outsideQc = !provinces.length || provinces.some((p) => p !== 'QC');
   const events = recruitmentEvents(rules, today).filter((e) =>
     (e.id === 'recrutement-quebec' && qc) || (e.id === 'destination-canada' && outsideQc) || (e.id === 'destination-manitoba' && (!provinces.length || provinces.includes('MB'))));
+  const eventStatus = useEventsStatus();
   const nets = networks(rules, today, citizenship).filter((n) =>
     (n.id === 'services-publics-emploi' && n.forYourCountry) || (n.id === 'reseaux-immigration-francophone' && outsideQc));
   return (
@@ -106,6 +108,7 @@ function Platforms({ nocs, provinces, citizenship, lang }: { nocs: string[]; pro
         <article class="card-result">
           <h3>{e.name[lang]}</h3>
           <p class="muted">{e.status[lang]}</p>
+          <EventOpen status={eventStatus.find((s) => s.id === e.id)} lang={lang} />
           {e.old && <p class="warn">{tr(S.eventOld, lang)}</p>}
           <a class="button" href={e.source.url[lang]} {...ext}>{tr(S.officialPage, lang)} ↗</a>
         </article>

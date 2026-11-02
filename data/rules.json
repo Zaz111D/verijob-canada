@@ -2,6 +2,69 @@
   "$comment": "Règles d'immigration versionnées. NE JAMAIS coder ces valeurs en dur dans la logique : le moteur lit ce fichier. Chaque section pointe vers une source officielle (champ 'source') qui porte sa date de vérification et sa date de prochaine révision. Mettre à jour 'version' à chaque modification.",
   "version": "2026-11-02",
   "sources": {
+    "ircc-aip": {
+      "titleFr": "IRCC — Programme d'immigration au Canada atlantique",
+      "titleEn": "IRCC — Atlantic Immigration Program",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/programme-immigration-atlantique.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/atlantic-immigration.html",
+      "pageModified": "2026-09-01",
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "nl-aip-designated": {
+      "titleFr": "Terre-Neuve-et-Labrador (OIM) — Employeurs désignés du Programme d’immigration au Canada atlantique",
+      "titleEn": "Newfoundland and Labrador (OIM) — Atlantic Immigration Program designated employers",
+      "urlFr": null,
+      "urlEn": "https://www.gov.nl.ca/immigration/immigrating-to-newfoundland-and-labrador/atlantic-immigration-program/designated-employers/",
+      "pageModified": null,
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "nb-aip-designated": {
+      "titleFr": "Nouveau-Brunswick — Employeurs désignés (PDF ; page protégée contre les robots, lien seulement)",
+      "titleEn": "New Brunswick — Designated employers (PDF; bot-protected page, link only)",
+      "urlFr": "https://www.gnb.ca/content/dam/GNB3/t/fhc-fmc/immigration/docs/designated-employers-employeurs-designes.pdf",
+      "urlEn": "https://www.gnb.ca/content/dam/GNB3/t/fhc-fmc/immigration/docs/designated-employers-employeurs-designes.pdf",
+      "pageModified": null,
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "ns-aip": {
+      "titleFr": "Nouvelle-Écosse — Programme d’immigration au Canada atlantique",
+      "titleEn": "Nova Scotia — Atlantic Immigration Program",
+      "urlFr": null,
+      "urlEn": "https://liveinnovascotia.com/atlantic-immigration-program",
+      "pageModified": null,
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "alberta-rrs": {
+      "titleFr": "Alberta (AAIP) — Volet de renouvellement rural : communautés désignées",
+      "titleEn": "Alberta (AAIP) — Rural Renewal Stream: designated communities",
+      "urlFr": null,
+      "urlEn": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation",
+      "pageModified": null,
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "yukon-ynp": {
+      "titleFr": "Yukon — Programme des candidats du Yukon : processus 2026 (priorités : employeurs hors Whitehorse, francophones)",
+      "titleEn": "Yukon — Yukon Nominee Program 2026 process (priorities: rural employers, French speakers)",
+      "urlFr": null,
+      "urlEn": "https://yukon.ca/en/yukon-nominee-program",
+      "pageModified": null,
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "nwt-ntnp": {
+      "titleFr": "Territoires du Nord-Ouest — Programme des candidats des TNO (emplois peu spécialisés, volet francophone)",
+      "titleEn": "Northwest Territories — NWT Nominee Program (entry-level occupations, Francophone stream)",
+      "urlFr": null,
+      "urlEn": "https://www.immigratenwt.ca/entry-levelsemi-skilled-occupations",
+      "pageModified": null,
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
     "ontario-redi": {
       "titleFr": "Ontario — Initiative de développement économique régional par l'immigration (REDI), communautés 2026-2027",
       "titleEn": "Ontario — Regional Economic Development through Immigration (REDI) initiative, 2026-2027 communities",
@@ -205,8 +268,8 @@
       "titleEn": "IRCC — Destination Canada Mobility Forum: attend as a candidate",
       "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/embaucher-etranger-temporaires/travailleurs-francophones-bilingues-exterieur-quebec/destination-canada/candidats.html",
       "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/hire-temporary-foreign/french-speaking-bilingual-workers-outside-quebec/destination-canada/candidates.html",
-      "pageModified": "2026-08-05",
-      "verifiedAt": "2026-10-14",
+      "pageModified": "2026-10-16",
+      "verifiedAt": "2026-11-02",
       "nextReview": "2026-12-14"
     },
     "ircc-francophone-recruitment": {
@@ -230,10 +293,10 @@
     "quebec-recrutement-international": {
       "titleFr": "Gouvernement du Québec — Activités de recrutement international (MIFI)",
       "titleEn": "Government of Quebec — International recruitment activities (MIFI, French only)",
-      "urlFr": "https://www.quebec.ca/entreprises-et-travailleurs-autonomes/administrer-gerer/embauche-gestion-personnel/recruter/embaucher-immigrant/journees-quebec",
-      "urlEn": "https://www.quebec.ca/entreprises-et-travailleurs-autonomes/administrer-gerer/embauche-gestion-personnel/recruter/embaucher-immigrant/journees-quebec",
-      "pageModified": "2025-12-16",
-      "verifiedAt": "2026-10-14",
+      "urlFr": "https://www.quebec.ca/entreprises-et-travailleurs-autonomes/administrer-gerer/embauche-gestion-personnel/recruter/embaucher-immigrant/recruter-etranger/activites-de-recrutement-international-du-gouvernement-du-quebec",
+      "urlEn": "https://www.quebec.ca/en/businesses-and-self-employed-workers/managing-running/hiring-managing-staff/recruit/hire-immigrant/recruit-abroad/journees-quebec/candidates/program-candidates/current-upcoming-events",
+      "pageModified": "2026-10-21",
+      "verifiedAt": "2026-11-02",
       "nextReview": "2027-01-14"
     },
     "cdem-destination-manitoba": {
@@ -1205,10 +1268,10 @@
         ],
         "towns": [
           "Pembroke",
-          "Petawawa",
-          "Arnprior"
+          "Petawawa"
         ],
         "match": [
+          "Arnprior",
           "Renfrew",
           "Deep River"
         ],
@@ -1366,10 +1429,10 @@
         ],
         "towns": [
           "Caraquet",
-          "Tracadie",
-          "Shippagan"
+          "Tracadie"
         ],
         "match": [
+          "Shippagan",
           "Lamèque",
           "Bas-Caraquet",
           "Paquetville"
@@ -1488,10 +1551,10 @@
         ],
         "towns": [
           "Nelson",
-          "Trail",
-          "Castlegar"
+          "Trail"
         ],
         "match": [
+          "Castlegar",
           "Rossland",
           "Kootenay",
           "Salmo",
@@ -1531,10 +1594,10 @@
         ],
         "towns": [
           "Fort St. John",
-          "Dawson Creek",
-          "Fort Nelson"
+          "Dawson Creek"
         ],
         "match": [
+          "Fort Nelson",
           "Fort St John",
           "Fort Saint John",
           "Chetwynd",
@@ -1574,10 +1637,10 @@
         ],
         "towns": [
           "Rouyn-Noranda",
-          "Val-d'Or",
-          "Amos"
+          "Val-d'Or"
         ],
         "match": [
+          "Amos",
           "Abitibi",
           "Témiscamingue",
           "Vallée-de-l'Or",
@@ -1597,10 +1660,10 @@
         ],
         "towns": [
           "Saguenay",
-          "Alma",
-          "Roberval"
+          "Alma"
         ],
         "match": [
+          "Roberval",
           "Chicoutimi",
           "Jonquière",
           "La Baie",
@@ -1645,10 +1708,10 @@
         ],
         "towns": [
           "Rimouski",
-          "Rivière-du-Loup",
-          "Matane"
+          "Rivière-du-Loup"
         ],
         "match": [
+          "Matane",
           "Bas-Saint-Laurent",
           "Amqui",
           "Mont-Joli",
@@ -1701,6 +1764,630 @@
         ],
         "url": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
         "francophone": true
+      },
+      {
+        "id": "yukon",
+        "name": "Yukon (Whitehorse, Dawson City)",
+        "province": "YT",
+        "programs": [
+          "YNP"
+        ],
+        "towns": [
+          "Whitehorse"
+        ],
+        "match": [
+          "Dawson City",
+          "Watson Lake",
+          "Haines Junction",
+          "Carmacks",
+          "Mayo",
+          "Yukon"
+        ],
+        "url": "https://yukon.ca/en/yukon-nominee-program",
+        "noteFr": "Programme du Yukon : c'est l'employeur qui dépose la demande (2 périodes par an ; celles de 2026 sont closes, changements annoncés pour 2027). Priorités 2026 : employeurs hors de Whitehorse et personnes qui parlent français. Emplois peu spécialisés (TEER 4-5) : 6 mois d'expérience liée. Mobilité francophone possible (hors Québec).",
+        "noteEn": "Yukon program: the employer applies (2 intakes a year; the 2026 ones are closed, changes announced for 2027). 2026 priorities: employers outside Whitehorse and French speakers. Entry-level jobs (TEER 4-5): 6 months of related experience. Francophone Mobility possible (outside Quebec)."
+      },
+      {
+        "id": "tno",
+        "name": "Territoires du Nord-Ouest (Yellowknife, Hay River)",
+        "province": "NT",
+        "programs": [
+          "NTNP"
+        ],
+        "towns": [
+          "Yellowknife",
+          "Hay River"
+        ],
+        "match": [
+          "Inuvik",
+          "Fort Smith",
+          "Behchoko",
+          "Northwest Territories"
+        ],
+        "url": "https://www.immigratenwt.ca/entry-levelsemi-skilled-occupations",
+        "noteFr": "Programme des TNO : offre d'un employeur des TNO. Emplois peu spécialisés (TEER 4-5) : 12 mois à temps plein chez cet employeur avec un permis de travail, puis test de langue. Volet francophone : français ET anglais, tous les métiers. Venez d'abord avec un permis de travail (Mobilité francophone possible).",
+        "noteEn": "NWT program: an offer from an NWT employer. Entry-level jobs (TEER 4-5): 12 months full time with that employer on a work permit, then a language test. Francophone stream: French AND English, all occupations. Come first with a work permit (Francophone Mobility possible)."
+      },
+      {
+        "id": "labrador",
+        "name": "Labrador (Labrador City, Happy Valley-Goose Bay)",
+        "province": "NL",
+        "programs": [
+          "AIP"
+        ],
+        "towns": [
+          "Labrador City",
+          "Happy Valley-Goose Bay"
+        ],
+        "match": [
+          "Wabush",
+          "Goose Bay",
+          "Churchill Falls",
+          "Nain",
+          "L'Anse au Loup"
+        ],
+        "url": "https://www.gov.nl.ca/immigration/immigrating-to-newfoundland-and-labrador/atlantic-immigration-program/designated-employers/"
+      },
+      {
+        "id": "nl-centre",
+        "name": "Centre de Terre-Neuve (Gander, Grand Falls-Windsor)",
+        "province": "NL",
+        "programs": [
+          "AIP"
+        ],
+        "towns": [
+          "Gander",
+          "Grand Falls-Windsor"
+        ],
+        "match": [
+          "Grand Falls - Windsor",
+          "Lewisporte",
+          "Botwood",
+          "Bishop's Falls",
+          "Twillingate",
+          "Gambo",
+          "Glovertown"
+        ],
+        "url": "https://www.gov.nl.ca/immigration/immigrating-to-newfoundland-and-labrador/atlantic-immigration-program/designated-employers/"
+      },
+      {
+        "id": "nl-ouest",
+        "name": "Ouest de Terre-Neuve (Corner Brook, Stephenville)",
+        "province": "NL",
+        "programs": [
+          "AIP"
+        ],
+        "towns": [
+          "Corner Brook",
+          "Stephenville"
+        ],
+        "match": [
+          "Deer Lake",
+          "Pasadena",
+          "Port aux Basques",
+          "Channel-Port aux Basques",
+          "St. Anthony",
+          "Rocky Harbour",
+          "Woody Point",
+          "Little Rapids",
+          "Cormack",
+          "Kippens"
+        ],
+        "url": "https://www.gov.nl.ca/immigration/immigrating-to-newfoundland-and-labrador/atlantic-immigration-program/designated-employers/"
+      },
+      {
+        "id": "nb-nord-ouest",
+        "name": "Nord-Ouest du Nouveau-Brunswick (Edmundston)",
+        "province": "NB",
+        "programs": [
+          "AIP"
+        ],
+        "towns": [
+          "Edmundston"
+        ],
+        "match": [
+          "Grand Falls",
+          "Grand-Sault",
+          "Saint-Quentin",
+          "Saint-Léonard",
+          "Madawaska",
+          "Clair"
+        ],
+        "url": "https://www.gnb.ca/content/dam/GNB3/t/fhc-fmc/immigration/docs/designated-employers-employeurs-designes.pdf",
+        "francophone": true
+      },
+      {
+        "id": "restigouche",
+        "name": "Restigouche et Miramichi (Campbellton, Miramichi)",
+        "province": "NB",
+        "programs": [
+          "AIP"
+        ],
+        "towns": [
+          "Campbellton",
+          "Miramichi"
+        ],
+        "match": [
+          "Dalhousie",
+          "Atholville",
+          "Neguac",
+          "Restigouche"
+        ],
+        "url": "https://www.gnb.ca/content/dam/GNB3/t/fhc-fmc/immigration/docs/designated-employers-employeurs-designes.pdf",
+        "francophone": true
+      },
+      {
+        "id": "cap-breton",
+        "name": "Cap-Breton (Sydney)",
+        "province": "NS",
+        "programs": [
+          "AIP"
+        ],
+        "towns": [
+          "Sydney"
+        ],
+        "match": [
+          "Glace Bay",
+          "North Sydney",
+          "Sydney Mines",
+          "New Waterford",
+          "Port Hawkesbury",
+          "Cape Breton",
+          "Baddeck",
+          "Inverness"
+        ],
+        "url": "https://liveinnovascotia.com/atlantic-immigration-program"
+      },
+      {
+        "id": "ab-brooks",
+        "name": "Brooks et comté de Newell (Alberta)",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Brooks"
+        ],
+        "match": [
+          "Bassano",
+          "Duchess",
+          "Newell",
+          "Rosemary"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-grande-prairie",
+        "name": "Grande Prairie (ville et comté)",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Grande Prairie"
+        ],
+        "match": [
+          "Sexsmith",
+          "Wembley",
+          "Beaverlodge",
+          "Rycroft"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-innisfail",
+        "name": "Innisfail, Olds, Bowden",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Innisfail"
+        ],
+        "match": [
+          "Olds",
+          "Bowden"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-smoky-river",
+        "name": "Smoky River (Falher, Donnelly, Girouxville)",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Falher"
+        ],
+        "match": [
+          "Donnelly",
+          "Girouxville",
+          "Smoky River"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation",
+        "francophone": true
+      },
+      {
+        "id": "ab-trochu",
+        "name": "Trochu, Three Hills, Acme, Linden",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Three Hills"
+        ],
+        "match": [
+          "Trochu",
+          "Acme",
+          "Linden"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-fort-mcmurray",
+        "name": "Fort McMurray – Wood Buffalo",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Fort McMurray"
+        ],
+        "match": [
+          "Wood Buffalo",
+          "Fort Chipewyan",
+          "Anzac"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-jasper",
+        "name": "Jasper",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Jasper"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-hinton",
+        "name": "Hinton",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Hinton"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-medicine-hat",
+        "name": "Medicine Hat et Bow Island",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Medicine Hat"
+        ],
+        "match": [
+          "Bow Island",
+          "Redcliff"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-fox-creek",
+        "name": "Fox Creek",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Fox Creek"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-cold-lake",
+        "name": "Cold Lake",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Cold Lake"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-st-paul",
+        "name": "Comté de St. Paul (St. Paul, Elk Point)",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "St. Paul"
+        ],
+        "match": [
+          "Saint Paul",
+          "Elk Point",
+          "Horseshoe Bay"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation",
+        "francophone": true
+      },
+      {
+        "id": "ab-drayton-valley",
+        "name": "Drayton Valley",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Drayton Valley"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-slave-lake",
+        "name": "Slave Lake et High Prairie",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Slave Lake"
+        ],
+        "match": [
+          "High Prairie",
+          "Big Lakes",
+          "Opportunity"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-lloydminster",
+        "name": "Lloydminster",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Lloydminster"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-westlock",
+        "name": "Westlock",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Westlock"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-peace-river",
+        "name": "Peace River",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Peace River"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-wetaskiwin",
+        "name": "Wetaskiwin",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Wetaskiwin"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-special-areas",
+        "name": "Special Areas (Hanna, Oyen, Consort)",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Hanna"
+        ],
+        "match": [
+          "Oyen",
+          "Consort",
+          "Empress",
+          "Veteran",
+          "Youngstown",
+          "Acadia"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-woodlands",
+        "name": "Woodlands County et Swan Hills",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Swan Hills"
+        ],
+        "match": [
+          "Woodlands",
+          "Whitecourt"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-northern-lights",
+        "name": "County of Northern Lights (Manning)",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Manning"
+        ],
+        "match": [
+          "Northern Lights"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-bonnyville",
+        "name": "Bonnyville",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Bonnyville"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation",
+        "francophone": true
+      },
+      {
+        "id": "ab-two-hills",
+        "name": "Two Hills",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Two Hills"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-lac-la-biche",
+        "name": "Lac La Biche",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Lac La Biche"
+        ],
+        "match": [
+          "Plamondon"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation",
+        "francophone": true
+      },
+      {
+        "id": "ab-high-level",
+        "name": "High Level",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "High Level"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-didsbury",
+        "name": "Didsbury",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Didsbury"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-coronation",
+        "name": "Coronation et Castor",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Coronation"
+        ],
+        "match": [
+          "Castor",
+          "Paintearth",
+          "Brownfield"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-smoky-lake",
+        "name": "Smoky Lake",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Smoky Lake"
+        ],
+        "match": [
+          "Vilna",
+          "Waskatenau"
+        ],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-rocky-mountain-house",
+        "name": "Rocky Mountain House",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Rocky Mountain House"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      },
+      {
+        "id": "ab-edson",
+        "name": "Edson",
+        "province": "AB",
+        "programs": [
+          "AAIP"
+        ],
+        "towns": [
+          "Edson"
+        ],
+        "match": [],
+        "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
       }
     ]
   },
@@ -1818,9 +2505,16 @@
         "nameEn": "Destination Canada Mobility Forum",
         "audienceFr": "Salon de recrutement du gouvernement du Canada pour les travailleurs qualifiés francophones ou bilingues, postes hors Québec. Gratuit, sur inscription puis invitation.",
         "audienceEn": "Government of Canada recruitment fair for skilled Francophone or bilingual workers, jobs outside Quebec. Free, by registration then invitation.",
-        "statusFr": "Édition 2026 : en ligne (3 au 5 février), Tunis (9 au 11 février), Paris (14 février). 22e édition : inscriptions des candidats annoncées pour l'automne 2026.",
-        "statusEn": "2026 edition: online (February 3–5), Tunis (February 9–11), Paris (February 14). 22nd edition: candidate registration announced for fall 2026.",
-        "lastEditionEnd": "2026-02-14"
+        "statusFr": "22e édition : inscriptions des candidats ouvertes (page officielle du 16 oct. 2026) pour Bruxelles, Marseille et Tunis. Tunis : 10 et 11 décembre 2026. Gratuit, sur invitation ; aucun visa ni frais de voyage pris en charge. Ne payez personne qui promet une invitation.",
+        "statusEn": "22nd edition: candidate registration open (official page of Oct. 16, 2026) for Brussels, Marseille and Tunis. Tunis: December 10–11, 2026. Free, by invitation; no visa or travel costs covered. Never pay anyone who promises an invitation.",
+        "lastEditionEnd": "2026-02-14",
+        "check": {
+          "url": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/embaucher-etranger-temporaires/travailleurs-francophones-bilingues-exterieur-quebec/destination-canada/candidats.html",
+          "section": ["Comment s", "Destination Canada Éducation"],
+          "open": "maintenant ouvertes",
+          "closed": "fermées",
+          "links": "forms-formulaires"
+        }
       },
       {
         "id": "destination-manitoba",
@@ -1840,9 +2534,13 @@
         "nameEn": "Quebec international recruitment (Journées Québec)",
         "audienceFr": "Missions du gouvernement du Québec pour des travailleurs temporaires dans les secteurs prioritaires : construction, éducation, petite enfance, santé et services sociaux.",
         "audienceEn": "Government of Quebec missions for temporary workers in priority sectors: construction, education, early childhood, health and social services.",
-        "statusFr": "Nombre limité d'activités annoncé. Les offres sont publiées sur Québec emploi.",
-        "statusEn": "A limited number of activities announced. Job offers are posted on Québec emploi.",
-        "lastEditionEnd": null
+        "statusFr": "Aucune activité annoncée pour l'instant : le ministère intègre les missions à sa prochaine planification de l'immigration (page officielle mise à jour le 21 oct. 2026). Les offres sont publiées sur Québec emploi.",
+        "statusEn": "No activity announced for now: the ministry is folding the missions into its next immigration planning (official page updated Oct. 21, 2026). Job offers are posted on Québec emploi.",
+        "lastEditionEnd": null,
+        "check": {
+          "url": "https://www.quebec.ca/en/businesses-and-self-employed-workers/managing-running/hiring-managing-staff/recruit/hire-immigrant/recruit-abroad/journees-quebec/candidates/program-candidates/current-upcoming-events",
+          "closed": "No Journées Québec events"
+        }
       }
     ],
     "networks": [

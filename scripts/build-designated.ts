@@ -119,3 +119,51 @@ export function buildDesignated(rules: Rules, today: string): DesignatedStats {
     files,
   };
 }
+
+/** Employeur désigné par une province de l'Atlantique (Programme d'immigration au Canada atlantique). */
+export interface AipEmployer {
+  province: string;
+  employer: string;
+  k: string;
+  /** Villes indiquées par la province (« Happy Valley-Goose Bay, St. Anthony »). */
+  locations: string;
+  nocs: string[];
+  designatedAt: string;
+  sourceUrl: string;
+  recordedAt: string;
+}
+
+/**
+ * Employeurs désignés du Programme d'immigration au Canada atlantique, relevés à la main sur la liste officielle de la
+ * province (aujourd'hui : Terre-Neuve-et-Labrador ; le Nouveau-Brunswick bloque l'accès automatique, lien seulement).
+ * Produit : apps/pwa/public/data/aip-employers.json
+ */
+export function buildAipEmployers(today: string): { employers: number; recordedAt: string; stale: boolean; file: WrittenFile } {
+  console.log('▶ Employeurs désignés du Programme d’immigration au Canada atlantique (relevé manuel)');
+  const errors: string[] = [];
+  const out: AipEmployer[] = [];
+  readCsv('aip-employeurs-designes.csv').forEach((r, i) => {
+    const line = i + 2;
+    if (!/^(NL|NB|NS|PE)$/.test(r['province'] ?? '')) return errors.push(`ligne ${line} : province « ${r['province']} » hors Atlantique`);
+    if (!r['employer']) return errors.push(`ligne ${line} : nom d'employeur vide`);
+    if (!/^https:\/\//.test(r['source_url'] ?? '')) return errors.push(`ligne ${line} : source_url manquante ou non https`);
+    if (!DATE.test(r['recorded_at'] ?? '')) return errors.push(`ligne ${line} : recorded_at doit être AAAA-MM-JJ`);
+    if (r['designated_at'] && !DATE.test(r['designated_at'])) return errors.push(`ligne ${line} : designated_at doit être AAAA-MM-JJ`);
+    const nocs = (r['nocs'] ?? '').split(/[;\s]+/).filter(Boolean);
+    if (nocs.some((n) => !/^\d{5}$/.test(n))) return errors.push(`ligne ${line} : codes CNP invalides « ${r['nocs']} »`);
+    out.push({
+      province: r['province']!, employer: r['employer']!, k: employerKey(r['employer']!), locations: r['locations'] ?? '', nocs,
+      designatedAt: r['designated_at'] ?? '', sourceUrl: r['source_url']!, recordedAt: r['recorded_at']!,
+    });
+  });
+  if (errors.length) throw new Error(`aip-employeurs-designes.csv invalide :\n  ${errors.join('\n  ')}`);
+  const recordedAt = out.map((e) => e.recordedAt).sort()[0] ?? today;
+  const file = writeDataFile('aip-employers.json', {
+    name: 'Employeurs désignés — Programme d’immigration au Canada atlantique (relevé manuel)',
+    publisher: 'Gouvernements provinciaux de l’Atlantique (liens par ligne)',
+    url: 'https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/programme-immigration-atlantique.html',
+    licence: 'Données factuelles publiques relevées à la main ; voir la source de chaque ligne',
+  }, out.length, out);
+  console.log(`  ${out.length} employeurs`);
+  return { employers: out.length, recordedAt, stale: (Date.parse(today) - Date.parse(recordedAt)) / 86_400_000 > MAX_AGE_DAYS, file };
+}

@@ -22,6 +22,14 @@ describe('régions : lieu des annonces', () => {
     expect(placeOf(rules, 'Fort Nelson, Northern Rockies', 'BC')?.id).toBe('peace-liard');
     expect(placeOf(rules, 'Nelson, Central Kootenay', 'BC')?.id).toBe('west-kootenay');
     expect(placeOf(rules, 'Trailside, Calgary', 'AB')).toBeUndefined();
+    // Nouvelles régions : Alberta rurale, Canada atlantique, Grand Nord.
+    expect(placeOf(rules, 'Fort McMurray, Wood Buffalo', 'AB')?.id).toBe('ab-fort-mcmurray');
+    expect(placeOf(rules, 'Calgary, Alberta', 'AB')).toBeUndefined();
+    expect(placeOf(rules, 'Happy Valley-Goose Bay', 'NL')?.id).toBe('labrador');
+    expect(placeOf(rules, "St. John's, Newfoundland and Labrador", 'NL')).toBeUndefined();
+    expect(placeOf(rules, 'Grand Falls - Windsor', 'NL')?.id).toBe('nl-centre');
+    expect(placeOf(rules, 'Grand Falls, Victoria', 'NB')?.id).toBe('nb-nord-ouest');
+    expect(placeOf(rules, 'Whitehorse, Yukon', 'YT')?.id).toBe('yukon');
   });
   it('EIMT bas salaire : hors RMR possible, RMR gelée bloquée', () => {
     const p = (id: string) => rules.regions.places.find((x) => x.id === id)!;

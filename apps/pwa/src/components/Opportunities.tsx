@@ -9,11 +9,13 @@ import {
 import { nocData, rules } from '../data';
 import { STRINGS as S, tr, type Lang } from '../i18n';
 import { Badge, Sources } from './common';
+import { EventOpen, useEventsStatus } from './EventsStatus';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const;
 
 export function Opportunities({ nocs, provinces, citizenship, lang }: { nocs: string[]; provinces: ProvinceCode[]; citizenship?: string; lang: Lang }) {
+  const eventStatus = useEventsStatus();
   const d = today();
   // Lieu de recherche : la 1re province visée (nom anglais, compris par les deux sites), sinon « Canada ».
   const location = provinces[0] ? PROVINCE_NAMES[provinces[0]].en : 'Canada';
@@ -48,6 +50,7 @@ export function Opportunities({ nocs, provinces, citizenship, lang }: { nocs: st
           <h3>{e.name[lang]}</h3>
           <p>{e.audience[lang]}</p>
           <p class="muted">{e.status[lang]}</p>
+          <EventOpen status={eventStatus.find((s) => s.id === e.id)} lang={lang} />
           {e.old && <p class="warn">{tr(S.eventOld, lang)}</p>}
           <p><a href={e.source.url[lang]} {...ext}>{tr(S.officialPage, lang)} ↗</a></p>
           <Sources sources={[e.source]} />

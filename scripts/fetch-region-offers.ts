@@ -22,6 +22,8 @@ const DISTANCE_KM = 30;
 /** Au plus, par région (les plus récentes) : le fichier reste léger sur un téléphone. */
 const MAX_PER_PLACE = 60;
 const SNIPPET = 220;
+/** Garde-fou : le quota gratuit d'Adzuna est de 250 appels par jour, et le lundi compte déjà ≈ 120 appels pour les autres étapes. */
+const MAX_QUERIES = 100;
 
 export interface RegionOffersStats { queries: number; seen: number; kept: number; skipped?: string; file?: WrittenFile }
 
@@ -80,7 +82,7 @@ export async function fetchRegionOffers(
   const api = adzunaClient(keys);
   const offers = new Map<string, RegionOffer>((opts.base?.offers ?? []).map((o) => [o.id, o]));
   let seen = 0;
-  const wanted = opts.onlyKeys ?? regionQueryKeys(rules);
+  const wanted = (opts.onlyKeys ?? regionQueryKeys(rules)).slice(0, MAX_QUERIES);
   for (const key of wanted) {
     const town = key.slice(key.indexOf(':') + 1);
     const { results } = await api.search({ where: town, distance: String(DISTANCE_KM), max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE) });

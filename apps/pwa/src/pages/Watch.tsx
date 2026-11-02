@@ -7,10 +7,16 @@ import { useEffect, useState } from 'preact/hooks';
 import { changeLog, formatDate, programStatuses, sourceRef, upcomingDates } from '@verijob/core';
 import { Badge, Sources } from '../components/common';
 import { ExpressEntryRounds, IrccNews } from '../components/LiveUpdates';
+import { OpenEventsBanner, useEventsStatus } from '../components/EventsStatus';
 import { loadDesignated, loadEmployersIndex, loadProposalsStatus, rules, type ProposalStatus } from '../data';
 import { STRINGS as S, tr, useLang } from '../i18n';
 
 const STATE_KIND = { ouvert: 'ok', restreint: 'moyen', ferme: 'eleve', expire: 'info' } as const;
+
+function OpenEvents({ lang }: { lang: 'fr' | 'en' }) {
+  const open = useEventsStatus().some((s) => s.state === 'ouvert');
+  return open ? <><h2>{tr(S.watchEventsTitle, lang)}</h2><OpenEventsBanner lang={lang} /></> : null;
+}
 
 export function Watch() {
   const lang = useLang();
@@ -35,6 +41,8 @@ export function Watch() {
       {stale.length > 0
         ? <p class="alert">{tr(S.staleBanner, lang)} ({stale.map((s) => s.title[lang]).join(' ; ')})</p>
         : <p class="ok">{tr(S.noStale, lang)}</p>}
+
+      <OpenEvents lang={lang} />
 
       {rules.proposals.length > 0 && (
         <>
