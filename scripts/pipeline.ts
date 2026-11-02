@@ -8,7 +8,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { normalize, type CurrentOffer, type NocData, type Rules } from '../packages/core/src';
+import { normalize, type CurrentOffer, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildEmployerContacts, checkEmployerContactPages } from './build-employer-contacts';
@@ -18,6 +18,8 @@ import { fetchInternational, type InternationalStats } from './fetch-internation
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
 import { fetchProposals, type ProposalsStats } from './fetch-proposals';
 import { fetchCurrentOffers, OTHER_LEVEL, queryKeys, type CurrentOffersStats } from './fetch-current-offers';
+import { fetchRegionOffers, regionQueryKeys, type RegionOffersStats } from './fetch-region-offers';
+import { checkRegionSources, type RegionsStatusStats } from './check-region-lists';
 import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
@@ -45,6 +47,12 @@ const designated = buildDesignated(rules, today); // en premier : échoue vite s
 const african = buildAfricanRecruiters(today);
 const contacts = buildEmployerContacts(today); // échoue vite si le relevé manuel est invalide
 try { await checkEmployerContactPages(today); } catch (e) { console.warn(`  ⚠ Contrôle des pages de coordonnées non fait : ${e instanceof Error ? e.message : String(e)}`); }
+// Onglet « Régions » : nouvelles listes d'employeurs désignés, pages de l'Ontario modifiées. Non bloquant.
+let regionsStatus: RegionsStatusStats | { error: string };
+try { regionsStatus = await checkRegionSources(rules, today); } catch (e) {
+  regionsStatus = { error: e instanceof Error ? e.message : String(e) };
+  console.warn(`  ⚠ Contrôle des sources des régions non fait : ${regionsStatus.error}`);
+}
 const geo = await fetchGeo(rules);
 const lmia = await fetchLmia(rules, nocData, geo.lookup, quarters);
 const wages = await fetchWages(nocData);
@@ -106,6 +114,23 @@ async function currentOffersStep() {
     return r;
   }
 }
+const regionOffers = await regionOffersStep();
+/** Offres des régions : comme les offres actuelles, les villes AJOUTÉES depuis sont interrogées tout de suite. */
+async function regionOffersStep() {
+  const r = await adzunaStep('region-offers.json', 'Offres des villes en région', () => fetchRegionOffers(rules, nocData));
+  if (!('reused' in r) || r.error) return r;
+  const prev = JSON.parse(readFileSync(join(OUT_DIR, 'region-offers.json'), 'utf8')) as { source: { keys?: string[] }; data: RegionOffer[] };
+  const known = new Set(prev.source.keys ?? []);
+  const missing = regionQueryKeys(rules).filter((k) => !known.has(k));
+  if (!missing.length) return r;
+  console.log(`  villes ajoutées depuis la dernière mise à jour : ${missing.join(', ')} — interrogées maintenant`);
+  try {
+    return await fetchRegionOffers(rules, nocData, { onlyKeys: missing, base: { offers: prev.data, keys: [...known] } });
+  } catch (e) {
+    console.warn(`  ⚠ Nouvelles villes non interrogées : ${e instanceof Error ? e.message : String(e)} — version publiée gardée`);
+    return r;
+  }
+}
 // Offres du mois (données ouvertes) : une erreur ne bloque pas le reste, l'appli fonctionne sans.
 let postings: PostingsStats | { error: string };
 try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
@@ -113,7 +138,7 @@ try { postings = await fetchPostings(rules, nocData, geo.lookup); } catch (e) {
   console.warn(`  ⚠ Offres du Guichet-Emplois non mises à jour : ${postings.error}`);
 }
 
-writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl, proposals, current));
+writeFileSync(join(DOCS_DIR, 'data-report.md'), report(geo.stats, lmia, wages.stats, designated, ee, postings, african, permits, intl, proposals, current, regionOffers, regionsStatus));
 console.log('✔ Terminé. Rapport : docs/data-report.md');
 
 // ---------------------------------------------------------------------------
@@ -128,8 +153,8 @@ function pct(a: number, total: number): string {
   return total ? `${Math.round((100 * a) / total)} %` : '–';
 }
 
-function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | Reused | { error: string }, pr: ProposalsStats, cu: CurrentOffersStats | Reused | { error: string }): string {
-  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file as WrittenFile] : []), ...(pr.file ? [pr.file] : []), ...('file' in cu && cu.file ? [cu.file as WrittenFile] : [])];
+function report(g: GeoStats, l: LmiaStats, w: WagesStats, d: DesignatedStats, ee: ExpressEntryStats, p: PostingsStats | { error: string }, af: AfricanRecruitersStats, pm: PermitsStats | { error: string }, it: InternationalStats | Reused | { error: string }, pr: ProposalsStats, cu: CurrentOffersStats | Reused | { error: string }, ro: RegionOffersStats | Reused | { error: string }, rs: RegionsStatusStats | { error: string }): string {
+  const files: WrittenFile[] = [g.file, ...l.files, w.file, ...d.files, ...(ee.file ? [ee.file] : []), ...('file' in p ? [p.file] : []), af.file, ...('file' in pm ? [pm.file] : []), ...('file' in it && it.file ? [it.file as WrittenFile] : []), ...(pr.file ? [pr.file] : []), ...('file' in cu && cu.file ? [cu.file as WrittenFile] : []), ...('file' in ro && ro.file ? [ro.file as WrittenFile] : []), ...('file' in rs ? [rs.file] : [])];
   const totalPos = l.geo.positionsCma + l.geo.positionsOutside + l.geo.positionsUnknown;
   const totalRec = l.geo.cma + l.geo.outside + l.geo.unknown;
   const recurringTargets = l.recurring.slice(0, 20);
@@ -221,5 +246,10 @@ ${'reused' in cu ? `Version publiée gardée (données du ${cu.reused}, ${n(cu.r
 ## 11. Règles en préparation
 
 ${pr.error ? `⚠ Non vérifiées : ${pr.error}` : `- ${pr.checked} page(s) vérifiée(s). ${pr.changed.length ? `**⚠ Page modifiée depuis la dernière vérification : ${pr.changed.join(', ')} — relire et mettre à jour rules.json (proposals).**` : 'Aucune page modifiée.'}`}
+
+## 12. Régions (Kenora, pilotes PICR / PICRF, Québec en région)
+
+- Offres des villes en région (API Adzuna) : ${'reused' in ro ? `version publiée gardée (données du ${ro.reused}, ${n(ro.records)} offres)${ro.error ? ` — ⚠ échec de l'API : ${ro.error}` : ''}` : 'error' in ro ? `⚠ non mises à jour : ${ro.error}` : ro.skipped ? `étape sautée : ${ro.skipped}` : `${ro.queries} requêtes, ${n(ro.seen)} annonces lues, **${n(ro.kept)} gardées**`}.
+- Sources contrôlées : ${'error' in rs ? `⚠ non fait : ${rs.error}` : `${rs.checked}. ${rs.changed.length ? `**⚠ Liste ou page changée : ${rs.changed.join(', ')} — relever la nouvelle liste (data/manual/designated-employers.csv) ou relire la page, puis mettre à jour rules.json.**` : 'Aucun changement repéré.'}`}
 `;
 }

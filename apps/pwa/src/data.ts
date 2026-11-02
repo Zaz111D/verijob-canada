@@ -8,7 +8,7 @@ import nocJson from '../../../data/noc.json';
 import catalogJson from '../../../data/noc-catalog.json';
 import {
   filterNews, makeWageLookup, mergeProspects, parseExpressEntryRounds,
-  type CmaLookup, type CurrentOffer, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type Rules, type WageLookup, type WagesData,
+  type CmaLookup, type CurrentOffer, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type RegionOffer, type Rules, type WageLookup, type WagesData,
 } from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
@@ -119,6 +119,9 @@ export interface ProposalStatus { id: string; pageModified: string | null; chang
 export const loadProposalsStatus = () => load<ProposalStatus[]>('proposals-status.json');
 export const loadCurrentOffers = () => load<CurrentOffer[]>('current-offers.json');
 export const loadInternationalOffers = () => load<InternationalOffer[]>('international-offers.json');
+export const loadRegionOffers = () => load<RegionOffer[]>('region-offers.json');
+export interface RegionSourceStatus { id: string; kind: 'liste' | 'page'; url: string; result: 'meme' | 'changee' | 'inconnu'; newUrl?: string; found?: number; checkedAt: string }
+export const loadRegionsStatus = () => load<RegionSourceStatus[]>('regions-status.json');
 
 // ---------------------------------------------------------------------------
 // Lecture EN DIRECT des fichiers officiels (canada.ca autorise la lecture depuis un navigateur).

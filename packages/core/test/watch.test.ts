@@ -25,7 +25,7 @@ describe('veille réglementaire', () => {
   });
   it('historique trié du plus récent au plus ancien, chaque entrée sourcée', () => {
     const c = changeLog(rules, TODAY);
-    expect(c[0]?.date).toBe('2026-10-09');
+    expect(c[0]?.date).toBe('2026-10-14');
     expect(c.every((x) => x.source.url.fr.startsWith('https://'))).toBe(true);
     expect(c.some((x) => x.approximate)).toBe(true);
   });

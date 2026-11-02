@@ -17,6 +17,8 @@ export interface DataSource {
   window?: string[];
   /** Métiers interrogés (offres actuelles). */
   nocs?: string[];
+  /** Villes interrogées (offres des régions), ex. « kenora:Dryden ». */
+  keys?: string[];
 }
 
 export interface DataFile<T> {

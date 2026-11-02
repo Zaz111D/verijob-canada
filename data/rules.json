@@ -1,7 +1,43 @@
 {
   "$comment": "Règles d'immigration versionnées. NE JAMAIS coder ces valeurs en dur dans la logique : le moteur lit ce fichier. Chaque section pointe vers une source officielle (champ 'source') qui porte sa date de vérification et sa date de prochaine révision. Mettre à jour 'version' à chaque modification.",
-  "version": "2026-10-14",
+  "version": "2026-11-02",
   "sources": {
+    "ontario-redi": {
+      "titleFr": "Ontario — Initiative de développement économique régional par l'immigration (REDI), communautés 2026-2027",
+      "titleEn": "Ontario — Regional Economic Development through Immigration (REDI) initiative, 2026-2027 communities",
+      "urlFr": null,
+      "urlEn": "https://www.ontario.ca/page/regional-economic-development-through-immigration-redi-initiative",
+      "pageModified": "2026-10-13",
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "ontario-oinp-owp": {
+      "titleFr": "Ontario — Mises à jour 2026 du Programme ontarien des candidats à l'immigration (volet Ontario Workforce Priority)",
+      "titleEn": "Ontario — 2026 Ontario Immigrant Nominee Program updates (Ontario Workforce Priority stream)",
+      "urlFr": null,
+      "urlEn": "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates",
+      "pageModified": "2026-10-16",
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "qc-pstq-regions": {
+      "titleFr": "Québec (MIFI) — PSTQ : invitations, dont 1 531 personnes résidant en région (hors Montréal et Laval), 2 mars 2026",
+      "titleEn": "Quebec (MIFI) — PSTQ invitations, including 1,531 people living in the regions (outside Montréal and Laval), March 2, 2026 (French only)",
+      "urlFr": "https://www.quebec.ca/nouvelles/actualites/details/programme-de-selection-des-travailleurs-qualifies-2-543-nouvelles-invitations-dans-le-programme-de-selection-des-travailleurs-qualifies-68821",
+      "urlEn": "https://www.quebec.ca/nouvelles/actualites/details/programme-de-selection-des-travailleurs-qualifies-2-543-nouvelles-invitations-dans-le-programme-de-selection-des-travailleurs-qualifies-68821",
+      "pageModified": "2026-03-02",
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
+    "qc-regions-integration": {
+      "titleFr": "Québec — Favoriser l'intégration des personnes immigrantes en région",
+      "titleEn": "Quebec — Supporting the integration of immigrants in the regions (French only)",
+      "urlFr": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
+      "urlEn": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
+      "pageModified": null,
+      "verifiedAt": "2026-11-02",
+      "nextReview": "2027-02-02"
+    },
     "esdc-refusal": {
       "titleFr": "EDSC — Refus de traiter certaines demandes d'EIMT (RMR à chômage ≥ 6 %)",
       "titleEn": "ESDC — Refusal to process certain LMIA applications (CMAs with unemployment ≥ 6%)",
@@ -958,7 +994,8 @@
         "programs": [
           "RCIP"
         ],
-        "url": "https://pictoucountypartnership.com/rcip/"
+        "url": "https://pictoucountypartnership.com/rcip/",
+        "listPage": "https://pcrcip.ca/employers/"
       },
       {
         "name": "North Bay",
@@ -1000,7 +1037,8 @@
         "programs": [
           "RCIP"
         ],
-        "url": "https://gotothunderbay.ca/why-thunder-bay/immigration/"
+        "url": "https://gotothunderbay.ca/why-thunder-bay/immigration/",
+        "listPage": "https://gotothunderbay.ca/rural-community-immigration-pilot-rcip/"
       },
       {
         "name": "Steinbach",
@@ -1097,6 +1135,572 @@
           "FCIP"
         ],
         "url": "https://www.sdecb.com/en/pilot-program/"
+      }
+    ]
+  },
+  "regions": {
+    "$comment": "Villes et régions où les employeurs peinent à recruter sur place et où un programme officiel ouvre une voie vers la résidence permanente (pilotes PICR/PICRF, REDI de l'Ontario) ou favorise les régions (Québec hors Montréal et Laval). towns : villes interrogées chaque semaine pour les offres (Adzuna, rayon 30 km) ; match : autres noms acceptés dans le lieu de l'annonce (villes voisines, nom de la région chez Adzuna). cma : RMR de lmiaLowWage.cmas (gel éventuel des EIMT bas salaire) ; absent = hors RMR.",
+    "redi": {
+      "source": "ontario-redi",
+      "streamSource": "ontario-oinp-owp",
+      "validTo": "2027-12-31",
+      "teer03": {
+        "clb": 6,
+        "clbSome": 5,
+        "nocExperienceMonths": 24,
+        "employerMonths": 6
+      },
+      "teer45": {
+        "clb": 4,
+        "employerMonths": 9
+      }
+    },
+    "quebec": {
+      "source": "qc-pstq-regions",
+      "integrationSource": "qc-regions-integration"
+    },
+    "places": [
+      {
+        "id": "kenora",
+        "name": "District de Kenora",
+        "province": "ON",
+        "programs": [
+          "REDI"
+        ],
+        "towns": [
+          "Kenora",
+          "Dryden",
+          "Sioux Lookout"
+        ],
+        "match": [
+          "Kenora region",
+          "Red Lake",
+          "Keewatin"
+        ],
+        "url": "https://www.ontario.ca/page/regional-economic-development-through-immigration-redi-initiative"
+      },
+      {
+        "id": "rainy-river",
+        "name": "District de Rainy River",
+        "province": "ON",
+        "programs": [
+          "REDI"
+        ],
+        "towns": [
+          "Fort Frances",
+          "Atikokan"
+        ],
+        "match": [
+          "Rainy River",
+          "Emo"
+        ],
+        "url": "https://www.ontario.ca/page/regional-economic-development-through-immigration-redi-initiative"
+      },
+      {
+        "id": "renfrew",
+        "name": "Comté de Renfrew",
+        "province": "ON",
+        "programs": [
+          "REDI"
+        ],
+        "towns": [
+          "Pembroke",
+          "Petawawa",
+          "Arnprior"
+        ],
+        "match": [
+          "Renfrew",
+          "Deep River"
+        ],
+        "url": "https://www.ontario.ca/page/regional-economic-development-through-immigration-redi-initiative"
+      },
+      {
+        "id": "thunder-bay",
+        "name": "Thunder Bay",
+        "province": "ON",
+        "programs": [
+          "RCIP",
+          "REDI"
+        ],
+        "towns": [
+          "Thunder Bay"
+        ],
+        "match": [
+          "Shuniah",
+          "Murillo",
+          "Kakabeka",
+          "Neebing",
+          "Oliver Paipoonge"
+        ],
+        "community": "Thunder Bay",
+        "url": "https://gotothunderbay.ca/why-thunder-bay/immigration/",
+        "cma": "Thunder Bay"
+      },
+      {
+        "id": "sudbury",
+        "name": "Grand Sudbury",
+        "province": "ON",
+        "programs": [
+          "RCIP",
+          "FCIP",
+          "REDI"
+        ],
+        "towns": [
+          "Sudbury"
+        ],
+        "match": [
+          "Val Caron",
+          "Chelmsford",
+          "Lively",
+          "Azilda",
+          "Hanmer",
+          "Capreol"
+        ],
+        "community": "Sudbury",
+        "url": "https://investsudbury.ca/why-sudbury/newcomers/rcipfcip/",
+        "cma": "Greater Sudbury",
+        "francophone": true
+      },
+      {
+        "id": "north-bay",
+        "name": "North Bay et district de Nipissing",
+        "province": "ON",
+        "programs": [
+          "RCIP",
+          "REDI"
+        ],
+        "towns": [
+          "North Bay",
+          "Sturgeon Falls"
+        ],
+        "match": [
+          "Nipissing",
+          "Mattawa",
+          "Callander"
+        ],
+        "community": "North Bay",
+        "url": "https://nbrcip.ca/"
+      },
+      {
+        "id": "timmins",
+        "name": "Timmins",
+        "province": "ON",
+        "programs": [
+          "RCIP",
+          "FCIP"
+        ],
+        "towns": [
+          "Timmins"
+        ],
+        "match": [
+          "South Porcupine",
+          "Porcupine",
+          "Schumacher"
+        ],
+        "community": "Timmins",
+        "url": "https://timminsedc.com/immigration/",
+        "francophone": true
+      },
+      {
+        "id": "sault-ste-marie",
+        "name": "Sault Ste. Marie",
+        "province": "ON",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Sault Ste. Marie"
+        ],
+        "match": [
+          "Sault Ste Marie",
+          "Sault Sainte Marie"
+        ],
+        "community": "Sault Ste. Marie",
+        "url": "https://welcometossm.com/rcip/"
+      },
+      {
+        "id": "superior-east",
+        "name": "Superior East (Wawa, White River, Chapleau)",
+        "province": "ON",
+        "programs": [
+          "FCIP"
+        ],
+        "towns": [
+          "Wawa",
+          "Chapleau"
+        ],
+        "match": [
+          "White River",
+          "Dubreuilville",
+          "Hornepayne"
+        ],
+        "community": "Superior East",
+        "url": "https://superioreastcfdc.ca/superioreastcfdc.ca/index.php/en-ca/fcip",
+        "francophone": true
+      },
+      {
+        "id": "pictou",
+        "name": "Comté de Pictou",
+        "province": "NS",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "New Glasgow",
+          "Stellarton"
+        ],
+        "match": [
+          "Pictou",
+          "Westville",
+          "Trenton"
+        ],
+        "community": "Pictou County",
+        "url": "https://pictoucountypartnership.com/rcip/"
+      },
+      {
+        "id": "peninsule-acadienne",
+        "name": "Péninsule acadienne",
+        "province": "NB",
+        "programs": [
+          "FCIP"
+        ],
+        "towns": [
+          "Caraquet",
+          "Tracadie",
+          "Shippagan"
+        ],
+        "match": [
+          "Lamèque",
+          "Bas-Caraquet",
+          "Paquetville"
+        ],
+        "community": "Péninsule acadienne",
+        "url": "https://inspirepeninsuleacadienne.ca/programme-pilote-immigration-communautes-francophones/",
+        "francophone": true
+      },
+      {
+        "id": "steinbach",
+        "name": "Steinbach",
+        "province": "MB",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Steinbach"
+        ],
+        "match": [
+          "Hanover",
+          "La Broquerie",
+          "Mitchell",
+          "Blumenort"
+        ],
+        "community": "Steinbach",
+        "url": "https://steinbachedc.com/rcip/"
+      },
+      {
+        "id": "altona",
+        "name": "Altona / Rhineland",
+        "province": "MB",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Altona"
+        ],
+        "match": [
+          "Rhineland",
+          "Gretna",
+          "Plum Coulee"
+        ],
+        "community": "Altona/Rhineland",
+        "url": "https://ared-rpga.com/immigration/rcip/"
+      },
+      {
+        "id": "brandon",
+        "name": "Brandon",
+        "province": "MB",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Brandon"
+        ],
+        "match": [],
+        "community": "Brandon",
+        "url": "https://economicdevelopmentbrandon.com/rcip/rcip"
+      },
+      {
+        "id": "st-pierre-jolys",
+        "name": "St-Pierre-Jolys",
+        "province": "MB",
+        "programs": [
+          "FCIP"
+        ],
+        "towns": [
+          "St. Pierre-Jolys"
+        ],
+        "match": [
+          "Pierre-Jolys",
+          "De Salaberry"
+        ],
+        "community": "St-Pierre-Jolys",
+        "url": "https://villagestpierrejolys.ca/p/francophone-communities-immigration-pilot-program",
+        "francophone": true
+      },
+      {
+        "id": "moose-jaw",
+        "name": "Moose Jaw",
+        "province": "SK",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Moose Jaw"
+        ],
+        "match": [],
+        "community": "Moose Jaw",
+        "url": "https://rcip.mjchamber.com/"
+      },
+      {
+        "id": "claresholm",
+        "name": "Claresholm",
+        "province": "AB",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Claresholm"
+        ],
+        "match": [
+          "Willow Creek",
+          "Stavely",
+          "Granum"
+        ],
+        "community": "Claresholm",
+        "url": "https://claresholm-rcip.ca/"
+      },
+      {
+        "id": "west-kootenay",
+        "name": "West Kootenay (Nelson, Trail, Castlegar)",
+        "province": "BC",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Nelson",
+          "Trail",
+          "Castlegar"
+        ],
+        "match": [
+          "Rossland",
+          "Kootenay",
+          "Salmo",
+          "Kaslo",
+          "Nakusp"
+        ],
+        "community": "West Kootenay",
+        "url": "https://wk-rnip.ca/"
+      },
+      {
+        "id": "north-okanagan-shuswap",
+        "name": "North Okanagan – Shuswap (Vernon, Salmon Arm)",
+        "province": "BC",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Vernon",
+          "Salmon Arm"
+        ],
+        "match": [
+          "Armstrong",
+          "Enderby",
+          "Coldstream",
+          "Shuswap",
+          "Sicamous"
+        ],
+        "community": "North Okanagan Shuswap",
+        "url": "https://rcipnorthokanaganshuswap.com/"
+      },
+      {
+        "id": "peace-liard",
+        "name": "Peace Liard (Fort St. John, Dawson Creek)",
+        "province": "BC",
+        "programs": [
+          "RCIP"
+        ],
+        "towns": [
+          "Fort St. John",
+          "Dawson Creek",
+          "Fort Nelson"
+        ],
+        "match": [
+          "Fort St John",
+          "Fort Saint John",
+          "Chetwynd",
+          "Tumbler Ridge",
+          "Peace River"
+        ],
+        "community": "Peace Liard",
+        "url": "https://www.nebcimmigration.ca/"
+      },
+      {
+        "id": "kelowna",
+        "name": "Kelowna",
+        "province": "BC",
+        "programs": [
+          "FCIP"
+        ],
+        "towns": [
+          "Kelowna"
+        ],
+        "match": [
+          "West Kelowna",
+          "Lake Country"
+        ],
+        "community": "Kelowna",
+        "url": "https://www.sdecb.com/en/pilot-program/",
+        "cma": "Kelowna",
+        "francophone": true,
+        "noteFr": "La communauté demande de ne pas contacter directement ses employeurs désignés : toutes les candidatures passent par sa page « Pilot program ».",
+        "noteEn": "The community asks candidates not to contact its designated employers directly: all applications go through its “Pilot program” page."
+      },
+      {
+        "id": "abitibi",
+        "name": "Abitibi-Témiscamingue",
+        "province": "QC",
+        "programs": [
+          "QC"
+        ],
+        "towns": [
+          "Rouyn-Noranda",
+          "Val-d'Or",
+          "Amos"
+        ],
+        "match": [
+          "Abitibi",
+          "Témiscamingue",
+          "Vallée-de-l'Or",
+          "La Sarre",
+          "Ville-Marie",
+          "Malartic"
+        ],
+        "url": "https://www.quebec.ca/gouvernement/ministeres-organismes/immigration/publications/abitibi-temiscamingue",
+        "francophone": true
+      },
+      {
+        "id": "saguenay",
+        "name": "Saguenay–Lac-Saint-Jean",
+        "province": "QC",
+        "programs": [
+          "QC"
+        ],
+        "towns": [
+          "Saguenay",
+          "Alma",
+          "Roberval"
+        ],
+        "match": [
+          "Chicoutimi",
+          "Jonquière",
+          "La Baie",
+          "Lac-Saint-Jean",
+          "Dolbeau",
+          "Saint-Félicien",
+          "Fjord-du-Saguenay"
+        ],
+        "url": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
+        "cma": "Saguenay",
+        "francophone": true
+      },
+      {
+        "id": "cote-nord",
+        "name": "Côte-Nord",
+        "province": "QC",
+        "programs": [
+          "QC"
+        ],
+        "towns": [
+          "Baie-Comeau",
+          "Sept-Îles"
+        ],
+        "match": [
+          "Manicouagan",
+          "Sept-Rivières",
+          "Port-Cartier",
+          "Minganie",
+          "Forestville",
+          "Havre-Saint-Pierre",
+          "Fermont"
+        ],
+        "url": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
+        "francophone": true
+      },
+      {
+        "id": "bas-saint-laurent",
+        "name": "Bas-Saint-Laurent",
+        "province": "QC",
+        "programs": [
+          "QC"
+        ],
+        "towns": [
+          "Rimouski",
+          "Rivière-du-Loup",
+          "Matane"
+        ],
+        "match": [
+          "Bas-Saint-Laurent",
+          "Amqui",
+          "Mont-Joli",
+          "Témiscouata",
+          "La Matapédia"
+        ],
+        "url": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
+        "francophone": true
+      },
+      {
+        "id": "gaspesie",
+        "name": "Gaspésie–Îles-de-la-Madeleine",
+        "province": "QC",
+        "programs": [
+          "QC"
+        ],
+        "towns": [
+          "Gaspé",
+          "Sainte-Anne-des-Monts"
+        ],
+        "match": [
+          "Gaspésie",
+          "Côte-de-Gaspé",
+          "Chandler",
+          "New Richmond",
+          "Bonaventure",
+          "Carleton-sur-Mer",
+          "Percé",
+          "Îles-de-la-Madeleine"
+        ],
+        "url": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
+        "francophone": true
+      },
+      {
+        "id": "nord-du-quebec",
+        "name": "Nord-du-Québec (Chibougamau)",
+        "province": "QC",
+        "programs": [
+          "QC"
+        ],
+        "towns": [
+          "Chibougamau"
+        ],
+        "match": [
+          "Chapais",
+          "Lebel-sur-Quévillon",
+          "Matagami",
+          "Nord-du-Québec",
+          "Jamésie"
+        ],
+        "url": "https://www.quebec.ca/gouvernement/politiques-orientations/integration-personnes-immigrantes-societe-quebecoise/favoriser-integration-personnes-immigrantes-region",
+        "francophone": true
       }
     ]
   },
@@ -1409,6 +2013,9 @@
       "pilotes-communautaires": { "required": true, "source": "ircc-fcip-eligibility",
         "noteFr": "Résidence permanente : une évaluation linguistique approuvée (test) est obligatoire.",
         "noteEn": "Permanent residence: an approved language assessment (test) is mandatory." },
+      "ontario-redi": { "required": true, "source": "ontario-oinp-owp",
+        "noteFr": "Programme de l'Ontario puis résidence permanente : un test de langue approuvé est obligatoire.",
+        "noteEn": "Ontario's program, then permanent residence: an approved language test is mandatory." },
       "pilotes-aides-familiaux": { "required": true, "source": "ircc-hcwp",
         "noteFr": "Résidence permanente : un test de langue approuvé est obligatoire (programme fermé aux nouvelles demandes).",
         "noteEn": "Permanent residence: an approved language test is mandatory (program closed to new applications)." }
@@ -1534,6 +2141,14 @@
     "MB": "licence-securite-mb"
   },
   "changes": [
+    {
+      "date": "2026-10-14",
+      "source": "ontario-redi",
+      "titleFr": "Ontario : nouvelle ronde du programme régional REDI (Kenora, Rainy River, Renfrew, Nipissing, Sudbury, Thunder Bay)",
+      "titleEn": "Ontario: new round of the regional REDI initiative (Kenora, Rainy River, Renfrew, Nipissing, Sudbury, Thunder Bay)",
+      "detailFr": "Jusqu'à fin 2027, des places de candidats de l'Ontario sont réservées à ces 6 territoires. Pas de demande séparée : il faut remplir les conditions du volet Ontario Workforce Priority (offre d'emploi permanente à temps plein).",
+      "detailEn": "Until the end of 2027, Ontario nominee spaces are set aside for these 6 areas. No separate application: you must meet the Ontario Workforce Priority stream requirements (full-time permanent job offer)."
+    },
     {
       "date": "2026-10-09",
       "source": "esdc-refusal",

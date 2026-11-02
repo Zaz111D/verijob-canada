@@ -6,6 +6,7 @@
  * Toutes les valeurs réglementaires viennent de data/rules.json.
  */
 import { locateWorkplace, PROVINCE_NAMES, type CmaLookup } from '../geo';
+import { placeOf } from '../regions';
 import { findNoc, isPrimaryAgriculture, nocLabel, probableRmrExemption, teerOf } from '../noc';
 import { sourceRef, todayIso, uniqueSources } from '../sources';
 import { formatCad, formatDate } from '../text';
@@ -17,7 +18,8 @@ export type PathwayId =
   | 'ptas'
   | 'mobilite-francophone'
   | 'pilotes-aides-familiaux'
-  | 'pilotes-communautaires';
+  | 'pilotes-communautaires'
+  | 'ontario-redi';
 
 export type PathwayStatus = 'probable' | 'possible' | 'bloquee' | 'inconnue';
 
@@ -61,6 +63,7 @@ export const PATHWAY_NAMES: Record<PathwayId, Localized> = {
   'mobilite-francophone': { fr: 'Mobilité francophone (permis sans EIMT)', en: 'Francophone Mobility (LMIA-exempt permit)' },
   'pilotes-aides-familiaux': { fr: 'Projets pilotes aides familiaux (résidence permanente)', en: 'Home Care Worker Pilots (permanent residence)' },
   'pilotes-communautaires': { fr: 'Pilotes communautaires rural (PICR) et francophone (PICRF)', en: 'Rural (RCIP) and Francophone (FCIP) Community Pilots' },
+  'ontario-redi': { fr: 'Ontario – programme régional REDI (résidence permanente)', en: 'Ontario – REDI regional initiative (permanent residence)' },
 };
 
 const STATUS_ORDER: Record<PathwayStatus, number> = { probable: 0, possible: 1, inconnue: 2, bloquee: 3 };
@@ -79,6 +82,7 @@ export function evaluatePathways(profile: Profile, job: JobContext, opts: Evalua
   results.push(francophoneMobility(ctx));
   if (opts.rules.homeCareWorkerPilots.nocs.includes(job.noc)) results.push(homeCarePilots(ctx));
   results.push(communityPilots(ctx));
+  if (!job.province || job.province === 'ON') results.push(ontarioRedi(ctx));
 
   return results.sort((a, b) => STATUS_ORDER[a.statut] - STATUS_ORDER[b.statut]);
 }
@@ -448,6 +452,67 @@ function communityPilots(ctx: Ctx): PathwayResult {
     en: 'You also need an education credential (or equivalency), settlement funds and the community’s recommendation.',
   });
   return result(ctx, 'pilotes-communautaires', statut, raisons, sourceIds);
+}
+
+/**
+ * Ontario — REDI : places du programme de l'Ontario (OINP) réservées à 6 territoires (Kenora, Thunder Bay…).
+ * Pas de demande séparée : conditions du volet Ontario Workforce Priority (offre permanente à temps plein).
+ */
+function ontarioRedi(ctx: Ctx): PathwayResult {
+  const { rules, job, profile } = ctx;
+  const redi = rules.regions.redi;
+  const ids = [redi.source, redi.streamSource];
+  const areas = rules.regions.places.filter((p) => p.programs.includes('REDI'));
+  const names = areas.map((p) => p.name).join(', ');
+  const raisons: Localized[] = [{
+    fr: `Seulement pour un emploi permanent à temps plein dans l'un de ces territoires : ${names}. Pas de demande séparée : c'est le programme de l'Ontario (OINP, volet « Ontario Workforce Priority »), jusqu'au ${formatDate(redi.validTo, 'fr')}.`,
+    en: `Only for a full-time permanent job in one of these areas: ${names}. No separate application: it goes through Ontario's program (OINP, Ontario Workforce Priority stream), until ${formatDate(redi.validTo, 'en')}.`,
+  }];
+  if (ctx.today > redi.validTo) {
+    return result(ctx, 'ontario-redi', 'bloquee', [{ fr: `Cette ronde du programme REDI a pris fin le ${formatDate(redi.validTo, 'fr')}.`, en: `This round of REDI ended on ${formatDate(redi.validTo, 'en')}.` }], ids);
+  }
+  let statut: PathwayStatus = 'possible';
+  if (job.city && job.province === 'ON' && !areas.includes(placeOf(rules, job.city, 'ON')!)) {
+    statut = 'inconnue';
+    raisons.push({ fr: `${job.city} ne semble pas faire partie de ces territoires : vérifiez les limites sur ontario.ca.`, en: `${job.city} does not seem to be in these areas: check the boundaries on ontario.ca.` });
+  }
+  const best = Math.max(minAllSkills(profile.french) ?? -1, minAllSkills(profile.english) ?? -1);
+  const lang = (min: number, low = min) => {
+    if (best < 0) {
+      if (statut === 'possible') statut = 'inconnue';
+      raisons.push({ fr: `Langue : NCLC/CLB ${min} dans les 4 compétences, en français ou en anglais (test approuvé).`, en: `Language: CLB/NCLC ${min} in all 4 abilities, in English or French (approved test).` });
+    } else if (best < low) {
+      statut = 'bloquee';
+      raisons.push({ fr: `Langue : votre meilleur niveau (${best}) est sous le minimum ${low}.`, en: `Language: your best level (${best}) is below the minimum ${low}.` });
+    } else if (best < min) {
+      raisons.push({ fr: `Langue : votre niveau (${best}) suffit seulement pour certains métiers (${low}) ; la règle générale est ${min}.`, en: `Language: your level (${best}) is only enough for some occupations (${low}); the general rule is ${min}.` });
+    } else {
+      raisons.push({ fr: `Langue : votre niveau (${best}) atteint le minimum ${min}.`, en: `Language: your level (${best}) meets the minimum ${min}.` });
+    }
+  };
+
+  if (ctx.teer <= 3) {
+    const t = redi.teer03;
+    lang(t.clb, t.clbSome);
+    const years = t.nocExperienceMonths / 12;
+    if (profile.experienceMonths === undefined || profile.experienceMonths < t.nocExperienceMonths) {
+      raisons.push({
+        fr: `Expérience : ${years} ans dans ce métier au cours des 5 dernières années${profile.experienceMonths !== undefined ? ` (vous : ${profile.experienceMonths} mois)` : ''}, ou ${t.employerMonths} mois de suite chez l'employeur qui fait l'offre — dans ce cas, venez d'abord avec un permis de travail.`,
+        en: `Experience: ${years} years in this occupation in the last 5 years${profile.experienceMonths !== undefined ? ` (you: ${profile.experienceMonths} months)` : ''}, or ${t.employerMonths} consecutive months with the employer making the offer — in that case, come first with a work permit.`,
+      });
+    } else {
+      raisons.push({ fr: `Expérience : vos ${profile.experienceMonths} mois atteignent les ${years} ans demandés dans le métier.`, en: `Experience: your ${profile.experienceMonths} months meet the ${years} years required in the occupation.` });
+    }
+    raisons.push({ fr: 'Il faut aussi un diplôme postsecondaire (collège ou université).', en: 'You also need a post-secondary degree or diploma.' });
+  } else {
+    const t = redi.teer45;
+    lang(t.clb);
+    raisons.push({
+      fr: `Métier TEER 4-5 : il faut déjà avoir travaillé ${t.employerMonths} mois (sur les 2 dernières années) chez l'employeur qui fait l'offre. Venez d'abord avec un permis de travail (EIMT ou Mobilité francophone), puis demandez la résidence permanente par ce programme. Diplôme d'études secondaires (ou équivalent) exigé.`,
+      en: `TEER 4-5 occupation: you must already have worked ${t.employerMonths} months (in the last 2 years) for the employer making the offer. Come first with a work permit (LMIA or Francophone Mobility), then apply for permanent residence through this program. Secondary school diploma (or equivalent) required.`,
+    });
+  }
+  return result(ctx, 'ontario-redi', statut, raisons, ids);
 }
 
 /** Libellé d'un métier pour l'affichage (réexport pratique). */

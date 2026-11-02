@@ -39,6 +39,31 @@ export interface Community {
   province: ProvinceCode;
   programs: Array<'RCIP' | 'FCIP'>;
   url: string;
+  /** Page qui publie la liste des employeurs désignés, si ce n'est pas la page de la communauté. */
+  listPage?: string;
+}
+
+/** RCIP / FCIP : pilotes fédéraux ; REDI : programme régional de l'Ontario ; QC : régions du Québec hors Montréal et Laval. */
+export type RegionProgram = 'RCIP' | 'FCIP' | 'REDI' | 'QC';
+
+export interface RegionPlace {
+  id: string;
+  name: string;
+  province: ProvinceCode;
+  programs: RegionProgram[];
+  /** Villes interrogées chaque semaine pour les offres. */
+  towns: string[];
+  /** Autres noms acceptés dans le lieu d'une annonce (villes voisines, nom de la région). */
+  match: string[];
+  /** Page officielle (communauté, Ontario ou Québec). */
+  url: string;
+  /** Nom de la communauté dans communityPilots.communities (employeurs désignés). */
+  community?: string;
+  /** RMR (lmiaLowWage.cmas) ; absent = hors RMR. */
+  cma?: string;
+  francophone?: boolean;
+  noteFr?: string;
+  noteEn?: string;
 }
 
 export interface Rules {
@@ -101,6 +126,19 @@ export interface Rules {
     fcip: { source: string; minNclcAllTeer: number; languages: string[] };
     minExperienceHours: number;
     communities: Community[];
+  };
+  /** Villes et régions qui peinent à recruter, avec un programme d'immigration régional (onglet « Régions »). */
+  regions: {
+    redi: {
+      source: string;
+      /** Volet de l'OINP par lequel passent les candidats REDI. */
+      streamSource: string;
+      validTo: string;
+      teer03: { clb: number; clbSome: number; nocExperienceMonths: number; employerMonths: number };
+      teer45: { clb: number; employerMonths: number };
+    };
+    quebec: { source: string; integrationSource: string };
+    places: RegionPlace[];
   };
   authorizedRepresentatives: {
     source: string;

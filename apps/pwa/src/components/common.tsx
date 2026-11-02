@@ -8,8 +8,8 @@ import { rules } from '../data';
 import { ActiveProfileChip } from './Profiles';
 import { setLang, STRINGS as S, tr, useLang } from '../i18n';
 
-export type Route = 'accueil' | 'offre' | 'employeur' | 'emplois' | 'demarcher' | 'suivi' | 'consultant' | 'profil' | 'veille' | 'cv' | 'cv-exemple' | 'postuler';
-const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'emplois', 'demarcher', 'suivi', 'consultant', 'profil', 'veille', 'cv', 'cv-exemple', 'postuler'];
+export type Route = 'accueil' | 'offre' | 'employeur' | 'emplois' | 'demarcher' | 'suivi' | 'consultant' | 'profil' | 'veille' | 'cv' | 'cv-exemple' | 'postuler' | 'regions';
+const ROUTES: Route[] = ['accueil', 'offre', 'employeur', 'emplois', 'demarcher', 'suivi', 'consultant', 'profil', 'veille', 'cv', 'cv-exemple', 'postuler', 'regions'];
 
 /** Routage par « #/page » : fonctionne sur tout hébergement statique. */
 export function useRoute(): Route {
@@ -40,6 +40,7 @@ const NAV: Array<{ route: Route; label: keyof typeof S; icon: string }> = [
   { route: 'accueil', label: 'navHome', icon: '⌂' },
   { route: 'offre', label: 'navOffer', icon: '✉' },
   { route: 'postuler', label: 'navApply', icon: '➤' },
+  { route: 'regions', label: 'navRegions', icon: '❄' },
   { route: 'emplois', label: 'navJobs', icon: '◎' },
   { route: 'demarcher', label: 'navProspects', icon: '✎' },
   { route: 'suivi', label: 'navTracking', icon: '☰' },
