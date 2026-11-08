@@ -29,6 +29,10 @@ describe('offres des régions (Adzuna) : annonce → offre publiée', () => {
     expect(o).toMatchObject({ place: 'kenora', province: 'ON', company: 'Lakeside Inn', date: '2026-10-30' });
     expect(toRegionOffer(job({ title: 'Security Guard' }), ctx)!.noc).toBe('64410');
   });
+  it('Terre-Neuve : Adzuna écrit « Newfoundland » seul pour la province', () => {
+    const o = toRegionOffer(job({ location: { display_name: 'Gander, Gander region', area: ['Canada', 'Newfoundland', 'Gander region', 'Gander'] } }), ctx)!;
+    expect(o).toMatchObject({ place: 'nl-centre', province: 'NL' });
+  });
   it('écarte une annonce hors des régions (ville inconnue d’Adzuna → résultats d’ailleurs)', () => {
     expect(toRegionOffer(job({ location: { display_name: 'Toronto, Ontario', area: ['Canada', 'Ontario', 'Toronto'] } }), ctx)).toBeNull();
     expect(toRegionOffer(job({ location: { display_name: 'Trenton, Quinte West', area: ['Canada', 'Ontario', 'Quinte West', 'Trenton'] } }), ctx)).toBeNull();

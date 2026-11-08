@@ -20,7 +20,15 @@ const provinceByName = new Map<string, ProvinceCode>(
 );
 /** L'API renvoie parfois des balises <strong> autour des mots trouvés. */
 export const clean = (s = '') => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
-export const provinceOf = (j: AdzunaJob) => (j.location?.area ?? []).map((a) => provinceByName.get(normalize(a))).find(Boolean);
+export const provinceOf = (j: AdzunaJob): ProvinceCode | undefined => {
+  const area = j.location?.area ?? [];
+  const exact = area.map((a) => provinceByName.get(normalize(a))).find(Boolean);
+  if (exact || !area[1]) return exact;
+  // Adzuna écrit parfois la province autrement (Terre-Neuve : « Newfoundland » seul, vu le 2 nov. 2026) :
+  // motifs des noms de province, sur le 2e niveau seulement (la province).
+  const level = normalize(area[1]);
+  return (Object.entries(PROVINCE_NAMES) as Array<[ProvinceCode, { patterns: string[] }]>).find(([, p]) => p.patterns.some((pat) => level.includes(pat)))?.[0];
+};
 
 /** Champs communs d'une annonce, prêts à publier. */
 export function baseOffer(j: AdzunaJob) {
