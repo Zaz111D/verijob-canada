@@ -58,11 +58,11 @@ export function adzunaClient(keys: { id: string; key: string }) {
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
   return {
     get count() { return count; },
-    async search(params: Record<string, string>): Promise<{ results: AdzunaJob[]; total: number }> {
+    async search(params: Record<string, string>, page = 1): Promise<{ results: AdzunaJob[]; total: number }> {
       const q = new URLSearchParams({ app_id: keys.id, app_key: keys.key, sort_by: 'date', 'content-type': 'application/json', ...params });
       if (count) await sleep(PAUSE_MS);
       count++;
-      const res = await fetch(`${ADZUNA_API}1?${q}`, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
+      const res = await fetch(`${ADZUNA_API}${page}?${q}`, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' } });
       if (!res.ok) throw new Error(`Adzuna : HTTP ${res.status} (${params.what ?? params.what_phrase ?? ''})`);
       const body = (await res.json()) as { results?: AdzunaJob[]; count?: number };
       return { results: body.results ?? [], total: body.count ?? 0 };

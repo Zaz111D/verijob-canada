@@ -9,6 +9,7 @@ name: Données et déploiement
 on:
   schedule:
     - cron: '0 6 * * 1' # chaque lundi à 6 h UTC
+    - cron: '0 6 * * 4' # chaque jeudi : tracker international seulement (ADZUNA_REFRESH=international)
   push:
     branches: [main]
   workflow_dispatch:
@@ -51,7 +52,24 @@ jobs:
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           # Quota gratuit : l'API Adzuna n'est appelée que le lundi (ou lancement manuel) ; à chaque envoi de code,
           # les offres déjà publiées sont reprises (scripts/lib/previous.ts).
-          ADZUNA_REFRESH: ${{ github.event_name != 'push' }}
+          # Jeudi : seulement le tracker international (2e mise à jour de la semaine, quota respecté).
+          ADZUNA_REFRESH: ${{ github.event_name == 'push' && 'false' || (github.event.schedule == '0 6 * * 4' && 'international' || 'true') }}
+      # Mise à jour automatique (lundi, jeudi) : le rapport de données est enregistré dans le dépôt. Ce commit
+      # déclenche la reconstruction Cloudflare (qui ne suit que les envois sur main) ; la release publiée plus bas
+      # porte ce commit, que Cloudflare attend. Sans cela, les données du lundi n'arrivaient en ligne qu'au prochain
+      # envoi de code (constaté le 13 nov. 2026). Le commit de GITHUB_TOKEN ne relance pas ce workflow.
+      - name: Enregistrer le rapport de données (met le site à jour sur Cloudflare)
+        id: data_commit
+        if: github.event_name != 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data-report.md
+          if git commit -q -m "Données du $(date -u +%Y-%m-%d) (mise à jour automatique)" && git push -q origin HEAD:main; then
+            echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          else
+            echo "Rapport inchangé ou envoi impossible : la release gardera le commit $GITHUB_SHA."
+          fi
       - name: Construction de la PWA
         run: |
           node scripts/make-icons.mjs
@@ -62,9 +80,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
+          DATA_SHA: ${{ steps.data_commit.outputs.sha }}
         run: |
           # Commit construit : Cloudflare attend que la release corresponde à son propre commit.
-          printf '{"commit":"%s","builtAt":"%s"}\n' "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > apps/pwa/dist/build-info.json
+          printf '{"commit":"%s","builtAt":"%s"}\n' "${DATA_SHA:-$GITHUB_SHA}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > apps/pwa/dist/build-info.json
           (cd apps/pwa/dist && zip -qr "$GITHUB_WORKSPACE/site.zip" .)
           gh release view site-latest >/dev/null 2>&1 || gh release create site-latest --title "Site construit (automatique)" --notes "Mis à jour par le workflow « Données et déploiement ». Utilisé par Cloudflare." --latest=false
           gh release upload site-latest site.zip --clobber

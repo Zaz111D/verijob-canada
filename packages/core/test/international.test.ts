@@ -62,3 +62,12 @@ describe('Offres ouvertes aux candidats de l’étranger', () => {
     expect(classifyInternational('Poste avec EIMT approuvée.').evidence[0]).toBe('Poste avec EIMT approuvée.');
   });
 });
+
+describe('faux positifs vus le 9 nov. 2026', () => {
+  it('refus de parrainage formulé longuement → écartée', () => {
+    expect(classifyInternational('Rentokil Terminix does not provide Labour Market Impact Assessment (LMIA) sponsorship, work permit support, or permanent residency support.').status).toBe('ferme');
+  });
+  it('visas américains (TN, EB-3) → pas une ouverture pour le Canada', () => {
+    expect(classifyInternational('Elite365 offers TN and/or EB3 visa sponsorship and will match you to one of our openings.').status).toBe('ferme');
+  });
+});

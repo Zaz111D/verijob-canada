@@ -8,6 +8,7 @@ import { changeLog, formatDate, programStatuses, sourceRef, upcomingDates } from
 import { Badge, Sources } from '../components/common';
 import { ExpressEntryRounds, IrccNews } from '../components/LiveUpdates';
 import { OpenEventsBanner, useEventsStatus } from '../components/EventsStatus';
+import { ProvinceWatch } from '../components/ProvinceWatch';
 import { loadDesignated, loadEmployersIndex, loadProposalsStatus, rules, type ProposalStatus } from '../data';
 import { STRINGS as S, tr, useLang } from '../i18n';
 
@@ -43,6 +44,7 @@ export function Watch() {
         : <p class="ok">{tr(S.noStale, lang)}</p>}
 
       <OpenEvents lang={lang} />
+      <ProvinceWatch lang={lang} />
 
       {rules.proposals.length > 0 && (
         <>

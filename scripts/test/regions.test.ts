@@ -69,3 +69,15 @@ describe('contrôle des listes d’employeurs désignés', () => {
     expect(ontarioUpdated('<p>Published</p>')).toBeUndefined();
   });
 });
+
+describe('tracker international : historique', () => {
+  it('garde la date de première apparition, retire après 60 jours', async () => {
+    const { mergeHistory } = await import('../fetch-international');
+    const o = (id: string, extra: Record<string, string> = {}) => ({ id, date: '2026-10-01', ...extra }) as never;
+    const out = mergeHistory([o('a'), o('b')], [o('a', { firstSeen: '2026-10-05', lastSeen: '2026-10-29' }), o('c', { firstSeen: '2026-10-01', lastSeen: '2026-10-29' }), o('vieux', { lastSeen: '2026-08-01' })], '2026-11-09') as Array<{ id: string; firstSeen: string; lastSeen: string }>;
+    expect(out.map((x) => x.id)).toEqual(['a', 'b', 'c']);
+    expect(out[0]).toMatchObject({ firstSeen: '2026-10-05', lastSeen: '2026-11-09' });
+    expect(out[1]).toMatchObject({ firstSeen: '2026-11-09' });
+    expect(out[2]).toMatchObject({ lastSeen: '2026-10-29' }); // plus vue cette semaine, gardée
+  });
+});

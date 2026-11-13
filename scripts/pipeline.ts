@@ -21,6 +21,7 @@ import { fetchCurrentOffers, OTHER_LEVEL, queryKeys, type CurrentOffersStats } f
 import { fetchRegionOffers, regionQueryKeys, type RegionOffersStats } from './fetch-region-offers';
 import { checkRegionSources, type RegionsStatusStats } from './check-region-lists';
 import { checkEvents, type EventsStats } from './check-events';
+import { fetchAaipDraws } from './fetch-aaip-draws';
 import { fetchPostings, type PostingsStats } from './fetch-postings';
 import { fetchGeo, type GeoStats } from './fetch-geo';
 import { fetchLmia, type LmiaStats } from './fetch-lmia';
@@ -72,6 +73,12 @@ try { events = await checkEvents(rules, today); } catch (e) {
   events = { error: e instanceof Error ? e.message : String(e) };
   console.warn(`  ⚠ Salons non vérifiés : ${events.error}`);
 }
+// Alberta : tirages du programme (volet rural surtout). Non bloquant.
+let aaip: Awaited<ReturnType<typeof fetchAaipDraws>> | { error: string };
+try { aaip = await fetchAaipDraws(rules); } catch (e) {
+  aaip = { error: e instanceof Error ? e.message : String(e) };
+  console.warn(`  ⚠ Tirages de l'Alberta non lus : ${aaip.error}`);
+}
 let permits: PermitsStats | { error: string };
 try { permits = await fetchPermits(); } catch (e) {
   permits = { error: e instanceof Error ? e.message : String(e) };
@@ -82,10 +89,17 @@ try { permits = await fetchPermits(); } catch (e) {
 // les offres déjà publiées (avec leur vraie date).
 type Reused = { reused: string; records: number; error?: string };
 const refreshAdzuna = process.env.ADZUNA_REFRESH === 'true';
+/** Au-delà, les offres publiées sont rafraîchies même lors d'un envoi de code (mise à jour du lundi manquée). */
+const STALE_DAYS = 7;
+// Jeudi : seulement le tracker international (2e mise à jour de la semaine), les autres offres sont reprises.
+const refreshOnly = process.env.ADZUNA_REFRESH === 'international' ? 'international-offers.json' : undefined;
 async function adzunaStep<T>(file: string, label: string, run: () => Promise<T>): Promise<T | Reused | { error: string }> {
-  if (!refreshAdzuna) {
+  if (!refreshAdzuna && file !== refreshOnly) {
     const prev = await reusePrevious(file);
-    if (prev) { console.log(`▶ ${label} : version publiée reprise (données du ${prev.fetchedAt}, ${prev.records} offres) — API appelée seulement le lundi`); return { reused: prev.fetchedAt, records: prev.records }; }
+    // Version publiée de plus de STALE_DAYS jours (mise à jour du lundi manquée) : on interroge l'API tout de suite.
+    if (prev && Date.parse(today) - Date.parse(prev.fetchedAt) > STALE_DAYS * 86_400_000) {
+      console.log(`▶ ${label} : version publiée du ${prev.fetchedAt}, trop ancienne — nouvelle interrogation`);
+    } else if (prev) { console.log(`▶ ${label} : version publiée reprise (données du ${prev.fetchedAt}, ${prev.records} offres) — API appelée seulement le lundi`); return { reused: prev.fetchedAt, records: prev.records }; }
   }
   try { return await run(); } catch (e) {
     const error = e instanceof Error ? e.message : String(e);
@@ -258,11 +272,11 @@ ${pr.error ? `⚠ Non vérifiées : ${pr.error}` : `- ${pr.checked} page(s) vér
 
 ## 12. Régions (Kenora, pilotes PICR / PICRF, Québec en région)
 
-- Offres des villes en région (API Adzuna) : ${'reused' in ro ? `version publiée gardée (données du ${ro.reused}, ${n(ro.records)} offres)${ro.error ? ` — ⚠ échec de l'API : ${ro.error}` : ''}` : 'error' in ro ? `⚠ non mises à jour : ${ro.error}` : ro.skipped ? `étape sautée : ${ro.skipped}` : `${ro.queries} requêtes, ${n(ro.seen)} annonces lues, **${n(ro.kept)} gardées**`}.
+- Offres des villes en région (API Adzuna) : ${'reused' in ro ? `version publiée gardée (données du ${ro.reused}, ${n(ro.records)} offres)${ro.error ? ` — ⚠ échec de l'API : ${ro.error}` : ''}` : 'error' in ro ? `⚠ non mises à jour : ${ro.error}` : ro.skipped ? `étape sautée : ${ro.skipped}` : `${ro.queries} requêtes, ${n(ro.seen)} annonces lues, **${n(ro.kept)} gardées**${ro.failed ? ` — ⚠ ${ro.failed} ville(s) en échec (offres de la semaine précédente gardées)` : ''}`}.
 - Sources contrôlées : ${'error' in rs ? `⚠ non fait : ${rs.error}` : `${rs.checked}. ${rs.changed.length ? `**⚠ Liste ou page changée : ${rs.changed.join(', ')} — relever la nouvelle liste (data/manual/designated-employers.csv) ou relire la page, puis mettre à jour rules.json.**` : 'Aucun changement repéré.'}`}
 
 ## 13. Salons de recrutement
 
-${'error' in ev ? `⚠ Non vérifiés : ${ev.error}` : `- ${ev.checked} salon(s) vérifié(s). Inscriptions ouvertes : ${ev.open.join(', ') || 'aucun'}.${ev.toCheck.length ? ` **⚠ Page changée, à relire : ${ev.toCheck.join(', ')} (mettre à jour rules.json › opportunities.events).**` : ''}`}
+${'error' in aaip ? `- Tirages de l'Alberta : ⚠ non lus (${aaip.error})\n\n` : `- Tirages de l'Alberta : ${aaip.draws}, le plus récent le ${aaip.latest}.\n\n`}${'error' in ev ? `⚠ Non vérifiés : ${ev.error}` : `- ${ev.checked} salon(s) vérifié(s). Inscriptions ouvertes : ${ev.open.join(', ') || 'aucun'}.${ev.toCheck.length ? ` **⚠ Page changée, à relire : ${ev.toCheck.join(', ')} (mettre à jour rules.json › opportunities.events).**` : ''}`}
 `;
 }

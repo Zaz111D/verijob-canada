@@ -14,6 +14,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { adzunaClient, adzunaKeys, baseOffer, clean, type AdzunaJob } from './lib/adzuna';
 import { OUT_DIR } from './lib/paths';
+import { readPrevious } from './lib/previous';
 import { writeDataFile, type WrittenFile } from './lib/output';
 
 const MAX_DAYS_OLD = 30;
@@ -25,7 +26,7 @@ const SNIPPET = 220;
 /** Garde-fou : le quota gratuit d'Adzuna est de 250 appels par jour, et le lundi compte déjà ≈ 120 appels pour les autres étapes. */
 const MAX_QUERIES = 100;
 
-export interface RegionOffersStats { queries: number; seen: number; kept: number; skipped?: string; file?: WrittenFile }
+export interface RegionOffersStats { queries: number; seen: number; kept: number; failed?: number; skipped?: string; file?: WrittenFile }
 
 /** Requêtes : « kenora:Dryden ». */
 export function regionQueryKeys(rules: Rules): string[] {
@@ -83,14 +84,29 @@ export async function fetchRegionOffers(
   const offers = new Map<string, RegionOffer>((opts.base?.offers ?? []).map((o) => [o.id, o]));
   let seen = 0;
   const wanted = (opts.onlyKeys ?? regionQueryKeys(rules)).slice(0, MAX_QUERIES);
+  const failed: string[] = [];
   for (const key of wanted) {
     const town = key.slice(key.indexOf(':') + 1);
-    const { results } = await api.search({ where: town, distance: String(DISTANCE_KM), max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE) });
+    let results: AdzunaJob[];
+    try {
+      ({ results } = await api.search({ where: town, distance: String(DISTANCE_KM), max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE) }));
+    } catch (e) {
+      // Une ville en échec (quota, panne) n'annule pas les autres : ses offres de la semaine précédente sont gardées.
+      failed.push(key);
+      console.warn(`  ⚠ ${key} : ${e instanceof Error ? e.message : String(e)}`);
+      continue;
+    }
     seen += results.length;
     for (const j of results) {
       const o = toRegionOffer(j, { rules, nocData, intlIds });
       if (o && !offers.has(o.id)) offers.set(o.id, o);
     }
+  }
+  if (failed.length === wanted.length && wanted.length) throw new Error(`toutes les requêtes ont échoué (${failed.length})`);
+  if (failed.length) {
+    const places = new Set(failed.map((k) => k.slice(0, k.indexOf(':'))));
+    const previous = opts.base?.offers ?? (await readPrevious<RegionOffer[]>('region-offers.json'))?.data ?? [];
+    for (const o of previous) if (places.has(o.place) && !offers.has(o.id)) offers.set(o.id, o);
   }
   const list = capPerPlace([...offers.values()]);
   const file = writeDataFile('region-offers.json', {
@@ -101,6 +117,6 @@ export async function fetchRegionOffers(
     // Villes déjà interrogées : une ville ajoutée plus tard sera interrogée dès l'envoi de code suivant.
     keys: [...new Set([...(opts.base?.keys ?? []), ...wanted])].sort(),
   }, list.length, list);
-  console.log(`  ${api.count} requêtes, ${seen} annonces lues, ${list.length} gardées (lieu dans une région de la liste)`);
-  return { queries: api.count, seen, kept: list.length, file };
+  console.log(`  ${api.count} requêtes, ${seen} annonces lues, ${list.length} gardées (lieu dans une région de la liste)${failed.length ? `, ${failed.length} en échec` : ''}`);
+  return { queries: api.count, seen, kept: list.length, failed: failed.length, file };
 }

@@ -52,7 +52,9 @@ const CLOSED = [
   /\b(authori[sz]ed|eligible|entitled)\s+to work in the (united states|us|u\.s\.)\b/,
   /\bsans\s+(aucun\s+)?parrainage\b/,
   /\bnot\s+(a|an)\s+(lmia|eimt)\b|\b(lmia|eimt)\s+not\s+(available|offered|supported|provided)\b/,
-  /\b(do not|don't|does not|doesn't|cannot|can't|will not|won't|unable to|not able to)\s+(offer|provide|support|sponsor|assist with)\b[^.!?\n]{0,30}\b(lmia|eimt|sponsor\w*|work permits?|visas?)\b/,
+  /\b(do not|don't|does not|doesn't|cannot|can't|will not|won't|unable to|not able to)\s+(offer|provide|support|sponsor|assist with)\b[^.!?\n]{0,60}\b(lmia|eimt|labour market impact assessment|sponsor\w*|work permits?|visas?)\b/,
+  // Visas AMÉRICAINS (TN, EB-3, H-1B, H-2B) : l'offre vise les États-Unis, pas un permis canadien (vu le 9 nov. 2026).
+  /\b(tn|eb-?3|h-?1b|h-?2b)\b[^.!?\n]{0,40}\b(visa|sponsorship)\b/,
   /\b(n'offr|ne (pouvons|peut) pas|n'appuy)\w*\b[^.!?\n]{0,30}\b(eimt|parrainage|permis de travail)\b/,
   /\bno\s+(lmia|eimt)\b|\b(lmia|eimt)\s+(is\s+)?(not|non|pas)\s+(available|offered|supported|provided|disponible|offerte?)\b/,
   /\b(doit|devez)\s+(deja\s+)?(resider|habiter|etre)\s+au canada\b/,
@@ -112,6 +114,11 @@ export interface InternationalOffer {
   caution: string[];
   /** Identifiants des signaux d'arnaque repérés dans le titre + l'extrait. */
   scam: string[];
+  /** Tracker : première et dernière semaine où VériJob a vu l'annonce (AAAA-MM-JJ). */
+  firstSeen?: string;
+  lastSeen?: string;
+  /** Métier reconnu dans le catalogue complet (516 métiers) quand ce n'est pas un métier suivi. */
+  nocGuess?: string;
 }
 
 /** Offre actuelle d'un métier suivi (annonce Adzuna avec lien direct), publiée par le pipeline. */

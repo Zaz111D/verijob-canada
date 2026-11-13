@@ -66,3 +66,4 @@ export { classifyInternational, type InternationalOffer, type CurrentOffer, type
 export { socialSearchLinks, publisherCheck, type SocialLink, type PublisherCheck } from './social';
 export { PROVINCE_TZ, tzOffsetMinutes, officeHoursLocal, internationalNumber } from './calling';
 export { placeOf, lowWageStatus, isOwnJob, type RegionOffer } from './regions';
+export { makeCatalogDetector } from './catalog';

@@ -131,6 +131,14 @@ export interface Rules {
     minExperienceHours: number;
     communities: Community[];
   };
+  /** Recruteurs qui recrutent en Afrique pour des employeurs canadiens (onglet « Tracker »). */
+  africaRecruitment: {
+    feesSource: string;
+    official: Array<{ id: string; source: string; event?: string; nameFr: string; nameEn: string; detailFr: string; detailEn: string }>;
+    registries: Array<{ province: ProvinceCode; source: string }>;
+    /** Agences privées : permis et activité en Afrique PUBLIÉS sur leur site, non confirmés par VériJob. */
+    agencies: Array<{ name: string; province: ProvinceCode; licence: string; url: string; zonesFr: string; zonesEn: string; noFeeStated: boolean; checkedAt: string }>;
+  };
   /** Villes et régions qui peinent à recruter, avec un programme d'immigration régional (onglet « Régions »). */
   regions: {
     redi: {

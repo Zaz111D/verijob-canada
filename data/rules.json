@@ -2,6 +2,87 @@
   "$comment": "Règles d'immigration versionnées. NE JAMAIS coder ces valeurs en dur dans la logique : le moteur lit ce fichier. Chaque section pointe vers une source officielle (champ 'source') qui porte sa date de vérification et sa date de prochaine révision. Mettre à jour 'version' à chaque modification.",
   "version": "2026-11-02",
   "sources": {
+    "esdc-recruitment-fees": {
+      "titleFr": "EDSC — Modifications au Règlement (2022) : aucun frais de recrutement à la charge du travailleur étranger, y compris par un recruteur",
+      "titleEn": "ESDC — Regulatory amendments (2022): no recruitment fees charged to the foreign worker, including by a recruiter",
+      "urlFr": "https://www.canada.ca/fr/emploi-developpement-social/nouvelles/2022/09/nouvelles-modifications-au-reglement-sur-limmigration-et-la-protection-des-refugiestravailleurs-etrangers-temporaires.html",
+      "urlEn": "https://www.canada.ca/en/employment-social-development/news/2022/09/new-amendments-to-the-immigration-and-refugee-protection-regulations-temporary-foreign-workers.html",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-05-13"
+    },
+    "nb-africa-strategy": {
+      "titleFr": "Nouveau-Brunswick — Stratégie du N.-B. pour l'Afrique francophone (2025-2030)",
+      "titleEn": "New Brunswick — Strategy for Francophone Africa (2025-2030)",
+      "urlFr": "https://www2.gnb.ca/content/dam/gnb/Departments/iga-aig/pdf/strategie-du-n-b-pour-l-afrique-francophone.pdf",
+      "urlEn": "https://www2.gnb.ca/content/dam/gnb/Departments/iga-aig/pdf/strategie-du-n-b-pour-l-afrique-francophone.pdf",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
+    "cnesst-agency-registry": {
+      "titleFr": "CNESST (Québec) — Registre des titulaires de permis d’agence (placement et recrutement de travailleurs étrangers temporaires)",
+      "titleEn": "CNESST (Quebec) — Registry of agency licence holders (French only)",
+      "urlFr": "https://www.cnesst.gouv.qc.ca/fr/demarches-formulaires/agences-placement-personnel-recrutement/permis-agences/registre-titulaires-permis-agence",
+      "urlEn": "https://www.cnesst.gouv.qc.ca/fr/demarches-formulaires/agences-placement-personnel-recrutement/permis-agences/registre-titulaires-permis-agence",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
+    "bc-recruiters": {
+      "titleFr": "Colombie-Britannique — Recruteurs de travailleurs étrangers autorisés",
+      "titleEn": "British Columbia — Licensed foreign worker recruiters",
+      "urlFr": null,
+      "urlEn": "https://services.labour.gov.bc.ca/licensing/TFW_IssuancePublication",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
+    "sk-recruiters": {
+      "titleFr": "Saskatchewan — Consultants en immigration et recruteurs de travailleurs étrangers autorisés",
+      "titleEn": "Saskatchewan — Licensed immigration consultants and foreign worker recruiters",
+      "urlFr": null,
+      "urlEn": "https://www.saskatchewan.ca/en/Residents/Moving-to-Saskatchewan/Provide-Immigration-Services/Immigration-Consultant-and-Foreign-Worker-Recruiter-Licensing-and-Responsibilities",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
+    "mb-recruiters": {
+      "titleFr": "Manitoba — Titulaires d’un permis de recrutement de travailleurs étrangers (PDF)",
+      "titleEn": "Manitoba — Valid foreign worker recruitment licence holders (PDF)",
+      "urlFr": null,
+      "urlEn": "https://www.gov.mb.ca/labour/standards/asset_library/pdf/wrapa_valid_licensees.pdf",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
+    "ns-recruiters": {
+      "titleFr": "Nouvelle-Écosse — Recruteurs de travailleurs étrangers autorisés",
+      "titleEn": "Nova Scotia — Licensed foreign worker recruiters",
+      "urlFr": null,
+      "urlEn": "https://novascotia.ca/lae/employmentrights/fw/licensedrecruiters.asp",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
+    "alberta-aaip-draws": {
+      "titleFr": "Alberta (AAIP) — Renseignements sur le traitement et tirages",
+      "titleEn": "Alberta (AAIP) — Processing information and draws",
+      "urlFr": null,
+      "urlEn": "https://www.alberta.ca/aaip-processing-information",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
+    "alberta-aaip-updates": {
+      "titleFr": "Alberta (AAIP) — Mises à jour du programme (dont le volet rural depuis le 1er janv. 2026)",
+      "titleEn": "Alberta (AAIP) — Program updates (including Rural Renewal changes from Jan. 1, 2026)",
+      "urlFr": null,
+      "urlEn": "https://www.alberta.ca/aaip-updates",
+      "pageModified": null,
+      "verifiedAt": "2026-11-13",
+      "nextReview": "2027-02-13"
+    },
     "ircc-aip": {
       "titleFr": "IRCC — Programme d'immigration au Canada atlantique",
       "titleEn": "IRCC — Atlantic Immigration Program",
@@ -2388,6 +2469,102 @@
         ],
         "match": [],
         "url": "https://www.alberta.ca/aaip-rural-renewal-stream-community-designation"
+      }
+    ]
+  },
+  "africaRecruitment": {
+    "$comment": "Recruteurs qui recrutent en Afrique pour des employeurs canadiens. official : voies publiques (gouvernements). agencies : agences privées qui PUBLIENT sur leur site un numéro de permis et une activité en Afrique, relevées le checkedAt ; VériJob ne peut pas confirmer le permis (registre de la CNESST protégé contre les robots) : l'appli affiche « permis à vérifier » avec le lien du registre. Jamais d'agence qui demande des frais aux candidats.",
+    "feesSource": "esdc-recruitment-fees",
+    "official": [
+      {
+        "id": "destination-canada",
+        "source": "ircc-destination-canada",
+        "event": "destination-canada",
+        "nameFr": "Destination Canada Forum Mobilité (gouvernement du Canada)",
+        "nameEn": "Destination Canada Mobility Forum (Government of Canada)",
+        "detailFr": "Salon gratuit d'IRCC pour les francophones : employeurs hors Québec, embauche possible sans EIMT (Mobilité francophone). Édition 2026-2027 : Tunis les 10 et 11 décembre 2026, Bruxelles, Marseille.",
+        "detailEn": "IRCC's free fair for French speakers: employers outside Quebec, hiring possible without an LMIA (Francophone Mobility). 2026-2027 edition: Tunis on December 10–11, 2026, Brussels, Marseille."
+      },
+      {
+        "id": "nouveau-brunswick",
+        "source": "nb-africa-strategy",
+        "nameFr": "Nouveau-Brunswick — Stratégie pour l’Afrique francophone (2025-2030)",
+        "nameEn": "New Brunswick — Strategy for Francophone Africa (2025-2030)",
+        "detailFr": "Le gouvernement du Nouveau-Brunswick cible le Cameroun, la Côte d'Ivoire, le Sénégal, le Bénin, le Maroc et la Tunisie, avec des missions de recrutement « éthique » (santé, foresterie, pâtes et papiers déjà en 2023-2024). Surveillez ses annonces de missions ; le site du gouvernement bloque la lecture automatique : VériJob ne peut pas vous prévenir lui-même.",
+        "detailEn": "The New Brunswick government targets Cameroon, Côte d’Ivoire, Senegal, Benin, Morocco and Tunisia, with “ethical” recruitment missions (health, forestry, pulp and paper in 2023-2024). Watch its mission announcements; the government site blocks automated reading, so VériJob cannot alert you itself."
+      },
+      {
+        "id": "destination-manitoba",
+        "source": "cdem-destination-manitoba",
+        "event": "destination-manitoba",
+        "nameFr": "Destination Manitoba (CDEM, avec la province et IRCC)",
+        "nameEn": "Destination Manitoba (CDEM, with the province and IRCC)",
+        "detailFr": "Mission francophone du Manitoba en Afrique (dernière édition publiée : Dakar et Abidjan, décembre 2024). La CDEM ne communique jamais par texto, téléphone ou WhatsApp.",
+        "detailEn": "Manitoba’s Francophone mission in Africa (last published edition: Dakar and Abidjan, December 2024). CDEM never communicates by text, phone or WhatsApp."
+      }
+    ],
+    "registries": [
+      {
+        "province": "QC",
+        "source": "cnesst-agency-registry"
+      },
+      {
+        "province": "BC",
+        "source": "bc-recruiters"
+      },
+      {
+        "province": "SK",
+        "source": "sk-recruiters"
+      },
+      {
+        "province": "MB",
+        "source": "mb-recruiters"
+      },
+      {
+        "province": "NS",
+        "source": "ns-recruiters"
+      }
+    ],
+    "agencies": [
+      {
+        "name": "SOS TETFA (SOS Travailleur étranger temporaire francophone)",
+        "province": "QC",
+        "licence": "AR-2101875",
+        "url": "https://www.sostravailleuretrangertemporairefrancophone.ca/",
+        "zonesFr": "Afrique (main-d’œuvre francophone, surtout Afrique centrale)",
+        "zonesEn": "Africa (French-speaking workers, mainly Central Africa)",
+        "noFeeStated": false,
+        "checkedAt": "2026-11-13"
+      },
+      {
+        "name": "Main d’Œuvre Internationale",
+        "province": "QC",
+        "licence": "AR-2403945",
+        "url": "https://moi-recrutement.com/",
+        "zonesFr": "Afrique de l’Ouest (bureau annoncé au Sénégal)",
+        "zonesEn": "West Africa (office announced in Senegal)",
+        "noFeeStated": false,
+        "checkedAt": "2026-11-13"
+      },
+      {
+        "name": "BB Recrutement",
+        "province": "QC",
+        "licence": "AR-2202670",
+        "url": "https://www.bb-recrutement.com/",
+        "zonesFr": "Pays francophones d’Europe et d’Afrique",
+        "zonesEn": "French-speaking countries of Europe and Africa",
+        "noFeeStated": false,
+        "checkedAt": "2026-11-13"
+      },
+      {
+        "name": "Workin",
+        "province": "QC",
+        "licence": "AR-2202590",
+        "url": "https://workin-group.com/",
+        "zonesFr": "Maghreb, Afrique de l’Ouest, océan Indien, Europe francophone",
+        "zonesEn": "Maghreb, West Africa, Indian Ocean, French-speaking Europe",
+        "noFeeStated": true,
+        "checkedAt": "2026-11-13"
       }
     ]
   },

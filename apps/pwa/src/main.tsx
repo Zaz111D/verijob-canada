@@ -6,6 +6,7 @@ import { CheckCv } from './pages/CheckCv';
 import { SampleCvPage } from './pages/SampleCv';
 import { Apply } from './pages/Apply';
 import { Regions } from './pages/Regions';
+import { Tracker } from './pages/Tracker';
 import { CheckEmployer } from './pages/CheckEmployer';
 import { CheckOffer } from './pages/CheckOffer';
 import { Home } from './pages/Home';
@@ -34,6 +35,7 @@ function App() {
         : route === 'cv-exemple' ? <SampleCvPage />
         : route === 'postuler' ? <Apply />
         : route === 'regions' ? <Regions />
+        : route === 'tracker' ? <Tracker />
         : <Home />}
     </Layout>
   );

@@ -23,6 +23,13 @@ function previousZip(): Promise<Record<string, Uint8Array> | undefined> {
   return zip;
 }
 
+/** Contenu de data/<name> dans la version publiée (sans l'écrire), ou undefined. */
+export async function readPrevious<T>(name: string): Promise<{ fetchedAt: string; data: T } | undefined> {
+  const raw = (await previousZip())?.[`data/${name}`];
+  if (!raw) return undefined;
+  try { return JSON.parse(strFromU8(raw)) as { fetchedAt: string; data: T }; } catch { return undefined; }
+}
+
 /** Recopie data/<name> de la version publiée dans apps/pwa/public/data. Renvoie sa date de mise à jour, ou undefined. */
 export async function reusePrevious(name: string): Promise<{ fetchedAt: string; records: number } | undefined> {
   const raw = (await previousZip())?.[`data/${name}`];

@@ -15,13 +15,14 @@
  * Produit : apps/pwa/public/data/international-offers.json (+ international-diagnostic.json)
  */
 import {
-  analyzeOffer, classifyInternational, detectNocInText, employerKey, normalize,
+  analyzeOffer, classifyInternational, detectNocInText, employerKey, makeCatalogDetector, normalize, todayIso,
   type InternationalOffer, type NocData, type Rules,
 } from '../packages/core/src';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { adzunaClient, adzunaKeys, baseOffer, clean } from './lib/adzuna';
-import { OUT_DIR } from './lib/paths';
+import { readPrevious } from './lib/previous';
+import { OUT_DIR, ROOT } from './lib/paths';
 import { writeDataFile, type WrittenFile } from './lib/output';
 
 /** Expressions exactes du recrutement international (cherchées par Adzuna dans l'annonce complète). */
@@ -30,8 +31,20 @@ import { writeDataFile, type WrittenFile } from './lib/output';
 // - « temporary foreign worker » : au Québec, mention légale du permis des agences de placement
 //   (« Temporary Foreign Worker Recruitment Agency Permit Number »), sans rapport avec l'ouverture du poste.
 const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt'];
+/**
+ * Tracker (2 nov. 2026) : expressions POSITIVES de l'ouverture à l'étranger. « visa sponsorship » seul reste écarté ;
+ * ces formes positives sont relues par classifyInternational (« without… », « no sponsorship » → écartées).
+ */
+const OPEN_PHRASES = [
+  'visa sponsorship available', 'sponsorship available', 'will sponsor', 'sponsorship provided', 'open to international applicants',
+  'international applicants welcome', 'foreign workers welcome', 'recrutement international', 'travailleurs étrangers', 'mobilité francophone',
+];
+/** Expressions très fréquentes : plusieurs pages de résultats (50 annonces par page). */
+const PAGES: Record<string, number> = { lmia: 3, eimt: 3 };
+/** Historique du tracker : une annonce vue il y a plus de 60 jours est retirée. */
+export const HISTORY_DAYS = 60;
 /** Postes dont le TRAVAIL porte sur l'immigration ou le recrutement (ils citent « LMIA » comme tâche). */
-const OFF_TOPIC_TITLE = /\b(immigration|lawyer|avocate?|paralegal|parajuriste|consultant|rcic|recruiter|recruteur|recruteuse|talent acquisition)\b/i;
+const OFF_TOPIC_TITLE = /\b(immigration|lawyer|avocate?|paralegal|parajuriste|consultant|rcic|recruiter|recruteur|recruteuse|talent acquisition|hr|human resources|ressources humaines|people and culture)\b/i;
 /**
  * Pour chaque métier suivi : au moins un de ces mots en plus du métier. « sponsorship » et « parrainage »
  * ramènent aussi des annonces « without sponsorship » : classifyInternational les écarte (motif CLOSED).
@@ -39,6 +52,26 @@ const OFF_TOPIC_TITLE = /\b(immigration|lawyer|avocate?|paralegal|parajuriste|co
 const NOC_WORDS = 'lmia eimt sponsorship parrainage';
 const MAX_DAYS_OLD = 45;
 const PER_PAGE = 50;
+
+/** Métier du catalogue complet (516 métiers), pour les offres hors des métiers suivis. */
+let catalog: ((title: string) => string | undefined) | undefined;
+function catalogNoc(title: string): string | undefined {
+  catalog ??= makeCatalogDetector(JSON.parse(readFileSync(join(ROOT, 'data', 'noc-search.json'), 'utf8')) as Record<string, string>);
+  return catalog(title);
+}
+
+/**
+ * Historique du tracker : les offres de cette semaine gardent leur date de première apparition ; celles des semaines
+ * précédentes qu'Adzuna ne renvoie plus restent affichées (« plus vue depuis le… ») pendant HISTORY_DAYS jours.
+ */
+export function mergeHistory(current: InternationalOffer[], previous: InternationalOffer[], today: string): InternationalOffer[] {
+  const prev = new Map(previous.map((o) => [o.id, o]));
+  const now = current.map((o) => ({ ...o, firstSeen: prev.get(o.id)?.firstSeen ?? prev.get(o.id)?.lastSeen ?? today, lastSeen: today }));
+  const ids = new Set(now.map((o) => o.id));
+  const limit = new Date(Date.parse(today) - HISTORY_DAYS * 86_400_000).toISOString().slice(0, 10);
+  const kept = previous.filter((o) => !ids.has(o.id) && (o.lastSeen ?? o.firstSeen ?? '') >= limit);
+  return [...now, ...kept];
+}
 
 export interface InternationalStats { queries: number; seen: number; kept: number; closed: number; skipped?: string; file?: WrittenFile }
 
@@ -55,8 +88,8 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
   const api = adzunaClient(keys);
   let seen = 0, closed = 0;
 
-  const search = async (label: string, params: Record<string, string>, matched: string) => {
-    const body = await api.search({ max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE), ...params });
+  const search = async (label: string, params: Record<string, string>, matched: string, page = 1) => {
+    const body = await api.search({ max_days_old: String(MAX_DAYS_OLD), results_per_page: String(PER_PAGE), ...params }, page);
     const stat = { query: label, total: body.total, results: body.results.length, kept: 0, closed: 0 };
     diag.push(stat);
     for (const j of body.results) {
@@ -74,6 +107,7 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
         title,
         // Métier déduit du TITRE seulement : Adzuna trouve le mot-clé n'importe où dans l'annonce.
         noc: detectNocInText(nocData, normalize(title))?.code ?? '',
+        ...(() => { const g = detectNocInText(nocData, normalize(title)) ? undefined : catalogNoc(title); return g ? { nocGuess: g } : {}; })(),
         snippet,
         evidence: verdict.evidence,
         matched: [matched],
@@ -84,7 +118,14 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     }
   };
 
-  for (const p of PHRASES) await search(`« ${p} »`, { what_phrase: p }, p);
+  for (const p of PHRASES) {
+    for (let page = 1; page <= (PAGES[p] ?? 1); page++) {
+      const before = seen;
+      await search(`« ${p} »${page > 1 ? ` p. ${page}` : ''}`, { what_phrase: p }, p, page);
+      if (seen - before < PER_PAGE) break; // dernière page atteinte
+    }
+  }
+  for (const p of OPEN_PHRASES) await search(`« ${p} »`, { what_phrase: p }, p);
   for (const n of nocData.nocs) {
     const what = (n.jobEn ?? n.titleEn).split(/[(/]/)[0]!.trim(); // Adzuna exige tous les mots de « what »
     await search(`${what} + (${NOC_WORDS})`, { what, what_or: NOC_WORDS }, 'lmia / eimt / sponsorship');
@@ -124,7 +165,8 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     }
   }
   console.log(`  recoupement EIMT : ${corroborated} employeurs trouvés dans les listes officielles, ${dropped} offres non vérifiables écartées`);
-  const list = [...offers.values()].sort((a, b) => b.date.localeCompare(a.date));
+  const list = mergeHistory([...offers.values()], (await readPrevious<InternationalOffer[]>('international-offers.json'))?.data ?? [], todayIso())
+    .sort((a, b) => (b.lastSeen ?? b.date).localeCompare(a.lastSeen ?? a.date) || b.date.localeCompare(a.date));
   const file = writeDataFile(
     'international-offers.json',
     {

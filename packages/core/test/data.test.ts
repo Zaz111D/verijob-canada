@@ -31,7 +31,7 @@ describe('data/rules.json', () => {
     for (const [id, s] of Object.entries(rules.sources)) {
       // Gouvernements du Canada et du Québec, registre du CICC, Centre antifraude, et organismes partenaires
       // financés par IRCC (FCFA, CDEM) pour les salons et réseaux francophones.
-      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca|www\.jobbank\.gc\.ca|antifraudcentre-centreantifraude\.ca|www\.quebec\.ca|immigrationfrancophone\.ca|www\.cdem\.com|open\.canada\.ca|www\.who\.int|www\.statcan\.gc\.ca|www\.bspquebec\.ca|www\.ontario\.ca|www2\.gov\.bc\.ca|www\.alberta\.ca|www\.manitoba\.ca|laws-lois\.justice\.gc\.ca|www\.gov\.nl\.ca|www\.gnb\.ca|liveinnovascotia\.com|yukon\.ca|www\.immigratenwt\.ca)\//);
+      expect(s.urlEn, id).toMatch(/^https:\/\/(www\.canada\.ca|register\.college-ic\.ca|www\.jobbank\.gc\.ca|antifraudcentre-centreantifraude\.ca|www\.quebec\.ca|immigrationfrancophone\.ca|www\.cdem\.com|open\.canada\.ca|www\.who\.int|www\.statcan\.gc\.ca|www\.bspquebec\.ca|www\.ontario\.ca|www2\.gov\.bc\.ca|www\.alberta\.ca|www\.manitoba\.ca|laws-lois\.justice\.gc\.ca|www\.gov\.nl\.ca|www2?\.gnb\.ca|liveinnovascotia\.com|yukon\.ca|www\.immigratenwt\.ca|www\.cnesst\.gouv\.qc\.ca|services\.labour\.gov\.bc\.ca|www\.saskatchewan\.ca|www\.gov\.mb\.ca|novascotia\.ca)\//);
       if (s.urlFr) expect(s.urlFr, id).toMatch(/^https:\/\//);
       expect(s.verifiedAt, id).toMatch(DATE);
       expect(s.nextReview, id).toMatch(DATE);
@@ -138,5 +138,18 @@ describe('data/noc.json', () => {
   it('les métiers d’agriculture primaire de rules.json sont tous des codes valides', () => {
     for (const c of rules.agricultural.primaryAgricultureNocs) expect(c).toMatch(/^\d{5}$/);
     expect(rules.agricultural.primaryAgricultureNocs).not.toContain('85102');
+  });
+});
+
+describe('recruteurs en Afrique', () => {
+  it('chaque agence a un permis, une province avec registre officiel et un site https ; chaque voie officielle a sa source', () => {
+    const ar = rules.africaRecruitment;
+    for (const a of ar.agencies) {
+      expect(a.licence).toMatch(/^AR-\d{7}$/);
+      expect(ar.registries.some((r) => r.province === a.province)).toBe(true);
+      expect(a.url).toMatch(/^https:\/\//);
+    }
+    for (const o of ar.official) expect(rules.sources[o.source]).toBeDefined();
+    expect(rules.sources[ar.feesSource]).toBeDefined();
   });
 });

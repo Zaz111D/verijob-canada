@@ -23,6 +23,7 @@ const LEGACY_PROFILE = 'verijob-profil';
 const LEGACY_APPS = 'verijob-candidatures';
 const profileKey = (id: string) => `verijob-profil:${id}`;
 const appsKey = (id: string) => `verijob-candidatures:${id}`;
+const trackerKey = (id: string) => `verijob-tracker:${id}`;
 
 /** IndexedDB peut être indisponible (navigation privée) : tout reste alors en mémoire pour la session. */
 async function safeGet<T>(k: string): Promise<T | undefined> { try { return await get<T>(k); } catch { return undefined; } }
@@ -170,6 +171,23 @@ export function useApplications(): Application[] {
     return () => { appsListeners.delete(setList); };
   }, []);
   return list;
+}
+
+// ---------------------------------------------------------------------------
+// Tracker international du profil actif : statut de chaque offre et date de la dernière visite (sur l'appareil)
+// ---------------------------------------------------------------------------
+
+export type TrackerStatus = 'interesse' | 'postule' | 'ecarte';
+export interface TrackerState { statuses: Record<string, TrackerStatus>; lastVisit?: string }
+
+export async function loadTracker(): Promise<TrackerState> {
+  const i = await loadIndex();
+  return (await safeGet<TrackerState>(trackerKey(i.active))) ?? { statuses: {} };
+}
+
+export async function saveTracker(t: TrackerState): Promise<void> {
+  const i = await loadIndex();
+  await safeSet(trackerKey(i.active), t);
 }
 
 /** Profil actif (vide tant qu'il n'est pas chargé). */

@@ -126,6 +126,8 @@ export interface AipEmployer { province: string; employer: string; k: string; lo
 export const loadAipEmployers = () => load<AipEmployer[]>('aip-employers.json');
 export interface EventStatus { id: string; url: string; state: 'ouvert' | 'ferme' | 'a-verifier' | 'inconnu'; links: Array<{ label: string; url: string }>; checkedAt: string }
 export const loadEventsStatus = () => load<EventStatus[]>('events-status.json');
+export interface AaipDraw { date: string; stream: string; minScore: number | null; invitations: string }
+export const loadAaipDraws = () => load<AaipDraw[]>('aaip-draws.json');
 
 // ---------------------------------------------------------------------------
 // Lecture EN DIRECT des fichiers officiels (canada.ca autorise la lecture depuis un navigateur).
