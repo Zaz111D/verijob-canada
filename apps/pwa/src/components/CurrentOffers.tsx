@@ -65,7 +65,8 @@ export function ApplyNow({ nocs, provinces, lang }: { nocs: string[]; provinces:
     const grouper = makeGrouper(profile);
     const mine = (o: { noc: string; province?: ProvinceCode }) =>
       (!nocs.length || nocs.includes(o.noc)) && (!provinces.length || !o.province || provinces.includes(o.province));
-    const out: Item[] = intl.filter(mine).map((o) => ({ kind: 'intl', o, g: grouper({ noc: o.noc || undefined, province: o.province }) }));
+    // Seulement les annonces qui montrent la preuve : une mention non vérifiable n'est pas une ouverture à l'étranger.
+    const out: Item[] = intl.filter((o) => o.evidence.length > 0 && mine(o)).map((o) => ({ kind: 'intl', o, g: grouper({ noc: o.noc || undefined, province: o.province }) }));
     const seen = new Set(out.map((x) => x.o.id));
     for (const o of current?.list ?? []) {
       if (mine(o) && !seen.has(o.id)) out.push({ kind: 'current', o, g: grouper({ noc: o.noc, province: o.province }) });

@@ -79,7 +79,8 @@ export async function fetchRegionOffers(
     return { queries: 0, seen: 0, kept: 0, skipped: 'clés absentes' };
   }
   const intlPath = join(OUT_DIR, 'international-offers.json');
-  const intlIds = new Set<string>(existsSync(intlPath) ? (JSON.parse(readFileSync(intlPath, 'utf8')).data as Array<{ id: string }>).map((o) => o.id) : []);
+  // Seulement les offres dont l'annonce montre la preuve (pas les mentions non vérifiables).
+  const intlIds = new Set<string>(existsSync(intlPath) ? (JSON.parse(readFileSync(intlPath, 'utf8')).data as Array<{ id: string; evidence: string[] }>).filter((o) => o.evidence.length > 0).map((o) => o.id) : []);
   const api = adzunaClient(keys);
   const offers = new Map<string, RegionOffer>((opts.base?.offers ?? []).map((o) => [o.id, o]));
   let seen = 0;

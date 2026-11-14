@@ -71,3 +71,23 @@ describe('faux positifs vus le 9 nov. 2026', () => {
     expect(classifyInternational('Elite365 offers TN and/or EB3 visa sponsorship and will match you to one of our openings.').status).toBe('ferme');
   });
 });
+
+describe('tri pointu (15 nov. 2026) : le mot « EIMT » seul ne prouve rien', () => {
+  it.each([
+    'Nous ne réalisons pas de EIMT.',
+    'Line Cook | Delta, BC *Note: No International Sponsorship Available*',
+    'Applicants must be currently authorized to work in Canada.',
+    'This position is not open to international applicants.',
+    'Foreign applicants will not be considered.',
+  ])('refus : %s', (t) => expect(status(t)).toBe('ferme'));
+  it.each([
+    'LMIA / PNP sponsorship available.',
+    'Can also help with LMIA.',
+    'Compagnie qui offre des services d’affichage pour soumettre des demandes de EIMT.',
+    'Can hire under the Francophone Mobility Program or LMIA exempt.',
+  ])('preuve : %s', (t) => expect(status(t)).toBe('ouvert'));
+  it.each([
+    'Our HR team handles EIMT files.',
+    'Experience with LMIA paperwork is an asset.',
+  ])('mention sans contexte positif : %s', (t) => expect(status(t)).not.toBe('ouvert'));
+});

@@ -277,7 +277,7 @@ function useEmployers(nocs: string[], provinces: ProvinceCode[]) {
     const mine = (o: { noc: string; province?: ProvinceCode }) => nocs.includes(o.noc) && (!provinces.length || !o.province || provinces.includes(o.province));
     const byKey = new Map<string, Employer & { date: string }>();
     // Les annonces qui disent accepter l'étranger passent avant les autres annonces du même employeur.
-    const offers = [...intl.map((o) => ({ o, proof: o.evidence[0] })), ...current.map((o) => ({ o, proof: undefined as string | undefined }))]
+    const offers = [...intl.filter((o) => o.evidence.length > 0).map((o) => ({ o, proof: o.evidence[0] })), ...current.map((o) => ({ o, proof: undefined as string | undefined }))]
       .filter(({ o }) => o.company && mine(o))
       .sort((a, b) => Number(!!b.proof) - Number(!!a.proof) || b.o.date.localeCompare(a.o.date));
     for (const { o, proof } of offers) {

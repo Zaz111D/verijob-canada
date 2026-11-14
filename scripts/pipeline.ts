@@ -8,13 +8,13 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { normalize, type CurrentOffer, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
+import { normalize, type CurrentOffer, type InternationalOffer, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildEmployerContacts, checkEmployerContactPages } from './build-employer-contacts';
 import { buildAipEmployers, buildDesignated, type DesignatedStats } from './build-designated';
 import { fetchPermits, type PermitsStats } from './fetch-permits';
-import { fetchInternational, type InternationalStats } from './fetch-international';
+import { fetchInternational, reverifyInternational, verifiedIds, type InternationalStats } from './fetch-international';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
 import { fetchProposals, type ProposalsStats } from './fetch-proposals';
 import { fetchCurrentOffers, OTHER_LEVEL, queryKeys, type CurrentOffersStats } from './fetch-current-offers';
@@ -137,6 +137,28 @@ async function currentOffersStep() {
   }
 }
 const regionOffers = await regionOffersStep();
+syncInternationalFlags();
+/**
+ * Version publiée reprise (envoi de code) : on relit quand même les offres internationales avec le tri actuel, et les
+ * offres actuelles / des régions ne gardent le badge « ouverte à l'étranger » que si l'annonce montre la preuve.
+ */
+function syncInternationalFlags() {
+  const read = <T>(name: string) => { try { return JSON.parse(readFileSync(join(OUT_DIR, name), 'utf8')) as { data: T[]; recordCount: number }; } catch { return undefined; } };
+  const intlFile = read<InternationalOffer>('international-offers.json');
+  if (!intlFile) return;
+  const before = intlFile.data.length;
+  intlFile.data = reverifyInternational(intlFile.data);
+  intlFile.recordCount = intlFile.data.length;
+  writeFileSync(join(OUT_DIR, 'international-offers.json'), JSON.stringify(intlFile));
+  const ok = verifiedIds(intlFile.data);
+  for (const name of ['current-offers.json', 'region-offers.json']) {
+    const f = read<{ id: string; intl?: true }>(name);
+    if (!f) continue;
+    for (const o of f.data) { if (ok.has(o.id)) o.intl = true; else delete o.intl; }
+    writeFileSync(join(OUT_DIR, name), JSON.stringify(f));
+  }
+  console.log(`▶ Tri international relu : ${before} → ${intlFile.data.length} offres, ${ok.size} avec preuve dans l'annonce`);
+}
 /** Offres des régions : comme les offres actuelles, les villes AJOUTÉES depuis sont interrogées tout de suite. */
 async function regionOffersStep() {
   const r = await adzunaStep('region-offers.json', 'Offres des villes en région', () => fetchRegionOffers(rules, nocData));

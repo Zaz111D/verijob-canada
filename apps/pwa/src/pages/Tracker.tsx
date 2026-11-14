@@ -7,14 +7,14 @@
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import {
-  addDays, DEFAULT_FOLLOW_UP_DAYS, findNoc, formatDate, newId, normalize, PROVINCE_NAMES, todayIso,
+  addDays, DEFAULT_FOLLOW_UP_DAYS, findNoc, formatDate, jobBankLink, newId, normalize, PROVINCE_NAMES, sourceRef, todayIso,
   type InternationalOffer, type ProvinceCode,
 } from '@verijob/core';
-import { Badge } from '../components/common';
+import { Badge, Sources } from '../components/common';
 import { ADZUNA, OfferLinks, salary } from '../components/InternationalOffers';
 import { ProfileBanner } from '../components/ProfileBanner';
 import { Recruiters } from '../components/Recruiters';
-import { loadInternationalOffers, nocData } from '../data';
+import { loadInternationalOffers, nocData, rules } from '../data';
 import { STRINGS as S, tr, useLang, type Lang } from '../i18n';
 import { loadTracker, saveTracker, upsertApplication, useProfile, type TrackerState, type TrackerStatus } from '../store';
 import { openOfferCheck } from './CheckOffer';
@@ -47,7 +47,7 @@ function TrackerCard({ o, isNew, status, lastData, onStatus, lang }: {
       </p>
       <p>
         {isNew && <><Badge kind="ok">{tr(S.trackerNew, lang)}</Badge>{' '}</>}
-        {o.evidence.length > 0 ? <Badge kind="ok">✓ {tr(S.intlTitle, lang)}</Badge> : <Badge kind="info">{tr(S.intlMatchedBadge, lang)}</Badge>}
+        {o.evidence.length > 0 ? <Badge kind="ok">✓ {tr(S.trackerProofBadge, lang)}</Badge> : <Badge kind="moyen">{tr(S.trackerUnverifiedBadge, lang)}</Badge>}
       </p>
       {o.evidence.length > 0
         ? o.evidence.slice(0, 2).map((e) => <p class="quote">« {e} »</p>)
@@ -77,6 +77,33 @@ function TrackerCard({ o, isNew, status, lastData, onStatus, lang }: {
   );
 }
 
+/**
+ * « Postuler soi-même, à distance » : pas besoin d'agence ni de représentant (IRCC), les sources officielles d'offres
+ * ouvertes à l'étranger, et les étapes que la personne fait elle-même en ligne.
+ */
+function RemoteGuide({ nocs, lang }: { nocs: string[]; lang: Lang }) {
+  const today = todayIso();
+  const jb = nocs.length
+    ? nocs.map((c) => { const n = findNoc(nocData, c); return { label: jobLabel(c, lang), url: jobBankLink(rules, { keyword: (n?.jobEn ?? n?.titleEn ?? '').split(/[(/]/)[0]!.trim() }).url }; })
+    : [{ label: tr(S.trackerAllJobs, lang), url: rules.jobBank.foreignJobsUrl }];
+  return (
+    <details class="card-result" open>
+      <summary><strong>{tr(S.remoteTitle, lang)}</strong></summary>
+      <p>{tr(S.remoteNoAgency, lang)}</p>
+      <ol>
+        <li>{tr(S.remoteStep1, lang)}</li>
+        <li>{tr(S.remoteStep2, lang)}</li>
+        <li>{tr(S.remoteStep3, lang)}</li>
+        <li>{tr(S.remoteStep4, lang)}</li>
+        <li>{tr(S.remoteStep5, lang)}</li>
+      </ol>
+      <p class="muted">{tr(S.remoteJobBank, lang)}</p>
+      <div class="row">{jb.map((j) => <a class="button primary" href={j.url} target="_blank" rel="noopener noreferrer nofollow">{j.label} ↗</a>)}</div>
+      <Sources sources={['ircc-no-representative', 'ircc-work-permit-outside', 'jobbank-foreign', 'ircc-c16'].map((id) => sourceRef(rules, id, today))} />
+    </details>
+  );
+}
+
 export function Tracker() {
   const lang = useLang();
   const profile = useProfile();
@@ -90,7 +117,7 @@ export function Tracker() {
   const [job, setJob] = useState('');
   const [province, setProvince] = useState<'' | ProvinceCode>('');
   const [onlyMine, setOnlyMine] = useState(false);
-  const [proofOnly, setProofOnly] = useState(false);
+  const [showUnverified, setShowUnverified] = useState(false);
   const [q, setQ] = useState('');
   const [shown, setShown] = useState(PAGE);
 
@@ -124,20 +151,22 @@ export function Tracker() {
 
   // Filtres communs (métier, province, mes métiers, preuve, recherche), puis onglet de statut.
   const nq = normalize(q.trim());
-  const filtered = offers.filter((o) =>
+  const verified = offers.filter((o) => o.evidence.length > 0);
+  const filtered = offers.filter((o) => (showUnverified || o.evidence.length > 0) &&
     (!job || jobOf(o) === job) && (!province || o.province === province) && (!onlyMine || mineCodes.has(jobOf(o)))
-    && (!proofOnly || o.evidence.length > 0) && (!nq || normalize(`${o.title} ${o.company} ${o.location}`).includes(nq)));
+    && (!nq || normalize(`${o.title} ${o.company} ${o.location}`).includes(nq)));
   const inTab = (o: InternationalOffer, t: Tab) => {
     const s = state.statuses[o.id];
     return t === 'tout' ? s !== 'ecarte' : t === 'nouveau' ? isNew(o) && s !== 'ecarte' : s === t;
   };
   const visible = filtered.filter((o) => inTab(o, tab))
     .sort((a, b) => Number(isNew(b)) - Number(isNew(a)) || Number(mineCodes.has(jobOf(b))) - Number(mineCodes.has(jobOf(a))) || (b.firstSeen ?? b.date).localeCompare(a.firstSeen ?? a.date));
+  // Métiers des offres affichées (avec preuve seulement, sauf si l'on montre aussi les non vérifiables).
   const jobs = useMemo(() => {
     const m = new Map<string, number>();
-    for (const o of offers) m.set(jobOf(o), (m.get(jobOf(o)) ?? 0) + 1);
+    for (const o of offers) if (showUnverified || o.evidence.length > 0) m.set(jobOf(o), (m.get(jobOf(o)) ?? 0) + 1);
     return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [offers]);
+  }, [offers, showUnverified]);
   const provinces = [...new Set(offers.map((o) => o.province).filter(Boolean))] as ProvinceCode[];
   const tabs: Array<[Tab, { fr: string; en: string }]> = [['tout', S.trackerTabAll], ['nouveau', S.trackerTabNew], ['interesse', S.trackerTabInterested], ['postule', S.trackerTabApplied], ['ecarte', S.trackerTabDismissed]];
 
@@ -147,8 +176,9 @@ export function Tracker() {
       <ProfileBanner lang={lang} />
       <p class="muted">{tr(S.trackerIntro, lang)}</p>
       <p class="callout">{tr(S.trackerWarning, lang)}</p>
+      <RemoteGuide nocs={[...mineCodes]} lang={lang} />
       <p>
-        <strong>{tr(S.trackerStats, lang).replace('{n}', String(offers.length)).replace('{new}', String(offers.filter(isNew).length)).replace('{jobs}', String(jobs.length))}</strong>
+        <strong>{tr(S.trackerStats, lang).replace('{n}', String(verified.length)).replace('{new}', String(verified.filter(isNew).length)).replace('{jobs}', String(jobs.length))}</strong>
         {dataDate && <span class="muted"> · {tr(S.trackerUpdated, lang)} {formatDate(dataDate, lang)}</span>}
       </p>
 
@@ -161,7 +191,7 @@ export function Tracker() {
       </div>
       <label>{lang === 'fr' ? 'Métier' : 'Occupation'}
         <select value={job} onChange={(e) => { setJob((e.target as HTMLSelectElement).value); setShown(PAGE); }}>
-          <option value="">{tr(S.trackerAllJobs, lang)} ({offers.length})</option>
+          <option value="">{tr(S.trackerAllJobs, lang)} ({showUnverified ? offers.length : verified.length})</option>
           {jobs.map(([code, n]) => <option value={code}>{jobLabel(code, lang)} ({n})</option>)}
         </select>
       </label>
@@ -173,7 +203,8 @@ export function Tracker() {
       </label>
       <label>{tr(S.applySearch, lang)}<input value={q} onInput={(e) => { setQ((e.target as HTMLInputElement).value); setShown(PAGE); }} /></label>
       {mineCodes.size > 0 && <label class="check"><input type="checkbox" checked={onlyMine} onChange={(e) => setOnlyMine((e.target as HTMLInputElement).checked)} /> {tr(S.trackerMine, lang)}</label>}
-      <label class="check"><input type="checkbox" checked={proofOnly} onChange={(e) => setProofOnly((e.target as HTMLInputElement).checked)} /> {tr(S.trackerProofOnly, lang)}</label>
+      <label class="check"><input type="checkbox" checked={showUnverified} onChange={(e) => { setShowUnverified((e.target as HTMLInputElement).checked); setShown(PAGE); }} /> {tr(S.trackerShowUnverified, lang).replace('{n}', String(offers.length - verified.length))}</label>
+      {showUnverified && <p class="muted">{tr(S.trackerUnverifiedHelp, lang)}</p>}
 
       {visible.length === 0 && <p class="muted">{tr(S.trackerNone, lang)}</p>}
       {visible.slice(0, shown).map((o) => (

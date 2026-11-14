@@ -2,6 +2,24 @@
   "$comment": "Règles d'immigration versionnées. NE JAMAIS coder ces valeurs en dur dans la logique : le moteur lit ce fichier. Chaque section pointe vers une source officielle (champ 'source') qui porte sa date de vérification et sa date de prochaine révision. Mettre à jour 'version' à chaque modification.",
   "version": "2026-11-02",
   "sources": {
+    "ircc-no-representative": {
+      "titleFr": "IRCC — Ai-je vraiment besoin d'un représentant ? Non : tous les demandeurs sont traités de la même manière, les formulaires sont gratuits",
+      "titleEn": "IRCC — Do I really need a representative? No: everyone is treated equally, forms are free",
+      "urlFr": "https://ircc.canada.ca/francais/centre-aide/reponse.asp?qnum=444&top=7",
+      "urlEn": "https://ircc.canada.ca/english/helpcentre/answer.asp?qnum=444&top=7",
+      "pageModified": "2026-11-02",
+      "verifiedAt": "2026-11-15",
+      "nextReview": "2027-02-15"
+    },
+    "ircc-work-permit-outside": {
+      "titleFr": "IRCC — Présenter une demande de permis de travail de l'extérieur du Canada (compte en ligne, documents, frais, biométrie)",
+      "titleEn": "IRCC — Apply for a work permit from outside Canada (online account, documents, fees, biometrics)",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/permis-exterieur.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/work-canada/permit-outside.html",
+      "pageModified": "2026-03-31",
+      "verifiedAt": "2026-11-15",
+      "nextReview": "2027-02-15"
+    },
     "esdc-recruitment-fees": {
       "titleFr": "EDSC — Modifications au Règlement (2022) : aucun frais de recrutement à la charge du travailleur étranger, y compris par un recruteur",
       "titleEn": "ESDC — Regulatory amendments (2022): no recruitment fees charged to the foreign worker, including by a recruiter",

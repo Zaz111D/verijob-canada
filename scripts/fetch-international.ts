@@ -38,6 +38,7 @@ const PHRASES = ['lmia approved', 'positive lmia', 'lmia', 'eimt'];
 const OPEN_PHRASES = [
   'visa sponsorship available', 'sponsorship available', 'will sponsor', 'sponsorship provided', 'open to international applicants',
   'international applicants welcome', 'foreign workers welcome', 'recrutement international', 'travailleurs étrangers', 'mobilité francophone',
+  'lmia available', 'lmia support', 'lmia sponsorship', 'francophone mobility', 'lmia exempt', 'eimt approuvée',
 ];
 /** Expressions très fréquentes : plusieurs pages de résultats (50 annonces par page). */
 const PAGES: Record<string, number> = { lmia: 3, eimt: 3 };
@@ -72,6 +73,25 @@ export function mergeHistory(current: InternationalOffer[], previous: Internatio
   const kept = previous.filter((o) => !ids.has(o.id) && (o.lastSeen ?? o.firstSeen ?? '') >= limit);
   return [...now, ...kept];
 }
+
+/**
+ * Relit chaque offre avec le tri ACTUEL (titre + extrait) : utile pour les offres gardées des semaines précédentes et
+ * quand la version publiée est reprise après un changement des règles. Écarte les refus (« Nous ne réalisons pas de
+ * EIMT », visas américains…) ; une offre sans phrase de preuve n'est gardée que si l'employeur figure dans les listes
+ * d'EIMT (elle reste alors « non vérifiable » : jamais présentée comme ouverte à l'étranger).
+ */
+export function reverifyInternational(list: InternationalOffer[]): InternationalOffer[] {
+  return list.flatMap((o) => {
+    if (OFF_TOPIC_TITLE.test(o.title)) return [];
+    const v = classifyInternational(`${o.title}.\n${o.snippet}`);
+    if (v.status === 'ferme' || (!v.evidence.length && !o.lmia)) return [];
+    const guess = o.noc || o.nocGuess ? undefined : catalogNoc(o.title);
+    return [{ ...o, evidence: v.evidence, caution: v.caution, ...(guess ? { nocGuess: guess } : {}) }];
+  });
+}
+
+/** Offres dont l'annonce montre une phrase de preuve : les seules présentées comme « ouvertes à l'étranger ». */
+export const verifiedIds = (list: InternationalOffer[]) => new Set(list.filter((o) => o.evidence.length > 0).map((o) => o.id));
 
 export interface InternationalStats { queries: number; seen: number; kept: number; closed: number; skipped?: string; file?: WrittenFile }
 
@@ -165,7 +185,7 @@ export async function fetchInternational(rules: Rules, nocData: NocData): Promis
     }
   }
   console.log(`  recoupement EIMT : ${corroborated} employeurs trouvés dans les listes officielles, ${dropped} offres non vérifiables écartées`);
-  const list = mergeHistory([...offers.values()], (await readPrevious<InternationalOffer[]>('international-offers.json'))?.data ?? [], todayIso())
+  const list = reverifyInternational(mergeHistory([...offers.values()], (await readPrevious<InternationalOffer[]>('international-offers.json'))?.data ?? [], todayIso()))
     .sort((a, b) => (b.lastSeen ?? b.date).localeCompare(a.lastSeen ?? a.date) || b.date.localeCompare(a.date));
   const file = writeDataFile(
     'international-offers.json',

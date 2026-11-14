@@ -24,7 +24,16 @@ export interface InternationalVerdict {
 
 // Texte normalisé : minuscules, sans accents (voir prepareText).
 const OPEN = [
-  /\b(lmia|eimt)\b/,
+  // Le mot « EIMT » seul ne prouve rien (« Nous ne réalisons pas de EIMT », vu le 15 nov. 2026) : il faut un contexte positif.
+  /\b(lmia|eimt)\s*-?\s*(approved|approuvee?s?|positive|available|disponibles?|supported|support|sponsorship|sponsored|assistance|provided|offerte?s?|possible|exempt|dispensee?)\b/,
+  // « with LMIA » seulement après un mot d'emploi : « Experience with LMIA paperwork » n'est pas une ouverture.
+  /\b(positive|approved|(job|position|poste|emploi|offer|offre)\s+(with|avec)(\s+une?|\s+an?)?|offre d'|obtenu \w+ )\s*(lmia|eimt)\b/,
+  /\b(lmia|eimt)\s+(jobs?|positions?|postes?|emplois?|candidates?|workers?)\b/,
+  /\b(lmia|eimt)\b[^.!?\n]{0,15}\b(may|can|will|could)\s+be\s+(considered|provided|offered|supported|available)\b/,
+  /\b(can|will|able to|pouvons|peut|pourrons|allons|aider?|help|assist|support)\b[^.!?\n]{0,25}\b(lmia|eimt)\b/,
+  // Annonce publiée pour une demande d'EIMT : l'employeur prépare l'embauche d'un travailleur étranger.
+  /\b(affichage|annonce|advertis\w*|posting)\b[^.!?\n]{0,80}\b(eimt|lmia)\b/,
+  /\b(eimt|lmia)\b[^.!?\n]{0,60}\b(affichage|advertis\w*|recruitment efforts?|efforts de recrutement)\b/,
   /\b(visa|work permit|permis de travail|immigration)\s+(sponsor(ship|ed|ing)?|support(ed)?|assistance|parrain\w*|soutien|accompagnement)\b/,
   /\b(sponsor(ship)?|parrain\w*)\s+(available|offered|provided|possible|disponible|offert)\b/,
   /\b(will|can|able to|willing to|happy to)\s+sponsor\b/,
@@ -38,6 +47,13 @@ const OPEN = [
 ];
 
 const CLOSED = [
+  // Refus en français et en anglais vus le 15 nov. 2026 (« Nous ne réalisons pas de EIMT », « No International Sponsorship Available »).
+  /\bne\s+(realis|fais|fait|offr|fourn|soutien|parrain|accompagn|procede)\w*\s+(pas|aucune?)\b[^.!?\n]{0,40}\b(eimt|parrainage|permis de travail|immigration)\b/,
+  /\bno\s+(international|foreign|overseas|visa|work permit|immigration)\s+(sponsorship|applicants|candidates|applications|support)\b/,
+  /\b(not|n't)\s+(open|available)\s+to\s+(international|foreign|overseas)\b/,
+  /\b(international|foreign|overseas)\s+(applicants|candidates|applications)\s+(will\s+)?(not|cannot|can't)\s+be\s+(considered|accepted|reviewed)\b/,
+  /\b(must|need to|required to)\s+be\s+(currently|already)\s+(legally\s+)?(authori[sz]ed|eligible|entitled|permitted)\s+to work in canada\b/,
+  /\b(must|need to)\s+(currently|already)\s+(have|hold|possess)\s+(a\s+)?(valid\s+)?(canadian\s+)?(work permit|work authori[sz]ation)\b/,
   /\b(must|need to|required to|should)\s+(be|have)\s+(a\s+)?(canadian citizen|citizenship|permanent resident|pr)\b/,
   /\b(canadian\s+)?citizens?\s+(and|or|&)\s+permanent residents?\s+(only|are eligible)/,
   /\bonly\s+(canadian\s+)?citizens?\s+(and|or)\s+permanent residents?\b/,

@@ -81,3 +81,18 @@ describe('tracker international : historique', () => {
     expect(out[2]).toMatchObject({ lastSeen: '2026-10-29' }); // plus vue cette semaine, gardée
   });
 });
+
+describe('tracker : relecture des offres publiées avec le tri actuel', () => {
+  it('écarte les refus, garde les preuves et les employeurs EIMT (non vérifiables)', async () => {
+    const { reverifyInternational, verifiedIds } = await import('../fetch-international');
+    const o = (id: string, title: string, snippet: string, lmia = false) => ({ id, title, snippet, company: 'X', evidence: ['ancienne'], matched: [], caution: [], scam: [], ...(lmia ? { lmia: { positions: 2, lastQuarter: '2026Q1', sameNoc: true } } : {}) }) as never;
+    const out = reverifyInternational([
+      o('a', 'Cook', 'Nous ne réalisons pas de EIMT.'),
+      o('b', 'Cook', 'LMIA approved position.'),
+      o('c', 'Driver', 'Full time driver.', true),
+      o('d', 'Driver', 'Full time driver.'),
+    ]) as Array<{ id: string; evidence: string[] }>;
+    expect(out.map((x) => x.id)).toEqual(['b', 'c']);
+    expect([...verifiedIds(out as never)]).toEqual(['b']);
+  });
+});
