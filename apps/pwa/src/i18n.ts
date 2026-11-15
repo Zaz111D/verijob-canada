@@ -553,6 +553,18 @@ export const STRINGS = {
   trackerAppliedSaved: { fr: 'Ajoutée au Suivi', en: 'Added to Tracking' },
   trackerNone: { fr: 'Aucune offre ne correspond à ces filtres.', en: 'No offer matches these filters.' },
   trackerUpdated: { fr: 'Mise à jour du', en: 'Updated on' },
+  abroadOnly: { fr: 'Celles qui acceptent l’étranger', en: 'Those that accept applicants abroad' },
+  abroadAll: { fr: 'Toutes les offres de mes métiers', en: 'All offers in my occupations' },
+  abroadOnlyHelp: { fr: 'L’annonce dit accepter les candidats de l’étranger (phrase citée sur chaque offre).', en: 'The ad says it accepts applicants from abroad (sentence quoted on each offer).' },
+  abroadNone: {
+    fr: 'Aucune annonce de vos métiers ne le dit clairement cette semaine. Voyez le Tracker (tous métiers) ou « Toutes les offres de mes métiers » : hors Québec, si vous parlez français, l’employeur peut quand même vous embaucher sans EIMT (Mobilité francophone) — demandez-le-lui.',
+    en: 'No ad in your occupations says so clearly this week. See the Tracker (all occupations) or “All offers in my occupations”: outside Quebec, if you speak French, the employer can still hire you without an LMIA (Francophone Mobility) — ask them.',
+  },
+  abroadOthersHelp: {
+    fr: 'Ces annonces ne disent PAS qu’elles acceptent l’étranger (celles qui le refusent sont retirées). Elles restent des pistes : hors Québec, la Mobilité francophone permet à n’importe quel employeur de vous embaucher sans EIMT si vous parlez français ; ailleurs, il faut que l’employeur accepte de faire une EIMT. Demandez-le-lui dans votre message.',
+    en: 'These ads do NOT say they accept applicants abroad (those that refuse are removed). They remain leads: outside Quebec, Francophone Mobility lets any employer hire you without an LMIA if you speak French; elsewhere, the employer must agree to get an LMIA. Ask in your message.',
+  },
+  abroadNotSaid: { fr: 'Ne dit pas accepter l’étranger', en: 'Does not say it accepts applicants abroad' },
   trackerProofBadge: { fr: 'L’annonce le dit', en: 'The ad says so' },
   trackerUnverifiedBadge: { fr: 'Non vérifiable', en: 'Not verifiable' },
   trackerShowUnverified: { fr: 'Afficher aussi les {n} annonces non vérifiables (employeurs avec EIMT récente)', en: 'Also show the {n} unverifiable ads (employers with a recent LMIA)' },

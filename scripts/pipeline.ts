@@ -8,7 +8,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { normalize, type CurrentOffer, type InternationalOffer, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
+import { classifyInternational, normalize, type CurrentOffer, type InternationalOffer, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildEmployerContacts, checkEmployerContactPages } from './build-employer-contacts';
@@ -152,8 +152,11 @@ function syncInternationalFlags() {
   writeFileSync(join(OUT_DIR, 'international-offers.json'), JSON.stringify(intlFile));
   const ok = verifiedIds(intlFile.data);
   for (const name of ['current-offers.json', 'region-offers.json']) {
-    const f = read<{ id: string; intl?: true }>(name);
+    const f = read<{ id: string; title: string; snippet: string; intl?: true }>(name);
     if (!f) continue;
+    // Les annonces qui refusent l'étranger sont retirées aussi des versions reprises.
+    f.data = f.data.filter((o) => classifyInternational(`${o.title}.\n${o.snippet}`).status !== 'ferme');
+    f.recordCount = f.data.length;
     for (const o of f.data) { if (ok.has(o.id)) o.intl = true; else delete o.intl; }
     writeFileSync(join(OUT_DIR, name), JSON.stringify(f));
   }

@@ -57,12 +57,10 @@ function OfferItem({ o, mine, lang }: { o: RegionOffer; mine: boolean; lang: Lan
       <h4>{o.title}</h4>
       <p><strong>{o.company || '—'}</strong> — {o.location}</p>
       <p class="muted">{tr(S.postedOn, lang)} {formatDate(o.date, lang)}{sal ? ` · ${sal}` : ''}</p>
-      {(mine || o.intl) && (
-        <p>
-          {mine && <Badge kind="info">{tr(S.regionsMine, lang)}</Badge>}{' '}
-          {o.intl && <Badge kind="ok">✓ {tr(S.currentIntl, lang)}</Badge>}
-        </p>
-      )}
+      <p>
+        {mine && <><Badge kind="info">{tr(S.regionsMine, lang)}</Badge>{' '}</>}
+        {o.intl ? <Badge kind="ok">✓ {tr(S.currentIntl, lang)}</Badge> : <Badge kind="info">{tr(S.abroadNotSaid, lang)}</Badge>}
+      </p>
       {o.snippet && <p class="muted">{o.snippet}</p>}
       {o.scam.length > 0 && (
         <div class="alert">

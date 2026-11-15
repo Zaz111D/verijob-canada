@@ -26,7 +26,7 @@ function CurrentCard({ o, g, lang }: { o: CurrentOffer; g: Grouped; lang: Lang }
       <h3>{o.title}</h3>
       <p><strong>{o.company || '—'}</strong> — {o.location}</p>
       <p class="muted">{tr(S.postedOn, lang)} {formatDate(o.date, lang)} · {lang === 'fr' ? n?.titleFr : n?.titleEn}{sal ? ` · ${sal}` : ''}</p>
-      {o.intl && <p><Badge kind="ok">✓ {tr(S.currentIntl, lang)}</Badge></p>}
+      {o.intl ? <p><Badge kind="ok">✓ {tr(S.currentIntl, lang)}</Badge></p> : <p><Badge kind="info">{tr(S.abroadNotSaid, lang)}</Badge></p>}
       {o.snippet && <p class="muted">{o.snippet}</p>}
       <TestLine g={g} lang={lang} />
       {o.scam.length > 0 && (
@@ -55,6 +55,8 @@ export function ApplyNow({ nocs, provinces, lang }: { nocs: string[]; provinces:
   const [intl, setIntl] = useState<InternationalOffer[]>([]);
   const [tab, setTab] = useState<TestTab>('sans-test');
   const [shown, setShown] = useState(PAGE);
+  // Par défaut : seulement les offres dont l'annonce dit accepter l'étranger (public de VériJob : à l'étranger).
+  const [onlyAbroad, setOnlyAbroad] = useState(true);
   useEffect(() => {
     loadCurrentOffers().then((f) => setCurrent({ list: f.data, at: f.fetchedAt.slice(0, 10) })).catch(() => undefined);
     loadInternationalOffers().then((f) => setIntl(f.data)).catch(() => undefined);
@@ -76,8 +78,10 @@ export function ApplyNow({ nocs, provinces, lang }: { nocs: string[]; provinces:
   }, [current, intl, nocs.join(), provinces.join(), profile]);
 
   if (!current && !intl.length) return null; // pas encore de données d'offres (clés Adzuna absentes)
-  const counts = countGroups(items.map((e) => e.g));
-  const visible = items.filter((e) => inTab(e.g, tab));
+  const abroad = items.filter((e) => proof(e) > 0);
+  const base = onlyAbroad ? abroad : items;
+  const counts = countGroups(base.map((e) => e.g));
+  const visible = base.filter((e) => inTab(e.g, tab));
   // Métiers du profil sans aucune offre : lien de secours vers le Guichet-Emplois (offres ouvertes aux étrangers).
   const emptyNocs = nocs.filter((c) => !items.some((e) => e.o.noc === c));
   return (
@@ -85,8 +89,14 @@ export function ApplyNow({ nocs, provinces, lang }: { nocs: string[]; provinces:
       <h2>{tr(S.applyTitle, lang)}</h2>
       <p class="muted">{tr(S.applyIntro, lang)}{current ? ` ${tr(S.intlUpdated, lang)} ${formatDate(current.at, lang)}.` : ''}</p>
       <p class="muted">💡 {tr(S.offerAbroadShort, lang)}</p>
-      {items.length > 0 && <TestTabs counts={counts} value={tab} onChange={(t) => { setTab(t); setShown(PAGE); }} lang={lang} />}
-      {visible.length
+      <div class="row" role="group">
+        <button type="button" class={onlyAbroad ? 'primary' : ''} onClick={() => { setOnlyAbroad(true); setShown(PAGE); }}>⭐ {tr(S.abroadOnly, lang)} ({abroad.length})</button>
+        <button type="button" class={onlyAbroad ? '' : 'primary'} onClick={() => { setOnlyAbroad(false); setShown(PAGE); }}>{tr(S.abroadAll, lang)} ({items.length})</button>
+      </div>
+      {onlyAbroad && <p class="muted">{tr(abroad.length ? S.abroadOnlyHelp : S.abroadNone, lang)}</p>}
+      {!onlyAbroad && <p class="callout">{tr(S.abroadOthersHelp, lang)}</p>}
+      {base.length > 0 && <TestTabs counts={counts} value={tab} onChange={(t) => { setTab(t); setShown(PAGE); }} lang={lang} />}
+      {visible.length || !onlyAbroad
         ? visible.slice(0, shown).map((it) => (it.kind === 'intl' ? <OfferCard o={it.o} g={it.g} lang={lang} /> : <CurrentCard o={it.o} g={it.g} lang={lang} />))
         : <p class="muted">{tr(S.currentNone, lang)}</p>}
       {shown < visible.length && <button type="button" onClick={() => setShown(shown + PAGE)}>{tr(S.showMore, lang)} ({visible.length - shown})</button>}

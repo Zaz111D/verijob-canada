@@ -60,3 +60,10 @@ describe('requêtes des offres actuelles', () => {
     expect(o.province).toBe('QC');
   });
 });
+
+describe('annonce qui refuse les candidats de l’étranger', () => {
+  it('retirée des offres actuelles', () => {
+    expect(toCurrentOffer(job({ title: 'Security Guard', description: 'Candidates must already be legally authorized to work in Canada without current or future sponsorship.' }), '64410', ctx)).toBeNull();
+    expect(toCurrentOffer(job({ title: 'Security Guard', description: 'Nous ne réalisons pas de EIMT.' }), '64410', ctx)).toBeNull();
+  });
+});

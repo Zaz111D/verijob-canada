@@ -10,7 +10,7 @@
  *
  * Produit : apps/pwa/public/data/current-offers.json
  */
-import { analyzeOffer, detectNocInText, normalize, type CurrentOffer, type NocData, type Rules } from '../packages/core/src';
+import { analyzeOffer, classifyInternational, detectNocInText, normalize, type CurrentOffer, type NocData, type Rules } from '../packages/core/src';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { adzunaClient, adzunaKeys, baseOffer, clean, type AdzunaJob } from './lib/adzuna';
@@ -34,6 +34,9 @@ export function toCurrentOffer(j: AdzunaJob, noc: string, ctx: { rules: Rules; n
   const title = clean(j.title);
   if (detectNocInText(ctx.nocData, normalize(title))?.code !== noc || OTHER_LEVEL.test(normalize(title))) return null;
   const snippet = clean(j.description);
+  // Public de VériJob : des personnes à l'étranger. Une annonce qui le refuse (« déjà autorisé à travailler au Canada »,
+  // « nous ne réalisons pas d'EIMT »…) ne leur sert à rien : retirée.
+  if (classifyInternational(`${title}.\n${snippet}`).status === 'ferme') return null;
   const signals = analyzeOffer(`${title}.\n${snippet}`, { rules: ctx.rules, nocData: ctx.nocData }).signals;
   return {
     ...baseOffer(j),

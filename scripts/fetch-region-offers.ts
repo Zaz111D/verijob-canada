@@ -9,7 +9,7 @@
  *
  * Produit : apps/pwa/public/data/region-offers.json
  */
-import { analyzeOffer, detectNocInText, normalize, placeOf, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
+import { analyzeOffer, classifyInternational, detectNocInText, normalize, placeOf, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { adzunaClient, adzunaKeys, baseOffer, clean, type AdzunaJob } from './lib/adzuna';
@@ -41,6 +41,8 @@ export function toRegionOffer(j: AdzunaJob, ctx: { rules: Rules; nocData: NocDat
   const place = base.province && placeOf(ctx.rules, where, base.province);
   if (!place) return null;
   const snippet = clean(j.description);
+  // Annonce qui refuse les candidats de l'étranger : inutile pour le public de VériJob.
+  if (classifyInternational(`${base.title}.\n${snippet}`).status === 'ferme') return null;
   const signals = analyzeOffer(`${base.title}.\n${snippet}`, { rules: ctx.rules, nocData: ctx.nocData }).signals;
   const noc = detectNocInText(ctx.nocData, normalize(base.title))?.code;
   return {
