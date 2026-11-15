@@ -62,8 +62,9 @@ export {
   isOldEvidence, permitSummary, recruiterEvidence, sortRecruiters, EVIDENCE_LABEL, OLD_EVIDENCE_YEARS,
   type AfricanRecruiter, type EvidenceType, type PermitsData, type PermitsByYear, type PermitSummary,
 } from './africa';
-export { classifyInternational, type InternationalOffer, type CurrentOffer, type InternationalStatus, type InternationalVerdict } from './international';
+export { classifyInternational, isGigOffer, type InternationalOffer, type CurrentOffer, type InternationalStatus, type InternationalVerdict } from './international';
 export { socialSearchLinks, publisherCheck, type SocialLink, type PublisherCheck } from './social';
 export { PROVINCE_TZ, tzOffsetMinutes, officeHoursLocal, internationalNumber } from './calling';
 export { placeOf, lowWageStatus, isOwnJob, type RegionOffer } from './regions';
 export { makeCatalogDetector } from './catalog';
+export { extractCvProfile, suggestBridges, type CvProfile, type CvJob, type CvCredential, type CvEducationLevel, type CvProfileOptions, type Bridge, type BridgeOptions, type LmiaByNoc } from './cvprofile';

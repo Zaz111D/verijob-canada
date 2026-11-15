@@ -14,6 +14,7 @@ import { openSampleCv } from './SampleCv';
 import { ProfileSwitcher } from '../components/Profiles';
 import { FamilyCard } from '../components/QuebecFamily';
 import { JobSearch } from '../components/JobSearch';
+import { CvImport } from '../components/CvImport';
 
 const SKILLS = ['speaking', 'listening', 'reading', 'writing'] as const;
 const LEVELS = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -126,6 +127,7 @@ export function Profile() {
       <h1>{tr(S.profileTitle, lang)}</h1>
       <p class="callout">{tr(S.profilePrivacy, lang)}</p>
       <ProfileSwitcher />
+      <CvImport key={profiles?.active} profile={p} lang={lang} onApply={(q) => { setP(q); void saveProfile(q).then(() => setMsg('saved')); }} />
       {(profiles?.list.length ?? 0) > 1 && <FamilyCard lang={lang} />}
       <form key={profiles?.active} onSubmit={(e) => { e.preventDefault(); void saveProfile(p).then(() => setMsg('saved')); }}>
         <label for="country">{tr(S.citizenship, lang)}</label>

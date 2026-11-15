@@ -8,7 +8,7 @@ import nocJson from '../../../data/noc.json';
 import catalogJson from '../../../data/noc-catalog.json';
 import {
   filterNews, makeWageLookup, mergeProspects, parseExpressEntryRounds,
-  type CmaLookup, type CurrentOffer, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type RegionOffer, type Rules, type WageLookup, type WagesData,
+  type CmaLookup, type CurrentOffer, type ExpressEntryData, type NocElementsData, type AfricanRecruiter, type InternationalOffer, type LmiaByNoc, type NewsItem, type NocData, type PermitsData, type PostingsData, type Prospect, type RawRound, type RegionOffer, type Rules, type WageLookup, type WagesData,
 } from '@verijob/core';
 
 export const rules = rulesJson as unknown as Rules;
@@ -128,6 +128,8 @@ export interface EventStatus { id: string; url: string; state: 'ouvert' | 'ferme
 export const loadEventsStatus = () => load<EventStatus[]>('events-status.json');
 export interface AaipDraw { date: string; stream: string; minScore: number | null; invitations: string }
 export const loadAaipDraws = () => load<AaipDraw[]>('aaip-draws.json');
+/** EIMT positives par métier : [postes, employeurs, dont volet agricole] (métiers passerelles après lecture du CV). */
+export const loadLmiaByNoc = () => load<LmiaByNoc>('lmia-by-noc.json');
 
 // ---------------------------------------------------------------------------
 // Lecture EN DIRECT des fichiers officiels (canada.ca autorise la lecture depuis un navigateur).

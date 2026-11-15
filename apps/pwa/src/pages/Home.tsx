@@ -7,6 +7,7 @@ const CARDS = [
   { href: '#/tracker', title: S.cardTrackerTitle, text: S.cardTrackerText },
   { href: '#/regions', title: S.cardRegionsTitle, text: S.cardRegionsText },
   { href: '#/veille', title: S.cardWatchTitle, text: S.cardWatchText },
+  { href: '#/profil', title: S.cardCvMatchTitle, text: S.cardCvMatchText },
   { href: '#/cv', title: S.cardCvTitle, text: S.cardCvText },
   { href: '#/demarcher', title: S.cardProspectsTitle, text: S.cardProspectsText },
   { href: '#/suivi', title: S.cardTrackingTitle, text: S.cardTrackingText },

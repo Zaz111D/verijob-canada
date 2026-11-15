@@ -187,6 +187,10 @@ export async function fetchLmia(rules: Rules, nocData: NocData, lookup: CmaLooku
     datasets: { positive: `https://open.canada.ca/data/fr/dataset/${POSITIVE_ID}`, negative: `https://open.canada.ca/data/fr/dataset/${NEGATIVE_ID}` },
   }));
 
+  // Résumé par métier (onglet « Profil » → métiers passerelles après lecture du CV) : quelques Ko pour tous les métiers.
+  const byNoc = lmiaByNoc([...records.values()]);
+  files.push(writeDataFile('lmia-by-noc.json', { ...source, name: `${source.name} — postes approuvés par métier`, window: quarters }, Object.keys(byNoc).length, byNoc));
+
   // Liste de démarchage : recruteurs récurrents (≥ 2 trimestres) pour les métiers ciblés,
   // + NOUVEAUX recruteurs : première EIMT positive (tous métiers) dans les 2 derniers trimestres publiés,
   // aucune dans les trimestres précédents de la fenêtre.
@@ -225,6 +229,24 @@ export async function fetchLmia(rules: Rules, nocData: NocData, lookup: CmaLooku
   console.log(`  employeurs par métier : ${perNocFiles} fichiers (${Math.round(perNocBytes / 1024)} Ko au total)`);
 
   return { ...computeStats(records, nocTitles, nocData), quarters: qStats, streamPositions, repairedAddresses, files, missingQuarters };
+}
+
+/**
+ * Par métier : [postes approuvés, employeurs distincts, dont postes du volet agriculture primaire] sur la fenêtre.
+ * Seulement les EIMT positives.
+ */
+export function lmiaByNoc(recs: Array<Pick<EmployerRecord, 'k' | 'p'> & { province?: string }>): Record<string, [number, number, number]> {
+  const acc = new Map<string, { pos: number; emp: Set<string>; agri: number }>();
+  for (const r of recs) {
+    for (const [, stream, noc, , positions] of r.p) {
+      let a = acc.get(noc);
+      if (!a) acc.set(noc, (a = { pos: 0, emp: new Set(), agri: 0 }));
+      a.pos += positions;
+      a.emp.add(`${r.province ?? ''}|${r.k}`);
+      if (stream === 'PA') a.agri += positions;
+    }
+  }
+  return Object.fromEntries([...acc.entries()].sort().map(([noc, a]) => [noc, [a.pos, a.emp.size, a.agri]]));
 }
 
 /** Statistiques de contrôle (affichées dans docs/data-report.md). */

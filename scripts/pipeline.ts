@@ -8,13 +8,13 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { classifyInternational, normalize, type CurrentOffer, type InternationalOffer, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
+import { classifyInternational, isGigOffer, normalize, type CurrentOffer, type InternationalOffer, type NocData, type RegionOffer, type Rules } from '../packages/core/src';
 import { todayIso } from '../packages/core/src';
 import { buildAfricanRecruiters, type AfricanRecruitersStats } from './build-african-recruiters';
 import { buildEmployerContacts, checkEmployerContactPages } from './build-employer-contacts';
 import { buildAipEmployers, buildDesignated, type DesignatedStats } from './build-designated';
 import { fetchPermits, type PermitsStats } from './fetch-permits';
-import { fetchInternational, reverifyInternational, verifiedIds, type InternationalStats } from './fetch-international';
+import { catalogNoc, fetchInternational, reverifyInternational, verifiedIds, type InternationalStats } from './fetch-international';
 import { fetchExpressEntry, type ExpressEntryStats } from './fetch-express-entry';
 import { fetchProposals, type ProposalsStats } from './fetch-proposals';
 import { fetchCurrentOffers, OTHER_LEVEL, queryKeys, type CurrentOffersStats } from './fetch-current-offers';
@@ -152,12 +152,18 @@ function syncInternationalFlags() {
   writeFileSync(join(OUT_DIR, 'international-offers.json'), JSON.stringify(intlFile));
   const ok = verifiedIds(intlFile.data);
   for (const name of ['current-offers.json', 'region-offers.json']) {
-    const f = read<{ id: string; title: string; snippet: string; intl?: true }>(name);
+    const f = read<{ id: string; title: string; company: string; snippet: string; intl?: true; noc?: string; nocGuess?: string }>(name);
     if (!f) continue;
-    // Les annonces qui refusent l'étranger sont retirées aussi des versions reprises.
-    f.data = f.data.filter((o) => classifyInternational(`${o.title}.\n${o.snippet}`).status !== 'ferme');
+    // Les annonces qui refusent l'étranger sont retirées aussi des versions reprises, comme le travail à la tâche sur une
+    // plateforme (livreur Skip The Dishes, Uber Eats… : pas d'employeur, donc pas de permis de travail possible).
+    f.data = f.data.filter((o) => classifyInternational(`${o.title}.\n${o.snippet}`).status !== 'ferme' && !isGigOffer(o));
     f.recordCount = f.data.length;
-    for (const o of f.data) { if (ok.has(o.id)) o.intl = true; else delete o.intl; }
+    for (const o of f.data) {
+      if (ok.has(o.id)) o.intl = true; else delete o.intl;
+      // Métier de l'annonce parmi les 516 de la CNP (suggestions d'offres après lecture du CV, onglet « Profil »).
+      const guess = catalogNoc(o.title);
+      if (guess && guess !== o.noc) o.nocGuess = guess; else delete o.nocGuess;
+    }
     writeFileSync(join(OUT_DIR, name), JSON.stringify(f));
   }
   console.log(`▶ Tri international relu : ${before} → ${intlFile.data.length} offres, ${ok.size} avec preuve dans l'annonce`);

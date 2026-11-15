@@ -123,7 +123,7 @@ export async function writeAllNocElements(): Promise<{ written: number; skipped:
 }
 
 /** Exemples à éviter comme nom court : niveaux ou statuts (« apprenti cuisinier », « chef comptable »). */
-const NOT_SHORT = /^(apprenti|apprentie|apprentice|compagnon|compagne|journeyman|chef|head|senior|superviseur|superviseure|supervisor|surveillant|surveillante|assistant|assistante|aide|helper|stagiaire|trainee)/i;
+const NOT_SHORT = /^(apprenti|apprentie|apprentice|compagnon|compagne|journeyman|chef|head|senior|superviseur|superviseure|supervisor|surveillant|surveillante|assistant|assistante|aide|helper|stagiaire|trainee)(?![a-z])/i;
 const strip = (s: string) => s.replace(/\s*\(.*?\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
 const stem = (w: string) => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').slice(0, 5);
 /**

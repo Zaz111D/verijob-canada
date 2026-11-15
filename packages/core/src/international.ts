@@ -7,7 +7,7 @@
  * (citoyens/résidents permanents seulement, « no sponsorship », permis de travail valide exigé).
  * Chaque décision est justifiée par la phrase trouvée. Aucune IA : des expressions explicables.
  */
-import { excerpt, prepareText } from './text';
+import { excerpt, normalize, prepareText } from './text';
 import type { ProvinceCode } from './types';
 
 export type InternationalStatus = 'ouvert' | 'ferme' | 'inconnu';
@@ -82,6 +82,16 @@ const WEAK = [
   /\b(legalement\s+)?(autorise|admissible)e?s?\s+a travailler au canada\b/,
 ];
 
+/**
+ * Travail « à la tâche » sur une plateforme (livreur Skip The Dishes, Uber Eats, DoorDash…) ou en travailleur autonome :
+ * pas d'employeur, donc pas d'offre d'emploi qui permette un permis de travail. Inutile pour le public de VériJob.
+ */
+const GIG_COMPANY = /(^|[^a-z])(skip ?the ?dishes|uber|doordash|instacart|lyft|amazon flex|spark driver|foodora)(?![a-z])/;
+const GIG_TITLE = /(^|[^a-z])(freelance|independent contractor|livreur independant|livreuse independante|chauffeur independant|travailleur autonome|travailleuse autonome|self[- ]employed)(?![a-z])/;
+export function isGigOffer(o: { title: string; company?: string }): boolean {
+  return GIG_COMPANY.test(normalize(o.company ?? '')) || GIG_TITLE.test(normalize(o.title));
+}
+
 export function classifyInternational(text: string): InternationalVerdict {
   const { segments } = prepareText(text);
   // Extrait centré sur l'expression trouvée : les annonces ont souvent de très longues « phrases » sans ponctuation.
@@ -139,6 +149,8 @@ export interface InternationalOffer {
 
 /** Offre actuelle d'un métier suivi (annonce Adzuna avec lien direct), publiée par le pipeline. */
 export interface CurrentOffer {
+  /** Métier du catalogue complet (516 métiers) reconnu dans le titre, quand ce n'est pas un métier suivi. */
+  nocGuess?: string;
   id: string;
   title: string;
   company: string;

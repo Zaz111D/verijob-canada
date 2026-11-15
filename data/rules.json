@@ -613,6 +613,24 @@
       "pageModified": null,
       "verifiedAt": "2026-10-15",
       "nextReview": "2027-04-15"
+    },
+    "ircc-language-tests": {
+      "titleFr": "IRCC — Résultats des tests linguistiques (tests approuvés : CELPIP-G, IELTS General, PTE Core, TEF Canada, TCF Canada)",
+      "titleEn": "IRCC — Language test results (approved tests: CELPIP-G, IELTS General, PTE Core, TEF Canada, TCF Canada)",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/documents/examen-linguistique.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/documents/language-requirements/language-testing.html",
+      "pageModified": "2026-10-16",
+      "verifiedAt": "2026-11-15",
+      "nextReview": "2027-05-15"
+    },
+    "ircc-eca": {
+      "titleFr": "IRCC — Évaluation des diplômes d'études (EDE) : organismes désignés (WES, ICAS, IQAS, CES, ICES)",
+      "titleEn": "IRCC — Educational credential assessment (ECA): designated organizations (WES, ICAS, IQAS, CES, ICES)",
+      "urlFr": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/documents/evaluer-diplomes-etudes.html",
+      "urlEn": "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/documents/education-assessed.html",
+      "pageModified": null,
+      "verifiedAt": "2026-11-15",
+      "nextReview": "2027-05-15"
     }
   },
   "lmiaLowWage": {

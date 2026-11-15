@@ -56,7 +56,7 @@ const PER_PAGE = 50;
 
 /** Métier du catalogue complet (516 métiers), pour les offres hors des métiers suivis. */
 let catalog: ((title: string) => string | undefined) | undefined;
-function catalogNoc(title: string): string | undefined {
+export function catalogNoc(title: string): string | undefined {
   catalog ??= makeCatalogDetector(JSON.parse(readFileSync(join(ROOT, 'data', 'noc-search.json'), 'utf8')) as Record<string, string>);
   return catalog(title);
 }
