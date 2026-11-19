@@ -1,6 +1,6 @@
 # Rapport de contrôle des données
 
-> Généré automatiquement par `npm run data` le 2026-11-16. Ne pas modifier à la main.
+> Généré automatiquement par `npm run data` le 2026-11-19. Ne pas modifier à la main.
 
 ## 1. Fichiers publiés (`apps/pwa/public/data/`)
 
@@ -24,7 +24,7 @@
 | employers-YT.json | 73 | 13 Ko | 3 Ko |
 | lmia-by-noc.json | 473 | 9 Ko | 3 Ko |
 | prospects.json | 12 635 | 2 301 Ko | 466 Ko |
-| wages.json | 350 | 15 Ko | 3 Ko |
+| wages.json | 351 | 15 Ko | 3 Ko |
 | designated-employers.json | 2 231 | 720 Ko | 70 Ko |
 | community-priorities.json | 76 | 16 Ko | 2 Ko |
 | aip-employers.json | 650 | 227 Ko | 27 Ko |
@@ -32,12 +32,12 @@
 | postings.json | 1 753 | 245 Ko | 37 Ko |
 | african-recruiters.json | 7 | 6 Ko | 2 Ko |
 | permits-africa.json | 53 | 12 Ko | 3 Ko |
-| international-offers.json | 77 | 82 Ko | 15 Ko |
+| international-offers.json | 131 | 137 Ko | 21 Ko |
 | proposals-status.json | 1 | 0 Ko | 0 Ko |
-| region-offers.json | 2 349 | 1 352 Ko | 235 Ko |
+| current-offers.json | 988 | 553 Ko | 111 Ko |
 | regions-status.json | 17 | 3 Ko | 1 Ko |
 | events-status.json | 2 | 1 Ko | 1 Ko |
-| **Total** | | **16 612 Ko** | **3 245 Ko** |
+| **Total** | | **15 867 Ko** | **3 128 Ko** |
 
 Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne charge le fichier d'une province que lorsqu'on en a besoin.
 
@@ -124,9 +124,9 @@ Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne c
 - Municipalités (SDR) : 5 161 — dans une RMR : 556 — hors RMR : 4 452 — noms ambigus : 11
 - RMR de `rules.json` retrouvées dans le tableau officiel : 41 / 41
 
-## 4. Salaires Job Bank (2025)
+## 4. Salaires Job Bank (2026)
 
-- 36 métiers ciblés couverts, 350 valeurs (Canada + provinces).
+- 36 métiers ciblés couverts, 351 valeurs (Canada + provinces).
 
 ## 5. Employeurs désignés FCIP / RCIP (relevés manuels)
 
@@ -164,15 +164,15 @@ Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne c
 ## 8. Recrutement en Afrique
 
 - Preuves relevées à la main (`data/manual/recrutement-afrique.csv`) : 7 preuves, 7 employeurs.
-- Permis de travail par pays de citoyenneté (IRCC) : 53 pays d'Afrique, jusqu'à 2026-08.
+- Permis de travail par pays de citoyenneté (IRCC) : 53 pays d'Afrique, jusqu'à 2026-09.
 
 ## 9. Offres ouvertes aux candidats de l'étranger (API Adzuna, tri VériJob)
 
-- 58 requêtes, 863 annonces lues, **77 ouvertes à l'international**, 60 écartées (Canada exigé).
+- 58 requêtes, 920 annonces lues, **131 ouvertes à l'international**, 60 écartées (Canada exigé).
 
 ## 10. Offres actuelles avec lien direct (API Adzuna)
 
-Version publiée gardée (données du 2026-11-09, 1 113 offres) — ⚠ échec de l'API : Adzuna : HTTP 503 (greenhouse or nursery worker).
+- 75 requêtes, 2 338 annonces lues, **988 gardées** (titre conforme au métier).
 
 ## 11. Règles en préparation
 
@@ -180,8 +180,8 @@ Version publiée gardée (données du 2026-11-09, 1 113 offres) — ⚠ échec 
 
 ## 12. Régions (Kenora, pilotes PICR / PICRF, Québec en région)
 
-- Offres des villes en région (API Adzuna) : 86 requêtes, 3 603 annonces lues, **2 349 gardées** — ⚠ 2 ville(s) en échec (offres de la semaine précédente gardées).
-- Sources contrôlées : 17. **⚠ Liste ou page changée : ontario-oinp-owp — relever la nouvelle liste (data/manual/designated-employers.csv) ou relire la page, puis mettre à jour rules.json.**
+- Offres des villes en région (API Adzuna) : version publiée gardée (données du 2026-11-16, 2 211 offres).
+- Sources contrôlées : 17. **⚠ Liste ou page changée : Thunder Bay, Pictou County, Steinbach, ontario-oinp-owp — relever la nouvelle liste (data/manual/designated-employers.csv) ou relire la page, puis mettre à jour rules.json.**
 
 ## 13. Salons de recrutement
 
