@@ -1,6 +1,6 @@
 # Rapport de contrôle des données
 
-> Généré automatiquement par `npm run data` le 2026-11-19. Ne pas modifier à la main.
+> Généré automatiquement par `npm run data` le 2026-11-23. Ne pas modifier à la main.
 
 ## 1. Fichiers publiés (`apps/pwa/public/data/`)
 
@@ -28,16 +28,15 @@
 | designated-employers.json | 2 231 | 720 Ko | 70 Ko |
 | community-priorities.json | 76 | 16 Ko | 2 Ko |
 | aip-employers.json | 650 | 227 Ko | 27 Ko |
-| express-entry.json | 40 | 9 Ko | 1 Ko |
+| express-entry.json | 40 | 8 Ko | 1 Ko |
 | postings.json | 1 753 | 245 Ko | 37 Ko |
 | african-recruiters.json | 7 | 6 Ko | 2 Ko |
 | permits-africa.json | 53 | 12 Ko | 3 Ko |
-| international-offers.json | 131 | 137 Ko | 21 Ko |
 | proposals-status.json | 1 | 0 Ko | 0 Ko |
-| current-offers.json | 988 | 553 Ko | 111 Ko |
+| region-offers.json | 2 315 | 1 325 Ko | 220 Ko |
 | regions-status.json | 17 | 3 Ko | 1 Ko |
 | events-status.json | 2 | 1 Ko | 1 Ko |
-| **Total** | | **15 867 Ko** | **3 128 Ko** |
+| **Total** | | **16 502 Ko** | **3 216 Ko** |
 
 Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne charge le fichier d'une province que lorsqu'on en a besoin.
 
@@ -155,7 +154,7 @@ Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne c
 
 ## 6. Entrée express — rondes d'invitations (IRCC)
 
-- 40 rondes gardées, la plus récente le 2026-10-28.
+- 40 rondes gardées, la plus récente le 2026-11-23.
 
 ## 7. Offres du Guichet-Emplois (données ouvertes, mensuelles)
 
@@ -168,11 +167,11 @@ Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne c
 
 ## 9. Offres ouvertes aux candidats de l'étranger (API Adzuna, tri VériJob)
 
-- 58 requêtes, 920 annonces lues, **131 ouvertes à l'international**, 60 écartées (Canada exigé).
+Version publiée gardée (données du 2026-11-19, 131 offres) — ⚠ échec de l'API : Adzuna : HTTP 503 (open to international applicants).
 
 ## 10. Offres actuelles avec lien direct (API Adzuna)
 
-- 75 requêtes, 2 338 annonces lues, **988 gardées** (titre conforme au métier).
+Version publiée gardée (données du 2026-11-19, 970 offres) — ⚠ échec de l'API : Adzuna : HTTP 503 (livestock worker).
 
 ## 11. Règles en préparation
 
@@ -180,11 +179,11 @@ Chaque fichier contient `{ source, fetchedAt, recordCount, data }`. L'appli ne c
 
 ## 12. Régions (Kenora, pilotes PICR / PICRF, Québec en région)
 
-- Offres des villes en région (API Adzuna) : version publiée gardée (données du 2026-11-16, 2 211 offres).
-- Sources contrôlées : 17. **⚠ Liste ou page changée : Thunder Bay, Pictou County, Steinbach, ontario-oinp-owp — relever la nouvelle liste (data/manual/designated-employers.csv) ou relire la page, puis mettre à jour rules.json.**
+- Offres des villes en région (API Adzuna) : 86 requêtes, 3 357 annonces lues, **2 315 gardées** — ⚠ 6 ville(s) en échec (offres de la semaine précédente gardées).
+- Sources contrôlées : 17. **⚠ Liste ou page changée : Pictou County, Steinbach, ontario-oinp-owp — relever la nouvelle liste (data/manual/designated-employers.csv) ou relire la page, puis mettre à jour rules.json.**
 
 ## 13. Salons de recrutement
 
-- Tirages de l'Alberta : 40, le plus récent le 2026-11-02.
+- Tirages de l'Alberta : 40, le plus récent le 2026-11-13.
 
 - 2 salon(s) vérifié(s). Inscriptions ouvertes : destination-canada.
